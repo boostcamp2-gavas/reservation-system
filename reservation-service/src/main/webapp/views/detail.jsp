@@ -302,9 +302,10 @@
 <script src="//code.jquery.com/jquery.min.js"></script>
 
 <!--  img Slide  -->
-<script src="/resources/js/commonCaroucel.js"></script>
-<script src="/resources/js/caroucelDetail.js"></script>
-<script src="/resources/js/caroucelPopup.js"></script>
+<script src="/resources/js/slide/commonCaroucel.js"></script>
+<script src="/resources/js/slide/caroucelDetail.js"></script>
+<script src="/resources/js/slide/caroucelPopup.js"></script>
+
 <!--  Handlebar -->
 <script src="//cdn.jsdelivr.net/handlebarsjs/4.0.8/handlebars.min.js"></script>
 
@@ -339,12 +340,16 @@
 
 
 $(function(){
-	var $ul = $(".visual_img:first")
-	carouceldetail.init($ul,$ul.width());
-
-	$(".prev_inn:first").on("click",carouceldetail.caroucelLeftClick);
-	$(".nxt_inn:first").on("click",carouceldetail.caroucelRightClick);
+	var $ul = $(".visual_img:first"),
+	$ul_pop = $(".visual_img:last"),
+	templateSource = $("#layer-content").html();
 	
+	Carouceldetail.init($ul,$ul.width());
+
+	$(".prev_inn:first").on("click",Carouceldetail.caroucelLeftClick);
+	$(".nxt_inn:first").on("click",Carouceldetail.caroucelRightClick);
+	
+	Carouceldetail.touchEvent();
 	
 	// layer popup
 	
@@ -352,39 +357,12 @@ $(function(){
 		var comment = $(this).data("id");
 		
 		$(".layer").removeClass("_none");
-		//$(".layer").css("top",offset.top);
-		
-		
-		
-		templateSource = $("#layer-content").html();
-		
 		$.ajax({
 			method : "GET",
 			url : "/commentImg/"+comment,
 			contentType : "application/json; charset=utf-8",
 			dataType : "json"
-		}).done(function(data) {
-			// 핸들바 템플릿 컴파일
-			if (data.length === 0) {
-				alert("더이상 데이터가 존재하지 않습니다. ");
-			}else{
-				var leftTemplate,
-				Items = {
-					items : []
-				}
-				
-				leftTemplate = Handlebars.compile(templateSource);
-				for (var i = 0, max = data.length; i < max; ++i) {
-					Items.items.push(data[i]);
-					
-				}
-				var main = leftTemplate(Items);
-				// 생성된 HTML을 DOM에 주입
-	
-				$('.visual_img:last').append(main);
-			}
-		}).always(function(){
-			
+		}).done(CaroucelPopup.getLayerImg).always(function(){
 			var $ul_pop = $(".visual_img:last");
 			$(".num.off:last > span").text($ul_pop.children().length);
 			console.log($ul_pop);
@@ -529,49 +507,8 @@ $(function(){
 		$(".detail_area_wrap").addClass("hide");
 		$("._path>  a").addClass("active");
 	});
-
-	// 이거 모듈화 할것. 
-	var touch_start_x = 0;
-	var save_x = 0;
-	var move_dx = 0;
-	var width =$(".visual_img:first").width();
- 	
-	 $(".visual_img:first").on("touchstart",function(event){
-		 touch_start_x =event.originalEvent.changedTouches[0].screenX;
-	}); 
 	
 	
-	 $(".visual_img:first").on("touchend",function(event){
-		// 버블링 막기 
-		end =  event.originalEvent.changedTouches[0].screenX;
-		
-	     if(move_dx >50 ){
-			 if(carouceldetail.caroucelLeftClick.call()){
-				 save_x -= width;	 
-			 }
-		 }else if(move_dx < -50 ){
-			 if(carouceldetail.caroucelRightClick.call()){
-				 save_x += width;
-			 }
-		 }
-	     // 움직인 만큼 반대로 돌림 
-	     $(".visual_img:first").animate({"right": "+="+move_dx}, 0);	 
-	     
-		// 다시 초기화 	     
-		touch_start_y = 0;
-		move_x = 0;
-		move_dx = 0;
-		event.preventDefault();
-	}); 
-	 
-	$(".visual_img:first").on("touchmove",function(event){
-		event.preventDefault();
-		move_dx = event.originalEvent.changedTouches[0].screenX-touch_start_x;
-		$(".visual_img:first").animate({"right": save_x-move_dx}, 0);
-	});
-	
-	
-
 	//scroll
 	
 	// lazy 부분 

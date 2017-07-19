@@ -28,6 +28,26 @@
 					caroucel.setting.current_length=0;
 					currentPoint =1;
 					$point.text(currentPoint);
+				}, 
+				getLayerImg : function(data) {
+					if (data.length === 0) {
+						alert("없는 이미지 ");
+					}else{
+						var leftTemplate,
+						main ='html',
+						Items = {
+							items : []
+						}
+						
+						leftTemplate = Handlebars.compile(templateSource);
+						for (var i = 0, max = data.length; i < max; ++i) {
+							Items.items.puh(data[i]);
+						}
+						main = leftTemplate(Items);
+						// 생성된 HTML을 DOM에 주입
+			
+						caroucel.$ul.append(main);
+					}
 				}
 		}
 		

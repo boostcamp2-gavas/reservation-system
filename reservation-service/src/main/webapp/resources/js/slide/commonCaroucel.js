@@ -36,9 +36,6 @@ function Caroucel(){
 			this.$ul.animate({"right": "+="+this.setting.imgLength}, "fast");
 			this.setting.moveLength += this.setting.imgLength;
 			++this.setting.current_length;
-			
-			console.log(this.setting.current_length);
-			console.log(this.setting.total_length);
 			return true;
 		}
 	}

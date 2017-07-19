@@ -117,8 +117,8 @@
 <script src="resources/js/category.js"></script>
 
 <!--  img Slide  -->
-<script src="/resources/js/commonCaroucel.js"></script>
-<script src="/resources/js/caroucelMain.js"></script>
+<script src="/resources/js/slide/commonCaroucel.js"></script>
+<script src="/resources/js/slide/caroucelMain.js"></script>
 
 <!--  productcontents -->
 <script src="resources/js/mainProduct.js"></script>
