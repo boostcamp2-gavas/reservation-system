@@ -2,20 +2,21 @@
 
 // 클릭만 동작하는 부분 + touch 
 	
-function CaroucelTouch($point){
+function CaroucelTouch($ul,$point){
 	this.$point =$point;
+	this.$ul = $ul;
+	this.caroucel = new Caroucel();
 	this.currentPoint = Number($point.text());
 	
 	this.start_x = 0;
-	this.save_x = 0;
+	this.save_a = 0;
 	this.move_dx = 0;
 	this.touchstartEvent = function(event){};
 	this.touchendEvent = function(event){};
 	this.touchmoveEvent = function(event){};
 	
-	
 	this.caroucelLeftClick = function(){
-		if(cleftClick()){
+		if(this.caroucel.leftClick()){
 			this.$point.text(--this.currentPoint);
 			return true;
 		}
@@ -23,7 +24,7 @@ function CaroucelTouch($point){
 	};
 	
 	this.caroucelRightClick = function(){
-		if(rightClick()){
+		if(this.caroucel.rightClick()){
 			this.$point.text(++this.currentPoint);
 			return true;
 		}
@@ -35,16 +36,15 @@ function CaroucelTouch($point){
 	}
  	
 
-	this.touchendEvent = function(event){
+	this.touchendEvent = function(imgLength){
 		// 버블링 막기 
-		console.log("너 나오냐 ?  "+setting.imgLength);
 	     if(this.move_dx >50 ){
-			 if(this.caroucelLeftClick){
-				 this.save_x -= setting.imgLength;	 
+			 if(this.caroucelLeftClick()){
+				 this.save_a -= imgLength;	 
 			 }
 		 }else if(this.move_dx < -50 ){
-			 if(this.caroucelRightClick){
-				 this.save_x += setting.imgLength;
+			 if(this.caroucelRightClick()){
+				 this.save_a += imgLength;
 			 }
 		 }
 	     // 움직인 만큼 반대로 돌림 
@@ -53,28 +53,33 @@ function CaroucelTouch($point){
 	     console.log("end :: "+this.move_dx);
 	     this.move_x = 0,
 	     this.move_dx = 0;
-		event.preventDefault();
 	};
 	
-
 	this.touchmoveEvent = function(event){
-		event.preventDefault();
 		this.move_dx = event.originalEvent.changedTouches[0].screenX-this.start_x;
-		console.log($ul);
-		$ul.animate({"right": this.save_x-this.move_dx},0);
-		console.log("save " + this.save_x);
-		console.log("move_dx " + this.move_dx);
-		
-		console.log("move :: "+this.save_x-this.move_dx);
+		$ul.animate({"right": this.save_a-this.move_dx},0);
 	};
-	
 	
 }
 
-CaroucelTouch.prototye = new Caroucel();
-	
+var CarocelDetail = (function(){
+	var touch = {};
+	var caroucel = new Caroucel();
+	return{
+		init : function($ul, $point){
+			touch = new CaroucelTouch($ul,$point);
+			touch.setUl($ul);
+			touch.setWidth(414);
+			$ul.on("touchend",touch.touchendEvent.bind(touch,touch.setting.imgLength)); 
+			$ul.on("touchstart",touch.touchstartEvent.bind(touch)); 
+			$ul.on("touchmove",touch.touchmoveEvent.bind(touch)); 
+		}
+	}
+})();
 
-
+CaroucelTouch.prototype = new Caroucel();
+CaroucelTouch.prototype.constructor = CaroucelTouch;
+/*
 	var Carouceldetail = (function(){
 		var $point = $(".num:first"),
 		currentPoint = Number($point.text());
@@ -150,3 +155,4 @@ CaroucelTouch.prototye = new Caroucel();
 		}
 		
 	})();
+*/

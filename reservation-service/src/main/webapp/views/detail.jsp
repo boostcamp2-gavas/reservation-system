@@ -344,12 +344,17 @@ $(function(){
 	$ul_pop = $(".visual_img:last"),
 	templateSource = $("#layer-content").html();
 	
-	Carouceldetail.init($ul,$ul.width());
+	CarocelDetail.init($ul,$ul_pop);
+	
+	
+	
+	
+	/* Carouceldetail.init($ul,$ul.width());
 
 	$(".prev_inn:first").on("click",Carouceldetail.caroucelLeftClick);
 	$(".nxt_inn:first").on("click",Carouceldetail.caroucelRightClick);
 	
-	Carouceldetail.touchEvent();
+	Carouceldetail.touchEvent(); */
 	
 	// layer popup
 	
