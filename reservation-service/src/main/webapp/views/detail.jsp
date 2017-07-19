@@ -392,6 +392,47 @@ $(function(){
 			$(".prev_inn:last").on("click",CaroucelPopup.caroucelLeftClick);
 			$(".nxt_inn:last").on("click",CaroucelPopup.caroucelRightClick);
 			
+			var touch_start_x = 0;
+			var save_x = 0;
+			var move_dx = 0;
+			var width =$(".visual_img:last").width();
+			
+			 $(".visual_img:last").on("touchstart",function(event){
+				 touch_start_x =event.originalEvent.changedTouches[0].screenX;
+			}); 
+			
+			
+			 $(".visual_img:last").on("touchend",function(event){
+				console.log(width);
+				 // 버블링 막기 
+				end =  event.originalEvent.changedTouches[0].screenX;
+				
+			     if(move_dx >50 ){
+					 if(CaroucelPopup.caroucelLeftClick.call()){
+						 save_x -= width;	 
+					 }
+				 }else if(move_dx < -50 ){
+					 if(CaroucelPopup.caroucelRightClick.call()){
+						 save_x += width;
+					 }
+				 }
+			     console.log(move_dx);
+			     // 움직인 만큼 반대로 돌림 
+			     $(".visual_img:last").animate({"right": "+="+move_dx}, 0);	 
+			     
+				// 다시 초기화 	     
+				touch_start_y = 0;
+				move_x = 0;
+				move_dx = 0;
+				event.preventDefault();
+			}); 
+			 
+			$(".visual_img:last").on("touchmove",function(event){
+				event.preventDefault();
+				move_dx = event.originalEvent.changedTouches[0].screenX-touch_start_x;
+				$(".visual_img:last").animate({"right": save_x-move_dx}, 0);
+			});
+			
 		});
 		
 	});
@@ -400,10 +441,20 @@ $(function(){
 		$(".layer").addClass("_none");
 		$('.visual_img:last > .item').remove();
 		
+		$(".visual_img:last").animate({"right": 0}, 0);	 
+		
 		$(".prev_inn:last").off("click");
 		$(".nxt_inn:last").off("click");
 		
+		$(".visual_img:last").off("touchstart");
+		$(".visual_img:last").off("touchend");
+		$(".visual_img:last").off("touchmove");
+		
+		
 	});
+	
+	
+	
 	
 });
 
@@ -483,14 +534,14 @@ $(function(){
 	var touch_start_x = 0;
 	var save_x = 0;
 	var move_dx = 0;
-	var width =$(".visual_img").width();
+	var width =$(".visual_img:first").width();
  	
-	 $(".visual_img").on("touchstart",function(event){
+	 $(".visual_img:first").on("touchstart",function(event){
 		 touch_start_x =event.originalEvent.changedTouches[0].screenX;
 	}); 
 	
 	
-	 $(".visual_img").on("touchend",function(event){
+	 $(".visual_img:first").on("touchend",function(event){
 		// 버블링 막기 
 		end =  event.originalEvent.changedTouches[0].screenX;
 		
@@ -504,7 +555,7 @@ $(function(){
 			 }
 		 }
 	     // 움직인 만큼 반대로 돌림 
-	     $(".visual_img").animate({"right": "+="+move_dx}, 0);	 
+	     $(".visual_img:first").animate({"right": "+="+move_dx}, 0);	 
 	     
 		// 다시 초기화 	     
 		touch_start_y = 0;
@@ -513,10 +564,10 @@ $(function(){
 		event.preventDefault();
 	}); 
 	 
-	$(".visual_img").on("touchmove",function(event){
+	$(".visual_img:first").on("touchmove",function(event){
 		event.preventDefault();
 		move_dx = event.originalEvent.changedTouches[0].screenX-touch_start_x;
-		$(".visual_img").animate({"right": save_x-move_dx}, 0);
+		$(".visual_img:first").animate({"right": save_x-move_dx}, 0);
 	});
 	
 	

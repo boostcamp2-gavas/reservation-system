@@ -25,6 +25,9 @@
 				init : function($ul,size){
 					caroucel.setUl($ul);
 					caroucel.setWidth(size);
+					caroucel.setting.current_length=0;
+					currentPoint =1;
+					$point.text(currentPoint);
 				}
 		}
 		
