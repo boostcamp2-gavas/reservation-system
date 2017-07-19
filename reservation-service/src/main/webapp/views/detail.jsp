@@ -283,7 +283,7 @@
 <!--  img Slide  -->
 <script src="/resources/js/commonCaroucel.js"></script>
 <script src="/resources/js/caroucelDetail.js"></script>
-<script src="/resources/js/caroucelDetail2.js"></script>
+
 <!--  Handlebar -->
 <script src="//cdn.jsdelivr.net/handlebarsjs/4.0.8/handlebars.min.js"></script>
 
@@ -488,11 +488,6 @@ $(function(){
 		});
 		
 		
-		carouceldetail2.setUl($(".layer").find(".visual_img"));
-		carouceldetail2.setWidth($(".layer").find(".visual_img").width());
-		// 어느정도 임시 방편 ? 
-		$(".prev_inn:last").on("click",carouceldetail2.caroucelLeftClick);
-		$(".nxt_inn:last").on("click",carouceldetail2.caroucelRightClick);
 		
 });
 </script>

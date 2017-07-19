@@ -8,7 +8,8 @@ $(document).ready(function() {
 		values = {};
 		id =0,
 		start = 0,
-		templateSource= {};
+		templateSource= {},
+		leftTemplate =function(){};
 		//func = funcion(){};
 		
 		// compile은 한번만 하면 된다.
@@ -49,8 +50,7 @@ $(document).ready(function() {
 					if (data.length === 0) {
 						alert("더이상 데이터가 존재하지 않습니다. ");
 					}else{
-						var leftTemplate,
-						leftItem = {
+						var leftItem = {
 							items : []
 						}, rightItem = {
 							items : []
