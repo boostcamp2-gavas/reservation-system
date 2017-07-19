@@ -24,6 +24,7 @@ public class ImgController {
 		this.imgService = imgService;
 	}
 	
+	//url 바꿀것
     @GetMapping(path="/{id}")
     public void downloadReservationUserCommentImage(
             @PathVariable(name="id") long id,

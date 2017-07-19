@@ -18,9 +18,9 @@
 		
 		.layer{
 			position: absolute;
-  			top: 20%;
   			left: auto;
   			z-index : -1;
+  			min-width: 25rem;
   		}
 		.mainContents{
 			position : relative;
@@ -135,12 +135,13 @@
 	                                <span class="join_count"><em class="green">${avg.amountOfCount  }건</em> 등록</span>
 	                            </div>
 	                            <ul class="list_short_review">
+	                           
 	                            <c:forEach items="${comment}" var="list">
 		                             <li class="list_item">
 	                                    <div>
 	                                        <div class="review_area">
 	                                            <div class="thumb_area" >
-	                                                <a href="#" class="thumb" title="이미지 크게 보기"> <img width="90" height="90" class="img_vertical_top" src='/${list.fileId }' alt="리뷰이미지"> </a> <span class="img_count">${list.count}</span>                                                </div>
+	                                                <a  class="thumb" title="이미지 크게 보기" data-id="${list.id}"> <img width="90" height="90" class="img_vertical_top" src='/${list.fileId }' alt="리뷰이미지"> </a> <span class="img_count">${list.count}</span>                                                </div>
 	                                            <h4 class="resoc_name">${detail.name}</h4>
 	                                            <p class="review">${list.comment }</p>
 	                                        </div>
@@ -213,7 +214,7 @@
 	                                </div>
 	                                <div class="lst_store_info_wrap">
 	                                    <ul class="lst_store_info">
-	                                        <li class="item"> <span class="item_lt"> <i class="fn fn-call2"></i> <span class="sr_only">전화번호</span> </span> <span class="item_rt"> <a href="${detail.tel }" class="store_tel">${detail.tel }</a></span> </li>
+	                                        <li class="item"> <span class="item_lt"> <i class="fn fn-call2"></i> <span class="sr_only">전화번호</span> </span> <span class="item_rt"> <a href="tel:${detail.tel }" class="store_tel">${detail.tel }</a></span> </li>
 	                                    </ul>
 	                                </div>
 	                            </div>
@@ -246,35 +247,22 @@
 
 <div class="group_visual layer" >
     <div class ="right">
-        
         <div class="container_visual" style="width: 320px;">
         <p class ="close" >X</p>
             <ul class="visual_img">
-            
-                <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fpost.phinf.naver.net%2FMjAxNzA2MjhfMjA1%2FMDAxNDk4NjI4Njg4MjQ2.7k5crqEpsqt1JMbDF95P5a30PB6mjYhdgJdQ35rYAA8g.exZtElHxby807QMfzbDCSxvx60R0NBPXvh-B-m4SCdIg.JPEG%2FIo-ILwtEKbERwU2jVp2eZ4U4QYKc.jpg&amp;type=b400"> <span class="img_bg"></span>
-                    <!-- if 문을 추가. 이렇게 하면 매번 if문 체크를 해야되는데 ...   -->
-                          
-					<div class="visual_txt">
-					    <div class="visual_txt_inn">
-					        <h2 class="visual_txt_tit"> <span>남이 될수 있을까</span> </h2>
-					        <p class="visual_txt_dsc">볼빨간 사춘기 </p>
-					    </div>
-					</div>
-
-                 </li>
-
-                 <li class="item" style="width: 414px;"> 
-                 	<img alt="" class="img_thumb" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fcafefiles.naver.net%2FMjAxNzA2MTRfMTk2%2FMDAxNDk3NDQ0MzAzMjU1.Q9Ey4KhRGon9taM065bOLQMOvoKoZeXN_UNsHpvPDAUg.JsCp3eNnyU9Yx2BTQvRgygZKVBq08mS833WcYEg6OqUg.PNG.wndyd0419%2FScreenshot_2017-06-14-21-43-13.png&amp;type=b400"> <span class="img_bg"></span>
-                 </li>
-
-                <li class="item" style="width: 414px;"> 
-                	<img alt="" class="img_thumb" src="http://imgnews.naver.com/image/112/2017/06/14/201706140940237546634_20170614101420_01_20170614101620455.jpg"> <span class="img_bg"></span>
-                </li>
+            <!--  template  -->
+            	<script id="layer-content" type="text/x-handlebars-template">
+                    {{#items}}
+					<li class="item" style="width: 414px;"> 
+                		<img alt="" class="img_thumb" src="/{{file_id}}"> <span class="img_bg"></span>
+               	 	</li>
+					{{/items}}
+				</script>	
             </ul>
         </div>
         <div class="prev">
             <div class="prev_inn">
-                <a href="#" class="btn_prev" title="이전">
+                <a  class="btn_prev" title="이전">
                     <!-- [D] 첫 이미지 이면 off 클래스 추가 -->
                     <i class="spr_book2 ico_arr6_lt off"></i>
                 </a>
@@ -282,7 +270,7 @@
         </div>
         <div class="nxt">
             <div class="nxt_inn">
-                <a href="#" class="btn_nxt" title="다음">
+                <a  class="btn_nxt" title="다음">
                     <i class="spr_book2 ico_arr6_rt"></i>
                 </a>
             </div>
@@ -295,12 +283,16 @@
 <!--  img Slide  -->
 <script src="/resources/js/commonCaroucel.js"></script>
 <script src="/resources/js/caroucelDetail.js"></script>
+<script src="/resources/js/caroucelDetail2.js"></script>
+<!--  Handlebar -->
+<script src="//cdn.jsdelivr.net/handlebarsjs/4.0.8/handlebars.min.js"></script>
 
 <script src="/resources/js/loginCheck.js"></script>
 <!--  map -->
    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=w0YSpFZqo6SXUXy5itSy&submodules=geocoder"></script>
 
   <script>
+  // x , y 좌표를 알아내서 직접 url에 넣어주는 방식으로 진행
       var map = new naver.maps.Map('map');
       var myaddress = '${detail.placeLot}';// 도로명 주소나 지번 주소만 가능 (건물명 불가!!!!)
       
@@ -349,8 +341,9 @@ $(function(){
 	})();
 	
 	carouceldetail.setWidth($(".visual_img").width());
-	$(".prev_inn").on("click",carouceldetail.caroucelLeftClick);
-	$(".nxt_inn").on("click",carouceldetail.caroucelRightClick);
+	// 어느정도 임시 방편 ? 
+	$(".prev_inn:first").on("click",carouceldetail.caroucelLeftClick);
+	$(".nxt_inn:first").on("click",carouceldetail.caroucelRightClick);
 
 	//$(".visual_txt").empty();
 	
@@ -371,17 +364,6 @@ $(function(){
 	});
 	
 
-	$(".thumb").on("click",function(){
-		$(".layer").css("z-index","6");
-		$(".mainContents").fadeTo("slow",0.3); 
-	});
-	
-	$(".close").on("click",function(){
-		console.log("?");
-		$(".layer").css("z-index","-1");
-		$(".mainContents").fadeTo("slow",1); 
-	});
-	
 	
 	$("._detail").on("click",function(){
 		$("._path>  a").removeClass("active");
@@ -437,6 +419,81 @@ $(function(){
 		$(".visual_img").animate({"right": save_x-move_dx}, 0);
 	});
 	
+	
+
+	//scroll
+	
+	// lazy 부분 
+	 $(document).scroll(function(){
+		 if ($(window).scrollTop() >= $(document).height() - $(window).height()) {
+			 var $img = $(".in_img_lst:last > .img_thumb");
+			 var data =  $img.data("lazy-image");
+			 $img.attr("src",data);
+		 }
+		 
+	 });
+	
+	
+		// layer popup
+		
+		$(".thumb").on("click",function(){
+			var comment = $(this).data("id");
+			var offset = $(this).offset();
+			
+			$(".layer").css("top",offset.top);
+			$('html, body').animate({scrollTop : offset.top});
+			$(".layer").css("z-index","6");
+			$(".mainContents").css("background-color","black");
+			$(".mainContents").fadeTo("slow",0.3); 
+			
+			
+			console.log(comment);
+			
+			templateSource = $("#layer-content").html();
+			
+			$.ajax({
+				method : "GET",
+				url : "/commentImg/"+comment,
+				contentType : "application/json; charset=utf-8",
+				dataType : "json"
+			}).done(function(data) {
+				// 핸들바 템플릿 컴파일
+				if (data.length === 0) {
+					alert("더이상 데이터가 존재하지 않습니다. ");
+				}else{
+					var leftTemplate,
+					Items = {
+						items : []
+					}
+					
+					leftTemplate = Handlebars.compile(templateSource);
+					for (var i = 0, max = data.length; i < max; ++i) {
+						Items.items.push(data[i]);
+						
+					}
+					var main = leftTemplate(Items);
+					// 생성된 HTML을 DOM에 주입
+		
+					$('.visual_img').append(main);
+				}
+			});
+			
+		});
+		
+		$(".close").on("click",function(){
+			$(".layer").css("z-index","-1");
+			$(".mainContents").fadeTo("slow",1); 
+			$('.visual_img > .item').remove();
+			
+		});
+		
+		
+		carouceldetail2.setUl($(".layer").find(".visual_img"));
+		carouceldetail2.setWidth($(".layer").find(".visual_img").width());
+		// 어느정도 임시 방편 ? 
+		$(".prev_inn:last").on("click",carouceldetail2.caroucelLeftClick);
+		$(".nxt_inn:last").on("click",carouceldetail2.caroucelRightClick);
+		
 });
 </script>
 </body>

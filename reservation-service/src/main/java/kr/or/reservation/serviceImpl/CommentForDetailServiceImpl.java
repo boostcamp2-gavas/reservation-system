@@ -36,4 +36,10 @@ public class CommentForDetailServiceImpl implements CommentForDetailService{
 		Long count = (Long) map.get("amount_of_count");
 		return new AVGForComment(count.intValue(),score);
 	}
+
+	@Override
+	public List<?> getFileIdByCommentId(int commentId) {
+		// TODO Auto-generated method stub
+		return dao.getFileId(commentId);
+	}
 }

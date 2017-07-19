@@ -7,15 +7,15 @@
 // 의미가 있나 ..?  + 모듈로 사용할 수 없지 않나 ?
 // 이렇게 하려면 caroucelSlide 도 생성자로 지정하여 진행해야 하지 않나 ? 
 // 질문 할것. <<<
+
+// 내부에 new를 사용하지 않는 방향으로 진행. 
+// 그럼 어떻게 ? 
 	var caroucelSlide = (function(){
 		var $ul = $(".visual_img");
 		var caroucel = new Caroucel(),
 		carc_setting = caroucel.carc_setting,
 		init_secon = '',
 		init_first = '';
-		
-		
-		
 		function OuterHtml(url){
 			return url.clone().wrapAll("<div/>").parent().html();
 		}
@@ -29,7 +29,9 @@
 		}
 		
 	
-		
+		// 실행하는 시점을 정할 수 없음. 
+		// 제어 가능하도록 수정할 것.
+		// 일반적으로 함수 내부에 즉시실행을 두진 않음 
 		(function initFunc(){
 			init_first = OuterHtml($ul.children().eq(0));
 			init_secon = OuterHtml($ul.children().eq(1));

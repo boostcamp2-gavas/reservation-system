@@ -16,4 +16,6 @@ public class CommentForDetailSql {
 	public final static String SELECT_COUNT_AND_AVGSCORE = "SELECT  count(*) as amount_of_count,ROUND(AVG(score),1) as avg_score " + 
 			"FROM reservation_user_comment " + 
 			" where product_id = :id;";
+
+	public final static String SELECT_FILEID_BY_COMMENTID = "SELECT file_id FROM reservation_user_comment_image where reservation_user_comment_id =:id";
 }

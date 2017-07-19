@@ -2,14 +2,12 @@
 
 // 클릭만 동작하는 부분 
 
-	var carouceldetail = (function(){
+	var carouceldetail2 = (function(){
 		var $point = $(".num:first"),
 		currentPoint = Number($point.text());
 		
 		// 객체 생성
-		// 교집합으로 구성하고  Prototype 상속을 활용
 		var caroucel = new Caroucel();		
-		
 		return {
 				caroucelLeftClick : function leftClickEvent(event){
 					if(caroucel.leftClick()){
@@ -34,6 +32,9 @@
 				},
 				getWidth: function(){
 					return caroucel.carc_setting.imgLength;
+				},
+				setUl : function(ul){
+					caroucel.setUl(ul);
 				}
 		
 		}

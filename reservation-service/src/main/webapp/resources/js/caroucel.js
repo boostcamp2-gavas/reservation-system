@@ -126,7 +126,6 @@ $(document).ready(function(){
 				setWidth : function(size){
 					carc_setting.imgLength = size;
 				}
-		
 		}
 		
 	})();

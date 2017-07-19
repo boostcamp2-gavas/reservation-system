@@ -9,4 +9,5 @@ public interface CommentForDetailService {
 
 	public List<CommentForDetail> selectByProductId(int productId);
 	public AVGForComment selectAvgScoreByProductId(int producId);
+	public List<?> getFileIdByCommentId(int commentId);
 }

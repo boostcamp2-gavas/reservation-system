@@ -8,9 +8,13 @@ $(document).ready(function() {
 		values = {};
 		id =0,
 		start = 0,
-		templateSource= {}; 
+		templateSource= {};
+		//func = funcion(){};
 		
+		// compile은 한번만 하면 된다.
+		// compile를 한 부분을 올릴 수 도 있음. (handlebar 쪽에 method를 제공함)
 		templateSource = $("#product-content").html();
+		leftTemplate = Handlebars.compile(templateSource);
 		
 		return {
 			countEvent : function(){
@@ -52,7 +56,7 @@ $(document).ready(function() {
 							items : []
 						};
 						
-						leftTemplate = Handlebars.compile(templateSource);
+						
 						
 						for (var i = 0, max = data.length; i < max; ++i) {
 							if (i % 2 === 0) {
@@ -62,6 +66,7 @@ $(document).ready(function() {
 							}
 						}
 						var left = leftTemplate(leftItem);
+						// html 과 data가 mapping된걸 반환함
 						var right = leftTemplate(rightItem);
 						// 생성된 HTML을 DOM에 주입
 			

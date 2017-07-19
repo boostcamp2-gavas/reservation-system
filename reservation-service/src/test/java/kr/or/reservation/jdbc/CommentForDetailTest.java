@@ -28,6 +28,14 @@ public class CommentForDetailTest {
 		
 		List<?> list= service.selectByProductId(2);
 		// 가져 오는지 테스트 
-		log.info(service.selectAvgScoreByProductId(3));
+		//log.info(service.selectAvgScoreByProductId(3));
+	}
+	
+	@Test
+	public void selectFileIdByCommentId() {
+		
+		List<?> list= service.getFileIdByCommentId(1);
+		// 가져 오는지 테스트 
+		log.info(list.toString());
 	}
 }

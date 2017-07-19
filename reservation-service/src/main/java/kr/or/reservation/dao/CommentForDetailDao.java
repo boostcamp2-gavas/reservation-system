@@ -40,4 +40,10 @@ public class CommentForDetailDao {
 		List<Map<String,Object>> list = jdbc.queryForList(CommentForDetailSql.SELECT_COUNT_AND_AVGSCORE,map);
 		return list;
 	}
+	
+	public List<?> getFileId(int commnetId){
+		Map<String , ?> map = Collections.singletonMap("id",commnetId);
+		return jdbc.queryForList(CommentForDetailSql.SELECT_FILEID_BY_COMMENTID,map);
+	}
+	
 }

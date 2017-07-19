@@ -1,5 +1,9 @@
 // 생성자 정의 
+// 교집합 형태로 수정할것. 
+// 공통되는 부분은 Prototye으로 정의 하고 진행. 
+// 너무 합집합으로 구성하긴 함 
 function Caroucel(){
+
 	var $ul = $(".visual_img:first");
 	this.carc_setting = {};
 	
@@ -13,13 +17,15 @@ function Caroucel(){
 			startAuto : 0,
 			autoSlid_ID : 0
 	};
+	
+	// startAuto / autoSlid_ID 쓸 필요는 없음 .
 	// 초기에 한번만 사용될  함수
 
 	for(var i =0; i < $ul.children().length -1; ++i){
 		this.carc_setting.maxLength += $ul.children().eq(i).width();
 	}
 	
-
+	// this를 사용하지 않고, prototype을 사용.
 	this.leftClick =   function caroucelLeft(){
 		if(this.carc_setting.current_length !== 0){
 			// ul 의 자식중 current_length 번쨰 를 선택 .
@@ -47,5 +53,9 @@ function Caroucel(){
 	
 	this.setWidth = function(size){
 		this.carc_setting.imgLength = size;
+	}
+	
+	this.setUl = function(ul){
+		$ul = ul;
 	}
 };
