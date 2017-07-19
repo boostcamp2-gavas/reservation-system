@@ -14,12 +14,8 @@ function Caroucel(){
 			current_length : 0,
 			maxLength : 0,
 			imgLength : 0
-		/*	startAuto : 0,
-			autoSlid_ID : 0*/
+		
 	};
-	
-	// startAuto / autoSlid_ID 쓸 필요는 없음 .
-	// 초기에 한번만 사용될  함수
 	
 
 	/**
@@ -37,7 +33,7 @@ function Caroucel(){
 			return false;
 		}else{
 			// ul 의 자식중 current_length 번쨰 를 선택 .
-			$ul.animate({"right": "+="+this.setting.imgLength}, "fast");
+			this.$ul.animate({"right": "+="+this.setting.imgLength}, "fast");
 			this.setting.moveLength += this.setting.imgLength;
 			++this.setting.current_length;
 			return true;
@@ -47,7 +43,7 @@ function Caroucel(){
 	this.leftClick =   function caroucelLeft(){
 		if(this.setting.current_length !== 0){
 			// ul 의 자식중 current_length 번쨰 를 선택 .
-			$ul.animate({"right": "-="+this.setting.imgLength}, "fast");
+			this.$ul.animate({"right": "-="+this.setting.imgLength}, "fast");
 			this.setting.moveLength -= this.setting.imgLength;
 			this.setting.current_length --;
 			return true;

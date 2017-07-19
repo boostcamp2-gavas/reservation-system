@@ -288,8 +288,9 @@
 <script src="//cdn.jsdelivr.net/handlebarsjs/4.0.8/handlebars.min.js"></script>
 
 <script src="/resources/js/loginCheck.js"></script>
+
 <!--  map -->
-   <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=w0YSpFZqo6SXUXy5itSy&submodules=geocoder"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=w0YSpFZqo6SXUXy5itSy&submodules=geocoder"></script>
 
   <script>
   // x , y 좌표를 알아내서 직접 url에 넣어주는 방식으로 진행
@@ -314,6 +315,16 @@
       </script>
 <script>
 $(function(){
+	var $ul = $(".visual_img:first")
+	carouceldetail.init($ul,$ul.width());
+	// 어느정도 임시 방편 ? 
+	$(".prev_inn:first").on("click",carouceldetail.caroucelLeftClick);
+	$(".nxt_inn:first").on("click",carouceldetail.caroucelRightClick);
+});
+$(function(){
+	
+
+	
 	// 평점 view
 	(function(){
 		var reviewCount = '${avg.amountOfCount}';
@@ -340,10 +351,7 @@ $(function(){
 		}
 	})();
 	
-	carouceldetail.setWidth($(".visual_img").width());
-	// 어느정도 임시 방편 ? 
-	$(".prev_inn:first").on("click",carouceldetail.caroucelLeftClick);
-	$(".nxt_inn:first").on("click",carouceldetail.caroucelRightClick);
+
 
 	//$(".visual_txt").empty();
 	

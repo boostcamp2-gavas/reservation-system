@@ -67,7 +67,7 @@
 					init_secon = OuterHtml($ul.children().eq(1));
 					$ul.append(init_first).append(init_secon);
 					caroucel.setting.total_length = $ul.children().length - 1 ;
-					caroucel.setting.imgLength = size;
+					caroucel.setWidth(size);
 				},
 				leftClick : function leftClickEvent(event){
 					this.clearfunc();
@@ -90,8 +90,8 @@
 		}
 		
 	})();
-	
-	caroucelSlide.prototype = new Caroucel();
+	// 이 부분을 사용하지 않아도 돌아감 
+	/*caroucelSlide.prototype = new Caroucel();
 	caroucelSlide.constructor = caroucelSlide;
-	
+	*/
 
