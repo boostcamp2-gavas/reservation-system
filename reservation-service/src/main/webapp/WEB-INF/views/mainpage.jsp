@@ -87,8 +87,8 @@
                     <ul class="lst_event_box">
                     	<script id="product_template" type="text/x-handlebars-template">
 							{{#productList}}
-								<li class="product_list item category{{categoryId}}">
-                    	        <a href="#" class="item_book">
+								<li class="product_list item">
+                    	        <a href="/mvDetail/{{productId}}" class="item_book">
                         	        <div class="item_preview"> 
                             	    	<img alt="{{fileName}}" class="img_thumb" src="{{saveFileName}}">
                                 		<span class="img_border"></span> 
@@ -119,5 +119,6 @@
 </body>
 <script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
 <script src="/resources/js/handlebars-v4.0.5.js"></script>
-<script src="/resources/js/main_module.js"></script>
+<script src="/resources/js/modules.js"></script>
+<script src="/resources/js/main.js"></script>
 </html>

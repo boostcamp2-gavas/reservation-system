@@ -1,12 +1,9 @@
 package connect.reservation.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import connect.reservation.domain.Category;
 import connect.reservation.dto.ProductInfo;
 import connect.reservation.service.CategoryService;
 import connect.reservation.service.ProductInfoService;
+import connect.reservation.service.ReservationCommentService;
 
 @Controller
 @RequestMapping("/")
@@ -29,6 +26,9 @@ public class MainController {
 	
 	@Autowired
 	ProductInfoService productInfoService;
+	
+	@Autowired
+	ReservationCommentService reservationCommentService;
 	
 	@GetMapping("/category")
 	public String index() {
@@ -64,4 +64,14 @@ public class MainController {
 		return productNum;
 	}
 
+	@GetMapping("/mvDetail/{productId}")
+	public String mvDetail(Model model, @PathVariable int productId) {
+		model.addAttribute("productId", productId);
+		model.addAttribute("detailInfo", productInfoService.getProductDetail(productId));
+		model.addAttribute("commentMap", reservationCommentService.getCommentList(productId));
+		model.addAttribute("NoticeImage", productInfoService.getProductNoticeImage(productId));
+		model.addAttribute("InfoImage", productInfoService.getProductInfoImage(productId));
+		
+		return "detail";
+	}
 }

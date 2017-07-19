@@ -1,6 +1,5 @@
 package connect.reservation.service.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,5 +48,24 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 	
 		return map;
 	}
+
+	@Override
+	public List<ProductInfo> getProductImage(int productId) {
+		return productInfoDao.getProductImage(productId);
+	}
 	
+	@Override
+	public ProductInfo getProductDetail(int productId) {
+		return productInfoDao.getProductDetailInfo(productId);
+	}
+	
+	@Override
+	public List<ProductInfo> getProductNoticeImage(int productId) {
+		return productInfoDao.getProductNoticeImage(productId);
+	}
+	
+	@Override
+	public List<ProductInfo> getProductInfoImage(int productId) {
+		return productInfoDao.getProductInfoImage(productId);
+	}
 }

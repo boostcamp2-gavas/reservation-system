@@ -26,9 +26,6 @@ public class ProductInfoDao {
     // Spring은 생성자를 통하여 주입을 하게 된다.
     public ProductInfoDao(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource); // Datasource를 주입
-//        this.insertAction = new SimpleJdbcInsert(dataSource)  // Datasource를 주입
-//                .withTableName("category")   // table명을 지정
-//                .usingGeneratedKeyColumns("id"); // pk 칼럼을 지정
     }
     
     public int getProductCount() {
@@ -48,10 +45,34 @@ public class ProductInfoDao {
     	return jdbc.query(ProductInfoSqls.GET_MAIN_INFO, params, rowMapper);
     }
     
-    public List<ProductInfo> getCategoryInfo(int categoryId, int start) {
+    public List<ProductInfo> getCategoryInfo(int category_id, int start) {
     	Map<String, Object> params = new HashMap<>();
-    	params.put("categoryId", categoryId);
+    	params.put("category_id", category_id);
     	params.put("start", start);
     	return jdbc.query(ProductInfoSqls.GET_CATEGORY_INFO, params, rowMapper);
+    }
+    
+    public List<ProductInfo> getProductImage(int product_id) {
+    	Map<String, Object> params = new HashMap<>();
+    	params.put("product_id", product_id);
+    	return jdbc.query(ProductInfoSqls.GET_PRODUCT_IMAGE, params, rowMapper);
+    }
+    
+    public ProductInfo getProductDetailInfo(int product_id) {
+    	Map<String, Object> params = new HashMap<>();
+        params.put("product_id", product_id);
+    	return jdbc.queryForObject(ProductInfoSqls.GET_PRODUCT_DETAIL, params, rowMapper);
+    }
+    
+    public List<ProductInfo> getProductNoticeImage(int product_id) {
+    	Map<String, Object> params = new HashMap<>();
+    	params.put("product_id", product_id);
+    	return jdbc.query(ProductInfoSqls.GET_PRODUCT_NOTICE_IMAGE, params, rowMapper);
+    }
+    
+    public List<ProductInfo> getProductInfoImage(int product_id) {
+    	Map<String, Object> params = new HashMap<>();
+    	params.put("product_id", product_id);
+    	return jdbc.query(ProductInfoSqls.GET_PRODUCT_INFO_IMAGE, params, rowMapper);
     }
 }
