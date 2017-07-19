@@ -13,7 +13,7 @@
     <style>
 		
 		._none{
-			display: none;
+			visibility:hidden;
 		}
 		
 		.layer{
@@ -40,10 +40,15 @@
 		} 
 		
 		.layer .visual_img{
-			overflow: hidden;
 			margin : auto;
 			width : 414px;
 			height :100%;
+		}
+		
+		.over-hidden{
+			width : 414px;
+		 	overflow: hidden;
+		 	margin: auto;
 		}
 		
 	</style>
@@ -252,10 +257,10 @@
 </footer>
 <div id="photoviwer" class="layer _none">
 	<div class = "group_visual ">
-        <div>
-	        <div class = "align-right">
-	        	<a class ="close" >X</a>
-	        </div>
+		<div class = "align-right">
+        	<a class ="close" >X</a>
+        </div>
+        <div class ="over-hidden">   
             <ul class="visual_img" style="top: 5rem;">
             <!--  template  -->
             	<script id="layer-content" type="text/x-handlebars-template">
@@ -290,7 +295,7 @@
 <!--  img Slide  -->
 <script src="/resources/js/commonCaroucel.js"></script>
 <script src="/resources/js/caroucelDetail.js"></script>
-
+<script src="/resources/js/caroucelPopup.js"></script>
 <!--  Handlebar -->
 <script src="//cdn.jsdelivr.net/handlebarsjs/4.0.8/handlebars.min.js"></script>
 
@@ -341,7 +346,6 @@ $(function(){
 		//$(".layer").css("top",offset.top);
 		
 		
-		console.log(comment);
 		
 		templateSource = $("#layer-content").html();
 		
@@ -368,15 +372,23 @@ $(function(){
 				var main = leftTemplate(Items);
 				// 생성된 HTML을 DOM에 주입
 	
-				$('.visual_img').append(main);
+				$('.visual_img:last').append(main);
 			}
+		}).always(function(){
+			
+			var $ul_pop = $(".visual_img:last");
+			console.log($ul_pop.children().length);
+			CaroucelPopup.init($ul_pop , $ul_pop.width());
+			$(".prev_inn:last").on("click",CaroucelPopup.caroucelLeftClick);
+			$(".nxt_inn:last").on("click",CaroucelPopup.caroucelRightClick);
+			
 		});
 		
 	});
 	
 	$(".close").on("click",function(){
 		$(".layer").addClass("_none");
-		$('.visual_img > .item').remove();
+		$('.visual_img:last > .item').remove();
 		
 	});
 	
