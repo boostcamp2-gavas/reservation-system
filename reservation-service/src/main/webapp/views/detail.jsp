@@ -260,16 +260,17 @@
 		<div class = "align-right">
         	<a class ="close" >X</a>
         </div>
+         <div class="pagination">
+                    <div class="bg_pagination"></div>
+                    <div class="figure_pagination">
+                        <span class="num popup">1</span>
+                        <span class="num off">/ <span> </span></span>
+                    </div>
+                </div>
         <div class ="over-hidden">   
             <ul class="visual_img" style="top: 5rem;">
             <!--  template  -->
-            	<script id="layer-content" type="text/x-handlebars-template">
-                    {{#items}}
-					<li class="item" style="width: 414px;"> 
-                		<img alt="" class="img_thumb" src="/{{file_id}}">
-               	 	</li>
-					{{/items}}
-				</script>	
+            
             </ul>
         </div>
         <div class="prev loaction_top">
@@ -289,6 +290,14 @@
         </div>
     </div>
 </div>
+	<script id="layer-content" type="text/x-handlebars-template">
+                    {{#items}}
+					<li class="item" style="width: 414px;"> 
+                		<img alt="" class="img_thumb" src="/{{file_id}}">
+               	 	</li>
+					{{/items}}
+ 	</script>	
+				
 <!--  get JQuery   -->
 <script src="//code.jquery.com/jquery.min.js"></script>
 
@@ -377,7 +386,8 @@ $(function(){
 		}).always(function(){
 			
 			var $ul_pop = $(".visual_img:last");
-			console.log($ul_pop.children().length);
+			$(".num.off:last > span").text($ul_pop.children().length);
+			console.log($ul_pop);
 			CaroucelPopup.init($ul_pop , $ul_pop.width());
 			$(".prev_inn:last").on("click",CaroucelPopup.caroucelLeftClick);
 			$(".nxt_inn:last").on("click",CaroucelPopup.caroucelRightClick);
@@ -389,6 +399,9 @@ $(function(){
 	$(".close").on("click",function(){
 		$(".layer").addClass("_none");
 		$('.visual_img:last > .item').remove();
+		
+		$(".prev_inn:last").off("click");
+		$(".nxt_inn:last").off("click");
 		
 	});
 	

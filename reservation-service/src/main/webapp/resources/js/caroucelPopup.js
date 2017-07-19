@@ -2,7 +2,7 @@
 
 // 클릭만 동작하는 부분 
 	var CaroucelPopup = (function(){
-		var $point = $(".num:first"),
+		var $point = $(".num.popup"),
 		currentPoint = Number($point.text());
 		var caroucel = new Caroucel();		
 		
