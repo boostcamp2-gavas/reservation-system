@@ -13,12 +13,13 @@
   <div id="naver_id_login"></div>
   <!-- //네이버아이디로로그인 버튼 노출 영역 -->
   <script type="text/javascript">
-  	var naver_id_login = new naver_id_login("w0YSpFZqo6SXUXy5itSy", "http://192.168.0.4/login");
+  	var naver_id_login = new naver_id_login("w0YSpFZqo6SXUXy5itSy", "http://10.81.25.154/login");
   	var state = naver_id_login.getUniqState();
   	naver_id_login.setButton("white", 2,40);
-  	naver_id_login.setDomain("http://localhost");
+  	naver_id_login.setDomain("http://10.81.25.154");
   	naver_id_login.setState(state);
-  	naver_id_login.setPopup();
+  	 naver_id_login.setPopup();
   	naver_id_login.init_naver_id_login();
+  	 console.log(naver_id_login);
   </script>
 </html>
