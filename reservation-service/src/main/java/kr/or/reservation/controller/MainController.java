@@ -19,7 +19,8 @@ public class MainController {
     	if(session.getAttribute("id") !=null) {
     		model.addAttribute("loginURL", "/my");
     	}else {
-    		String url = NaverLogin.getLoginURL(session);
+    		NaverLogin login = new NaverLogin();
+    		String url = login.getLoginURL(session);
         	model.addAttribute("loginURL", url);
     	}
     	return "mainpage";
