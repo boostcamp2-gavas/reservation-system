@@ -8,22 +8,23 @@ public class NaverUserDTO {
 	private String username;
 	private int adminFlag;
 	private String snsType;
+	private int snsId;
 
 	public NaverUserDTO() {
 		// TODO Auto-generated constructor stub
 	
 	}
 
-	public NaverUserDTO(String email, String nickname, String snsProfile, String id, String username) {
+	public NaverUserDTO(String email, String nickname, String snsProfile,  String username,int snsId) {
 		super();
 		this.email = email;
 		this.nickname = nickname;
 		this.snsProfile = snsProfile;
-		this.id = id;
 		this.username = username;
 		// default 로 설정해줌
 		this.adminFlag = 0;
 		this.snsType = "naver";
+		this.snsId = snsId;
 	}
 
 	public String getEmail() {
@@ -82,13 +83,22 @@ public class NaverUserDTO {
 		this.snsType = snsType;
 	}
 
+	public int getSnsId() {
+		return snsId;
+	}
+
+	public void setSnsId(int snsId) {
+		this.snsId = snsId;
+	}
+
 	@Override
 	public String toString() {
 		return "email : \"" + email + "\", nickname : \"" + nickname + "\", snsProfile : \"" + snsProfile
 				+ "\", id : \"" + id + "\", username : \"" + username + "\", adminFlag : \"" + adminFlag
-				+ "\", snsType : \"" + snsType;
+				+ "\", snsType : \"" + snsType + "\", snsId : \"" + snsId;
 	}
 
+	
 
 
 }

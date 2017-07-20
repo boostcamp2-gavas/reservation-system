@@ -120,7 +120,8 @@ public class NaverLogin {
 				profileImage = loginInfo.get("profile_image").toString();
 				id = loginInfo.get("id").toString();
 				name = loginInfo.get("name").toString();
-				dto = new NaverUserDTO(email, nickname,profileImage, id, name);
+				
+				dto = new NaverUserDTO(email, nickname,profileImage, name,Integer.parseInt(id));
 			} else {
 				log.debug("json 못받아옴 ");
 			}

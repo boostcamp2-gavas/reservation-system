@@ -53,7 +53,8 @@ public class LoginController {
 		if (state.equals(session.getAttribute("state"))) {
 			dto = login.convertToNaverDTO(code, state);
 			if(dto != null) {
-				session.setAttribute("id", dto.getId());
+				loginService.progressLogin(dto);
+				session.setAttribute("id", dto.getSnsId());
 				session.setAttribute("name", dto.getUsername());
 				session.setAttribute("email", dto.getEmail());
 			}
