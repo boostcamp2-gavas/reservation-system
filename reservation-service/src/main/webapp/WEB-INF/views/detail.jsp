@@ -285,18 +285,18 @@
     </div>
     <c:import url="/WEB-INF/views/footer.jsp" />
     <div id="photoviwer" class="hidden">
-    	<div class="group_visual">
+    	<div class="group_visual group_frame">
     		<div>
     			<div id="btnClose" align="left">
     				<img src="/resources/img/close.png">
     			</div>
 			</div>
 			<div>
-				<div class="container_visual" style="width: 414px;">
+				<div class="container_visual image-popup-ab">
 					<ul class="visual_img comment_popup_img">
 						<script id="comment_image_template" type="text/x-handlebars-template">
 							{{#commentImageList}} 
-                				<li class="popImgList item" style="width: 414px;"> 
+                				<li class="popImgList item"> 
                 					<img alt="{{fileName}}" class="img_thumb" src="{{saveFileName}}">
                 				 	<span class="img_bg"></span>
                     			 	<div class="visual_txt">
@@ -325,9 +325,9 @@
 		</div>
     </div>
 </body>
-<script src="/resources/js/jquery-3.1.1.min.js"></script>
+<script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.js"></script>
-<script src="/resources/js/handlebars-v4.0.5.js"></script>
+<script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
 <script src="/resources/js/modules.js"></script>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=eGDuy2NMeDv1C1QCsPGF&submodules=geocoder"></script>
 <script src="/resources/js/detail.js"></script>

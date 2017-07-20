@@ -118,7 +118,8 @@
     <c:import url="/WEB-INF/views/footer.jsp" />
 </body>
 <script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
-<script src="/resources/js/handlebars-v4.0.5.js"></script>
+<!-- <script src="/resources/js/handlebars-v4.0.5.js"></script> -->
+<script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
 <script src="/resources/js/modules.js"></script>
 <script src="/resources/js/main.js"></script>
 </html>

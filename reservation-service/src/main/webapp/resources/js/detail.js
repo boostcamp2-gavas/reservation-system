@@ -2,7 +2,7 @@ $(document).ready(function() {
 	$('.header').addClass('fade');
 	
 	getImageList();
-	$('.lazy').lazyload();
+	//$('.lazy').lazyload();
 	getMap();
 });
 

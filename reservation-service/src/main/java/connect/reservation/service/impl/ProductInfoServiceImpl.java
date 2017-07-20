@@ -15,9 +15,14 @@ import connect.reservation.service.ProductInfoService;
 @Service
 @Transactional
 public class ProductInfoServiceImpl implements ProductInfoService {
-	@Autowired
-	ProductInfoDao productInfoDao;
 	
+	private ProductInfoDao productInfoDao;
+	
+	
+	@Autowired
+	private void setProductInfoDao(ProductInfoDao productInfoDao) {
+		this.productInfoDao = productInfoDao;
+	}
 	
 	@Override
 	public int getProductCount() {

@@ -3,6 +3,8 @@ package connect.reservation.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import connect.reservation.domain.Category;
-import connect.reservation.dto.ProductInfo;
 import connect.reservation.service.CategoryService;
 import connect.reservation.service.ProductInfoService;
 import connect.reservation.service.ReservationCommentService;
@@ -21,6 +22,8 @@ import connect.reservation.service.ReservationCommentService;
 @Controller
 @RequestMapping("/")
 public class MainController {
+
+	
 	@Autowired
 	CategoryService categoryService;
 	
@@ -45,12 +48,15 @@ public class MainController {
 		return "mainpage";
 	}
 	
+	
 	@GetMapping("/mvMyPage")
-	public String mvMyPage() {
+	public String mvMyPage(HttpSession session) {
 		// 로그인을 하지 않은 유저는 로그인 페이지로
 		// 로그인 한 후라면 "나의 예약 메인"페이지로 이동한다
-		
-		return "myreservation";
+		if(!("true").equals(session.getAttribute("loginOk")))
+			return "redirect:/login/";
+		else
+			return "myreservation";
 	}
 	
 	@ResponseBody
