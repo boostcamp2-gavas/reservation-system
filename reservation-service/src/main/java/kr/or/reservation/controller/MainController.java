@@ -16,6 +16,7 @@ public class MainController {
     @GetMapping(path = "/")
     public String viewMain(Model model,HttpSession session){
     	// session 이 존재하면, mypageURI를 줌 
+    	// 이 부분 여러 페이지에서 사용될 수 있으니, 함수로 따로 뺄까 ? 
     	if(session.getAttribute("id") !=null) {
     		model.addAttribute("loginURL", "/my");
     	}else {

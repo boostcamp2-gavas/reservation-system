@@ -22,6 +22,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonObjectFormatVisitor;
+
 import kr.or.common.StringToJsonParser;
 
 public class NaverLogin {
@@ -41,7 +45,7 @@ public class NaverLogin {
 		String state = "", apiURL = "";
 		try {
 			random = new SecureRandom();
-			redirectUrl = URLEncoder.encode("REDIRECT_URL", "UTF-8");
+			redirectUrl = URLEncoder.encode(REDIRECT_URL, "UTF-8");
 			state = new BigInteger(130, random).toString();
 			apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
 			apiURL += "&client_id=" + CLIENT_ID;
@@ -58,12 +62,8 @@ public class NaverLogin {
 	}
 
 	public JSONObject CallBack(String code, String state) {
-		int responseCode = 0;
-		String redirectUrl = "", apiURL = "", inputLine = null;
-		BufferedReader br = null;
-		HttpURLConnection con = null;
-		URL url = null;
-		JSONObject jsonObj = null;
+		String redirectUrl = "", apiURL = "";
+		ResponseEntity<JSONObject> response  =null;
 		try {
 			redirectUrl = URLEncoder.encode(REDIRECT_URL, "UTF-8");
 			apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
@@ -72,58 +72,38 @@ public class NaverLogin {
 			apiURL += "&redirect_uri=" + redirectUrl;
 			apiURL += "&code=" + code;
 			apiURL += "&state=" + state;
-			log.info("apiURL :: " + apiURL);
 
-			try {
-				url = new URL(apiURL);
-				con = (HttpURLConnection) url.openConnection();
-				con.setRequestMethod("GET");
-				responseCode = con.getResponseCode();
-				log.info("responseCode=" + responseCode);
-				if (responseCode == 200) { // 정상 호출
-					br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-				} else { // 에러 발생
-					br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-				}
-
-				StringBuffer res = new StringBuffer();
-				while ((inputLine = br.readLine()) != null) {
-					res.append(inputLine);
-				}
-				br.close();
-
-				jsonObj = StringToJsonParser.JsonParser(res.toString());
-				// 이러면 response 에 토큰을 줌
-				log.info("토큰 : " + jsonObj.get("access_token"));
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				// 자원 반환
-				if (con != null) {
-					con.disconnect();
-				}
+			RestTemplate restTemplate = new RestTemplate();
+			response = restTemplate.exchange(apiURL, HttpMethod.GET, null, JSONObject.class);
+			
+			log.info(response.getBody().toString());
+			if(response.getStatusCodeValue() != 200) {
+				throw new Exception("요청이 완료되지 않음.");
 			}
+
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return jsonObj;
+		
+		return response.getBody();
 	}
 
+	// body 에 잇는 response 값을 return 
+	// 토큰을 보내, 사용자 정보를 얻어옴 
 	public JSONObject getCustomInfo(JSONObject json) {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
-		// Header 등록
 		headers.set("Authorization",json.get("token_type")+" "+json.get("access_token"));
-		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
-		ResponseEntity<String> response = 	restTemplate.exchange("https://openapi.naver.com/v1/nid/me", HttpMethod.GET, entity, String.class);
-		// body 정보 가져오기
-		JSONObject body = StringToJsonParser.JsonParser(response.getBody().toString());
-		// 회원 정보 가져오기 
-		JSONObject data  = StringToJsonParser.JsonParser(body.get("response").toString());
-		return data;
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		ResponseEntity<JSONObject> response = 	restTemplate.exchange("https://openapi.naver.com/v1/nid/me", HttpMethod.GET, entity, JSONObject.class);
+		// Object를 Json으로 변환해주기 위해 사용
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.convertValue(response.getBody().get("response"), JSONObject.class);
 	}
 
 }

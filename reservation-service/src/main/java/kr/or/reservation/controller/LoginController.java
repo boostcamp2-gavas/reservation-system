@@ -29,6 +29,7 @@ import org.springframework.web.client.RestTemplate;
 
 import kr.or.common.StringToJsonParser;
 import kr.or.reservation.api.NaverLogin;
+import kr.or.reservation.dto.NaverUserDTO;
 
 @Controller
 public class LoginController {
@@ -40,21 +41,36 @@ public class LoginController {
 			@RequestParam String state) {
 		NaverLogin login = new NaverLogin();
 		JSONObject json = null, loginInfo = null;
-		if(state.equals(session.getAttribute("state"))) {
+		NaverUserDTO dto = null;
+		String email = null, nickname = null, profileImage = null, age = null, 
+				gender = null, id = null, name = null, birthday = null;
+		if (state.equals(session.getAttribute("state"))) {
 			json = login.CallBack(code, state);
-		}
-		if(json != null) {
 			loginInfo = login.getCustomInfo(json);
-			session.setAttribute("id", loginInfo.get("id"));
-			session.setAttribute("name", loginInfo.get("name"));
-			session.setAttribute("email", loginInfo.get("email"));
-			session.setAttribute("nickname", loginInfo.get("nickname"));
-			session.setAttribute("profile_image", loginInfo.get("profile_image"));
+			if (loginInfo != null) {
+				// 이렇게 해도 되나?
+				email =loginInfo.get("email").toString();
+				nickname = loginInfo.get("nickname").toString();
+				profileImage = loginInfo.get("profile_image").toString();
+				age =loginInfo.get("age").toString();
+				gender = loginInfo.get("gender").toString();
+				id = loginInfo.get("id").toString();
+				name = loginInfo.get("name").toString();
+				birthday = loginInfo.get("birthday").toString();
+				dto = new NaverUserDTO(email, nickname,profileImage, age, gender,
+						id, name, birthday);
+				//일단 3개만 저장
+				session.setAttribute("id", id);
+				session.setAttribute("name", name);
+				session.setAttribute("email", email);
+			
+			} else {
+				log.debug("json 못받아옴 ");
+			}
+		} else {
+
 		}
 		return "redirect:/";
 	}
-	
-	
 
-	
 }
