@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -30,12 +31,21 @@ import org.springframework.web.client.RestTemplate;
 import kr.or.common.StringToJsonParser;
 import kr.or.reservation.api.NaverLogin;
 import kr.or.reservation.dto.NaverUserDTO;
+import kr.or.reservation.service.LoginService;
 
 @Controller
 public class LoginController {
 	// 로그 선언
 	Logger log = Logger.getLogger(this.getClass());
+	LoginService loginService;
+	
+	@Autowired
+	public void setLoginService(LoginService loginService) {
+		this.loginService = loginService;
+	}
 
+
+	// Controller 단에서 너무 많은 읽을 하는게 아닐까 ? 
 	@GetMapping(path = "/callback")
 	public String enrollSession(Model model, HttpSession session, @RequestParam String code,
 			@RequestParam String state) {
@@ -57,19 +67,19 @@ public class LoginController {
 				id = loginInfo.get("id").toString();
 				name = loginInfo.get("name").toString();
 				birthday = loginInfo.get("birthday").toString();
-				dto = new NaverUserDTO(email, nickname,profileImage, age, gender,
-						id, name, birthday);
-				//일단 3개만 저장
-				session.setAttribute("id", id);
-				session.setAttribute("name", name);
-				session.setAttribute("email", email);
-			
+				dto = new NaverUserDTO(email, nickname,profileImage, id, name);
+				if(!loginService.progressLogin(dto)) {
+					log.debug("Login 실패");
+				}else {
+					//일단 3개만 저장
+					session.setAttribute("id", id);
+					session.setAttribute("name", name);
+					session.setAttribute("email", email);
+				}
 			} else {
 				log.debug("json 못받아옴 ");
 			}
-		} else {
-
-		}
+		} 
 		return "redirect:/";
 	}
 

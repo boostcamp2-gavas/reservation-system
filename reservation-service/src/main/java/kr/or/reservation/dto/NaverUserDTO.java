@@ -3,28 +3,27 @@ package kr.or.reservation.dto;
 public class NaverUserDTO {
 	private String email;
 	private String nickname;
-	private String profileImage;
-	private String age;
-	private String gender;
+	private String snsProfile;
 	private String id;
-	private String name;
-	private String birthday;
+	private String username;
+	private int adminFlag;
+	private String snsType;
 
 	public NaverUserDTO() {
 		// TODO Auto-generated constructor stub
+	
 	}
 
-	public NaverUserDTO(String email, String nickname, String profileImage, String age, String gender, String id,
-			String name, String birthday) {
+	public NaverUserDTO(String email, String nickname, String snsProfile, String id, String username) {
 		super();
 		this.email = email;
 		this.nickname = nickname;
-		this.profileImage = profileImage;
-		this.age = age;
-		this.gender = gender;
+		this.snsProfile = snsProfile;
 		this.id = id;
-		this.name = name;
-		this.birthday = birthday;
+		this.username = username;
+		// default 로 설정해줌
+		this.adminFlag = 0;
+		this.snsType = "naver";
 	}
 
 	public String getEmail() {
@@ -43,28 +42,12 @@ public class NaverUserDTO {
 		this.nickname = nickname;
 	}
 
-	public String getProfileImage() {
-		return profileImage;
+	public String getSnsProfile() {
+		return snsProfile;
 	}
 
-	public void setProfileImage(String profileImage) {
-		this.profileImage = profileImage;
-	}
-
-	public String getAge() {
-		return age;
-	}
-
-	public void setAge(String age) {
-		this.age = age;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
+	public void setSnsProfile(String snsProfile) {
+		this.snsProfile = snsProfile;
 	}
 
 	public String getId() {
@@ -75,29 +58,37 @@ public class NaverUserDTO {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public String getBirthday() {
-		return birthday;
+	public int getAdminFlag() {
+		return adminFlag;
 	}
 
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
+	public void setAdminFlag(int adminFlag) {
+		this.adminFlag = adminFlag;
+	}
+
+	public String getSnsType() {
+		return snsType;
+	}
+
+	public void setSnsType(String snsType) {
+		this.snsType = snsType;
 	}
 
 	@Override
 	public String toString() {
-		return "email : \"" + email + "\", nickname : \"" + nickname + "\", profileImage : \"" + profileImage
-				+ "\", age : \"" + age + "\", gender : \"" + gender + "\", id : \"" + id + "\", name : \"" + name
-				+ "\", birthday : \"" + birthday+ "\"";
+		return "email : \"" + email + "\", nickname : \"" + nickname + "\", snsProfile : \"" + snsProfile
+				+ "\", id : \"" + id + "\", username : \"" + username + "\", adminFlag : \"" + adminFlag
+				+ "\", snsType : \"" + snsType;
 	}
-	
-	
+
+
 
 }

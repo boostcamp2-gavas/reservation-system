@@ -75,7 +75,6 @@ public class NaverLogin {
 
 			RestTemplate restTemplate = new RestTemplate();
 			response = restTemplate.exchange(apiURL, HttpMethod.GET, null, JSONObject.class);
-			
 			log.info(response.getBody().toString());
 			if(response.getStatusCodeValue() != 200) {
 				throw new Exception("요청이 완료되지 않음.");
