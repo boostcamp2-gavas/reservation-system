@@ -45,41 +45,19 @@ public class LoginController {
 	}
 
 
-	// Controller 단에서 너무 많은 읽을 하는게 아닐까 ? 
 	@GetMapping(path = "/callback")
 	public String enrollSession(Model model, HttpSession session, @RequestParam String code,
 			@RequestParam String state) {
 		NaverLogin login = new NaverLogin();
-		JSONObject json = null, loginInfo = null;
 		NaverUserDTO dto = null;
-		String email = null, nickname = null, profileImage = null, age = null, 
-				gender = null, id = null, name = null, birthday = null;
 		if (state.equals(session.getAttribute("state"))) {
-			json = login.CallBack(code, state);
-			loginInfo = login.getCustomInfo(json);
-			if (loginInfo != null) {
-				// 이렇게 해도 되나?
-				email =loginInfo.get("email").toString();
-				nickname = loginInfo.get("nickname").toString();
-				profileImage = loginInfo.get("profile_image").toString();
-				age =loginInfo.get("age").toString();
-				gender = loginInfo.get("gender").toString();
-				id = loginInfo.get("id").toString();
-				name = loginInfo.get("name").toString();
-				birthday = loginInfo.get("birthday").toString();
-				dto = new NaverUserDTO(email, nickname,profileImage, id, name);
-				if(!loginService.progressLogin(dto)) {
-					log.debug("Login 실패");
-				}else {
-					//일단 3개만 저장
-					session.setAttribute("id", id);
-					session.setAttribute("name", name);
-					session.setAttribute("email", email);
-				}
-			} else {
-				log.debug("json 못받아옴 ");
+			dto = login.convertToNaverDTO(code, state);
+			if(dto != null) {
+				session.setAttribute("id", dto.getId());
+				session.setAttribute("name", dto.getUsername());
+				session.setAttribute("email", dto.getEmail());
 			}
-		} 
+		}
 		return "redirect:/";
 	}
 

@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonObjectFormatVisitor;
 
 import kr.or.common.StringToJsonParser;
+import kr.or.reservation.dto.NaverUserDTO;
 
 public class NaverLogin {
 	final static String CLIENT_ID = "w0YSpFZqo6SXUXy5itSy";
@@ -103,6 +104,28 @@ public class NaverLogin {
 		// Object를 Json으로 변환해주기 위해 사용
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.convertValue(response.getBody().get("response"), JSONObject.class);
+	}
+	
+	public NaverUserDTO convertToNaverDTO(String code,String state) {
+			JSONObject json = null, loginInfo = null;
+			NaverUserDTO dto = null;
+			String email = null, nickname = null, profileImage = null, 
+					 id = null, name = null;
+			json = CallBack(code, state);
+			loginInfo = getCustomInfo(json);
+			if (loginInfo != null) {
+				// 이렇게 해도 되나?
+				email =loginInfo.get("email").toString();
+				nickname = loginInfo.get("nickname").toString();
+				profileImage = loginInfo.get("profile_image").toString();
+				id = loginInfo.get("id").toString();
+				name = loginInfo.get("name").toString();
+				dto = new NaverUserDTO(email, nickname,profileImage, id, name);
+			} else {
+				log.debug("json 못받아옴 ");
+			}
+			return dto;
+		
 	}
 
 }
