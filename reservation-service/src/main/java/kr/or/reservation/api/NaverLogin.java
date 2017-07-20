@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
+import java.sql.Timestamp;
 
 import javax.servlet.http.HttpSession;
 
@@ -122,6 +123,8 @@ public class NaverLogin {
 				name = loginInfo.get("name").toString();
 				
 				dto = new NaverUserDTO(email, nickname,profileImage, name,Integer.parseInt(id));
+				dto.setCreateDate(new Timestamp(System.currentTimeMillis()));
+				dto.setModifyDate(new Timestamp(System.currentTimeMillis()));
 			} else {
 				log.debug("json 못받아옴 ");
 			}

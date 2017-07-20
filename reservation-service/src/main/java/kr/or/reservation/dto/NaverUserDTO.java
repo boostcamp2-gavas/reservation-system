@@ -1,5 +1,7 @@
 package kr.or.reservation.dto;
 
+import java.sql.Timestamp;
+
 public class NaverUserDTO {
 	private String email;
 	private String nickname;
@@ -9,6 +11,9 @@ public class NaverUserDTO {
 	private int adminFlag;
 	private String snsType;
 	private int snsId;
+	private Timestamp createDate;
+	private Timestamp modifyDate;
+	
 
 	public NaverUserDTO() {
 		// TODO Auto-generated constructor stub
@@ -90,15 +95,31 @@ public class NaverUserDTO {
 	public void setSnsId(int snsId) {
 		this.snsId = snsId;
 	}
+	
+	public Timestamp getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Timestamp createDate) {
+		this.createDate = createDate;
+	}
+
+	public Timestamp getModifyDate() {
+		return modifyDate;
+	}
+
+	public void setModifyDate(Timestamp modifyDate) {
+		this.modifyDate = modifyDate;
+	}
 
 	@Override
 	public String toString() {
 		return "email : \"" + email + "\", nickname : \"" + nickname + "\", snsProfile : \"" + snsProfile
 				+ "\", id : \"" + id + "\", username : \"" + username + "\", adminFlag : \"" + adminFlag
-				+ "\", snsType : \"" + snsType + "\", snsId : \"" + snsId;
+				+ "\", snsType : \"" + snsType + "\", snsId : \"" + snsId + "\", createDate : \"" + createDate
+				+ "\", modifyDate : \"" + modifyDate;
 	}
 
-	
 
 
 }
