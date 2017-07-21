@@ -12,30 +12,26 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.reservation.domain.Img;
-import kr.or.reservation.domain.Product;
-import kr.or.reservation.domain.ProductForDetail;
 import kr.or.reservation.sql.ImgSqls;
-import kr.or.reservation.sql.ProductForDetailSqls;
 
 @Repository
 public class ImgDao {
-	
+
 	private NamedParameterJdbcTemplate jdbc;
 	private RowMapper<Img> rowMapper = BeanPropertyRowMapper.newInstance(Img.class);
 
 	public ImgDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
-	
+
 	public List<Img> selectList(int id) {
-		Map<String , ?> params = Collections.singletonMap("id", id);
+		Map<String, ?> params = Collections.singletonMap("id", id);
 		return jdbc.query(ImgSqls.SELECTBYPRODUCT_ID, params, rowMapper);
 	}
-	
+
 	public Img selectOne(long id) {
-		Map<String , ?> params = Collections.singletonMap("id", id);
-		return jdbc.queryForObject(ImgSqls.SELECTBYFILE_ID, params,rowMapper);
+		Map<String, ?> params = Collections.singletonMap("id", id);
+		return jdbc.queryForObject(ImgSqls.SELECTBYFILE_ID, params, rowMapper);
 	}
-	
-	
+
 }

@@ -10,15 +10,15 @@ import org.springframework.stereotype.Service;
 import kr.or.reservation.dao.CommentForDetailDao;
 import kr.or.reservation.domain.AVGForComment;
 import kr.or.reservation.domain.CommentForDetail;
-import kr.or.reservation.service.CommentForDetailService;
+import kr.or.reservation.service.CommentService;
 
 @Service
-public class CommentForDetailServiceImpl implements CommentForDetailService{
+public class CommentServiceImpl implements CommentService{
 
 	CommentForDetailDao dao ;
 	Logger log = Logger.getLogger(this.getClass());
 	@Autowired
-	public CommentForDetailServiceImpl(CommentForDetailDao dao) {
+	public CommentServiceImpl(CommentForDetailDao dao) {
 		this.dao = dao;
 	}
 	

@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.reservation.config.RootApplicationContextConfig;
 import kr.or.reservation.dao.CommentForDetailDao;
-import kr.or.reservation.service.CommentForDetailService;
+import kr.or.reservation.service.CommentService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = RootApplicationContextConfig.class)
@@ -20,7 +20,7 @@ import kr.or.reservation.service.CommentForDetailService;
 public class CommentForDetailTest {
 
 	@Autowired
-	CommentForDetailService service;
+	CommentService service;
 	
 	Logger log = Logger.getLogger(this.getClass());
 	@Test

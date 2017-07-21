@@ -17,7 +17,7 @@ public class ProductSqls {
 	where product.category_id = 1
 	limit 0 , 4
 	 */
-	public static final String SELECT_CATEGORY = "select product.id ,  product.category_id , product.name,detail.content ,display.place_name, img.file_id " + 
+	public static final String SELECT_BY_CATEGORY = "select product.id ,  product.category_id , product.name,detail.content ,display.place_name, img.file_id " + 
 			"from  product left outer join product_detail as detail " + 
 			"	on product.id = detail.product_id " + 
 			"left outer join display_info as display " + 
@@ -43,4 +43,11 @@ public class ProductSqls {
 	public final static String SELECT_COUNT_BY_CATEGORYID = "select count(*) from product where category_id = :category_id";
 	
 
+	public final static String SELECT_DETAIL_INFO = "select product.id, product.name,product.description, product.event ,product.sales_flag, product.sales_end, detail.content , display.homepage,display.email,display.tel , display.place_name,display.place_lot,display.place_street " + 
+			"from product left outer join  product_detail detail " + 
+			"	on product.id = detail.product_id " + 
+			"left outer join display_info  display " + 
+			"	on product.id = display.product_id "+ 
+			"where product.id = :id ; ";
+	
 }	

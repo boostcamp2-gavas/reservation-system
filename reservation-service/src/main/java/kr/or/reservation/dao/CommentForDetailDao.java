@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.reservation.domain.AVGForComment;
 import kr.or.reservation.domain.CommentForDetail;
-import kr.or.reservation.sql.CommentForDetailSql;
+import kr.or.reservation.sql.CommentSqls;
 
 @Repository
 public class CommentForDetailDao {
@@ -31,19 +31,19 @@ public class CommentForDetailDao {
 	
 	public List<CommentForDetail> selectByProductId(int productId) {
 		Map<String , ?> map = Collections.singletonMap("id",productId);
-		return jdbc.query(CommentForDetailSql.SELECT_ALL,map,rowMapper);
+		return jdbc.query(CommentSqls.SELECT_ALL,map,rowMapper);
 	}
 	
 	// 이름이 너무긴데? 
 	public List<Map<String,Object>> selectAvgScoreByProductId(int productId) {
 		Map<String , ?> map = Collections.singletonMap("id",productId);
-		List<Map<String,Object>> list = jdbc.queryForList(CommentForDetailSql.SELECT_COUNT_AND_AVGSCORE,map);
+		List<Map<String,Object>> list = jdbc.queryForList(CommentSqls.SELECT_COUNT_AND_AVGSCORE,map);
 		return list;
 	}
 	
 	public List<?> getFileId(int commnetId){
 		Map<String , ?> map = Collections.singletonMap("id",commnetId);
-		return jdbc.queryForList(CommentForDetailSql.SELECT_FILEID_BY_COMMENTID,map);
+		return jdbc.queryForList(CommentSqls.SELECT_FILEID_BY_COMMENTID,map);
 	}
 	
 }

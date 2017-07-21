@@ -1,9 +1,9 @@
-package kr.or.reservation.domain;
+package kr.or.reservation.dto;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 
-public class ProductForDetail {
+public class ProductDetailDTO {
 	private int id;
 	private String name;
 	private String description;
@@ -18,13 +18,13 @@ public class ProductForDetail {
 	private String salesFlag;
 	private Timestamp salesEnd;
 
-	public ProductForDetail() {
+	public ProductDetailDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
 	
 
-	public ProductForDetail(int id, String name, String description, String event, String content, String homepage,
+	public ProductDetailDTO(int id, String name, String description, String event, String content, String homepage,
 			String email, String placeName, String tel, String placeLot, String placeStreet, String salesFlag,
 			Timestamp salesEnd) {
 		super();

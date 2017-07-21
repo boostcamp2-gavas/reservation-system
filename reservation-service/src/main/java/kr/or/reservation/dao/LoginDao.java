@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 import kr.or.reservation.domain.Category;
 import kr.or.reservation.dto.NaverUserDTO;
 import kr.or.reservation.sql.CategorySqls;
-import kr.or.reservation.sql.LoginSql;
+import kr.or.reservation.sql.LoginSqls;
 
 @Repository
 public class LoginDao {
@@ -39,7 +39,7 @@ public class LoginDao {
 
 	public boolean isEmpty(int snsId) {
 		Map<String, ?> params = Collections.singletonMap("id", snsId);
-		return jdbc.queryForObject(LoginSql.SELECTBYID, params, Integer.class) == 0;
+		return jdbc.queryForObject(LoginSqls.SELECTBYID, params, Integer.class) == 0;
 	}
 
 }

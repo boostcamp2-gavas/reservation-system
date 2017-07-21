@@ -1,6 +1,6 @@
 package kr.or.reservation.sql;
 
-public class CommentForDetailSql {
+public class CommentSqls {
 /*	public final static String SELECT_ALL ="SELECT users.nickname, comment.*  " + 
 			"FROM reservation_user_comment as comment inner join users " + 
 			"on comment.user_id = users.id where comment.product_id = :id limit 0,3 ";

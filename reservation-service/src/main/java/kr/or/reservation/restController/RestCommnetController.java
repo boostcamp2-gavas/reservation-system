@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.reservation.domain.Product;
-import kr.or.reservation.service.CommentForDetailService;
+import kr.or.reservation.service.CommentService;
 import kr.or.reservation.service.ProductService;
 
 @RestController
 public class RestCommnetController {
 
-	CommentForDetailService commentForDetailService;
+	CommentService commentForDetailService;
 	
 	@Autowired
-	public RestCommnetController(CommentForDetailService commentForDetailService) {
+	public RestCommnetController(CommentService commentForDetailService) {
 		this.commentForDetailService =commentForDetailService;
 	}
 	
