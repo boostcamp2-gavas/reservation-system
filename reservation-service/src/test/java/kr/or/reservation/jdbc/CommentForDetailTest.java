@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.reservation.config.RootApplicationContextConfig;
-import kr.or.reservation.dao.CommentForDetailDao;
+import kr.or.reservation.dao.CommentDao;
 import kr.or.reservation.service.CommentService;
 
 @RunWith(SpringJUnit4ClassRunner.class)

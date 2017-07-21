@@ -1,9 +1,9 @@
-package kr.or.reservation.domain;
+package kr.or.reservation.dto;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-public class CommentForDetail {
+public class CommentDTO {
 	private String nickname;
 	private String id; // comment id
 	private String fileId;
@@ -14,7 +14,7 @@ public class CommentForDetail {
 	private Timestamp createDate;
 	private int count;
 	
-	public CommentForDetail() {
+	public CommentDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -22,7 +22,7 @@ public class CommentForDetail {
 
 
 
-	public CommentForDetail(String nickname, String id, String fileId, String productId, String userId, String score,
+	public CommentDTO(String nickname, String id, String fileId, String productId, String userId, String score,
 			String comment, Timestamp createDate, int count) {
 		super();
 		this.nickname = nickname;

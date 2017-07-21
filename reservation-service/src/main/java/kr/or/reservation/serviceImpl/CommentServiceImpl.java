@@ -7,23 +7,23 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.or.reservation.dao.CommentForDetailDao;
+import kr.or.reservation.dao.CommentDao;
 import kr.or.reservation.domain.AVGForComment;
-import kr.or.reservation.domain.CommentForDetail;
+import kr.or.reservation.dto.CommentDTO;
 import kr.or.reservation.service.CommentService;
 
 @Service
 public class CommentServiceImpl implements CommentService{
 
-	CommentForDetailDao dao ;
+	CommentDao dao ;
 	Logger log = Logger.getLogger(this.getClass());
 	@Autowired
-	public CommentServiceImpl(CommentForDetailDao dao) {
+	public CommentServiceImpl(CommentDao dao) {
 		this.dao = dao;
 	}
 	
 	@Override
-	public List<CommentForDetail> selectByProductId(int productId) {
+	public List<CommentDTO> selectByProductId(int productId) {
 		// TODO Auto-generated method stub
 		return dao.selectByProductId(productId);
 	}

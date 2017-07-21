@@ -17,12 +17,12 @@ import kr.or.reservation.service.CommentService;
 import kr.or.reservation.service.ProductService;
 
 @RestController
-public class RestCommnetController {
+public class RestCommentController {
 
 	CommentService commentForDetailService;
 	
 	@Autowired
-	public RestCommnetController(CommentService commentForDetailService) {
+	public RestCommentController(CommentService commentForDetailService) {
 		this.commentForDetailService =commentForDetailService;
 	}
 	

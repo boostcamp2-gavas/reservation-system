@@ -1,11 +1,8 @@
 package kr.or.reservation.jdbc;
 
-import static org.hamcrest.CoreMatchers.is;
-
 import java.sql.Timestamp;
 
 import org.apache.log4j.Logger;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.reservation.config.RootApplicationContextConfig;
-import kr.or.reservation.dao.ProductForDetailDao;
+import kr.or.reservation.dao.ProductDao;
 import kr.or.reservation.dto.ProductDetailDTO;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = RootApplicationContextConfig.class)
@@ -22,7 +19,7 @@ import kr.or.reservation.dto.ProductDetailDTO;
 public class ProductforDetailTest {
 
 	@Autowired
-	ProductForDetailDao dao ;
+	ProductDao dao ;
 	
 
 	

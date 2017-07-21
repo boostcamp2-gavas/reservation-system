@@ -18,13 +18,11 @@ public class ProductServiceImpl implements ProductService {
 
 	ProductDao productDao;
 	
-	
-	// 수정 할것.  분리 안하고 메서드가 한가지 기능만 하도록.  
-
-
-	public void setProductDao(ProductDao productDao) {
+	@Autowired
+	public ProductServiceImpl(ProductDao productDao) {
 		this.productDao = productDao;
 	}
+
 
 	// 얘는 2가지 기능을 하고있음 
 	@Override
