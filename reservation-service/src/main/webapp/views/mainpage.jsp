@@ -126,8 +126,7 @@
 <script src="resources/js/category.js"></script>
 
 <!--  img Slide  -->
-<script src="/resources/js/slide/commonCaroucel.js"></script>
-<script src="/resources/js/slide/caroucelMain.js"></script>
+<script src="/resources/js/slide/caroucel.js"></script>
 
 <!--  productcontents -->
 <script src="resources/js/mainProduct.js"></script>
@@ -141,14 +140,15 @@ $(document).ready(function(){
 		location.href= "/";
 	});	
 	
+	var $ul = $(".visual_img:first");
 	
-	caroucelSlide.init(338);
-	caroucelSlide.autoSlide.call(caroucelSlide);
+	var auto = new AutoCaaroucel($ul);
+	auto.autoSlide();
+	CarocelDetail.init(auto,338);
+	console.log(auto);
+	//caroucelSlide.autoSlide.call(caroucelSlide);
 	
-	//이벤트를 취소해야돼 
-	
-	$(".prev_inn").on("click",caroucelSlide.leftClick.bind(caroucelSlide));
-	$(".nxt_inn").on("click",caroucelSlide.rightClick.bind(caroucelSlide));
+
 });
  
 </script>

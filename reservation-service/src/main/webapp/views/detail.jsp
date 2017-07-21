@@ -13,7 +13,8 @@
     <style>
 		
 		._none{
-			visibility:hidden;
+			/* visibility:hidden; */
+			display : none;
 		}
 		
 		.layer{
@@ -302,8 +303,7 @@
 <script src="//code.jquery.com/jquery.min.js"></script>
 
 <!--  img Slide  -->
-<script src="/resources/js/slide/commonCaroucel.js"></script>
-<script src="/resources/js/slide/caroucelDetail.js"></script>
+<script src="/resources/js/slide/caroucel.js"></script>
 
 
 <!--  Handlebar -->
