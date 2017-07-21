@@ -12,8 +12,6 @@ function Caroucel(){
 };
 
 Caroucel.prototype.setting = {
-		total_length : 0,
-		maxLength : 0,
 		imgLength : 0,
 		moveLength :0
 };
@@ -28,7 +26,10 @@ Caroucel.prototype.setting = {
  * 	있다면 animator을 돌리고 true를 반환
  */
 Caroucel.prototype.rightClick = function caroucelRight(){	
-	if(this.current_length === this.setting.total_length){
+
+	console.log(this.current_length);
+	console.log(this.total_length);
+	if(this.current_length === this.total_length){
 		// 처음으로 돌아가는 코드
 		return false;
 	}else{
@@ -38,6 +39,7 @@ Caroucel.prototype.rightClick = function caroucelRight(){
 		++this.current_length;
 		return true;
 	}
+	
 };
 
 Caroucel.prototype.leftClick =   function caroucelLeft(){
@@ -66,7 +68,7 @@ Caroucel.prototype.leftClick =   function caroucelLeft(){
 Caroucel.prototype.setInit = function(size){
 
 	this.setting.imgLength = size;
-	this.setting.total_length = this.$ul.children().length - 1
+	this.total_length = this.$ul.children().length - 1
 	this.currentPoint = 1;
 };
 
@@ -75,6 +77,9 @@ Caroucel.prototype.setInit = function(size){
 function CaroucelTouch($ul,$point){
 	this.$point = $point;
 	this.$ul = $ul;
+	if($ul){
+		this.total_length =$ul.children().length - 1 ;
+	}
 	this.current_length = 0;
 	if($point){
 		this.currentPoint = Number($point.text());
@@ -142,7 +147,6 @@ function CaroucelPopup($ul,$point){
 	this.$point = $point;
 	this.$ul = $ul;
 	this.currentPoint = Number($point.text());
-	this.current_length = 0;
 	templateSource = $("#layer-content").html(),
 	leftTemplate = Handlebars.compile(templateSource);
 	
@@ -174,12 +178,11 @@ function AutoCaaroucel($ul){
 	this.init_first = '',
 	this.startAuto = 0,
 	this.autoSlid_ID =0,
-	this.current_length = 1;
+	this.current_length = 0;
 
 	this.init_first = outerHtml($ul.children().eq(0));
 	this.init_secon = outerHtml($ul.children().eq(1));
 	this.$ul.append(this.init_first).append(this.init_secon);
-	this.setting.total_length = $ul.children().length - 1 ;
 	
 	this.clearfunc = function(){
 		clearInterval(this.autoSlid_ID);
@@ -199,7 +202,6 @@ function AutoCaaroucel($ul){
 			this.$ul.animate({"right": "-="+this.setting.imgLength}, "slow");
 			this.setting.moveLength -= this.setting.imgLength;
 			this.current_length --;
-	
 		}else{
 			this.$ul.animate({"right": this.setting.imgLength*2}, 0);
 			this.$ul.animate({"right": "-="+this.setting.imgLength}, "slow");
@@ -210,14 +212,12 @@ function AutoCaaroucel($ul){
 	
 	this.caroucelRightClick = function(){
 		this.clearfunc();
-		if(this.current_length === this.setting.total_length -1  ){
-			
+		if(this.current_length === this.total_length-1){
 			this.$ul.animate({"right": 0}, 0);
 			this.$ul.animate({"right": "+="+this.setting.imgLength}, "slow");
 			
 			this.setting.moveLength = this.setting.imgLength;
 			this.current_length =1;
-			
 			// 처음으로 돌아가는 코드
 		}else{
 			// ul 의 자식중 current_length 번쨰 를 선택 .
