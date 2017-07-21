@@ -114,11 +114,15 @@ var CarocelDetail = (function(){
 			$nxt.on("click",touch.caroucelRightClick.bind(touch));
 		},
 		destroy : function($ul){
+			var $pre =  $ul.parents(".group_visual").find(".prev_inn");
+			var $nxt =  $ul.parents(".group_visual").find(".nxt_inn");
+			
 			$ul.off("touchstart");
 			$ul.off("touchend");
 			$ul.off("touchmove");
-			$ul.animate({"right": 0}, 0);	 
-			
+			$ul.animate({"right": 0}, 0);
+			$pre.off("click");
+			$nxt.off("click");
 			
 		}
 	}

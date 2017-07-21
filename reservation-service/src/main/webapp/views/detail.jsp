@@ -319,6 +319,16 @@ api 등록된 ip주소의 변동으로 주석처리
 <script>
 
 $(document).ready(function(){
+	// 평점 view
+	(function(){
+		var reviewCount = '${avg.amountOfCount}';
+		if(reviewCount<3){
+			$(".btn_review_more").addClass('hide');
+		}
+	})();
+	
+	
+	//naverMap('${detail.placeLot}');
 	
 	var $ul = $(".visual_img:first"),
 	$point = $(".num:first"),
@@ -327,15 +337,6 @@ $(document).ready(function(){
 	var touch = new CaroucelTouch($ul,$point);
 	CarocelDetail.init(touch);
 	
-	
-	
-	
-	/* Carouceldetail.init($ul,$ul.width());
-
-	$(".prev_inn:first").on("click",Carouceldetail.caroucelLeftClick);
-	$(".nxt_inn:first").on("click",Carouceldetail.caroucelRightClick);
-	
-	Carouceldetail.touchEvent(); */
 	
 	// layer popup
 	
@@ -351,102 +352,22 @@ $(document).ready(function(){
 			url : "/commentImg/"+comment,
 			contentType : "application/json; charset=utf-8",
 			dataType : "json"
-		}).done(caroucelPopup.getLayerImg.bind(caroucelPopup)).always(function(){
-			
+		}).done(caroucelPopup.getLayerImg.bind(caroucelPopup))
+		.always(function(){
 			// count 초기화 및 module로 이벤트 등록
 			$point.text("1");
 			$(".num.off:last > span").text($ul_pop.children().length);
 			CarocelDetail.init(caroucelPopup);
-		
-		/* 	
-			var touch_start_x = 0;
-			var save_x = 0;
-			var move_dx = 0;
-			var width =$(".visual_img:last").width();
-			
-			 $(".visual_img:last").on("touchstart",function(event){
-				 touch_start_x =event.originalEvent.changedTouches[0].screenX;
-			}); 
-			
-			
-			 $(".visual_img:last").on("touchend",function(event){
-				console.log(width);
-				 // 버블링 막기 
-				end =  event.originalEvent.changedTouches[0].screenX;
-				
-			     if(move_dx >50 ){
-					 if(CaroucelPopup.caroucelLeftClick.call()){
-						 save_x -= width;	 
-					 }
-				 }else if(move_dx < -50 ){
-					 if(CaroucelPopup.caroucelRightClick.call()){
-						 save_x += width;
-					 }
-				 }
-			     console.log(move_dx);
-			     // 움직인 만큼 반대로 돌림 
-			     $(".visual_img:last").animate({"right": "+="+move_dx}, 0);	 
-			     
-				// 다시 초기화 	     
-				touch_start_y = 0;
-				move_x = 0;
-				move_dx = 0;
-				event.preventDefault();
-			}); 
-			 
-			$(".visual_img:last").on("touchmove",function(event){
-				event.preventDefault();
-				move_dx = event.originalEvent.changedTouches[0].screenX-touch_start_x;
-				$(".visual_img:last").animate({"right": save_x-move_dx}, 0);
-			}); */
-			
 		});
-		
 	});	
 	
-});
-$(function(){
-	// navermap
-	//naverMap('${detail.placeLot}');
-	
-
 	
 	$(".close").on("click",function(){
 		var $ul = $(".visual_img:last");
 		$(".layer").addClass("_none");
-	
-		$(".prev_inn:last").off("click");
-		$(".nxt_inn:last").off("click");
-	
 		$ul.children(".item").remove();	
 		CarocelDetail.destroy($ul);
-	
 	});
-	
-	
-	
-	
-});
-
-</script>
-
-
-
-
-<script>
-$(function(){
-	
-
-	
-	// 평점 view
-	(function(){
-		var reviewCount = '${avg.amountOfCount}';
-		if(reviewCount<3){
-			$(".btn_review_more").addClass('hide');
-		}
-	})();
-	
-	
 	
 	$(".graph_value").css("width",('${avg.avgScore}' * 20)+"%");
 	
@@ -464,18 +385,14 @@ $(function(){
 		}
 	})();
 	
-
-
-	//$(".visual_txt").empty();
 	
 	//store_details
+	// 재사용하지 않을거라 판단하여 모듈화를 진행하지 않았습니다. 
 	
 	$("._open").on("click", function(){
 		$(".store_details").removeClass("close3");
 		$("._open").addClass("_none");
 		$("._close").removeClass("_none");
-		
-		
 	});
 	
 	$("._close").on("click",function(){
@@ -502,7 +419,6 @@ $(function(){
 	
 	
 	//scroll
-	
 	// lazy 부분 
 	 $(document).scroll(function(){
 		 if ($(window).scrollTop() >= $(document).height() - $(window).height()) {
@@ -510,15 +426,12 @@ $(function(){
 			 var data =  $img.data("lazy-image");
 			 $img.attr("src",data);
 		 }
-		 
 	 });
-	
-	
-	
-		
-		
 });
+	
+	
 </script>
+
 </body>
 
 </html>
