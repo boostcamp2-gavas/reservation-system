@@ -1,5 +1,6 @@
 package kr.or.reservation.serviceImpl;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -35,10 +36,21 @@ public class CommentServiceImpl implements CommentService{
 
 	public AVGForComment selectAvgScoreByProductId(int producId) {
 		if(producId>0) {
-			Map<String, Object> map = dao.selectAvgScoreByProductId(producId).get(0);
-			String score= (map.get("avg_score") ==null)? "0" : String.valueOf(map.get("avg_score"));
-			Long count = (Long) map.get("amount_of_count");
-			return new AVGForComment(count.intValue(),score);
+			Long count =AVGForComment.getCount(producId);
+			Float AVG = AVGForComment.getAVG(producId);
+			if(count ==null || AVG ==null) {
+				Map<String, Object> map = dao.selectAvgScoreByProductId(producId).get(0);
+				// null check
+				AVG= (map.get("avg_score") ==null)? 0 : ((BigDecimal)map.get("avg_score")).floatValue();
+				count = (map.get("avg_score") ==null)? 0 : (Long)map.get("amount_of_count");
+				AVGForComment.setCount(producId, count);
+				AVGForComment.setAVG(producId, AVG);
+				return new AVGForComment(count,AVG);
+			}else {
+				log.info("여기 접근");
+				return new AVGForComment(count,AVG);
+			}
+			
 		}
 		return null;
 	}

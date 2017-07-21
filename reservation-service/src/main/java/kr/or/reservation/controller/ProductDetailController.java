@@ -18,7 +18,7 @@ public class ProductDetailController {
 
 	ProductService productService;
 	ImgService imgService;
-	CommentService commentForDetailService;
+	CommentService commentService;
 
 	@Autowired
 	public void setProductService(ProductService productService) {
@@ -31,18 +31,18 @@ public class ProductDetailController {
 	}
 
 	@Autowired
-	public void setCommentForDetailService(CommentService commentForDetailService) {
-		this.commentForDetailService = commentForDetailService;
+	public void setCommentForDetailService(CommentService commentService) {
+		this.commentService = commentService;
 	}
 
 
 	@GetMapping
 	@RequestMapping("/detail/{id}")
-	public String getProductDetail(Model model, @PathVariable(name = "id") int id,ApplicationContext context) {
+	public String getProductDetail(Model model, @PathVariable(name = "id") int id) {
 		model.addAttribute("detail", productService.selectOne(id));
 		model.addAttribute("img",imgService.selectList(id));
-		model.addAttribute("comment",commentForDetailService.selectByProductId(id));
-		model.addAttribute("avg",commentForDetailService.selectAvgScoreByProductId(id));
+		model.addAttribute("comment",commentService.selectByProductId(id));
+		model.addAttribute("avg",commentService.selectAvgScoreByProductId(id));
 		return "detail";
 	}
 

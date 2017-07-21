@@ -1,31 +1,38 @@
 package kr.or.reservation.domain;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AVGForComment {
-	private int amountOfCount;
-	private String avgScore;
+	private Long amountOfCount;
+	private Float avgScore;
+	
+	private static Map<Integer,Float> AVGMAP = new HashMap<>();
+	private static Map<Integer,Long> COUNTMAP= new HashMap<>();
+	
 	
 	public AVGForComment() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AVGForComment(int amountOfCount, String avgScore) {
+	public AVGForComment(Long amountOfCount, Float avgScore) {
 		this.amountOfCount = amountOfCount;
 		this.avgScore = avgScore;
 	}
 
-	public int getAmountOfCount() {
+	public Long getAmountOfCount() {
 		return amountOfCount;
 	}
 
-	public void setAmountOfCount(int amountOfCount) {
+	public void setAmountOfCount(Long amountOfCount) {
 		this.amountOfCount = amountOfCount;
 	}
 
-	public String getAvgScore() {
+	public Float getAvgScore() {
 		return avgScore;
 	}
 
-	public void setAvgScore(String avgScore) {
+	public void setAvgScore(Float avgScore) {
 		this.avgScore = avgScore;
 	}
 
@@ -34,6 +41,18 @@ public class AVGForComment {
 		return "amountOfCount : \"" + amountOfCount + "\", avgScore : \"" + avgScore +"\"";
 	}
 	
+	public static Long getCount(int index) {
+		return COUNTMAP.get(index); 
+	}
+	public static void setCount(int index , Long value) {
+		COUNTMAP.put(index, value);
+	}
 	
+	public static Float getAVG(int index) {
+		return AVGMAP.get(index); 
+	}
+	public static void setAVG(int index , Float value) {
+		AVGMAP.put(index, value);
+	}
 	
 }
