@@ -1,12 +1,7 @@
 package kr.or.reservation.api;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.sql.Timestamp;
@@ -15,19 +10,14 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonObjectFormatVisitor;
 
-import kr.or.common.StringToJsonParser;
 import kr.or.reservation.dto.NaverUserDTO;
 
 public class NaverLogin {
@@ -77,11 +67,9 @@ public class NaverLogin {
 
 			RestTemplate restTemplate = new RestTemplate();
 			response = restTemplate.exchange(apiURL, HttpMethod.GET, null, JSONObject.class);
-			log.info(response.getBody().toString());
 			if(response.getStatusCodeValue() != 200) {
 				throw new Exception("요청이 완료되지 않음.");
 			}
-
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -106,6 +94,7 @@ public class NaverLogin {
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.convertValue(response.getBody().get("response"), JSONObject.class);
 	}
+	
 	
 	public NaverUserDTO convertToNaverDTO(String code,String state) {
 			JSONObject json = null, loginInfo = null;
