@@ -311,40 +311,24 @@
 
 <script src="/resources/js/loginCheck.js"></script>
 
-<!--  map -->
+<!-- 
+api 등록된 ip주소의 변동으로 주석처리 
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=w0YSpFZqo6SXUXy5itSy&submodules=geocoder"></script>
-
-  <script>
-  // x , y 좌표를 알아내서 직접 url에 넣어주는 방식으로 진행
-      var map = new naver.maps.Map('map');
-      var myaddress = '${detail.placeLot}';// 도로명 주소나 지번 주소만 가능 (건물명 불가!!!!)
-      
-      naver.maps.Service.geocode({address: myaddress}, function(status, response) {
-          if (status !== naver.maps.Service.Status.OK) {
-              return alert(myaddress + '의 검색 결과가 없거나 기타 네트워크 에러');
-          }
-          var result = response.result;
-      
-          var location  = "https://openapi.naver.com/v1/map/staticmap.bin?clientId=w0YSpFZqo6SXUXy5itSy&url=localhost&center="+result.items[0].point.x+","+result.items[0].point.y+"&level=11&w=300&h=300&baselayer=default&markers="+result.items[0].point.x+","+result.items[0].point.y;
-       	  var hrefLocation = "http://map.naver.com/?lng="+result.items[0].point.x+"&pinTitle=${detail.name}&level=2&pinType=SITE&lat="+result.items[0].point.y+"&enc=utf8";
-          
-          $(".store_map").attr("src",location); 
-		  $(".store_location").attr("href",hrefLocation);
-         
-      
-      });
-      
-      </script>
-
+<script src="/resources/js/naverMap.js"></script>
+ -->
 <script>
 
 
 $(function(){
+	// navermap
+	//naverMap('${detail.placeLot}');
+	
+
 	var $ul = $(".visual_img:first"),
-	$ul_pop = $(".visual_img:last"),
+	$point = $(".num:first");	
 	templateSource = $("#layer-content").html();
 	
-	CarocelDetail.init($ul,$ul_pop);
+	CarocelDetail.init($ul,$point);
 	
 	
 	

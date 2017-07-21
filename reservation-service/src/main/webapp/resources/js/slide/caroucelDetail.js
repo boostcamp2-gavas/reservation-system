@@ -5,7 +5,6 @@
 function CaroucelTouch($ul,$point){
 	this.$point =$point;
 	this.$ul = $ul;
-	this.caroucel = new Caroucel();
 	this.currentPoint = Number($point.text());
 	
 	this.start_x = 0;
@@ -16,7 +15,7 @@ function CaroucelTouch($ul,$point){
 	this.touchmoveEvent = function(event){};
 	
 	this.caroucelLeftClick = function(){
-		if(this.caroucel.leftClick()){
+		if(this.leftClick()){
 			this.$point.text(--this.currentPoint);
 			return true;
 		}
@@ -24,7 +23,7 @@ function CaroucelTouch($ul,$point){
 	};
 	
 	this.caroucelRightClick = function(){
-		if(this.caroucel.rightClick()){
+		if(this.rightClick()){
 			this.$point.text(++this.currentPoint);
 			return true;
 		}
@@ -37,8 +36,8 @@ function CaroucelTouch($ul,$point){
  	
 
 	this.touchendEvent = function(imgLength){
-		// 버블링 막기 
 	     if(this.move_dx >50 ){
+	    	
 			 if(this.caroucelLeftClick()){
 				 this.save_a -= imgLength;	 
 			 }
@@ -50,7 +49,6 @@ function CaroucelTouch($ul,$point){
 	     // 움직인 만큼 반대로 돌림 
 	     $ul.animate({"right": "+="+this.move_dx }, 0);	 
 		// 다시 초기화 	     
-	     console.log("end :: "+this.move_dx);
 	     this.move_x = 0,
 	     this.move_dx = 0;
 	};
@@ -62,23 +60,27 @@ function CaroucelTouch($ul,$point){
 	
 }
 
+CaroucelTouch.prototype = new Caroucel();
+CaroucelTouch.prototype.constructor = CaroucelTouch;
+
+
+
 var CarocelDetail = (function(){
 	var touch = {};
 	var caroucel = new Caroucel();
 	return{
 		init : function($ul, $point){
 			touch = new CaroucelTouch($ul,$point);
-			touch.setUl($ul);
-			touch.setWidth(414);
+			touch.setInit(414);
 			$ul.on("touchend",touch.touchendEvent.bind(touch,touch.setting.imgLength)); 
 			$ul.on("touchstart",touch.touchstartEvent.bind(touch)); 
 			$ul.on("touchmove",touch.touchmoveEvent.bind(touch)); 
+
 		}
 	}
 })();
 
-CaroucelTouch.prototype = new Caroucel();
-CaroucelTouch.prototype.constructor = CaroucelTouch;
+
 /*
 	var Carouceldetail = (function(){
 		var $point = $(".num:first"),

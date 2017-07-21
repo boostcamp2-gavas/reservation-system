@@ -28,9 +28,6 @@ Caroucel.prototype.setting = {
  * 	있다면 animator을 돌리고 true를 반환
  */
 Caroucel.prototype.rightClick = function caroucelRight(){	
-	console.log(this);
-	console.log(this.$ul);
-	
 	if(this.setting.current_length === this.setting.total_length){
 		// 처음으로 돌아가는 코드
 		return false;
@@ -66,13 +63,9 @@ Caroucel.prototype.leftClick =   function caroucelLeft(){
  * Width 와 Ul을 입력받아 설정
  * 
  */
-Caroucel.prototype.setWidth = function(size){
+Caroucel.prototype.setInit = function(size){
 	this.setting.imgLength = size;
+	this.setting.total_length = this.$ul.children().length - 1
 };
 
-Caroucel.prototype.setUl = function(ul){
-	// 얘가 문제 
-	this.$ul = ul;
-	this.setting.total_length = this.$ul.children().length - 1
-	console.log("전체길이 :: "+ this.setting.total_length);
-};
+
