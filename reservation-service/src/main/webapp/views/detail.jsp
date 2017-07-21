@@ -304,7 +304,7 @@
 <!--  img Slide  -->
 <script src="/resources/js/slide/commonCaroucel.js"></script>
 <script src="/resources/js/slide/caroucelDetail.js"></script>
-<script src="/resources/js/slide/caroucelPopup.js"></script>
+
 
 <!--  Handlebar -->
 <script src="//cdn.jsdelivr.net/handlebarsjs/4.0.8/handlebars.min.js"></script>
@@ -318,17 +318,14 @@ api 등록된 ip주소의 변동으로 주석처리
  -->
 <script>
 
-
-$(function(){
-	// navermap
-	//naverMap('${detail.placeLot}');
+$(document).ready(function(){
 	
-
 	var $ul = $(".visual_img:first"),
-	$point = $(".num:first");	
+	$point = $(".num:first"),
 	templateSource = $("#layer-content").html();
 	
-	CarocelDetail.init($ul,$point);
+	var touch = new CaroucelTouch($ul,$point);
+	CarocelDetail.init(touch);
 	
 	
 	
@@ -343,22 +340,25 @@ $(function(){
 	// layer popup
 	
 	$(".thumb").on("click",function(){
-		var comment = $(this).data("id");
+		var comment = $(this).data("id"),
+		$ul_pop = $(".visual_img:last"),
+		$point = $(".num.popup");
 		
+		var caroucelPopup = new CaroucelPopup($ul_pop,$point);
 		$(".layer").removeClass("_none");
 		$.ajax({
 			method : "GET",
 			url : "/commentImg/"+comment,
 			contentType : "application/json; charset=utf-8",
 			dataType : "json"
-		}).done(CaroucelPopup.getLayerImg).always(function(){
-			var $ul_pop = $(".visual_img:last");
-			$(".num.off:last > span").text($ul_pop.children().length);
-			console.log($ul_pop);
-			CaroucelPopup.init($ul_pop , $ul_pop.width());
-			$(".prev_inn:last").on("click",CaroucelPopup.caroucelLeftClick);
-			$(".nxt_inn:last").on("click",CaroucelPopup.caroucelRightClick);
+		}).done(caroucelPopup.getLayerImg.bind(caroucelPopup)).always(function(){
 			
+			// count 초기화 및 module로 이벤트 등록
+			$point.text("1");
+			$(".num.off:last > span").text($ul_pop.children().length);
+			CarocelDetail.init(caroucelPopup);
+		
+		/* 	
 			var touch_start_x = 0;
 			var save_x = 0;
 			var move_dx = 0;
@@ -398,11 +398,18 @@ $(function(){
 				event.preventDefault();
 				move_dx = event.originalEvent.changedTouches[0].screenX-touch_start_x;
 				$(".visual_img:last").animate({"right": save_x-move_dx}, 0);
-			});
+			}); */
 			
 		});
 		
-	});
+	});	
+	
+});
+$(function(){
+	// navermap
+	//naverMap('${detail.placeLot}');
+	
+
 	
 	$(".close").on("click",function(){
 		$(".layer").addClass("_none");
@@ -416,7 +423,7 @@ $(function(){
 		$(".visual_img:last").off("touchstart");
 		$(".visual_img:last").off("touchend");
 		$(".visual_img:last").off("touchmove");
-		
+		console.log("remove Event");
 		
 	});
 	

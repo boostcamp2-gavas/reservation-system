@@ -12,7 +12,6 @@ function Caroucel(){
 
 Caroucel.prototype.setting = {
 		total_length : 0,
-		current_length : 0,
 		maxLength : 0,
 		imgLength : 0,
 		moveLength :0
@@ -28,24 +27,24 @@ Caroucel.prototype.setting = {
  * 	있다면 animator을 돌리고 true를 반환
  */
 Caroucel.prototype.rightClick = function caroucelRight(){	
-	if(this.setting.current_length === this.setting.total_length){
+	if(this.current_length === this.setting.total_length){
 		// 처음으로 돌아가는 코드
 		return false;
 	}else{
 		// ul 의 자식중 current_length 번쨰 를 선택 .
 		this.$ul.animate({"right": "+="+this.setting.imgLength}, "fast");
 		this.setting.moveLength += this.setting.imgLength;
-		++this.setting.current_length;
+		++this.current_length;
 		return true;
 	}
 };
 
 Caroucel.prototype.leftClick =   function caroucelLeft(){
-	if(this.setting.current_length !== 0){
+	if(this.current_length !== 0){
 		// ul 의 자식중 current_length 번쨰 를 선택 .
 		this.$ul.animate({"right": "-="+this.setting.imgLength}, "fast");
 		this.setting.moveLength -= this.setting.imgLength;
-		this.setting.current_length --;
+		this.current_length --;
 		return true;
 	}else{
 		return false;
@@ -64,8 +63,10 @@ Caroucel.prototype.leftClick =   function caroucelLeft(){
  * 
  */
 Caroucel.prototype.setInit = function(size){
+
 	this.setting.imgLength = size;
 	this.setting.total_length = this.$ul.children().length - 1
+	this.currentPoint = 1;
 };
 
 

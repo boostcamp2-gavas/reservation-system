@@ -3,9 +3,12 @@
 // 클릭만 동작하는 부분 + touch 
 	
 function CaroucelTouch($ul,$point){
-	this.$point =$point;
+	this.$point = $point;
 	this.$ul = $ul;
-	this.currentPoint = Number($point.text());
+	this.current_length = 0;
+	if($point){
+		this.currentPoint = Number($point.text());
+	}
 	
 	this.start_x = 0;
 	this.save_a = 0;
@@ -24,6 +27,7 @@ function CaroucelTouch($ul,$point){
 	
 	this.caroucelRightClick = function(){
 		if(this.rightClick()){
+			console.log(this.currentPoint);
 			this.$point.text(++this.currentPoint);
 			return true;
 		}
@@ -37,7 +41,6 @@ function CaroucelTouch($ul,$point){
 
 	this.touchendEvent = function(imgLength){
 	     if(this.move_dx >50 ){
-	    	
 			 if(this.caroucelLeftClick()){
 				 this.save_a -= imgLength;	 
 			 }
@@ -47,7 +50,7 @@ function CaroucelTouch($ul,$point){
 			 }
 		 }
 	     // 움직인 만큼 반대로 돌림 
-	     $ul.animate({"right": "+="+this.move_dx }, 0);	 
+	     this.$ul.animate({"right": "+="+this.move_dx }, 0);	 
 		// 다시 초기화 	     
 	     this.move_x = 0,
 	     this.move_dx = 0;
@@ -55,13 +58,44 @@ function CaroucelTouch($ul,$point){
 	
 	this.touchmoveEvent = function(event){
 		this.move_dx = event.originalEvent.changedTouches[0].screenX-this.start_x;
-		$ul.animate({"right": this.save_a-this.move_dx},0);
+		this.$ul.animate({"right": this.save_a-this.move_dx},0);
 	};
 	
 }
 
+
+
+
+function CaroucelPopup($ul,$point){
+	this.$point = $point;
+	this.$ul = $ul;
+	this.currentPoint = Number($point.text());
+	this.current_length = 0;
+	templateSource = $("#layer-content").html(),
+	leftTemplate = Handlebars.compile(templateSource);
+	
+	this.getLayerImg = function(data) {
+		if (data.length === 0) {
+			alert("없는 이미지 ");
+		}else{
+			main ='html',
+			Items = {
+				items : []
+			}
+			for (var i = 0, max = data.length; i < max; ++i) {
+				Items.items.push(data[i]);
+			}
+			main = leftTemplate(Items);
+			this.$ul.append(main);
+		}
+	};
+};
+
 CaroucelTouch.prototype = new Caroucel();
 CaroucelTouch.prototype.constructor = CaroucelTouch;
+
+CaroucelPopup.prototype = new CaroucelTouch();
+CaroucelPopup.prototype.constructor = CaroucelPopup;
 
 
 
@@ -69,8 +103,9 @@ var CarocelDetail = (function(){
 	var touch = {};
 	var caroucel = new Caroucel();
 	return{
-		init : function($ul, $point){
-			touch = new CaroucelTouch($ul,$point);
+		init : function(touch){
+			console.log("init");
+			var $ul = touch.$ul;
 			touch.setInit(414);
 			$ul.on("touchend",touch.touchendEvent.bind(touch,touch.setting.imgLength)); 
 			$ul.on("touchstart",touch.touchstartEvent.bind(touch)); 
