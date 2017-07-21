@@ -18,6 +18,7 @@ function CaroucelTouch($ul,$point){
 	this.touchmoveEvent = function(event){};
 	
 	this.caroucelLeftClick = function(){
+		console.log(this);
 		if(this.leftClick()){
 			this.$point.text(--this.currentPoint);
 			return true;
@@ -26,8 +27,8 @@ function CaroucelTouch($ul,$point){
 	};
 	
 	this.caroucelRightClick = function(){
+		console.log(this);
 		if(this.rightClick()){
-			console.log(this.currentPoint);
 			this.$point.text(++this.currentPoint);
 			return true;
 		}
@@ -104,13 +105,25 @@ var CarocelDetail = (function(){
 	var caroucel = new Caroucel();
 	return{
 		init : function(touch){
-			console.log("init");
 			var $ul = touch.$ul;
+			var $pre =  $ul.parents(".group_visual").find(".prev_inn");
+			var $nxt =  $ul.parents(".group_visual").find(".nxt_inn");
+			
 			touch.setInit(414);
 			$ul.on("touchend",touch.touchendEvent.bind(touch,touch.setting.imgLength)); 
 			$ul.on("touchstart",touch.touchstartEvent.bind(touch)); 
 			$ul.on("touchmove",touch.touchmoveEvent.bind(touch)); 
-
+			
+			$pre.on("click",touch.caroucelLeftClick.bind(touch));
+			$nxt.on("click",touch.caroucelRightClick.bind(touch));
+		},
+		destroy : function($ul){
+			$ul.off("touchstart");
+			$ul.off("touchend");
+			$ul.off("touchmove");
+			$ul.animate({"right": 0}, 0);	 
+			
+			
 		}
 	}
 })();

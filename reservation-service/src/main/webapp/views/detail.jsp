@@ -412,19 +412,15 @@ $(function(){
 
 	
 	$(".close").on("click",function(){
+		var $ul = $(".visual_img:last");
 		$(".layer").addClass("_none");
-		$('.visual_img:last > .item').remove();
-		
-		$(".visual_img:last").animate({"right": 0}, 0);	 
-		
+	
 		$(".prev_inn:last").off("click");
 		$(".nxt_inn:last").off("click");
-		
-		$(".visual_img:last").off("touchstart");
-		$(".visual_img:last").off("touchend");
-		$(".visual_img:last").off("touchmove");
-		console.log("remove Event");
-		
+	
+		$ul.children(".item").remove();	
+		CarocelDetail.destroy($ul);
+	
 	});
 	
 	
