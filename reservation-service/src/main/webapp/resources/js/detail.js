@@ -1,8 +1,7 @@
 $(document).ready(function() {
 	$('.header').addClass('fade');
 	
-	getImageList();
-	//$('.lazy').lazyload();
+	$('.lazy').lazyload();
 	getMap();
 });
 
@@ -38,46 +37,7 @@ $('.visual_img').bind('touchend',function (e) {
 
 
 var imgCount = 1;
-var $imgNum;
 
-function getImageList() {
-	var productId = $('#productId').val();
-	
-	$.ajax({
-		url : "/productInfo/image/"+productId,
-		type : "GET",
-		data : "productId="+productId,
-		success : function(data){
-			imageCount(data.length);
-			imageAppend(data);
-		},
-		error : function(request,status,error){
-			alert("code:"+request.status+"\n"+"error:"+error);
-		}
-	});
-}
-
-function imageCount(imgNum) {
-	$imgNum = imgNum;
-	$('.imgNum').html(imgNum);
-	
-	if(imgNum == 1) {
-		$('.prev_inn').css('display', 'none');
-		$('.nxt_inn').css('display', 'none');
-	}
-}
-
-function imageAppend(list) {
-	var source = $('#product_image_template').html();
-	var template = Handlebars.compile(source);
-	
-	$.each(list, function(index, image){
-		var data = {productImageList : image};
-		var html = template(data);
-		
-		$('.product_banner_image').append(html);
-	});	
-}
 
 /*$('.btnImg').on("click",(function() {
 	
@@ -100,7 +60,7 @@ $('.prev_inn:first').click(function() {
 	$('.imgCurrent').html(--imgCount);
 	bannerModule.bannerRolling_pre();
 	
-	imgRolling();
+	imgBtnManage();
 });
 
 $('.nxt_inn:first').click(function() {
@@ -113,18 +73,8 @@ $('.nxt_inn:first').click(function() {
 	$('.imgCurrent').html(++imgCount);
 	bannerModule.bannerRolling_nxt();
 	
-	imgRolling();
-});
-
-function imgRolling() {
-	if(imgCount != 1) {
-		$('.visual_txt').css('display', 'none');
-	}
-	else {
-		$('.visual_txt').css('display', 'block');
-	}
 	imgBtnManage();
-}
+});
 
 function imgBtnManage(){
 	if (imgCount == 1) {

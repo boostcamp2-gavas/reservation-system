@@ -38,11 +38,6 @@ public class ProductInfoController {
 	public Map<String, Object> getCategoryProduct(@PathVariable(name = "categoryId") int categoryId, @PathVariable(name = "start") int start) {
 		return productInfoService.getCategoryInfo(categoryId, start*productNum);
 	}
-	
-	@GetMapping("/image/{productId}")
-	public List<ProductInfo> getProductImage(@PathVariable int productId) {
-		return productInfoService.getProductImage(productId);
-	}
 
 //	@GetMapping("/commentImage?commentId={commentId}")
 //	public List<ReservationComment> getCommentImage(@PathVariable int commentId) {

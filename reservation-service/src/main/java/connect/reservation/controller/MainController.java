@@ -73,6 +73,7 @@ public class MainController {
 	@GetMapping("/mvDetail/{productId}")
 	public String mvDetail(Model model, @PathVariable int productId) {
 		model.addAttribute("productId", productId);
+		model.addAttribute("productImage", productInfoService.getProductImage(productId));
 		model.addAttribute("detailInfo", productInfoService.getProductDetail(productId));
 		model.addAttribute("commentMap", reservationCommentService.getCommentList(productId));
 		model.addAttribute("NoticeImage", productInfoService.getProductNoticeImage(productId));

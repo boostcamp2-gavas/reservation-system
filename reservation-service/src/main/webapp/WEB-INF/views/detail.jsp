@@ -39,22 +39,22 @@
                         <div>
                             <div class="container_visual" style="width: 414px;">
                                 <ul class="visual_img product_banner_image">
-                                	<script id="product_image_template" type="text/x-handlebars-template">
-										{{#productImageList}} 
-                                    			<li class="imgList item" style="width: 414px;"> 
-                                    			<img alt="{{fileName}}" class="img_thumb" src="{{saveFileName}}">
-                                    			 <span class="img_bg"></span>
-                                        		 <div class="visual_txt">
-                                            		<div class="visual_txt_inn">
-                                                		<h2 class="visual_txt_tit">
-                                                			<span>{{productName}}</span>
-                                               			</h2>
-                                                		<p class="visual_txt_dsc">{{description}}</p>
-                                            		</div>
-                                        		</div>
-                                    		</li>
-								 		{{/productImageList}}
-									</script> 
+<c:forEach var="image" items="${productImage}" varStatus="status">
+                               			<li class="imgList item" style="width: 414px;"> 
+                               			<img alt="${image.fileName}" class="img_thumb" src="${image.saveFileName}">
+                               			 <span class="img_bg"></span>
+                                   		 <div class="visual_txt">
+	<c:if test="${status.index eq 0}">
+                                       		<div class="visual_txt_inn">
+                                           		<h2 class="visual_txt_tit">
+                                           			<span>${image.productName}</span>
+                                          		</h2>
+                                           		<p class="visual_txt_dsc">${image.description}</p>
+                                       		</div>
+	</c:if>
+                                   		</div>
+                               		</li>
+</c:forEach>
                                 </ul>
                             </div>
                             <div class="imgBtn prev">
