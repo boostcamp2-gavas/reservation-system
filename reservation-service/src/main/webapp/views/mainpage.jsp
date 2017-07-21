@@ -145,7 +145,6 @@ $(document).ready(function(){
 	var auto = new AutoCaaroucel($ul);
 	auto.autoSlide();
 	CarocelDetail.init(auto,338);
-	console.log(auto);
 	//caroucelSlide.autoSlide.call(caroucelSlide);
 	
 

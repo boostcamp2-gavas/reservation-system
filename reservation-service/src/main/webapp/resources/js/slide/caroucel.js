@@ -173,8 +173,8 @@ function AutoCaaroucel($ul){
 	this.init_secon = '',
 	this.init_first = '',
 	this.startAuto = 0,
-	this.autoSlid_ID =0;
-	
+	this.autoSlid_ID =0,
+	this.current_length = 1;
 
 	this.init_first = outerHtml($ul.children().eq(0));
 	this.init_secon = outerHtml($ul.children().eq(1));
@@ -194,24 +194,39 @@ function AutoCaaroucel($ul){
 	
 	this.caroucelLeftClick =function(){
 		this.clearfunc();
-		this.leftClick();
+		if(this.current_length !== 0){
+			// ul 의 자식중 current_length 번쨰 를 선택 .
+			this.$ul.animate({"right": "-="+this.setting.imgLength}, "slow");
+			this.setting.moveLength -= this.setting.imgLength;
+			this.current_length --;
+	
+		}else{
+			this.$ul.animate({"right": this.setting.imgLength*2}, 0);
+			this.$ul.animate({"right": "-="+this.setting.imgLength}, "slow");
+			this.setting.moveLength = this.setting.imgLength;
+			this.current_length = 1;
+		}
 	}
 	
 	this.caroucelRightClick = function(){
 		this.clearfunc();
-		this.rightClick();
-	}
-		
-	
-		/*	leftClick : function leftClickEvent(event){
-				this.clearfunc();
-				caroucelLeft();
-			},
+		if(this.current_length === this.setting.total_length -1  ){
 			
-			rightClick : function rightClickEvent(event){
-				this.clearfunc();
-				caroucelRight();
-			}*/
+			this.$ul.animate({"right": 0}, 0);
+			this.$ul.animate({"right": "+="+this.setting.imgLength}, "slow");
+			
+			this.setting.moveLength = this.setting.imgLength;
+			this.current_length =1;
+			
+			// 처음으로 돌아가는 코드
+		}else{
+			// ul 의 자식중 current_length 번쨰 를 선택 .
+			this.$ul.animate({"right": "+="+this.setting.imgLength}, "slow");
+			this.setting.moveLength += this.setting.imgLength;
+			++this.current_length;
+		}
+	}
+	
 	
 }
 
@@ -222,7 +237,7 @@ CaroucelTouch.prototype.constructor = CaroucelTouch;
 CaroucelPopup.prototype = new CaroucelTouch();
 CaroucelPopup.prototype.constructor = CaroucelPopup;
 
-AutoCaaroucel.prototype = new CaroucelTouch();
+AutoCaaroucel.prototype = new Caroucel();
 AutoCaaroucel.prototype.constructor = AutoCaaroucel;
 
 
@@ -236,10 +251,13 @@ var CarocelDetail = (function(){
 			var $nxt =  $ul.parents(".group_visual").find(".nxt_inn");
 			var len = length || 414;
 			touch.setInit(len);
-			$ul.on("touchend",touch.touchendEvent.bind(touch)); 
-			$ul.on("touchstart",touch.touchstartEvent.bind(touch)); 
-			$ul.on("touchmove",touch.touchmoveEvent.bind(touch)); 
 			
+			if(touch.constructor !== AutoCaaroucel){
+				$ul.on("touchend",touch.touchendEvent.bind(touch)); 
+				$ul.on("touchstart",touch.touchstartEvent.bind(touch)); 
+				$ul.on("touchmove",touch.touchmoveEvent.bind(touch)); 
+			}
+		
 			$pre.on("click",touch.caroucelLeftClick.bind(touch));
 			$nxt.on("click",touch.caroucelRightClick.bind(touch));
 		},
