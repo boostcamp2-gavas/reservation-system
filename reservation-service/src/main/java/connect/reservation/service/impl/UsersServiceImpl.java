@@ -14,12 +14,18 @@ import connect.reservation.service.UsersService;
 
 @Service
 public class UsersServiceImpl implements UsersService {
+	
+	private UsersDao usersDao;
+	
+	
 	@Autowired
-	UsersDao usersDao;
+	public void setUsersDao(UsersDao usersDao) {
+		this.usersDao = usersDao;
+	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Users getSnsUser(int snsId) {
+	public Users getSnsUser(String snsId) {
 		return usersDao.selectBySnsId(snsId);
 	}
 	
@@ -44,5 +50,11 @@ public class UsersServiceImpl implements UsersService {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(date);
+	}
+	
+	@Override
+	public int updateSnsUser(String snsId, String nickname, String profile) {
+		
+		return usersDao.updateSnsUser(snsId, nickname, profile, getDate());
 	}
 }

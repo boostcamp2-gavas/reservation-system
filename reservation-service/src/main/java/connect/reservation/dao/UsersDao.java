@@ -35,7 +35,7 @@ public class UsersDao {
         return insertAction.executeAndReturnKey(params).intValue();	
     }
     
-    public Users selectBySnsId(int sns_id){
+    public Users selectBySnsId(String sns_id){
         Map<String, Object> params = new HashMap<>();
         params.put("sns_id", sns_id);
         try {
@@ -45,5 +45,14 @@ public class UsersDao {
         }
     }
     
-    
+    public int updateSnsUser(String sns_id, String nickname, String sns_profile, String modify_date) {
+//    	SqlParameterSource params = new BeanPropertySqlParameterSource(user);
+    	Map<String, Object> params = new HashMap<>();
+        params.put("sns_id", sns_id);
+        params.put("nickname", nickname);
+        params.put("sns_profile", sns_profile);
+        params.put("modify_date", modify_date);
+    	
+    	return jdbc.update(UsersSqls.UPDATE_BY_SNS_ID, params);
+    }
 }

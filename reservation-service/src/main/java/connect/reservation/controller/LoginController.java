@@ -38,7 +38,6 @@ public class LoginController {
 	private String code = "";
 	
 
-	
 	@Autowired
 	UsersService usersService;
 	
@@ -123,13 +122,14 @@ public class LoginController {
 			refreshToken = (String)obj.get("refresh_token");
 												
 			if(accessToken != null) {
+				// 접근 토큰 얻으면 사용자 정보 가져옴
 				getUserProfile(accessToken, session);
 			}
 	    }catch (Exception e) {
 	      System.out.println(e);
 	    }
 		
-		return "redirect:/";
+		return "redirect:/mvMyPage";
 	}
 	
 	public void getUserProfile(String accessToken, HttpSession session) {
@@ -153,13 +153,22 @@ public class LoginController {
 		}
 		
 		NaverLoginUser snsUser = responseEntity.getBody().getResponse();
-		int snsId = Integer.parseInt(snsUser.getId());
+		String snsId = snsUser.getId();
 		Users user = usersService.getSnsUser(snsId);
 		
 		if(user == null) {
 			// 가입 기록이 없으면 user 추가
 			usersService.addSnsUser(snsUser);
 			user = usersService.getSnsUser(snsId);
+		}
+		else {
+			// 정보업데이트 있을 경우 DB 업데이트
+			String nickname = snsUser.getNickname();
+			String profile = snsUser.getProfileImage();
+			
+			if(!nickname.equals(user.getNickname()) || !profile.equals(user.getSnsProfile())) {
+				usersService.updateSnsUser(snsId, nickname, profile);
+			}
 		}
 		// 가입된 user면 session 설정
 		session.setAttribute("loginOk", "true");
