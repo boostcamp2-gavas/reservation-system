@@ -24,8 +24,6 @@ public class RestProductController {
 	
 	Logger log = Logger.getLogger(this.getClass());
 	
-	//@RequestParam(defaultValue = "0", name = "startPoint") int startPoint
-	
 	
 	// get Query 에 대하여       
 	// 그냥 쿼리를 쓰는 방향으로 ....  ~ 
@@ -48,31 +46,6 @@ public class RestProductController {
 	public int countProductAll(){
     	return productService.countProduct(0);
 	}
-	
-	
 
-	
-	/*
-	// 컨트롤러 하나로 url 2개를 받아 처리하려 했지만 java.lang.String cannot be cast to java.lang.Long 
-	 // error로 실패 
-	@GetMapping
-	@RequestMapping(value = {"/counter/{category}","/counter"})
-	public int countProductByCategory(@PathVariable Map<String, Integer> map){
-		int categoryId = 0;
-		if (map.containsKey("category")) {
-			categoryId = map.get("category").intValue();
-	    } 
-		return productService.countProduct(categoryId);
-	}
-	
-	// 이렇게 따로 분리할것인가 ?
-	@GetMapping
-	@RequestMapping("/counter")
-	public int countProductAll(){
-    	return productService.countProduct(0);
-	}
-	*
-	*
-	*/
 
 }

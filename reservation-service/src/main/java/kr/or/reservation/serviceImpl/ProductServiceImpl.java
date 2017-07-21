@@ -18,7 +18,6 @@ public class ProductServiceImpl implements ProductService {
 
 	ProductDao productDao;
 	
-	
 
 	@Autowired
 	public void setProductDao(ProductDao productDao) {

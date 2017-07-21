@@ -1,6 +1,7 @@
 package kr.or.reservation.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,18 +19,26 @@ public class ProductDetailController {
 	ProductService productService;
 	ImgService imgService;
 	CommentService commentForDetailService;
-	
+
 	@Autowired
-	public ProductDetailController(ProductService productService, 
-			ImgService imgService,CommentService commentForDetailService) {
+	public void setProductService(ProductService productService) {
 		this.productService = productService;
-		this.imgService = imgService;
-		this.commentForDetailService =commentForDetailService;
 	}
+
+	@Autowired
+	public void setImgService(ImgService imgService) {
+		this.imgService = imgService;
+	}
+
+	@Autowired
+	public void setCommentForDetailService(CommentService commentForDetailService) {
+		this.commentForDetailService = commentForDetailService;
+	}
+
 
 	@GetMapping
 	@RequestMapping("/detail/{id}")
-	public String getProductDetail(Model model, @PathVariable(name = "id") int id) {
+	public String getProductDetail(Model model, @PathVariable(name = "id") int id,ApplicationContext context) {
 		model.addAttribute("detail", productService.selectOne(id));
 		model.addAttribute("img",imgService.selectList(id));
 		model.addAttribute("comment",commentForDetailService.selectByProductId(id));

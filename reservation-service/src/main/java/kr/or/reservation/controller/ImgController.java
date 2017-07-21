@@ -19,11 +19,14 @@ import kr.or.reservation.service.ImgService;
 public class ImgController {
 
 	ImgService imgService;
+	
+	
 	@Autowired
-	public ImgController(ImgService imgService) {
+	public void setImgService(ImgService imgService) {
 		this.imgService = imgService;
 	}
-	
+
+
 	//url 바꿀것
     @GetMapping(path="/{id}")
     public void downloadReservationUserCommentImage(

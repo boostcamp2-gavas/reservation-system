@@ -26,30 +26,20 @@ import kr.or.reservation.service.CategoryService;
 @RequestMapping("/categorys")
 public class CategoryController {
 	
-	@Autowired
 	CategoryService catergoryservice;
 	
-/*	
- * // get 방식, 등록된 모든 List를 가져와서 model로 보여준다.
-    @GetMapping()
-    public ModelAndView selectAll(Model model){
-    	ModelAndView mav = new ModelAndView("category");
-    	List<Category> list = catergoryservice.selectforList();
-    	mav.addObject("list",list);
-    	return mav;
-    }
-    */
+	@Autowired
+    public void setCatergoryservice(CategoryService catergoryservice) {
+		this.catergoryservice = catergoryservice;
+	}
 
-    
-    // Post 방식을 사용시, 넘겨받은 name을 통해 category 등록 후, redirect 
+	// Post 방식을 사용시, 넘겨받은 name을 통해 category 등록 후, redirect 
     @PostMapping()
     public String insert(Model model,@RequestParam String name){
     	Category category = new Category(name);
     	catergoryservice.insert(category);
     	return "redirect:/categorys";
     }
-    
- 
     
     
     // url 로 id를 받아 해당 데이터를 삭제
