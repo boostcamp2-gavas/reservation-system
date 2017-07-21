@@ -2,9 +2,9 @@ package kr.or.reservation.service;
 
 import java.util.List;
 
-import kr.or.reservation.domain.Img;
+import kr.or.reservation.dto.ImgDTO;
 
 public interface ImgService {
-	public List<Img> selectList(int id);
-	public Img selectOne(long fileId);
+	public List<ImgDTO> selectList(int id);
+	public ImgDTO selectOne(long fileId);
 }

@@ -17,6 +17,7 @@ public class CommentServiceImpl implements CommentService{
 
 	CommentDao dao ;
 	Logger log = Logger.getLogger(this.getClass());
+	
 	@Autowired
 	public CommentServiceImpl(CommentDao dao) {
 		this.dao = dao;
@@ -25,21 +26,29 @@ public class CommentServiceImpl implements CommentService{
 	@Override
 	public List<CommentDTO> selectByProductId(int productId) {
 		// TODO Auto-generated method stub
-		return dao.selectByProductId(productId);
+		if(productId > 0) {
+			return dao.selectByProductId(productId);
+		}
+		return null;
 	}
 	
-	// 좀 복잡하긴한데 ..
-	//java.math.BigDecimal cannot be cast to java.lang.Float  발생으로 type 을 String 으로 변경
+
 	public AVGForComment selectAvgScoreByProductId(int producId) {
-		Map<String, Object> map = dao.selectAvgScoreByProductId(producId).get(0);
-		String score= (map.get("avg_score") ==null)? "0" : String.valueOf(map.get("avg_score"));
-		Long count = (Long) map.get("amount_of_count");
-		return new AVGForComment(count.intValue(),score);
+		if(producId>0) {
+			Map<String, Object> map = dao.selectAvgScoreByProductId(producId).get(0);
+			String score= (map.get("avg_score") ==null)? "0" : String.valueOf(map.get("avg_score"));
+			Long count = (Long) map.get("amount_of_count");
+			return new AVGForComment(count.intValue(),score);
+		}
+		return null;
 	}
 
 	@Override
 	public List<?> getFileIdByCommentId(int commentId) {
 		// TODO Auto-generated method stub
-		return dao.getFileId(commentId);
+		if(commentId>0) {
+			return dao.getFileId(commentId);
+		}
+		return null;
 	}
 }

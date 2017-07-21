@@ -21,11 +21,8 @@ public class ProductforDetailTest {
 	@Autowired
 	ProductDao dao ;
 	
-
-	
 	Logger log = Logger.getLogger(this.getClass());
 	
-
 	
 	@Test
 	public void saleTimeTest() {

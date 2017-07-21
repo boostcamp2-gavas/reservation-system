@@ -1,16 +1,16 @@
-package kr.or.reservation.domain;
+package kr.or.reservation.dto;
 
-public class Img {
+public class ImgDTO {
 	private int productId;
 	private int fileId;
 	private String saveFileName;
 	private String type;
 
-	public Img() {
+	public ImgDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Img(int productId, int fileId, String saveFileName, String type) {
+	public ImgDTO(int productId, int fileId, String saveFileName, String type) {
 		super();
 		this.productId = productId;
 		this.fileId = fileId;

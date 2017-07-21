@@ -18,11 +18,12 @@ public class ProductServiceImpl implements ProductService {
 
 	ProductDao productDao;
 	
+	
+
 	@Autowired
-	public ProductServiceImpl(ProductDao productDao) {
+	public void setProductDao(ProductDao productDao) {
 		this.productDao = productDao;
 	}
-
 
 	// 얘는 2가지 기능을 하고있음 
 	@Override
@@ -32,34 +33,41 @@ public class ProductServiceImpl implements ProductService {
 		if(categoryId ==0) {
 			return productDao.selectAll(start);
 		}
-		return productDao.selectByCategory(start,categoryId);
+		if(start >=0 && categoryId >=0) {
+			return productDao.selectByCategory(start,categoryId);
+		}
+		return null;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public int countProduct(int categoryId) {
-		if(categoryId == 0) {
-			return productDao.countCategoryAll();
-		}else {
-			return productDao.countCategory(categoryId);
+		if(categoryId >=0) {
+			if(categoryId == 0) {
+				return productDao.countCategoryAll();
+			}else {
+				return productDao.countCategory(categoryId);
+			}
 		}
+		return 0;
+		
 	}
 	
 	@Override
 	public ProductDetailDTO selectOne(int id) {
 		// TODO Auto-generated method stub
 		// 시간이 지낫을 경우, saleFlage를 3으로 두어, 판매 종료를 설정함.
-		ProductDetailDTO detail =productDao.selectOne(id);
-		Timestamp t1 = new Timestamp(System.currentTimeMillis());
-		if(detail.getSalesEnd().getTime() - t1.getTime()  < 0) {
-			detail.setSalesFlag("3");
+		if( id >0) {
+			ProductDetailDTO detail =productDao.selectOne(id);
+			Timestamp t1 = new Timestamp(System.currentTimeMillis());
+			if(detail.getSalesEnd().getTime() - t1.getTime()  < 0) {
+				detail.setSalesFlag("3");
+			}
+			return detail;
 		}
-		return detail;
+		return null;
 	}
 	
-	@Autowired
-	public ProductDao getProductDao() {
-		return productDao;
-	}
+
 
 }

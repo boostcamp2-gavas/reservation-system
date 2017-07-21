@@ -20,24 +20,36 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public Long insert(Category category) {
 		// TODO Auto-generated method stub
-		return categorydao.insert(category);
+		if(category != null) {
+			return categorydao.insert(category);
+		}
+		return null;
 	}
 
 	@Override
 	public int update(Category category) {
-		return categorydao.updateById(category);
+		if(category != null) {
+			return categorydao.updateById(category);
+		}
+		return 0;
 	}
 
 	@Override
 	public int deleteById(Long id) {
 		// TODO Auto-generated method stub
-		return categorydao.deleteById(id);
+		if(id != null) {
+			return categorydao.deleteById(id);
+		}
+		return 0;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Category selectById(Long id) {
-		return categorydao.selectById(id);
+		if(id != null) {
+			return categorydao.selectById(id);
+		}
+		return null;
 	}
 
 	@Override

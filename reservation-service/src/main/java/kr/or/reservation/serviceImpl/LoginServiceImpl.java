@@ -19,9 +19,7 @@ public class LoginServiceImpl implements LoginService {
 	public boolean progressLogin(NaverUserDTO dto) {
 		if(dto != null) {
 			// email로 비어있는지 확인. 
-			log.info("들어옴"+dto.getSnsId());
 			if(loginDao.isEmpty(dto.getSnsId())) {
-				log.info("비엇나?");
 				loginDao.insert(dto);
 			}
 			// 비어 있지 않으면 로그인 성공 
@@ -30,6 +28,7 @@ public class LoginServiceImpl implements LoginService {
 		return false;
 	}
 
+	
 	@Autowired
 	public void setLoginDao(LoginDao loginDao) {
 		this.loginDao = loginDao;

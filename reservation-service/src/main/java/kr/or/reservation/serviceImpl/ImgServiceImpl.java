@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.reservation.dao.ImgDao;
-import kr.or.reservation.domain.Img;
+import kr.or.reservation.dto.ImgDTO;
 import kr.or.reservation.service.ImgService;
 
 @Service
@@ -20,14 +20,20 @@ public class ImgServiceImpl implements ImgService {
 	}
 	
 	@Override
-	public List<Img> selectList(int id) {
+	public List<ImgDTO> selectList(int id) {
 		// TODO Auto-generated method stub
-		return imgDao.selectList(id);
+		if(id > 0) {
+			return imgDao.selectList(id);
+		}
+		return null;
 	}
 	
 	@Override
-	public Img selectOne(long fileId) {
-		return imgDao.selectOne(fileId);
+	public ImgDTO selectOne(long fileId) {
+		if(fileId > 0) {
+			return imgDao.selectOne(fileId);
+		}
+		return null;
 	}
 
 }
