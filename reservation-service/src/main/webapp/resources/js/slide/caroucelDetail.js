@@ -18,8 +18,8 @@ function CaroucelTouch($ul,$point){
 	this.touchmoveEvent = function(event){};
 	
 	this.caroucelLeftClick = function(){
-		console.log(this);
 		if(this.leftClick()){
+			 this.save_a -= this.setting.imgLength;	
 			this.$point.text(--this.currentPoint);
 			return true;
 		}
@@ -27,8 +27,8 @@ function CaroucelTouch($ul,$point){
 	};
 	
 	this.caroucelRightClick = function(){
-		console.log(this);
 		if(this.rightClick()){
+			 this.save_a += this.setting.imgLength;
 			this.$point.text(++this.currentPoint);
 			return true;
 		}
@@ -40,15 +40,11 @@ function CaroucelTouch($ul,$point){
 	}
  	
 
-	this.touchendEvent = function(imgLength){
+	this.touchendEvent = function(){
 	     if(this.move_dx >50 ){
-			 if(this.caroucelLeftClick()){
-				 this.save_a -= imgLength;	 
-			 }
+			 this.caroucelLeftClick()
 		 }else if(this.move_dx < -50 ){
-			 if(this.caroucelRightClick()){
-				 this.save_a += imgLength;
-			 }
+			 this.caroucelRightClick()
 		 }
 	     // 움직인 만큼 반대로 돌림 
 	     this.$ul.animate({"right": "+="+this.move_dx }, 0);	 
@@ -110,7 +106,7 @@ var CarocelDetail = (function(){
 			var $nxt =  $ul.parents(".group_visual").find(".nxt_inn");
 			
 			touch.setInit(414);
-			$ul.on("touchend",touch.touchendEvent.bind(touch,touch.setting.imgLength)); 
+			$ul.on("touchend",touch.touchendEvent.bind(touch)); 
 			$ul.on("touchstart",touch.touchstartEvent.bind(touch)); 
 			$ul.on("touchmove",touch.touchmoveEvent.bind(touch)); 
 			
