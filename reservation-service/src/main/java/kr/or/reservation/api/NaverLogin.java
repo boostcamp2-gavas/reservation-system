@@ -22,7 +22,7 @@ import kr.or.reservation.dto.NaverUserDTO;
 
 public class NaverLogin {
 	final static String CLIENT_ID = "w0YSpFZqo6SXUXy5itSy";
-	final static String REDIRECT_URL = "http://10.81.25.154/callback";
+	final static String REDIRECT_URL = "http://localhost/callback";
 	final static String URL = "https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id="
 			+ "&redirect_uri=" + "&state=";
 	final static String SECRET_ID = "IxSbeRZI3A";

@@ -141,7 +141,11 @@
                 </div>
             </div>
             <div class="section_btn"> 
-            <button type="button" class="bk_btn" data-config = '${detail.salesFlag}'> <i class="fn fn-nbooking-calender2"></i> <span></span> </button> </div>
+	            <button type="button" class="bk_btn" data-config = '${detail.salesFlag}'> 
+	            <i class="fn fn-nbooking-calender2"></i>
+	            	<span></span> 
+	            </button> 
+            </div>
             <div class="section_review_list">
                 <div class="review_box">
                     <h3 class="title_h3">예매자 한줄평</h3>
@@ -311,11 +315,11 @@
 
 <script src="/resources/js/loginCheck.js"></script>
 
-<!-- 
-api 등록된 ip주소의 변동으로 주석처리 
+
+
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=w0YSpFZqo6SXUXy5itSy&submodules=geocoder"></script>
 <script src="/resources/js/naverMap.js"></script>
- -->
+ 
 <script>
 
 $(document).ready(function(){
@@ -328,11 +332,13 @@ $(document).ready(function(){
 	})();
 	
 	
-	//naverMap('${detail.placeLot}');
+	naverMap('${detail.placeLot}');
 	
 	var $ul = $(".visual_img:first"),
 	$point = $(".num:first"),
-	templateSource = $("#layer-content").html();
+	templateSource = $("#layer-content").html(),
+	$ulPop = $(".visual_img:last"),
+	$popupPoint = $(".num.popup");
 	
 	var touch = new CaroucelTouch($ul,$point);
 	CarocelDetail.init(touch);
@@ -342,10 +348,9 @@ $(document).ready(function(){
 	
 	$(".thumb").on("click",function(){
 		var comment = $(this).data("id"),
-		$ul_pop = $(".visual_img:last"),
-		$point = $(".num.popup");
-		
-		var caroucelPopup = new CaroucelPopup($ul_pop,$point);
+		caroucelPopup = {};
+		caroucelPopup = new CaroucelPopup($ulPop,$popupPoint);
+			
 		$(".layer").removeClass("_none");
 		$.ajax({
 			method : "GET",
@@ -355,8 +360,8 @@ $(document).ready(function(){
 		}).done(caroucelPopup.getLayerImg.bind(caroucelPopup))
 		.always(function(){
 			// count 초기화 및 module로 이벤트 등록
-			$point.text("1");
-			$(".num.off:last > span").text($ul_pop.children().length);
+			$popupPoint.text("1");
+			$(".num.off:last > span").text($ulPop.children().length);
 			CarocelDetail.init(caroucelPopup);
 		});
 	});	
@@ -373,11 +378,15 @@ $(document).ready(function(){
 	
 	(function bkBtnCheck(){
 		
-		var config = $(".bk_btn").data("config"),
+		var $btn =$(".bk_btn"), 
+		config = $btn.data("config"),
 		$span = $(".bk_btn > span");
 		
 		if(!config){
 			$span.text("예매하기");
+			$btn.on("click",function(){
+				location.href='/product/reservation/'+${detail.id};
+			});
 		}else if(config === 1){
 			$span.text("매진");
 		}else{

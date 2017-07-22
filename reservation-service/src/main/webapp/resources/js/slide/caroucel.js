@@ -162,6 +162,7 @@ function CaroucelPopup($ul,$point){
 				Items.items.push(data[i]);
 			}
 			main = leftTemplate(Items);
+			console.log(this);
 			this.$ul.append(main);
 		}
 	};

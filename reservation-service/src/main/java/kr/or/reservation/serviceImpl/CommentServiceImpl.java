@@ -47,7 +47,6 @@ public class CommentServiceImpl implements CommentService{
 				AVGForComment.setAVG(producId, AVG);
 				return new AVGForComment(count,AVG);
 			}else {
-				log.info("여기 접근");
 				return new AVGForComment(count,AVG);
 			}
 			

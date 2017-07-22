@@ -1,7 +1,6 @@
 package kr.or.reservation.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +13,7 @@ import kr.or.reservation.service.ProductService;
 
 @Controller
 @RequestMapping(path = "/product")
-public class ProductDetailController {
+public class ReservationController {
 
 	ProductService productService;
 	ImgService imgService;
@@ -37,13 +36,9 @@ public class ProductDetailController {
 
 
 	@GetMapping
-	@RequestMapping("/detail/{id}")
+	@RequestMapping("/reservation/{id}")
 	public String getProductDetail(Model model, @PathVariable(name = "id") int id) {
-		model.addAttribute("detail", productService.selectOne(id));
-		model.addAttribute("img",imgService.selectList(id));
-		model.addAttribute("comment",commentService.selectByProductId(id));
-		model.addAttribute("avg",commentService.selectAvgScoreByProductId(id));
-		return "detail";
+		return "reserve";
 	}
 	
 
