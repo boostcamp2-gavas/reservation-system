@@ -30,7 +30,7 @@ public class ProductInfoSqls {
 			+ "from product p, product_image pi, file f "
 			+ "where p.id = pi.product_id and pi.file_id = f.id) s2 "
 			+ "ON s1.id = s2.id "
-			+ "WHERE s2.type = 1 AND s1.category_id = :categoryId "
+			+ "WHERE s2.type = 1 AND s1.category_id = :category_id "
 			+ "ORDER BY s1.id "
 			+ "LIMIT :start , "+endNum;
 	// 상세페이지 상품 이미지

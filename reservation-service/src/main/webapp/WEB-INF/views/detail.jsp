@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -32,7 +33,7 @@
                         <div class="bg_pagination"></div>
                         <div class="figure_pagination">
                             <span class="num imgCurrent">1</span>
-                            <span class="num off">/ <span class="imgNum"></span></span>
+                            <span class="num off">/ <span class="imgNum">${fn:length(productImage)} </span></span>
                         </div>
                     </div>
                     <div class="group_visual">

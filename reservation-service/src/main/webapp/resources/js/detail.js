@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	rolling.setting();
 	$('.header').addClass('fade');
 	
 	$('.lazy').lazyload();
@@ -25,56 +26,64 @@ $('.visual_img').bind('touchend',function (e) {
 	var temp;
 	temp = startTouchX-moveTouchX;
 	if(temp > 0) {
-		bannerModule.setting();
-		bannerModule.bannerRolling_nxt();
+		rolling.rollingNxt();
 	}
 	else {
-		bannerModule.setting();
-		bannerModule.bannerRolling_pre();
+		rolling.rollingPre();
 	}
 });
 
 
 
 var imgCount = 1;
+var $imgNum = parseInt($('.imgNum').text());
 
 
-/*$('.btnImg').on("click",(function() {
-	
-	if($(this).hasClass('prev'))
-		console.log('true');
-	else
-		console.log('false');
-	//test($(this));
-}));
+$('.imgBtn ').click(function() {
+	var element = $(this).children();
+	var btn = element.attr('class');
 
-function test(obj) {
-	console.log(obj.attr('class'));
-}*/
-$('.prev_inn:first').click(function() {
-	bannerModule.setting();
+	if(btn == 'nxt_inn') {
+		if(imgCount == $imgNum)
+			return;
+		
+		$('.imgCurrent').html(++imgCount);
+		rolling.rollingNxt();
+	}
+	else {
+		if(imgCount == 1)
+			return;
+		
+		$('.imgCurrent').html(--imgCount);		
+		rolling.rollingPre();
+	}
+	imgBtnManage();
+});
+
+/*$('.prev_inn:first').click(function() {
+	rolling.setting();
 	
 	if(imgCount == 1)
 		return;
 	
 	$('.imgCurrent').html(--imgCount);
-	bannerModule.bannerRolling_pre();
+	rolling.rollingPre();
 	
 	imgBtnManage();
 });
 
 $('.nxt_inn:first').click(function() {
-	bannerModule.setting();
+	rolling.setting();
 	
 	if(imgCount == $imgNum)
 		return;
 	
 	
 	$('.imgCurrent').html(++imgCount);
-	bannerModule.bannerRolling_nxt();
+	rolling.rollingNxt();
 	
 	imgBtnManage();
-});
+});*/
 
 function imgBtnManage(){
 	if (imgCount == 1) {
@@ -107,8 +116,6 @@ $('.bk_btn').click(function() {
 		alert("매진입니다.");
 	else if($('#sales_end').val() < today)
 		alert("판매기간이 종료되었습니다.");
-	
-
 });
 
 function getToday() {
@@ -172,28 +179,28 @@ var popImgCount = 1;
 
 $('.prev_inn:last').click(function() {
 	event.preventDefault();
-	bannerModule.init($('.comment_popup_img'));
+	rolling.init($('.comment_popup_img'));
 	console.log('before:'+popImgCount);
 //	if(popImgCount == 1)
 //		return;
 	popImgCount--;
 	console.log('after:'+popImgCount);
 //	$('.imgCurrent').html(--imgCount);
-	bannerModule.bannerRolling_pre();
+	rolling.rollingPre();
 	
 //	imgRolling();
 });
 
 $('.nxt_inn:last').click(function() {
 	event.preventDefault();
-	bannerModule.init($('.comment_popup_img'));
+	rolling.init($('.comment_popup_img'));
 	console.log('before:'+popImgCount);
 	if(popImgCount == 2)
 		return;
 	popImgCount++;
 	console.log('after:'+popImgCount);
 //	$('.imgCurrent').html(--imgCount);
-	bannerModule.bannerRolling_nxt();
+	rolling.rollingNxt();
 	
 //	imgRolling();
 });

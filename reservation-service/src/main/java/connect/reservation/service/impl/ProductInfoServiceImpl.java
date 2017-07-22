@@ -47,7 +47,6 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 	@Override
 	public Map<String, Object> getCategoryInfo(int categoryId, int start) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		
 		map.put("productList", productInfoDao.getCategoryInfo(categoryId, start));
 		map.put("productCount", productInfoDao.getCategoryProductCount(categoryId));
 	

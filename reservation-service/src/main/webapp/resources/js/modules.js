@@ -1,7 +1,7 @@
-var bannerModule = (function(ul) {
+var rolling = (function(ul) {
 	var setRolling=0,
 	 	timeCheck=0,
-		bannerList,
+		rollingList,
 	    cnt = 0,
 		size,
 		len,
@@ -12,32 +12,32 @@ var bannerModule = (function(ul) {
 	return {
 		init : function(newUl) {
 			$ul = newUl;
-			bannerModule.setting();
+			rolling.setting();
 		},
 		setting : function() {
-			bannerList = $ul.find('li');
-			size = bannerList.outerWidth();
-			len = bannerList.length;
+			rollingList = $ul.find('li');
+			size = rollingList.outerWidth();
+			len = rollingList.length;
 		},
-		bannerRolling_nxt : function() {	// 오른쪽
+		rollingNxt : function() {	// 오른쪽
 			cnt++;
 			if(cnt > len){
 				cnt = 1;
 			}
 			var move = cnt%len;
-			bannerList.animate({'left': -(move*size)+'px'}, 'normal');
+			rollingList.animate({'left': -(move*size)+'px'}, 'normal');
 		},
-		bannerRolling_pre : function() {	// 왼쪽
+		rollingPre : function() {	// 왼쪽
 			cnt--;
 			if(cnt <= 0){
 				cnt = 3;
 			}
 			var move = cnt%len;
-			bannerList.animate({'left': -(move*size)+'px'}, 'normal');
+			rollingList.animate({'left': -(move*size)+'px'}, 'normal');
 		},
-		test : function autoRolling() {
+		autoRolling : function() {
 			// 상단 배너 자동 롤
-			setRolling = setInterval(bannerModule.bannerRolling_nxt, 2000);
+			setRolling = setInterval(rolling.rollingNxt, 2000);
 		},
 		clear :function() {
 			// 이벤트 해제
@@ -45,9 +45,9 @@ var bannerModule = (function(ul) {
 			clearTimeout(timeCheck);
 		},
 		setRollings : function(){
-			setRolling = setInterval(bannerModule.bannerRolling_nxt, 2000);
+			setRolling = setInterval(rolling.rollingNxt, 2000);
 		},
-		setTimecheck:function(value){
+		setTimerID:function(value){
 			timeCheck = value;
 		}
 		
@@ -55,11 +55,15 @@ var bannerModule = (function(ul) {
 })($('.visual_img'));
 
 
-var categoryModule = (function(list) {
-	var firstCategory = list.first().find('a');
-	var lastCategory = list.last().find('a');
+var category = (function(list) {
+	var firstCategory,
+		lastCategory;
 	
 	return {
+		setting : function() {
+			firstCategory = list.first().find('a');
+			lastCategory = list.last().find('a');
+		},
 		manageCategory : function() {
 			firstCategory.addClass('active');
 			lastCategory.addClass('last');
@@ -81,13 +85,19 @@ var categoryModule = (function(list) {
 })($('.cate_list'));
 
 
-var productListModule = (function(countArea, ul) {
-	var start = 0;
-	var categoryFlag = false;
-	var countData= countArea;
-	var handlebarTemplate = ul.find('script');
+var getProducts = (function(countArea, ul) {
+	var start,
+		categoryFlag,
+		countData,
+		handlebarTemplate;
 	
 	return {
+		setting : function() {
+			start = 0;
+			categoryFlag = false;
+			countData= countArea;
+			handlebarTemplate = ul.find('script');
+		},
 		getProducInfo : function(flag, categoryId, start) {
 			if(flag == false)	// '더보기'가 아닐 경우 0번째부터 가져옴
 				start = 0;
@@ -111,12 +121,12 @@ var productListModule = (function(countArea, ul) {
 			    type : "GET",
 			    data : dataInfo,
 			    success: function(data) {
-			    	productListModule.countProduct(data.productCount);
+			    	getProducts.countProduct(data.productCount);
 			    	
 			    	if(data.productList.length == 0)
 			    		alert("더이상 상품이 없습니다!");
 			    	else 
-			    		productListModule.productAppend(flag, data.productList);
+			    		getProducts.productAppend(flag, data.productList);
 			    },
 			    error:function(request,status,error){
 			        alert("code:"+request.status+"\n"+"error:"+error);
