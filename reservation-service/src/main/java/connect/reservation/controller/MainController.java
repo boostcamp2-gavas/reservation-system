@@ -46,8 +46,8 @@ public class MainController {
 		model.addAttribute("category", categoryList);
 		
 		return "mainpage";
+		//return "files";
 	}
-	
 	
 	@GetMapping("/mvMyPage")
 	public String mvMyPage(HttpSession session) {
@@ -58,26 +58,15 @@ public class MainController {
 		else
 			return "myreservation";
 	}
-	
-	@ResponseBody
-	@PostMapping("/changeCategory/{categoryId}")
-	public int changeCategory(@PathVariable int categoryId) {
-		if(categoryId == 0)
-			return productInfoService.getProductCount();
-		
-		int productNum = productInfoService.getCategoryProductCount(categoryId);
-		
-		return productNum;
-	}
 
 	@GetMapping("/mvDetail/{productId}")
 	public String mvDetail(Model model, @PathVariable int productId) {
 		model.addAttribute("productId", productId);
-		model.addAttribute("productImage", productInfoService.getProductImage(productId));
-		model.addAttribute("detailInfo", productInfoService.getProductDetail(productId));
-		model.addAttribute("commentMap", reservationCommentService.getCommentList(productId));
-		model.addAttribute("NoticeImage", productInfoService.getProductNoticeImage(productId));
-		model.addAttribute("InfoImage", productInfoService.getProductInfoImage(productId));
+		model.addAttribute("productImage", productInfoService.getImage(productId));
+		model.addAttribute("detailInfo", productInfoService.getDetail(productId));
+		model.addAttribute("commentMap", reservationCommentService.getList(productId));
+		model.addAttribute("NoticeImage", productInfoService.getNoticeImage(productId));
+		model.addAttribute("InfoImage", productInfoService.getInfoImage(productId));
 		
 		return "detail";
 	}

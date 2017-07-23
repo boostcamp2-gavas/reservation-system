@@ -5,34 +5,23 @@ public class ProductInfoSqls {
 	
 	final static String COUNT_PRODUCT = "SELECT count(*) FROM product";
 	final static String COUNT_CATEGORY_PRODUCT = "SELECT count(*) FROM product WHERE category_id = :category_id";
-	// 메인페이지 상품 리스트
-	final static String GET_MAIN_INFO = "SELECT s1.id product_id, s1.category_id, s1.name product_name, s1.description , s1.place_name, s2.file_name, s2.save_file_name "
-			+ "FROM "
-			+ "(select p.id, p.category_id, p.name, p.description, di.place_name  "
-			+ "from product p, display_info di "
-			+ "where p.id = di.product_id) s1 "
-			+ "INNER JOIN "
-			+ "(select p.id, f.file_name, f.save_file_name, pi.type "
-			+ "from product p, product_image pi, file f "
-			+ "where p.id = pi.product_id and pi.file_id = f.id) s2 "
-			+ "ON s1.id = s2.id "
-			+ "WHERE s2.type = 1 "
-			+ "ORDER BY s1.id "
-			+ "LIMIT :start , "+endNum;
+	final static String GET_MAIN_INFO = "SELECT p.id product_id, p.category_id category_id, p.name product_name, p.description description, di.place_name, f.file_name, f.save_file_name"
+			+ " FROM product p"
+			+ " INNER JOIN display_info di ON p.id = di.product_id"
+			+ " LEFT JOIN product_image pi ON p.id = pi.product_id"
+			+ " LEFT JOIN file f ON pi.file_id = f.id"
+			+ " WHERE pi.type = 1"
+			+ " ORDER BY p.id"
+			+ " LIMIT :start , "+endNum;
 	// 메인페이지 카테고리별 상품 리스트
-	final static String GET_CATEGORY_INFO = "SELECT s1.id product_id, s1.category_id, s1.name product_name, s1.description , s1.place_name, s2.file_name, s2.save_file_name "
-			+ "FROM "
-			+ "(select p.id, p.category_id, p.name, p.description, di.place_name  "
-			+ "from product p, display_info di "
-			+ "where p.id = di.product_id) s1 "
-			+ "INNER JOIN "
-			+ "(select p.id, f.file_name, f.save_file_name, pi.type "
-			+ "from product p, product_image pi, file f "
-			+ "where p.id = pi.product_id and pi.file_id = f.id) s2 "
-			+ "ON s1.id = s2.id "
-			+ "WHERE s2.type = 1 AND s1.category_id = :category_id "
-			+ "ORDER BY s1.id "
-			+ "LIMIT :start , "+endNum;
+	final static String GET_CATEGORY_INFO = "SELECT p.id product_id, p.category_id category_id, p.name product_name, p.description description, di.place_name, f.file_name, f.save_file_name"
+			+ "	FROM product p"
+			+ " INNER JOIN display_info di ON p.id = di.product_id"
+			+ "	LEFT JOIN product_image pi ON p.id = pi.product_id"
+			+ " LEFT JOIN file f ON pi.file_id = f.id"
+			+ " WHERE pi.type = 1 AND p.category_id = :category_id"
+			+ " ORDER BY p.id"
+			+ " LIMIT :start , "+endNum;
 	// 상세페이지 상품 이미지
 	final static String GET_PRODUCT_IMAGE = "select p.name product_name, p.description, f.file_name, f.save_file_name "
 			+ "from product p, product_image pi, file f "

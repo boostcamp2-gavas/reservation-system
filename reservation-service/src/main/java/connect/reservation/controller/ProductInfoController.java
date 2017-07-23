@@ -29,13 +29,13 @@ public class ProductInfoController {
 	}
 	
 	@GetMapping("/all/{start}")
-	public Map<String, Object> getAllProduct(@PathVariable int start) {
+	public Map<String, Object> getAll(@PathVariable int start) {
 
 		return productInfoService.getMainInfo(start*productNum);
 	}
 	
 	@GetMapping("/category/{categoryId}/start/{start}")
-	public Map<String, Object> getCategoryProduct(@PathVariable(name = "categoryId") int categoryId, @PathVariable(name = "start") int start) {
+	public Map<String, Object> getCategory(@PathVariable(name = "categoryId") int categoryId, @PathVariable(name = "start") int start) {
 		return productInfoService.getCategoryInfo(categoryId, start*productNum);
 	}
 
@@ -47,6 +47,6 @@ public class ProductInfoController {
 //	@GetMapping("/commentImage?commentId={commentId}")
 	@GetMapping("/commentImage/commentId={commentId}")
 	public Map<String, Object> getCommentImage(@PathVariable int commentId) {
-		return reservationCommentService.getImageList(commentId);
+		return reservationCommentService.getImage(commentId);
 	}
 }

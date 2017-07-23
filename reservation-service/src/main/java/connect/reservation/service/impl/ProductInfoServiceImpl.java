@@ -36,6 +36,9 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 	
 	@Override
 	public Map<String, Object> getMainInfo(int start) {
+		if(start < 0)
+			return null;
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("productList", productInfoDao.getMainInfo(start));
@@ -54,22 +57,22 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 	}
 
 	@Override
-	public List<ProductInfo> getProductImage(int productId) {
+	public List<ProductInfo> getImage(int productId) {
 		return productInfoDao.getProductImage(productId);
 	}
 	
 	@Override
-	public ProductInfo getProductDetail(int productId) {
+	public ProductInfo getDetail(int productId) {
 		return productInfoDao.getProductDetailInfo(productId);
 	}
 	
 	@Override
-	public List<ProductInfo> getProductNoticeImage(int productId) {
+	public List<ProductInfo> getNoticeImage(int productId) {
 		return productInfoDao.getProductNoticeImage(productId);
 	}
 	
 	@Override
-	public List<ProductInfo> getProductInfoImage(int productId) {
+	public List<ProductInfo> getInfoImage(int productId) {
 		return productInfoDao.getProductInfoImage(productId);
 	}
 }

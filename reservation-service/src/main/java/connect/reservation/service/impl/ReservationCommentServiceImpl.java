@@ -20,7 +20,7 @@ public class ReservationCommentServiceImpl implements ReservationCommentService{
 	@Autowired
 	ReservationCommentDao reservationCommentDao;
 	
-	public Map<String, Object> getCommentList(int productId) {		
+	public Map<String, Object> getList(int productId) {		
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<ReservationComment> list = new ArrayList<ReservationComment>();
 		
@@ -43,7 +43,7 @@ public class ReservationCommentServiceImpl implements ReservationCommentService{
 //		return reservationCommentDao.getImageList(commentId);
 //	}
 	
-	public Map<String, Object> getImageList(int commentId) {
+	public Map<String, Object> getImage(int commentId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		List<ReservationComment> list = reservationCommentDao.getImageList(commentId);
