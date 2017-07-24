@@ -11,14 +11,19 @@
 		this.count = 0;
 	}		
 	
-	//Ticket.prototype = new	eg.Component();		
+	Ticket.prototype = new	eg.Component();		
 	Ticket.prototype.constructor =	Ticket;	
 	
 	Ticket.prototype.totalCount = 0;
 
+	Ticket.prototype.init = function(){
+		this.on("plus",this.plus);
+		this.on("minus",this.minus);
+	};
+	
 	Ticket.prototype.changeTotal = function(){
 		$(".tickat_count").text(this.totalCount);
-	}
+	};
 	
 	Ticket.prototype.minus = function(){
 		--this.count;
@@ -51,18 +56,19 @@
 					return;
 				}
 				var index = $(".qty .ico_minus3").index($(this));
-				Ticket[index].minus();
-				
+				Ticket[index].trigger("minus");
 			},
 			plus : function(){
 				if($(this).hasClass("disabled")){
 					return;
 				}
 				var index = $(".qty .ico_plus3").index($(this));
-				Ticket[index].plus();
+				Ticket[index].trigger("plus");
 			},
 			init: function(ticket){
 				Ticket = ticket;
+				// 이벤트 init 
+				ticket[0].init();
 				$(".ico_minus3").on("click",this.minus);
 				$(".ico_plus3").on("click",this.plus);
 			}
