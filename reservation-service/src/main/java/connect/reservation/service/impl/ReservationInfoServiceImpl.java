@@ -4,12 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import connect.reservation.dao.ReservationInfoDao;
 import connect.reservation.domain.ReservationInfo;
 import connect.reservation.service.ReservationInfoService;
 
+@Service
 public class ReservationInfoServiceImpl implements ReservationInfoService{
 	private ReservationInfoDao reservationInfoDao;
 	

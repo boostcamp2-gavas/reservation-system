@@ -114,7 +114,7 @@ public class MainController {
 	
 	@PostMapping("/reserve")
 	public String add(HttpSession session, HttpServletRequest request, @RequestParam("productId") int productId) {
-		// getParameter, getAttribute
+		// getParameter, getAttribute 차이
 		int userId = Integer.parseInt(session.getAttribute("userId")+"");
 		String countInfo = request.getParameter("count_info");
 		String userName = request.getParameter("name");
