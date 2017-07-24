@@ -241,10 +241,8 @@
 
 	
 		$(".btn_agreement").on("click",function(event){
-			
 			var detail =$(this).parents(".agreement");
 			detail.addClass("open");
-			console.log(detail);
 		});
 		
 		// 유효성 검사 
@@ -279,8 +277,6 @@
 			}
 		});
 	
-		
-		
 		$("#chk3").on("change",function(){
 			if($("#chk3").is(":checked")){
 				if(!flag){
@@ -294,6 +290,13 @@
 			}
 		});
 	
+		$(".bk_btn").on("click",function(){
+			if($("#chk3").is(":checked") && Number($(".tickat_count").text())!==0){
+				alert("작성완료");
+			}else{
+				alert("약관 동의 및 티켓을 입력해주세요.");
+			}
+		});
 </script>
 
 </html>
