@@ -217,27 +217,10 @@
 	$(document).ready(function(){
 		// qty 선언 후 개수 만큼 ticket 생성. 그후 이벤트 등록
 		var $qty = $(".qty");
-		
 		var ticket = $qty.map(function(v,i){
 			return new Ticket($(i));
 		});
-		
-		$(".qty .ico_minus3").on("click",function(){
-			if($(this).hasClass("disabled")){
-				return;
-			}
-			var index = $(".qty .ico_minus3").index($(this));
-			ticket[index].minus();
-			
-		});
-		
-		$(".ico_plus3").on("click",function(){
-			if($(this).hasClass("disabled")){
-				return;
-			}
-			var index = $(".qty .ico_plus3").index($(this));
-			ticket[index].plus();
-		});
+		TicketModule.init(ticket);
 		
 		$("#chk3").on("change",function(){
 			if($("#chk3").is(":checked")){

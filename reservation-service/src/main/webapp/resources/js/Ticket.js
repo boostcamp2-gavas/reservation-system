@@ -44,9 +44,27 @@
 	};	
 	
 	var TicketModule = (function(){
+		var Ticket = [];
 		return {
-			init: function(){
+			minus : function(){
+				if($(this).hasClass("disabled")){
+					return;
+				}
+				var index = $(".qty .ico_minus3").index($(this));
+				Ticket[index].minus();
 				
+			},
+			plus : function(){
+				if($(this).hasClass("disabled")){
+					return;
+				}
+				var index = $(".qty .ico_plus3").index($(this));
+				Ticket[index].plus();
+			},
+			init: function(ticket){
+				Ticket = ticket;
+				$(".ico_minus3").on("click",this.minus);
+				$(".ico_plus3").on("click",this.plus);
 			}
 		}
 	})();
