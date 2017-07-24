@@ -110,7 +110,7 @@ function checkInfo() {
 		$('#email').focus();
 	}
 	else {
-		if($('#chk3').is(':checked'))
+		if($('#chk3').is(':checked')) 
 			$('.bk_btn_wrap').removeClass('disable');
 		else
 			$('.bk_btn_wrap').addClass('disable');
@@ -118,3 +118,22 @@ function checkInfo() {
 	}
 	$('#chk3').prop('checked', false);
 }
+
+$('.btn_agreement').click(function(){
+	event.preventDefault(); 
+	var index = $(".agreement .btn_agreement").index($(this));
+	index++;
+	$('.agreement:eq('+index+')').addClass('open');
+});
+
+$('.bk_btn').click(function(){
+	var $countInfo = "";
+	
+	for(var i=0; i<$('.qty').length; i++) {
+		$countInfo += $('.count_control_input:eq('+i+')').val() + '-';
+	}
+	
+	$('#count_info').val($countInfo);
+	$('.form_horizontal').attr('action', '/reserve?productId='+$('#productId').val());
+	$('.form_horizontal').submit();
+})

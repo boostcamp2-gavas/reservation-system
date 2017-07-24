@@ -39,7 +39,7 @@ public class ProductInfoSqls {
 			+ "WHERE pi.product_id = :product_id AND pi.file_id = f.id AND f.content_type like '%공연정보%' "
 			+ "ORDER BY f.content_type";
 	
-	final static String GET_RESERVE_INFO = "SELECT p.name product_name, FORMAT(pp.price*(1-pp.discount_rate),0) minimum_price, f.file_name, f.save_file_name, di.place_name, di.place_street, di.place_lot, replace(left(di.display_start, 10), '-', '.') display_start, replace(left(di.display_end, 10), '-', '.') display_end, di.observation_time"
+	final static String GET_RESERVE_INFO = "SELECT p.id product_id, p.name product_name, FORMAT(pp.price*(1-pp.discount_rate),0) minimum_price, f.file_name, f.save_file_name, di.place_name, di.place_street, di.place_lot, replace(left(di.display_start, 10), '-', '.') display_start, replace(left(di.display_end, 10), '-', '.') display_end, di.observation_time"
 			+ " FROM product p INNER JOIN product_price pp ON p.id = pp.product_id"
 			+ " LEFT JOIN product_image pi ON p.id = pi.product_id"
 			+ " LEFT JOIN file f ON pi.file_id = f.id"

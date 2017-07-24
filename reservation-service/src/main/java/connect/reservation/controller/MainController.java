@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -19,6 +21,7 @@ import connect.reservation.domain.Category;
 import connect.reservation.service.CategoryService;
 import connect.reservation.service.ProductInfoService;
 import connect.reservation.service.ReservationCommentService;
+import connect.reservation.service.ReservationInfoService;
 import connect.reservation.service.UsersService;
 
 @Controller
@@ -29,6 +32,7 @@ public class MainController {
 	private final ProductInfoService productInfoService;
 	private final ReservationCommentService reservationCommentService;
 	private final UsersService usersService;
+	private final ReservationInfoService reservationInfoService;
 	
 	
 	@Autowired
@@ -36,11 +40,13 @@ public class MainController {
 			CategoryService categoryService, 
 			ProductInfoService productInfoService,
 			ReservationCommentService reservationCommentService,
-			UsersService usersService) {
+			UsersService usersService,
+			ReservationInfoService reservationInfoService) {
 		this.categoryService = categoryService;
 		this.productInfoService = productInfoService;
 		this.reservationCommentService = reservationCommentService;
 		this.usersService = usersService;
+		this.reservationInfoService = reservationInfoService;
 	}
 	
 	@GetMapping("/category")
@@ -104,5 +110,20 @@ public class MainController {
 		model.addAttribute("price", productInfoService.getPriceInfo(productId));
 		model.addAttribute("user", usersService.getUserInfo(userId));
 		return "reserve";
+	}
+	
+	@PostMapping("/reserve")
+	public String add(HttpSession session, HttpServletRequest request, @RequestParam("productId") int productId) {
+		// getParameter, getAttribute
+		int userId = Integer.parseInt(session.getAttribute("userId")+"");
+		String countInfo = request.getParameter("count_info");
+		String userName = request.getParameter("name");
+		String userTel = request.getParameter("tel");
+		String userEmail = request.getParameter("email");
+		String reserveDate = request.getParameter("reserve_date");
+		
+		reservationInfoService.add(productId, userId, countInfo, userName, userTel, userEmail, reserveDate);
+		
+		return "redirect:/mvMyPage";
 	}
 }
