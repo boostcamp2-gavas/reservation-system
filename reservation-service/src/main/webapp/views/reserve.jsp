@@ -292,6 +292,31 @@
 	
 		$(".bk_btn").on("click",function(){
 			if($("#chk3").is(":checked") && Number($(".tickat_count").text())!==0){
+				
+				var data ={};
+				data.productId = "${id}";
+				data.userId = "${sessionScope.id}";
+				if(ticket[0]){
+					data.generalTicketCount =  ticket[0].count;
+				}
+				if(ticket[1]){
+					data.youthTicketCount =  ticket[1].count;
+				}
+				if(ticket[2]){
+					data.childTicketCount =  ticket[2].count;
+				}
+				// 배열이 없으면 에러 뜨지 않나 ? 
+				data.reservationName = $("#name").val();
+				data.reservationTel = $("#tel").val();
+				data.reservationEmail = $("#email").val();
+				
+				$.ajax({  method: "post",
+						  url: "/reservation",
+				          data : data
+				}).done(function(){
+					console.log("성공");
+				});
+				
 				alert("작성완료");
 			}else{
 				alert("약관 동의 및 티켓을 입력해주세요.");

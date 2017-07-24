@@ -18,15 +18,15 @@ import org.springframework.stereotype.Repository;
 import kr.or.reservation.domain.Category;
 import kr.or.reservation.dto.NaverUserDTO;
 import kr.or.reservation.sqls.CategorySqls;
-import kr.or.reservation.sqls.LoginSqls;
+import kr.or.reservation.sqls.UserSqls;
 
 @Repository
-public class LoginDao {
+public class UserDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private SimpleJdbcInsert insertAction;
 	private RowMapper<NaverUserDTO> rowMapper = BeanPropertyRowMapper.newInstance(NaverUserDTO.class);
 
-	public LoginDao(DataSource dataSource) {
+	public UserDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 		this.insertAction = new SimpleJdbcInsert(dataSource).withTableName("users").usingGeneratedKeyColumns("id");
 
@@ -39,7 +39,11 @@ public class LoginDao {
 
 	public boolean isEmpty(int snsId) {
 		Map<String, ?> params = Collections.singletonMap("id", snsId);
-		return jdbc.queryForObject(LoginSqls.SELECTBYID, params, Integer.class) == 0;
+		return jdbc.queryForObject(UserSqls.SELECTBYID, params, Integer.class) == 0;
 	}
 
+	public int selectId(int snsId) {
+		Map<String, ?> params = Collections.singletonMap("id", snsId);
+		return jdbc.queryForObject(UserSqls.SELECT_ID_BY_SNSID, params, Integer.class);
+	}
 }

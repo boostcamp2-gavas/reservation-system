@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.or.reservation.dao.LoginDao;
+import kr.or.reservation.dao.UserDao;
 import kr.or.reservation.dto.NaverUserDTO;
 import kr.or.reservation.service.LoginService;
 
@@ -12,7 +12,7 @@ import kr.or.reservation.service.LoginService;
 @Service
 public class LoginServiceImpl implements LoginService {
 
-	private LoginDao loginDao;
+	private UserDao loginDao;
 	Logger log = Logger.getLogger(this.getClass());
 	
 	@Override
@@ -30,7 +30,7 @@ public class LoginServiceImpl implements LoginService {
 
 	
 	@Autowired
-	public void setLoginDao(LoginDao loginDao) {
+	public void setLoginDao(UserDao loginDao) {
 		this.loginDao = loginDao;
 	}
 	
