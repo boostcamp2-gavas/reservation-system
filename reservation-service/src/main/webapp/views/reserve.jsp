@@ -25,7 +25,7 @@
                 <div class="group_visual">
                     <div class="container_visual" style="width: 414px;">
                         <ul class="visual_img">
-                            <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170217_264/1487312141947lTddT_JPEG/%B3%D7%C0%CC%B9%F6.jpg?type=ff1242_816"> <span class="img_bg"></span>
+                            <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="/${reservation.fileId}"> <span class="img_bg"></span>
                                 <div class="preview_txt">
                                     <h2 class="preview_txt_tit">${reservation.name}</h2> <em class="preview_txt_dsc">₩ ${reservation.priceList[0].price} ~ </em>
                                     <em class="preview_txt_dsc">${reservation.salesStart}~${reservation.salesEnd}, 잔여티켓 ?? </em> </div>
@@ -161,7 +161,13 @@
                                 </div>
                                 <div class="inline_form last"> <label class="label" for="message">예매내용</label>
                                     <div class="inline_control">
-                                        <p class="inline_txt selected">2017.2.17.(금)~2017.4.18.(화), 총 <span class ="tickat_count">0</span> 매</p>
+                                        <p class="inline_txt selected">
+											<fmt:parseDate value="${reservation.salesStart}" var="dateFmt" pattern="yyyy년 MM월 dd일"/>
+											<fmt:formatDate value="${dateFmt}"  pattern="yyyy-MM-dd"/>
+										~
+											<fmt:parseDate value="${reservation.salesEnd}" var="dateFmt" pattern="yyyy년 MM월 dd일"/>
+											<fmt:formatDate value="${dateFmt}"  pattern="yyyy-MM-dd"/>
+                                        , 총 <span class ="tickat_count">0</span> 매</p>
                                     </div>
                                 </div>
                             </form>

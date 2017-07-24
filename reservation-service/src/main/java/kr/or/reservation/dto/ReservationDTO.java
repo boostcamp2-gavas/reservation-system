@@ -14,6 +14,7 @@ public class ReservationDTO {
 	private Timestamp salesEnd;
 	private String observationTime;
 	private String placeLot;
+	private int fileId;
 	private List<Map<String,Object>> priceList;
 	
 	public ReservationDTO() {
@@ -63,12 +64,30 @@ public class ReservationDTO {
 		this.priceList = priceList;
 	}
 
+	public static SimpleDateFormat getMmddFormat() {
+		return mmddFormat;
+	}
+
+	public static void setMmddFormat(SimpleDateFormat mmddFormat) {
+		ReservationDTO.mmddFormat = mmddFormat;
+	}
+
+	public int getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(int fileId) {
+		this.fileId = fileId;
+	}
+
 	@Override
 	public String toString() {
 		return "id : \"" + id + "\", name : \"" + name + "\", salesStart : \"" + salesStart + "\", salesEnd : \""
 				+ salesEnd + "\", observationTime : \"" + observationTime + "\", placeLot : \"" + placeLot
-				+ "\", priceList : \"" + priceList +"}";
+				+ "\", fileId : \"" + fileId + "\", priceList : \"" + priceList;
 	}
+
+
 	
 	
 	
