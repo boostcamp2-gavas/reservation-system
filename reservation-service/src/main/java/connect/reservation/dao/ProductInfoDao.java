@@ -75,4 +75,16 @@ public class ProductInfoDao {
     	params.put("product_id", product_id);
     	return jdbc.query(ProductInfoSqls.GET_PRODUCT_INFO_IMAGE, params, rowMapper);
     }
+    
+    public ProductInfo getReserveInfo(int product_id) {
+    	Map<String, Object> params = new HashMap<>();
+    	params.put("product_id", product_id);
+    	return jdbc.queryForObject(ProductInfoSqls.GET_RESERVE_INFO, params, rowMapper);
+    }
+    
+    public List<ProductInfo> getPriceInfo(int product_id) {
+    	Map<String, Object> params = new HashMap<>();
+    	params.put("product_id", product_id);
+    	return jdbc.query(ProductInfoSqls.GET_PRICE_INFO, params, rowMapper);
+    }
 }

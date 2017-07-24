@@ -115,10 +115,12 @@
                 </div>
 </c:if>
                 <div class="section_btn"> 
-	                <button type="button" class="bk_btn"> 
-		                <i class="fn fn-nbooking-calender2"></i> 
-		                <span>예매하기</span> 
-	                </button> 
+                	<a href="#" class="bk_btn_reserve">
+		                <button type="button" class="bk_btn">
+			                <i class="fn fn-nbooking-calender2"></i> 
+			                <span>예매하기</span> 
+		                </button> 
+	                </a>
                 </div>
                 <div class="section_review_list">
                     <div class="review_box">
@@ -307,16 +309,16 @@
 						</script> 
 					</ul>
 				</div>
-				<div class="btnImg prev">
-					<div class="pop_prev prev_inn">
+				<div class="popImgBtn prev">
+					<div class="prev_inn">
 						<a href="#" class="btn_prev" title="이전">
 							<!-- [D] 첫 이미지 이면 off 클래스 추가 -->
 							<i class="spr_book2 ico_arr6_lt off"></i>
 						</a>
 					</div>
 				</div>
-				<div class="btnImg nxt">
-					<div class="pop_nxt nxt_inn">
+				<div class="popImgBtn nxt">
+					<div class="nxt_inn">
 						<a href="#" class="btn_nxt" title="다음">
 							<i class="spr_book2 ico_arr6_rt"></i>
 						</a>

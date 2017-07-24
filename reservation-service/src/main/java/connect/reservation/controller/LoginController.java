@@ -36,6 +36,7 @@ public class LoginController {
 	private String callbackUrl = "http://localhost:8080/login/checkState";
 	private String state = "";
 	private String code = "";
+	private String type = "";
 	
 
 	@Autowired
@@ -43,10 +44,15 @@ public class LoginController {
 	
 
 
-	@GetMapping("/")
-	public String mvLogin(HttpServletRequest request) {
+	@GetMapping("")
+	public String mvLogin(HttpServletRequest request, @RequestParam("type") String type) {
 		
 		try {
+			if(null == type) {
+				return null; // 오류처리하기*************************************************************************** 
+			}
+			this.type = type;
+			
 			String encodingUrl = URLEncoder.encode(callbackUrl, "utf-8");
 			String naverLoginUrl = getNaverLoginUrl(encodingUrl, request.getSession());
 			
@@ -129,7 +135,10 @@ public class LoginController {
 	      System.out.println(e);
 	    }
 		
-		return "redirect:/mvMyPage";
+		if("reserve".equals(type))
+			return session.getAttribute("beforeUrl")+"";
+		else
+			return "redirect:/mvMyPage";
 	}
 	
 	public void getUserProfile(String accessToken, HttpSession session) {

@@ -23,7 +23,25 @@ public class ProductInfo {
 	private String salesEnd;
 	private int salesFlag;
 	
+	private int priceType;
+	private int price;
+	private double discountRate;
+	private double discountPrice;
+	private int minimumPrice;
 	
+	
+	public double getDiscountPrice() {
+		return discountPrice;
+	}
+	public void setDiscountPrice(double discountPrice) {
+		this.discountPrice = discountPrice;
+	}
+	public int getMinimumPrice() {
+		return minimumPrice;
+	}
+	public void setMinimumPrice(int minimumPrice) {
+		this.minimumPrice = minimumPrice;
+	}
 	public int getProductId() {
 		return productId;
 	}
@@ -144,6 +162,25 @@ public class ProductInfo {
 	public void setSalesFlag(int salesFlag) {
 		this.salesFlag = salesFlag;
 	}
+	public int getPriceType() {
+		return priceType;
+	}
+	public void setPriceType(int priceType) {
+		this.priceType = priceType;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public double getDiscountRate() {
+		return discountRate;
+	}
+	public void setDiscountRate(double discountRate) {
+		this.discountRate = discountRate;
+	}
+	
 	
 	@Override
 	public String toString() {
@@ -152,7 +189,8 @@ public class ProductInfo {
 				+ fileName + ", saveFileName=" + saveFileName + ", placeLot=" + placeLot + ", placeStreet="
 				+ placeStreet + ", tel=" + tel + ", homepage=" + homepage + ", email=" + email + ", content=" + content
 				+ ", observationTime=" + observationTime + ", displayStart=" + displayStart + ", displayEnd="
-				+ displayEnd + ", event=" + event + ", salesEnd=" + salesEnd + ", salesFlag=" + salesFlag + "]";
+				+ displayEnd + ", event=" + event + ", salesEnd=" + salesEnd + ", salesFlag=" + salesFlag
+				+ ", priceType=" + priceType + ", price=" + price + ", discountRate=" + discountRate + "]";
 	}
 	
 }

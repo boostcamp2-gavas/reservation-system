@@ -54,7 +54,11 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Override
 	public int updateSnsUser(String snsId, String nickname, String profile) {
-		
 		return usersDao.updateSnsUser(snsId, nickname, profile, getDate());
+	}
+	
+	@Override
+	public Users getUserInfo(int userId) {
+		return usersDao.getUserInfo(userId);
 	}
 }

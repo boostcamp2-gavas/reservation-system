@@ -55,4 +55,14 @@ public class UsersDao {
     	
     	return jdbc.update(UsersSqls.UPDATE_BY_SNS_ID, params);
     }
+    
+    public Users getUserInfo(int user_id) {
+    	Map<String, Object> params = new HashMap<>();
+        params.put("user_id", user_id);
+        try {
+        	return jdbc.queryForObject(UsersSqls.GET_USER_INFO,params,rowMapper);
+        } catch(EmptyResultDataAccessException e) {
+        	return null;
+        }
+    }
 }

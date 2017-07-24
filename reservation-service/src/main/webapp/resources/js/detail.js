@@ -26,64 +26,45 @@ $('.visual_img').bind('touchend',function (e) {
 	var temp;
 	temp = startTouchX-moveTouchX;
 	if(temp > 0) {
-		rolling.rollingNxt();
+		imgBtnNxt();
 	}
 	else {
-		rolling.rollingPre();
+		imgBtnPre();
 	}
 });
 
 
-
 var imgCount = 1;
 var $imgNum = parseInt($('.imgNum').text());
-
 
 $('.imgBtn ').click(function() {
 	var element = $(this).children();
 	var btn = element.attr('class');
 
 	if(btn == 'nxt_inn') {
-		if(imgCount == $imgNum)
-			return;
-		
-		$('.imgCurrent').html(++imgCount);
-		rolling.rollingNxt();
+		imgBtnNxt();
 	}
 	else {
-		if(imgCount == 1)
-			return;
-		
-		$('.imgCurrent').html(--imgCount);		
-		rolling.rollingPre();
+		imgBtnPre();
 	}
 	imgBtnManage();
 });
 
-/*$('.prev_inn:first').click(function() {
-	rolling.setting();
-	
-	if(imgCount == 1)
-		return;
-	
-	$('.imgCurrent').html(--imgCount);
-	rolling.rollingPre();
-	
-	imgBtnManage();
-});
-
-$('.nxt_inn:first').click(function() {
-	rolling.setting();
-	
+function imgBtnNxt() {
 	if(imgCount == $imgNum)
 		return;
 	
-	
 	$('.imgCurrent').html(++imgCount);
 	rolling.rollingNxt();
+}
+
+function imgBtnPre() {
+	if(imgCount == 1)
+		return;
 	
-	imgBtnManage();
-});*/
+	$('.imgCurrent').html(--imgCount);		
+	rolling.rollingPre();
+}
 
 function imgBtnManage(){
 	if (imgCount == 1) {
@@ -112,10 +93,13 @@ $('.bk_more').click(function() {
 
 $('.bk_btn').click(function() {
 	var today = getToday();
+	
 	if($('#sales_flag').val() == 0)
 		alert("매진입니다.");
 	else if($('#sales_end').val() < today)
 		alert("판매기간이 종료되었습니다.");
+	else
+		$('.bk_btn_reserve').attr('href', '/reserve?productId='+$('#productId').val());
 });
 
 function getToday() {
@@ -174,36 +158,40 @@ $('#btnClose').click(function() {
 });
 
 
-
 var popImgCount = 1;
 
-$('.prev_inn:last').click(function() {
+$('.popImgBtn ').click(function() {
 	event.preventDefault();
 	rolling.init($('.comment_popup_img'));
-	console.log('before:'+popImgCount);
-//	if(popImgCount == 1)
-//		return;
-	popImgCount--;
-	console.log('after:'+popImgCount);
-//	$('.imgCurrent').html(--imgCount);
-	rolling.rollingPre();
 	
-//	imgRolling();
+	var element = $(this).children();
+	var btn = element.attr('class');
+
+	if(btn == 'nxt_inn') {
+		popimgBtnNxt();
+	}
+	else {
+		popimgBtnPre();
+	}
 });
 
-$('.nxt_inn:last').click(function() {
-	event.preventDefault();
-	rolling.init($('.comment_popup_img'));
-	console.log('before:'+popImgCount);
+function popimgBtnNxt() {
 	if(popImgCount == 2)
 		return;
-	popImgCount++;
-	console.log('after:'+popImgCount);
-//	$('.imgCurrent').html(--imgCount);
-	rolling.rollingNxt();
 	
-//	imgRolling();
-});
+	popImgCount++;
+	rolling.rollingNxt();
+}
+
+function popimgBtnPre() {
+	if(popImgCount == 1)
+		return;
+	
+	popImgCount--;
+	// 수정하기
+	rolling.rollingPre();
+}
+
 
 $('.teb_info').click(function() {
 	$(this).find('a').addClass('active');
