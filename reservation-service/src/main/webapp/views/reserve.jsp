@@ -48,18 +48,29 @@
                           <c:forEach  items="${reservation.priceList}" var="list"  >
                           	<c:choose>
 							    <c:when test="${list.price_type eq 1}">
-							       	일반(만 19~64세) ${list.price }원 <br>
+			 				       	일반(만 19~64세) ${list.price }원 
+			 				       	<c:if test="${list.discount_rate ne 0}">
+			 				       	-> <fmt:formatNumber value="${ list.price- (list.price * list.discount_rate)}" type="number"/>원 할인
+							    	</c:if>
+							    	 <br>
 							    </c:when>
 							    <c:when test="${list.price_type eq 2}">
-							        	청소년(만 13~18세) ${list.price }원 <br>
+							        	청소년(만 13~18세) ${list.price }원 
+					        		<c:if test="${list.discount_rate ne 0}">
+			 				       		-> <fmt:formatNumber value="${ list.price- (list.price * list.discount_rate)}" type="number"/>원 할인 <br>
+							    	</c:if>
+							        	 <br>
 							    </c:when>
 							    <c:when test="${list.price_type eq 3}">
-							        	어린이(만 4~12세) ${list.price }원 <br>
+							        	어린이(만 4~12세) ${list.price }원 -> ${list.price- (list.price * list.discount_rate)}원 할인 <br>
+							    		<c:if test="${list.discount_rate ne 0}">
+			 				       			-> <fmt:formatNumber value="${ list.price- (list.price * list.discount_rate)}" type="number"/>원 할인
+							    		</c:if>
+							    	 <br>
 							    </c:when>
 							</c:choose>
 					  	  </c:forEach>
-                            [event 가져올것 ?]<br>
-                            / 20인 이상 단체 20% 할인<br> 국가유공자, 장애인, 65세 이상 4,000원
+                          
                         </p>
                     </div>
                 </div>
