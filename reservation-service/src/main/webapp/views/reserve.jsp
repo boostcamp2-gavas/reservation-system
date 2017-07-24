@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 
 <head>
@@ -91,20 +92,54 @@
 									</c:choose>
                             	</span> 
                             	</strong> 
-                            	<strong class="product_price"> <span class="price">
-	                            	<c:choose>
-									    <c:when test="${list.price_type eq 1}">
-									       	${list.price }<span class="price_type">원</span>
-									    </c:when>
-									    <c:when test="${list.price_type eq 2}">
-									        ${list.price }<span class="price_type">원</span>
-									    </c:when>
-									    <c:when test="${list.price_type eq 3}">
-									        ${list.price }<span class="price_type">원</span>
-									    </c:when>
-									</c:choose>
-								</span>
-                            	 </strong> <em class="product_dsc">10,200원 (15% 할인가)</em> </div>
+		                            	<c:choose>
+										    <c:when test="${list.price_type eq 1}">
+										    <strong class="product_price">
+											     <span class="price">
+											    	<fmt:formatNumber value="${ list.price- (list.price * list.discount_rate)}" type="number"/>
+													<span class="price_type">원</span>
+												 </span>
+													<em class="product_dsc">
+					                            	 <fmt:formatNumber value="${ list.price- (list.price * list.discount_rate)}" type="number"/>
+					                            	  (
+						                            <fmt:formatNumber value="${list.discount_rate * 100}" type="number"/>
+						                            	  % 할인가)
+					                            	</em> 
+				                            </strong>
+										    </c:when>
+										    <c:when test="${list.price_type eq 2}">
+										       <strong class="product_price">
+										   	 		<span class="price">
+												        <fmt:formatNumber value="${ list.price- (list.price * list.discount_rate)}" type="number"/>
+												        <span class="price_type">원</span>
+												    </span>
+												        <em class="product_dsc">
+						                            	 <fmt:formatNumber value="${ list.price- (list.price * list.discount_rate)}" type="number"/>
+						                            	  (
+						                            	  <fmt:formatNumber value="${list.discount_rate * 100}" type="number"/>
+						                            	  % 할인가)
+						                            	</em> 
+											        
+										        </strong>
+										    </c:when>
+										    <c:when test="${list.price_type eq 3}">
+										       <strong class="product_price">
+											     <span class="price">
+											       <fmt:formatNumber value="${ list.price- (list.price * list.discount_rate)}" type="number"/>
+											       <span class="price_type">원</span>
+											     </span>
+											       <em class="product_dsc">
+					                            	 <fmt:formatNumber value="${ list.price- (list.price * list.discount_rate)}" type="number"/>
+					                            	  (
+						                            <fmt:formatNumber value="${list.discount_rate * 100}" type="number"/>
+						                            	  % 할인가)
+					                            	</em> 
+										       </strong>
+										    </c:when>
+										</c:choose>
+									
+                            	 
+                            	 </div>
                         	</div>
 					  	  </c:forEach>
                     </div>
@@ -126,7 +161,7 @@
                                 </div>
                                 <div class="inline_form last"> <label class="label" for="message">예매내용</label>
                                     <div class="inline_control">
-                                        <p class="inline_txt selected">2017.2.17.(금)~2017.4.18.(화), 총 0매</p>
+                                        <p class="inline_txt selected">2017.2.17.(금)~2017.4.18.(화), 총 <span class ="tickat_count">0</span> 매</p>
                                     </div>
                                 </div>
                             </form>
@@ -175,78 +210,51 @@
 
 <script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
 <script src = "/resources/js/node_modules/@egjs/component/dist/component.js"></script>
+<script src = "/resources/js/Ticket.js"></script>
+
 <script>
 
-	// 이게 예시. 
-	
-	function Ticket($qty,price){
-		this.$qty = $qty;
-		this.$text = $qty.find(".count_control_input[type = tel]");
-		this.$total_price = $qty.find(".total_price");
-		this.total_price =parseInt(this.$total_price.text());
-		this.price = parseInt($qty.find(".price").text());
-		this.count = 0;
-	}		
-	
-	Ticket.prototype = new	eg.Component();		
-	Ticket.prototype.constructor =	Ticket;	
-	
-	Ticket.prototype.minus = function(){
-		--this.count
-		this.$text.val(this.count);
-		this.$total_price.text(this.total_price-=this.price);
-		if(this.count ===0){
-			this.$qty.find(".ico_minus3").addClass("disabled");
-		}
-	};	
-	
-	Ticket.prototype.plus = function(){	
-		++this.count
-		this.$text.val(this.count);
-		this.$total_price.text(this.total_price+=this.price);
-		if(this.count !==0){
-			this.$qty.find(".ico_minus3").removeClass("disabled");
-		}
-	};	
-	
-	
-	var $qty = $(".qty");
-	var ticket = $qty.map(function(v,i){
-		return new Ticket($(i));
-	});
-	
-	$(".qty .ico_minus3").on("click",function(){
-		if($(this).hasClass("disabled")){
-			return;
-		}
-		var index = $(".qty .ico_minus3").index($(this));
-		ticket[index].minus();
+	$(document).ready(function(){
+		// qty 선언 후 개수 만큼 ticket 생성. 그후 이벤트 등록
+		var $qty = $(".qty");
 		
-	});
-	
-	$(".ico_plus3").on("click",function(){
-		if($(this).hasClass("disabled")){
-			return;
-		}
-		var index = $(".qty .ico_plus3").index($(this));
-		ticket[index].plus();
+		var ticket = $qty.map(function(v,i){
+			return new Ticket($(i));
+		});
 		
-	});
-	
-	$("#chk3").on("change",function(){
-		if($("#chk3").is(":checked")){
-			if( !($("#name").val() && $("#tel").val()) ){
-				alert("정보를 입력해주세요.");
-				$(this).prop("checked",false);
-			}else{
-				$(".bk_btn_wrap").removeClass("disable");
+		$(".qty .ico_minus3").on("click",function(){
+			if($(this).hasClass("disabled")){
+				return;
 			}
-		}else{
-			$(".bk_btn_wrap").addClass("disable");
-		}
+			var index = $(".qty .ico_minus3").index($(this));
+			ticket[index].minus();
+			
+		});
+		
+		$(".ico_plus3").on("click",function(){
+			if($(this).hasClass("disabled")){
+				return;
+			}
+			var index = $(".qty .ico_plus3").index($(this));
+			ticket[index].plus();
+		});
+		
+		$("#chk3").on("change",function(){
+			if($("#chk3").is(":checked")){
+				if( !($("#name").val() && $("#tel").val()) ){
+					alert("정보를 입력해주세요.");
+					$(this).prop("checked",false);
+				}else{
+					$(".bk_btn_wrap").removeClass("disable");
+				}
+			}else{
+				$(".bk_btn_wrap").addClass("disable");
+			}
+		});
 	});
 	
-	//console.log($qty.children(".count_control_input[type=tel]"));
+
+	
 
 	
 </script>
