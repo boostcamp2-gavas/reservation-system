@@ -26,75 +26,87 @@
                         <ul class="visual_img">
                             <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170217_264/1487312141947lTddT_JPEG/%B3%D7%C0%CC%B9%F6.jpg?type=ff1242_816"> <span class="img_bg"></span>
                                 <div class="preview_txt">
-                                    <h2 class="preview_txt_tit">클림트 인사이드</h2> <em class="preview_txt_dsc">₩12,000 ~ </em><em class="preview_txt_dsc">2017.2.17.(금)~2017.4.18.(화), 잔여티켓 2769매</em> </div>
+                                    <h2 class="preview_txt_tit">${reservation.name}</h2> <em class="preview_txt_dsc">₩ ${reservation.priceList[0].price} ~ </em>
+                                    <em class="preview_txt_dsc">${reservation.salesStart}~${reservation.salesEnd}, 잔여티켓 ?? </em> </div>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="section_store_details">
                     <div class="store_details">
-                        <h3 class="in_tit">클림트 인사이드</h3>
+                        <h3 class="in_tit">${reservation.name}</h3>
                         <p class="dsc">
-                            장소 : 서울 종로구 경희궁길 42(신문로 2가 1-101번지)<br> 기간 : 2017.2.17.(금)~2017.4.18.(화)
+                            장소 : ${reservation.placeLot}<br> 기간 : ${reservation.salesStart}~${reservation.salesEnd}
                         </p>
                         <h3 class="in_tit">관람시간</h3>
                         <p class="dsc">
-                            화, 목, 금 일요일 10:00am~06:00pm(입장마감 05:30pm)<br> ‘문화가 있는 날’ 매월 마지막 주 수요일은 오후 8시까지 연장
+                        	${reservation.observationTime}
                         </p>
                         <h3 class="in_tit">요금</h3>
                         <p class="dsc">
-                            성인(만 19~64세) 5,000원 / 청소년(만 13~18세) 4,000원<br> 어린이(만 4~12세) 3,000원 / 20인 이상 단체 20% 할인<br> 국가유공자, 장애인, 65세 이상 4,000원
+                          <c:forEach  items="${reservation.priceList}" var="list"  >
+                          	<c:choose>
+							    <c:when test="${list.price_type eq 1}">
+							       	일반(만 19~64세) ${list.price }원 <br>
+							    </c:when>
+							    <c:when test="${list.price_type eq 2}">
+							        	청소년(만 13~18세) ${list.price }원 <br>
+							    </c:when>
+							    <c:when test="${list.price_type eq 3}">
+							        	어린이(만 4~12세) ${list.price }원 <br>
+							    </c:when>
+							</c:choose>
+					  	  </c:forEach>
+                            [event 가져올것 ?]<br>
+                            / 20인 이상 단체 20% 할인<br> 국가유공자, 장애인, 65세 이상 4,000원
                         </p>
                     </div>
                 </div>
                 <div class="section_booking_ticket">
                     <div class="ticket_body">
-                        <div class="qty">
+                     <c:forEach  items="${reservation.priceList}" var="list"  >
+                      <div class="qty">
                             <div class="count_control">
                                 <!-- [D] 수량이 최소 값이 일때 ico_minus3, count_control_input에 disabled 각각 추가, 수량이 최대 값일 때는 ico_plus3에 disabled 추가 -->
                                 <div class="clearfix">
-                                    <a href="#" class="btn_plus_minus spr_book2 ico_minus3 disabled" title="빼기"> </a> <input type="tel" class="count_control_input disabled" value="0" readonly title="수량">
-                                    <a href="#" class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
+                                    <a class="btn_plus_minus spr_book2 ico_minus3 disabled" title="빼기"> </a> <input type="tel" class="count_control_input disabled" value="0" readonly title="수량">
+                                    <a  class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
                                     </a>
                                 </div>
                                 <!-- [D] 금액이 0 이상이면 individual_price에 on_color 추가 -->
-                                <div class="individual_price"><span class="total_price">123,000</span><span class="price_type">원</span></div>
+                                <div class="individual_price"><span class="total_price">0</span><span class="price_type">원</span></div>
                             </div>
-                            <div class="qty_info_icon"> <strong class="product_amount"> <span>성인</span> </strong> <strong class="product_price"> <span class="price">10,200</span> <span class="price_type">원</span> </strong> <em class="product_dsc">10,200원 (15% 할인가)</em> </div>
-                        </div>
-                        <div class="qty">
-                            <div class="count_control">
-                                <div class="clearfix">
-                                    <a href="#" class="btn_plus_minus spr_book2 ico_minus3" title="빼기"> </a> <input type="tel" class="count_control_input" value="10" readonly title="수량">
-                                    <a href="#" class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
-                                    </a>
-                                </div>
-                                <div class="individual_price on_color"><span class="total_price">123,000</span><span class="price_type">원</span></div>
-                            </div>
-                            <div class="qty_info_icon"> <strong class="product_amount"> <span>유아</span> </strong> <strong class="product_price"> <span class="price">6,800</span> <span class="price_type">원</span> </strong> <em class="product_dsc">6,800원 (15% 할인가)</em> </div>
-                        </div>
-                        <div class="qty">
-                            <div class="count_control">
-                                <div class="clearfix">
-                                    <a href="#" class="btn_plus_minus spr_book2 ico_minus3" title="빼기"> </a> <input type="tel" class="count_control_input" value="3" readonly title="수량">
-                                    <a href="#" class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
-                                    </a>
-                                </div>
-                                <div class="individual_price on_color"><span class="total_price">123,000</span><span class="price_type">원</span></div>
-                            </div>
-                            <div class="qty_info_icon"> <strong class="product_amount"> <span>세트1</span> </strong> <strong class="product_price"> <span class="price">20,000</span> <span class="price_type">원</span> </strong> <em class="product_dsc">2인 관람권 (17% 할인가)</em> </div>
-                        </div>
-                        <div class="qty">
-                            <div class="count_control">
-                                <div class="clearfix">
-                                    <a href="#" class="btn_plus_minus spr_book2 ico_minus3" title="빼기"> </a> <input type="tel" class="count_control_input" value="3" readonly title="수량">
-                                    <a href="#" class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
-                                    </a>
-                                </div>
-                                <div class="individual_price on_color"><span class="total_price">123,000</span><span class="price_type">원</span></div>
-                            </div>
-                            <div class="qty_info_icon"> <strong class="product_amount"> <span>청소년</span> </strong> <strong class="product_price"> <span class="price">8,500</span> <span class="price_type">원</span> </strong> <em class="product_dsc">8,500원 (15% 할인가)</em> </div>
-                        </div>
+                            <div class="qty_info_icon"> <strong class="product_amount"> 
+                            	<span>
+                            		<c:choose>
+									    <c:when test="${list.price_type eq 1}">
+									       	일반
+									    </c:when>
+									    <c:when test="${list.price_type eq 2}">
+									        	청소년
+									    </c:when>
+									    <c:when test="${list.price_type eq 3}">
+									        	어린이
+									    </c:when>
+									</c:choose>
+                            	</span> 
+                            	</strong> 
+                            	<strong class="product_price"> <span class="price">
+	                            	<c:choose>
+									    <c:when test="${list.price_type eq 1}">
+									       	${list.price }<span class="price_type">원</span>
+									    </c:when>
+									    <c:when test="${list.price_type eq 2}">
+									        ${list.price }<span class="price_type">원</span>
+									    </c:when>
+									    <c:when test="${list.price_type eq 3}">
+									        ${list.price }<span class="price_type">원</span>
+									    </c:when>
+									</c:choose>
+								</span>
+                            	 </strong> <em class="product_dsc">10,200원 (15% 할인가)</em> </div>
+                        	</div>
+					  	  </c:forEach>
                     </div>
                 </div>
                 <div class="section_booking_form">
@@ -104,13 +116,13 @@
                             <div class="agreement_nessasary help_txt"> <span class="spr_book ico_nessasary"></span> <span>필수입력</span> </div>
                             <form class="form_horizontal">
                                 <div class="inline_form"> <label class="label" for="name"> <span class="spr_book ico_nessasary">필수</span> <span>예매자</span> </label>
-                                    <div class="inline_control"> <input type="text" name="name" id="name" class="text" value="네이버" maxlength="17"> </div>
+                                    <div class="inline_control"> <input type="text" name="name" id="name" class="text" value="${name}" maxlength="17"> </div>
                                 </div>
                                 <div class="inline_form"> <label class="label" for="tel"> <span class="spr_book ico_nessasary">필수</span> <span>연락처</span> </label>
-                                    <div class="inline_control"> <input type="tel" name="tel" id="tel" class="tel" value="01012345678" placeholder="휴대폰 입력 시 예매내역 문자발송"> </div>
+                                    <div class="inline_control"> <input type="tel" name="tel" id="tel" class="tel" value="" placeholder="휴대폰 입력 시 예매내역 문자발송"> </div>
                                 </div>
                                 <div class="inline_form"> <label class="label" for="email">  <span>이메일</span> </label>
-                                    <div class="inline_control"> <input type="email" name="email" id="email" class="email" value="navercorp@naver.com" maxlength="50"> </div>
+                                    <div class="inline_control"> <input type="email" name="email" id="email" class="email" value="${email}" maxlength="50"> </div>
                                 </div>
                                 <div class="inline_form last"> <label class="label" for="message">예매내용</label>
                                     <div class="inline_control">
@@ -167,19 +179,76 @@
 
 	// 이게 예시. 
 	
-	function	Rectangle(){		
+	function Ticket($qty,price){
+		this.$qty = $qty;
+		this.$text = $qty.find(".count_control_input[type = tel]");
+		this.$total_price = $qty.find(".total_price");
+		this.total_price =parseInt(this.$total_price.text());
+		this.price = parseInt($qty.find(".price").text());
+		this.count = 0;
 	}		
-	Rectangle.prototype = new	eg.Component();		
-	Rectangle.prototype.constructor =	Rectangle;		
-	Rectangle.prototype.some	=	function(){	
-			console.log("a");		
-	}					
-	var	rt	= new	Rectangle();		
-	rt.some();		
-	rt.on("click",function(){	//	이벤트 등록
-						console.log("aa");		
-	});		
-	rt.trigger("click");	//	이벤트 실행
+	
+	Ticket.prototype = new	eg.Component();		
+	Ticket.prototype.constructor =	Ticket;	
+	
+	Ticket.prototype.minus = function(){
+		--this.count
+		this.$text.val(this.count);
+		this.$total_price.text(this.total_price-=this.price);
+		if(this.count ===0){
+			this.$qty.find(".ico_minus3").addClass("disabled");
+		}
+	};	
+	
+	Ticket.prototype.plus = function(){	
+		++this.count
+		this.$text.val(this.count);
+		this.$total_price.text(this.total_price+=this.price);
+		if(this.count !==0){
+			this.$qty.find(".ico_minus3").removeClass("disabled");
+		}
+	};	
+	
+	
+	var $qty = $(".qty");
+	var ticket = $qty.map(function(v,i){
+		return new Ticket($(i));
+	});
+	
+	$(".qty .ico_minus3").on("click",function(){
+		if($(this).hasClass("disabled")){
+			return;
+		}
+		var index = $(".qty .ico_minus3").index($(this));
+		ticket[index].minus();
+		
+	});
+	
+	$(".ico_plus3").on("click",function(){
+		if($(this).hasClass("disabled")){
+			return;
+		}
+		var index = $(".qty .ico_plus3").index($(this));
+		ticket[index].plus();
+		
+	});
+	
+	$("#chk3").on("change",function(){
+		if($("#chk3").is(":checked")){
+			if( !($("#name").val() && $("#tel").val()) ){
+				alert("정보를 입력해주세요.");
+				$(this).prop("checked",false);
+			}else{
+				$(".bk_btn_wrap").removeClass("disable");
+			}
+		}else{
+			$(".bk_btn_wrap").addClass("disable");
+		}
+	});
+	
+	//console.log($qty.children(".count_control_input[type=tel]"));
+
+	
 </script>
 
 </html>

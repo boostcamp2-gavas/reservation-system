@@ -10,34 +10,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.or.reservation.service.CommentService;
 import kr.or.reservation.service.ImgService;
 import kr.or.reservation.service.ProductService;
+import kr.or.reservation.service.ReservationService;
 
 @Controller
 @RequestMapping(path = "/product")
 public class ReservationController {
 
-	ProductService productService;
-	ImgService imgService;
-	CommentService commentService;
-
+	ReservationService reservationService;
+	
 	@Autowired
-	public void setProductService(ProductService productService) {
-		this.productService = productService;
+	public void setReservationService(ReservationService reservationService) {
+		this.reservationService = reservationService;
 	}
-
-	@Autowired
-	public void setImgService(ImgService imgService) {
-		this.imgService = imgService;
-	}
-
-	@Autowired
-	public void setCommentForDetailService(CommentService commentService) {
-		this.commentService = commentService;
-	}
-
 
 	@GetMapping
 	@RequestMapping("/reservation/{id}")
-	public String getProductDetail(Model model, @PathVariable(name = "id") int id) {
+	public String getProductDetail(Model model, @PathVariable(name = "id") int productId) {
+		model.addAttribute("reservation",reservationService.selectOne(productId));
 		return "reserve";
 	}
 	

@@ -1,10 +1,13 @@
 package kr.or.reservation.dto;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
 public class ReservationDTO {
+	private static SimpleDateFormat mmddFormat = new SimpleDateFormat("YYYY년 MM월 dd일");
+	
 	private int id;
 	private String name;
 	private Timestamp salesStart;
@@ -29,14 +32,14 @@ public class ReservationDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Timestamp getSalesStart() {
-		return salesStart;
+	public String getSalesStart() {
+		return mmddFormat.format(salesStart);
 	}
 	public void setSalesStart(Timestamp salesStart) {
 		this.salesStart = salesStart;
 	}
-	public Timestamp getSalesEnd() {
-		return salesEnd;
+	public String getSalesEnd() {
+		return mmddFormat.format(salesEnd);
 	}
 	public void setSalesEnd(Timestamp salesEnd) {
 		this.salesEnd = salesEnd;
