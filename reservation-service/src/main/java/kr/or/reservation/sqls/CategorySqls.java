@@ -1,4 +1,4 @@
-package kr.or.reservation.sql;
+package kr.or.reservation.sqls;
 
 public class CategorySqls {
 	// Query문을 별도의 class로 저장

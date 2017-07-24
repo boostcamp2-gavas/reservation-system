@@ -1,4 +1,4 @@
-package kr.or.reservation.sql;
+package kr.or.reservation.sqls;
 
 
 public class ProductSqls {

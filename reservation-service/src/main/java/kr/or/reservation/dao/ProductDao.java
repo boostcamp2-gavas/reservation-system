@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.reservation.domain.Product;
 import kr.or.reservation.dto.ProductDetailDTO;
-import kr.or.reservation.sql.ProductSqls;
+import kr.or.reservation.sqls.ProductSqls;
 
 @Repository
 public class ProductDao {

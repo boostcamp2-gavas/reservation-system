@@ -159,4 +159,27 @@
     </footer>
 </body>
 
+
+
+<script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
+<script src = "/resources/js/node_modules/@egjs/component/dist/component.js"></script>
+<script>
+
+	// 이게 예시. 
+	
+	function	Rectangle(){		
+	}		
+	Rectangle.prototype = new	eg.Component();		
+	Rectangle.prototype.constructor =	Rectangle;		
+	Rectangle.prototype.some	=	function(){	
+			console.log("a");		
+	}					
+	var	rt	= new	Rectangle();		
+	rt.some();		
+	rt.on("click",function(){	//	이벤트 등록
+						console.log("aa");		
+	});		
+	rt.trigger("click");	//	이벤트 실행
+</script>
+
 </html>

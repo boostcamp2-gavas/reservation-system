@@ -2,6 +2,7 @@ package kr.or.reservation.jdbc;
 
 import java.sql.Timestamp;
 
+
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.or.reservation.config.RootApplicationContextConfig;
 import kr.or.reservation.dao.ProductDao;
 import kr.or.reservation.dto.ProductDetailDTO;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = RootApplicationContextConfig.class)
 @Transactional

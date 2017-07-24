@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.reservation.dto.ImgDTO;
-import kr.or.reservation.sql.ImgSqls;
+import kr.or.reservation.sqls.ImgSqls;
 
 @Repository
 public class ImgDao {

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.reservation.domain.AVGForComment;
 import kr.or.reservation.dto.CommentDTO;
-import kr.or.reservation.sql.CommentSqls;
+import kr.or.reservation.sqls.CommentSqls;
 
 @Repository
 public class CommentDao {

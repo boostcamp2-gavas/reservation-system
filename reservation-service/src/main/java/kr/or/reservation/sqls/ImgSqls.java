@@ -1,4 +1,4 @@
-package kr.or.reservation.sql;
+package kr.or.reservation.sqls;
 
 public class ImgSqls {
 	public final static String SELECTBYPRODUCT_ID= "select img.product_id,file.id as file_id ,file.save_file_name,img.type from file inner join product_image  as img\r\n" + 

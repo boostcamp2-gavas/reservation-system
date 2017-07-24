@@ -17,8 +17,8 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.reservation.domain.Category;
 import kr.or.reservation.dto.NaverUserDTO;
-import kr.or.reservation.sql.CategorySqls;
-import kr.or.reservation.sql.LoginSqls;
+import kr.or.reservation.sqls.CategorySqls;
+import kr.or.reservation.sqls.LoginSqls;
 
 @Repository
 public class LoginDao {
