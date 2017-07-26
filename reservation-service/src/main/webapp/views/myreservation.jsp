@@ -99,7 +99,16 @@
 				                                                <li class="item">
 				                                                    <span class="item_tit">내역</span>
 				                                                    <em class="item_dsc">
-																		내역이 없습니다.
+				                                                    <c:if test="${list.generalTicketCount !=0 }">
+				                                                   		 일반 : (${ list.generalTicketCount}) 
+				                                                    </c:if>
+				                                                    <c:if test="${list.youthTicketCount !=0 }">
+				                                                   		청소년:  (${ list.youthTicketCount})  
+				                                                    </c:if>
+				                                                     <c:if test="${list.childTicketCount !=0 }">
+				                                                   		어린이:  (${ list.childTicketCount})
+				                                                    </c:if>
+				                                                   		- 합계 : (${ list.generalTicketCount +list.youthTicketCount+list.childTicketCount })
 																	</em>
 				                                                </li>
 				                                                <li class="item">
@@ -172,15 +181,19 @@
 				                                                <li class="item">
 				                                                    <span class="item_tit">내역</span>
 				                                                    <em class="item_dsc">
-																		내역이 없습니다.
+				                                                    <c:if test="${list.generalTicketCount !=0 }">
+				                                                   		 일반 : (${ list.generalTicketCount}) 
+				                                                    </c:if>
+				                                                    <c:if test="${list.youthTicketCount !=0 }">
+				                                                   		청소년:  (${ list.youthTicketCount})  
+				                                                    </c:if>
+				                                                     <c:if test="${list.childTicketCount !=0 }">
+				                                                   		어린이:  (${ list.childTicketCount})
+				                                                    </c:if>
+				                                                   		- 합계 : (${ list.generalTicketCount +list.youthTicketCount+list.childTicketCount })
 																	</em>
 				                                                </li>
-				                                                <li class="item">
-				                                                    <span class="item_tit">상품</span>
-				                                                    <em class="item_dsc">
-																		내역이 없습니다.
-																	</em>
-				                                                </li>
+				                                               
 				                                                <li class="item">
 				                                                    <span class="item_tit">업체</span>
 				                                                    <em class="item_dsc">
@@ -251,16 +264,20 @@
 				                                                </li>
 				                                                <li class="item">
 				                                                    <span class="item_tit">내역</span>
-				                                                    <em class="item_dsc">
-																		내역이 없습니다.
+				                                                     <em class="item_dsc">
+				                                                    <c:if test="${list.generalTicketCount !=0 }">
+				                                                   		 일반 : (${ list.generalTicketCount}) 
+				                                                    </c:if>
+				                                                    <c:if test="${list.youthTicketCount !=0 }">
+				                                                   		청소년:  (${ list.youthTicketCount})  
+				                                                    </c:if>
+				                                                     <c:if test="${list.childTicketCount !=0 }">
+				                                                   		어린이:  (${ list.childTicketCount})
+				                                                    </c:if>
+				                                                   		- 합계 : (${ list.generalTicketCount +list.youthTicketCount+list.childTicketCount })
 																	</em>
 				                                                </li>
-				                                                <li class="item">
-				                                                    <span class="item_tit">상품</span>
-				                                                    <em class="item_dsc">
-																		내역이 없습니다.
-																	</em>
-				                                                </li>
+				                                              
 				                                                <li class="item">
 				                                                    <span class="item_tit">업체</span>
 				                                                    <em class="item_dsc">
@@ -292,7 +309,7 @@
 									</c:if>
 								</c:forEach>
 	                        </li>
-	                        <li class="card used">
+	                        <li class="card cancel">
 	                        	<c:if test="${length.cancellation != 0 }">
 		                            <div class="link_booking_details">
 		                                <div class="card_header">
@@ -329,14 +346,17 @@
 			                                                <li class="item">
 			                                                    <span class="item_tit">내역</span>
 			                                                    <em class="item_dsc">
-																	내역이 없습니다.
-																</em>
-			                                                </li>
-			                                                <li class="item">
-			                                                    <span class="item_tit">상품</span>
-			                                                    <em class="item_dsc">
-																	내역이 없습니다.
-																</em>
+				                                                    <c:if test="${list.generalTicketCount !=0 }">
+				                                                   		 일반 : (${ list.generalTicketCount}) 
+				                                                    </c:if>
+				                                                    <c:if test="${list.youthTicketCount !=0 }">
+				                                                   		청소년:  (${ list.youthTicketCount})  
+				                                                    </c:if>
+				                                                     <c:if test="${list.childTicketCount !=0 }">
+				                                                   		어린이:  (${ list.childTicketCount})
+				                                                    </c:if>
+				                                                   		- 합계 : (${ list.generalTicketCount +list.youthTicketCount+list.childTicketCount })
+																	</em>
 			                                                </li>
 			                                                <li class="item">
 			                                                    <span class="item_tit">업체</span>
@@ -416,18 +436,22 @@
     <!--// 취소 팝업 -->
 <script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
 <script>
+
+	var $article;
+	var $cardDetail ;
 	$(".btn").on("click",function(event){
 		event.preventDefault();
-		
-		var $cardDetail = $(this).parents(".card_detail"),
+		$cardDetail = $(this).parents(".card_detail"),
 		$popoup = $(".popup_booking_wrapper");
 		var productId = $cardDetail.data("id"),
 		type = $cardDetail.data("type");
-		console.log("눌림");
 		if(type ===0){
+			$article = $cardDetail.parents("article");
 			$popoup.removeClass("none");
 			// id값을 인자로 넘길 방법이 없어, id로 설정하고 가져오는 방식
 			$popoup.data("id",productId);
+		}else if(type ===2){
+			alert("리뷰남기기로 이동");
 		}
 	
 	});
@@ -436,28 +460,39 @@
 	$(".btn_green").on("click",function(event){
 		event.preventDefault();
 		var id = $(".popup_booking_wrapper").data("id");
-		
+		// card_item 
 		$.ajax({
 			  method: "Delete",
 			  url: "/reservation/"+id
-		}).done(success ); 
+		}).done(success); 
 		
 	})
 	
+	function outerHtml(url){
+		return url.clone().wrapAll("<div/>").parent().html();
+	}
+	
 	function success(data){
-		console.log(data);
+		var html;
 		if(data){
+			$(".cancel").append(outerHtml($article));
+			$cardDetail.remove();
+			$(".popup_booking_wrapper").addClass("none");
+			// 잠깐 쉬고 할일 :: 
+			// count 도 감소 시켜야된다.
+			// 취소가 일어났을떄,  예약 신청이 0이면 menubar 또한 사라지도록 진행해야 된다. 
+			
 			alert("취소 되었습니다.");
 		}else{
 			alert("예상치 못한 에러가 ...");
 		}
-		location.reload();
 	}
 	
 	// 취소 버튼과 x 버튼 누르면 안보이게 진행
 	$(".btn_gray, .popup_btn_close").on("click",function(event){
 		event.preventDefault();
 		$(".popup_booking_wrapper").addClass("none");
+		console.log(html);
 	})
 	
 	
