@@ -7,8 +7,7 @@ import kr.or.reservation.dto.UserReservationDTO;
 
 public interface UserReservationService {
 
-	public List<UserReservationDTO> selectAll(int userId);
-	public Map<String,Integer> getTypeCount(List<UserReservationDTO> list);
+	public List<UserReservationDTO> selectReservationByType(int userId,int type);
 	public boolean cancelReservation(int userId,int reservationId);
 
 	

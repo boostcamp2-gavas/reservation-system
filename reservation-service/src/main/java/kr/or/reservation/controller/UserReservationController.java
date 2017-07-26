@@ -29,12 +29,10 @@ public class UserReservationController {
 	@GetMapping(path = "/my")
     public String selectAll(Model model,HttpSession session){
 		int sessionId= (Integer)session.getAttribute("id");
-		log.info(sessionId);
-		List<UserReservationDTO> list = userReservationService.selectAll(sessionId);
-    	model.addAttribute("allData", list);
-    	model.addAttribute("length", userReservationService.getTypeCount(list));
     	return "myreservation";
     }
+	
+	
   
 
 }

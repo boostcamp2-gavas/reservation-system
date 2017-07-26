@@ -33,9 +33,11 @@ public class UserReservationDao {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 
-	public List<UserReservationDTO> selectAll(int userId) {
-		Map<String , ?> map = Collections.singletonMap("id",userId);
-		return jdbc.query(UserReservationSqls.SELECTAll,map,mapper);
+	public List<UserReservationDTO> selectReservationByType(int userId,int type) {
+		Map<String , Integer> map = new HashMap<String,Integer>();
+		map.put("id",userId);
+		map.put("type",type);
+		return jdbc.query(UserReservationSqls.SELET_RESERVATION_BY_TYPE,map,mapper);
 	}
 	
 	public boolean cancelReservation(int userId,int reservationId) {

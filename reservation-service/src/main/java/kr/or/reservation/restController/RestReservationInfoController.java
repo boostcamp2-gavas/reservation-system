@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.reservation.domain.Product;
 import kr.or.reservation.domain.ReservationInfo;
+import kr.or.reservation.dto.UserReservationDTO;
 import kr.or.reservation.service.ProductService;
 import kr.or.reservation.service.ReservationInfoService;
 import kr.or.reservation.service.UserReservationService;
@@ -44,6 +45,17 @@ public class RestReservationInfoController {
 		this.userReservationService = userReservationService;
 	}
 
+	// RestController에 Session 을 사용해도 되나요 ? 
+	@GetMapping("/type/{type}")
+	public List<UserReservationDTO> getReservationByType(@PathVariable int type,HttpSession session) {
+		int id = (Integer)session.getAttribute("id");
+		log.info(id);
+		log.info(type);
+		
+		log.info(userReservationService.selectReservationByType(id, type));
+		return 	userReservationService.selectReservationByType(id, type);
+	}
+	
 	@PostMapping
 	public Long insert(@ModelAttribute ReservationInfo reservationInfo ){
 		log.info(reservationInfo);
@@ -58,6 +70,8 @@ public class RestReservationInfoController {
 		return userReservationService.cancelReservation(id, reservationId);
 		
 	}
+	
+
 
 
 }

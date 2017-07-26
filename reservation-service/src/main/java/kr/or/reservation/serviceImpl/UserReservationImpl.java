@@ -34,12 +34,13 @@ public class UserReservationImpl implements UserReservationService {
 	}
 
 	@Override
-	public List<UserReservationDTO> selectAll(int userId) {
+	public List<UserReservationDTO> selectReservationByType(int userId,int type) {
 		// TODO Auto-generated method stub
-		if(userId <= 0) {
+		if(userId <= 0 || type<0 ) {
 			return null;
 		}
-		return userReservationDao.selectAll(userId);
+		return userReservationDao.selectReservationByType(userId,type);
+		
 	}
 	
 	/**
@@ -49,27 +50,7 @@ public class UserReservationImpl implements UserReservationService {
 	 * 2 : 완료
 	 * 3 : 취소
 	 */
-	@Override
-	public Map<String,Integer> getTypeCount(List<UserReservationDTO> list){
-		Map<String,Integer> lengthList =new HashMap<String,Integer>();
-		int expectation = 0, end =0 ,decision = 0, cancellation=0;
-		for(UserReservationDTO dto : list) {
-			if(dto.getReservationType() == 0) {
-				expectation++;
-			}else if(dto.getReservationType() == 1) {
-				decision++;
-			}else if(dto.getReservationType() == 2) {
-				end++;
-			}else {
-				cancellation++;
-			}
-		}
-		lengthList.put("expectation", expectation);
-		lengthList.put("decision", decision);
-		lengthList.put("end", end);
-		lengthList.put("cancellation", cancellation);
-		return lengthList;
-	}
+
 
 	@Override
 	public boolean cancelReservation(int userId,int reservationId) {

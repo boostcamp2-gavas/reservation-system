@@ -32,7 +32,7 @@ public class UserReservationTest {
 	public void select() {
 		int userId = 15;
 		
-		List<UserReservationDTO> list = dao.selectAll(userId);
+		List<UserReservationDTO> list = dao.selectReservationByType(15,0);
 		log.info(list.toString());
 	}
 	

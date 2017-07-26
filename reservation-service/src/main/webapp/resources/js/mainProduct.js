@@ -55,9 +55,6 @@ $(document).ready(function() {
 						}, rightItem = {
 							items : []
 						};
-						
-						
-						
 						for (var i = 0, max = data.length; i < max; ++i) {
 							if (i % 2 === 0) {
 								leftItem.items.push(data[i]);
