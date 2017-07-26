@@ -1,22 +1,24 @@
 package connect.reservation.dto;
 
+import connect.reservation.domain.ReservationType;
+
 // reservation_info 테이블에서 reservationType별로 개수를 담는다. 
 public class ReservationCount {
-	private int reservationType;
+	private ReservationType reservationType;
 	private int cnt;
 	
 	public ReservationCount() {}
 
-	public ReservationCount(int reservationType, int cnt) {
+	public ReservationCount(ReservationType reservationType, int cnt) {
 		this.reservationType = reservationType;
 		this.cnt = cnt;
 	}
 
-	public int getReservationType() {
+	public ReservationType getReservationType() {
 		return reservationType;
 	}
 
-	public void setReservationType(int reservationType) {
+	public void setReservationType(ReservationType reservationType) {
 		this.reservationType = reservationType;
 	}
 
