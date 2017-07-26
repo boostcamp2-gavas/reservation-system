@@ -8,7 +8,6 @@
     <meta name="description" content="네이버 예약, 네이버 예약이 연동된 곳 어디서나 바로 예약하고, 네이버 예약 홈(나의예약)에서 모두 관리할 수 있습니다.">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
-    <link href="css/style.css" rel="stylesheet">
     <link href="/resources/css/style.css" rel="stylesheet">
 </head>
 
@@ -23,16 +22,32 @@
                     <ul class="summary_board">
                         <li class="item">
                             <!--[D] 선택 후 .on 추가 link_summary_board -->
-                            <a href="#" class="link_summary_board on"> <i class="spr_book2 ico_book2"></i> <em class="tit">전체</em> <span class="figure">4</span> </a>
+                            <a href="#" class="link_summary_board on"> 
+                            	<i class="spr_book2 ico_book2"></i> 
+                            	<em class="tit">전체</em> 
+                            	<span class="figure">4</span> 
+                            </a>
                         </li>
                         <li class="item">
-                            <a href="#" class="link_summary_board"> <i class="spr_book2 ico_book_ss"></i> <em class="tit">이용예정</em> <span class="figure">2</span> </a>
+                            <a href="#" class="link_summary_board"> 
+                           		<i class="spr_book2 ico_book_ss"></i> 
+                            	<em class="tit">이용예정</em> 
+                            	<span class="figure">2</span> 
+                            </a>
                         </li>
                         <li class="item">
-                            <a href="#" class="link_summary_board"> <i class="spr_book2 ico_check"></i> <em class="tit">이용완료</em> <span class="figure">1</span> </a>
+                            <a href="#" class="link_summary_board"> 
+                            	<i class="spr_book2 ico_check"></i> 
+                            	<em class="tit">이용완료</em> 
+                            	<span class="figure">1</span> 
+                            </a>
                         </li>
                         <li class="item">
-                            <a href="#" class="link_summary_board"> <i class="spr_book2 ico_back"></i> <em class="tit">취소·환불</em> <span class="figure">1</span> </a>
+                            <a href="#" class="link_summary_board"> 
+                            	<i class="spr_book2 ico_back"></i> 
+                            	<em class="tit">취소·환불</em> 
+                            	<span class="figure">1</span> 
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -42,14 +57,27 @@
                 <div class="wrap_mylist">
                     <ul class="list_cards" ng-if="bookedLists.length > 0">
                         <!--[D] 예약확정: .confirmed, 취소된 예약&이용완료: .used 추가 card -->
+<c:forEach var="" items="">                        
                         <li class="card">
 							<div class=link_booking_details>
 	                            <div class="card_header">
 	                                <div class="left"></div>
 	                                <div class="middle">
-	                                    <!--[D] 예약 신청중: .ico_clock, 예약확정&이용완료: .ico_check2, 취소된 예약: .ico_cancel 추가 spr_book2 -->
-	                                    <i class="spr_book2 ico_clock"></i>
+	                                    <!--[D]  예약 신청중: .ico_clock, 예약확정&이용완료: .ico_check2, 취소된 예약: .ico_cancel 추가 spr_book2 -->
+	<c:choose>	
+		<c:when test="">                                    
 	                                    <span class="tit">예약 신청중</span>
+		</c:when>
+		<c:when test="">	                                    
+                                        <span class="tit">예약 확정</span>
+        </c:when>
+    	<c:when test="">
+    									<span class="tit">이용 완료</span>
+    	</c:when>
+    	<c:when test="">
+    									<span class="tit">취소된 예약</span>
+    	</c:when>   
+	</c:choose>                                
 	                                </div>
 	                                <div class="right"></div>
 	                            </div>
@@ -169,6 +197,7 @@
 								<a href="#" class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
 							</article>
                         </li>
+</c:forEach>
                         <li class="card confirmed">
                             <div class="link_booking_details">
                                 <div class="card_header">

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -27,14 +29,20 @@ import connect.reservation.dto.NaverLoginUserResult;
 import connect.reservation.service.UserService;
 import net.minidev.json.JSONObject;
 
+@PropertySource("classpath:/application.properties")
 @Controller
 @RequestMapping("/login")
 public class LoginController {
 	private final UserService userService;
 	
-	private String clientId = "eGDuy2NMeDv1C1QCsPGF";
-	private String clientSecret = "hw2sty6mby";
-	private String callbackUrl = "http://localhost:8080/login/checkState";
+	@Value("${spring.naverlogin.clientId}")
+	private String clientId;
+	
+	@Value("${spring.naverlogin.clientSecret}")
+	private String clientSecret;
+	
+	@Value("${spring.naverlogin.callbackUrl}")
+	private String callbackUrl;
 	private String state = "";
 	private String code = "";
 	private String type = "";

@@ -1,5 +1,5 @@
 $(function() {
-	console.log('test');
+	
 	Rolling.setting();
 	Rolling.setRollings();
 
