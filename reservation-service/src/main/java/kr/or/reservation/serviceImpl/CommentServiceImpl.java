@@ -28,7 +28,7 @@ public class CommentServiceImpl implements CommentService{
 	public List<CommentDTO> selectByProductId(int productId) {
 		// TODO Auto-generated method stub
 		if(productId > 0) {
-			return dao.selectByProductId(productId);
+			return dao.select(productId);
 		}
 		return null;
 	}

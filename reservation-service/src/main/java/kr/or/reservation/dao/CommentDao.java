@@ -29,7 +29,7 @@ public class CommentDao {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource); 
 	}
 	
-	public List<CommentDTO> selectByProductId(int productId) {
+	public List<CommentDTO> select(int productId) {
 		Map<String , ?> map = Collections.singletonMap("id",productId);
 		return jdbc.query(CommentSqls.SELECT_ALL,map,rowMapper);
 	}

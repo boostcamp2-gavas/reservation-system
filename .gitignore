@@ -137,5 +137,6 @@ target
 # for js
 node_modules/
 
-
+# api
+src/main/java/kr/or/reservation/api/NaverLogin.java
 
