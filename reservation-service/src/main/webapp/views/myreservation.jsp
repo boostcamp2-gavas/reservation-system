@@ -423,7 +423,7 @@
 		$popoup = $(".popup_booking_wrapper");
 		var productId = $cardDetail.data("id"),
 		type = $cardDetail.data("type");
-		
+		console.log("눌림");
 		if(type ===0){
 			$popoup.removeClass("none");
 			// id값을 인자로 넘길 방법이 없어, id로 설정하고 가져오는 방식
@@ -438,14 +438,14 @@
 		var id = $(".popup_booking_wrapper").data("id");
 		
 		$.ajax({
-			  method: "DELETE",
+			  method: "Delete",
 			  url: "/reservation/"+id
-	          //dataType: "json",
-		}).then(success , fail); 
+		}).done(success ); 
 		
 	})
 	
 	function success(data){
+		console.log(data);
 		if(data){
 			alert("취소 되었습니다.");
 		}else{

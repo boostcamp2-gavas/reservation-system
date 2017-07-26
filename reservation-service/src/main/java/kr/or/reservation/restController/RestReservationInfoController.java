@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.reservation.domain.Product;
@@ -42,9 +44,6 @@ public class RestReservationInfoController {
 		this.userReservationService = userReservationService;
 	}
 
-
-
-
 	@PostMapping
 	public Long insert(@ModelAttribute ReservationInfo reservationInfo ){
 		log.info(reservationInfo);
@@ -53,10 +52,9 @@ public class RestReservationInfoController {
 	
 	
 	// RestController에 Session 을 사용해도 되나요 ? 
-	@DeleteMapping("/{productId}")
+	@DeleteMapping("/{reservationId}")
 	public boolean deleteProduct(@PathVariable int reservationId,HttpSession session) {
 		int id = (Integer)session.getAttribute("id");
-		
 		return userReservationService.cancelReservation(id, reservationId);
 		
 	}

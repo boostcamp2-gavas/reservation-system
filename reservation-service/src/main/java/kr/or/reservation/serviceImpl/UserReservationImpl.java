@@ -76,6 +76,7 @@ public class UserReservationImpl implements UserReservationService {
 		if(userId<=0 || reservationId<=0) {
 			return false;
 		}
+		log.info(" userID ::  "+userId + "  reservationId :: " +reservationId );
 		return userReservationDao.cancelReservation(userId,reservationId);
 	}
 

@@ -38,7 +38,7 @@ public class UserReservationTest {
 	
 	@Test
 	public void update() {
-		boolean value=  dao.cancelReservation(15,7);
+		boolean value=  dao.cancelReservation(15,2);
 		Assert.assertThat(value, is(true));
 	}
 

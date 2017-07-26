@@ -3,7 +3,7 @@ package kr.or.reservation.dto;
 import java.sql.Timestamp;
 
 public class UserReservationDTO {
-	private Long id; // product id
+	private Long id; // reservation_info id
 	private String name; // product name
 	private Timestamp displayStart;
 	private Timestamp displayEnd;
