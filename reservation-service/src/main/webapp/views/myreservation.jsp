@@ -62,12 +62,13 @@
                         <!--[D] 예약확정: .confirmed, 취소된 예약&이용완료: .used 추가 card -->
                         
                         <li class="card confirmed">
-                           
 							
                         </li>
+                        
                         <li class="card used">
                            
                         </li>
+                        
                         <li class="card used cancellation">
                            
                         </li>
@@ -127,7 +128,7 @@
 	<div class="card_header">
 		<div class="left"></div>
 			<div class="middle">
-				<i class="spr_book2 ico_clock"></i>
+				<i class="spr_book2 {{icon}}"></i>
 				<span class="tit">{{menubar}}</span>
 			</div>
 		<div class="right"></div>
@@ -172,9 +173,11 @@
 						</em>
 					</div>
 					<!-- [D] 예약 신청중, 예약 확정 만 취소가능, 취소 버튼 클릭 시 취소 팝업 활성화 -->
+					{{#if btns}}
 					<div class="booking_cancel">
-						<button class="btn"><span>취소</span></button>
+						<button class="btn"><span>{{btnText btns}}</span></button>
 					</div>
+					{{/if}}
 				</div>
 			</div>
 			<div class="right"></div>
@@ -249,7 +252,7 @@
 			if($article.siblings().length == 1 ){
 			 	$cardHeader.remove();
 			}
-			$(".cancel").append(outerHtml($article));
+			$(".cancellation").append(outerHtml($article));
 			$(".popup_booking_wrapper").addClass("none");
 			$article.remove();	
 			// count 변경하는 작업 
@@ -296,6 +299,7 @@ $(function(){
 	});
 	
 	
+	
 		
 	Handlebars.registerHelper("timeStamp", function(timestamp) {
 		  if (moment) {
@@ -307,6 +311,11 @@ $(function(){
 		  }
 	});
 	
+	Handlebars.registerHelper("btnText", function(btn) {
+		console.log(btn);
+		 return btn;
+	});
+	
 	var templateSource = $("#reservation-content").html();
 	
 	var Template = Handlebars.compile(templateSource);
@@ -315,18 +324,16 @@ $(function(){
 		url : "/reservation/type/0"
 	}).done(function(data) {
 		if (data.length === 0) {
-		 	// 메뉴바 지워야돼 
+			$(".err").remove();
 		}else{
 			var item = {
 					reservation : [],
-					menubar : [{ menubar : "테스ㅡ"}]
-			
+					menubar : [{ menubar : "예약 신청중", icon : "ico_clock"}]
 			};
-			console.log(item);
 			for (var i = 0, max = data.length; i < max; ++i) {
+				data[i].btns = "취소"
 				item.reservation.push(data[i]);
 			}
-			console.log(item);
 			
 			var html = Template(item);
 			$('.expectation').append(html);
@@ -339,12 +346,14 @@ $(function(){
 		url : "/reservation/type/1"
 	}).done(function(data) {
 		if (data.length === 0) {
-		 	// 메뉴바 지워야돼 
+		 	$(".err").remove();
 		}else{
 			var item = {
-					reservation : []
+					reservation : [],
+					menubar : [{ menubar : "예약 확정", icon : "ico_check2"}]
 			};
 			for (var i = 0, max = data.length; i < max; ++i) {
+				data[i].btns = "취소"
 				item.reservation.push(data[i]);
 			}
 			
@@ -359,17 +368,20 @@ $(function(){
 		url : "/reservation/type/2"
 	}).done(function(data) {
 		if (data.length === 0) {
-		 	// 메뉴바 지워야돼 
+			$(".err").remove();
 		}else{
 			var item = {
-					reservation : []
+					reservation : [],
+					menubar : [{ menubar : "이용 완료", icon : "ico_check2" }]
 			};
 			for (var i = 0, max = data.length; i < max; ++i) {
+				data[i].btns = "예매자 리뷰 남기기"
 				item.reservation.push(data[i]);
 			}
+			console.log(item)
 			
 			var html = Template(item);
-			$('.used').append(html);
+			$('.used:first').append(html);
 		}
 	});
 	
@@ -379,10 +391,11 @@ $(function(){
 		url : "/reservation/type/3"
 	}).done(function(data) {
 		if (data.length === 0) {
-		 	// 메뉴바 지워야돼 
+			$(".err").remove();
 		}else{
 			var item = {
-					reservation : []
+					reservation : [],
+					menubar : [{ menubar : "취소된 예약",icon : "ico_cancel"}]
 			};
 			for (var i = 0, max = data.length; i < max; ++i) {
 				item.reservation.push(data[i]);
