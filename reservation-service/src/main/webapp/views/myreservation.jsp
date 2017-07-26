@@ -281,6 +281,7 @@ moment.locale('ko', {
 
 // 할일 :: 모둘화 진행
 //
+var test ;
 $(function(){
 	// helper 정의 
 	Handlebars.registerHelper('exit', function (string,value) {
@@ -333,7 +334,7 @@ $(function(){
 				data[i].btns = "취소"
 				item.reservation.push(data[i]);
 			}
-			expectationLength = max ;
+			expectationLength += max ;
 			var html = Template(item);
 			$('.expectation').append(html);
 		}
@@ -377,7 +378,7 @@ $(function(){
 				data[i].btns = "예매자 리뷰 남기기"
 				item.reservation.push(data[i]);
 			}
-			expectationLength +=max;
+			usedLength =max;
 	
 			var html = Template(item);
 			$('.used:first').append(html);
@@ -403,16 +404,28 @@ $(function(){
 			var html = Template(item);
 			$('.used:last').append(html);
 		}
-	}).always(function(){
+	});
+	
+	
+	test = function count(){
 		// 이부분은 모듈화 할떄 뺼 것. 
-		$(".figure").eq(0).text(expectationLength+usedLength+cancellationLength)
-		$(".figure").eq(1).text(expectationLength)
-		$(".figure").eq(2).text(usedLength)
-		$(".figure").eq(3).text(cancellationLength)	
-	})
-	
-	
-	
+		var $all = $(".figure").eq(0),
+		$expectation =$(".figure").eq(1).text(expectationLength),
+		$usedLength = $(".figure").eq(2).text(usedLength),
+		$cancellation = $(".figure").eq(3).text(cancellationLength)	;
+		$all.text(expectationLength+usedLength+cancellationLength);
+		$expectation.text(expectationLength);
+		$usedLength.text(usedLength);
+		$cancellation.text(cancellationLength);
+		
+		$all.on("click",function(){
+			alert("test")
+		});
+		
+		$expectation.on("click",function(){
+			alert("test2")
+		});
+	}
 	
 });
 
