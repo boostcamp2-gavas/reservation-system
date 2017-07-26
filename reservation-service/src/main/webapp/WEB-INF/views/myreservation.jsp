@@ -8,39 +8,30 @@
     <meta name="description" content="네이버 예약, 네이버 예약이 연동된 곳 어디서나 바로 예약하고, 네이버 예약 홈(나의예약)에서 모두 관리할 수 있습니다.">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
-    <link href="css/style.css" rel="stylesheet">
     <link href="/resources/css/style.css" rel="stylesheet">
 </head>
 
 <body>
     <div id="container">
-        <div class="header">
-            <header class="header_tit">
-                <h1 class="logo">
-                    <a href="#" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
-                    <a href="#" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
-                </h1>
-                <a href="#" class="btn_my"> <span title="내 예약">MY</span> </a>
-            </header>
-        </div>
+        <c:import url="/WEB-INF/views/header.jsp" />
         <hr>
         <div class="ct">
             <div class="section_my">
                 <!-- 예약 현황 -->
-                <div class="my_summary">
+               <div class="my_summary">
                     <ul class="summary_board">
                         <li class="item">
                             <!--[D] 선택 후 .on 추가 link_summary_board -->
-                            <a href="#" class="link_summary_board on"> <i class="spr_book2 ico_book2"></i> <em class="tit">전체</em> <span class="figure">4</span> </a>
+                            <a class="link_summary_board on"> <i class="spr_book2 ico_book2"></i> <em class="tit">전체</em> <span class="figure" id="total_count">4</span> </a>
                         </li>
                         <li class="item">
-                            <a href="#" class="link_summary_board"> <i class="spr_book2 ico_book_ss"></i> <em class="tit">이용예정</em> <span class="figure">2</span> </a>
+                            <a class="link_summary_board"> <i class="spr_book2 ico_book_ss"></i> <em class="tit">이용예정</em> <span class="figure" id="due_count">2</span> </a>
                         </li>
                         <li class="item">
-                            <a href="#" class="link_summary_board"> <i class="spr_book2 ico_check"></i> <em class="tit">이용완료</em> <span class="figure">1</span> </a>
+                            <a class="link_summary_board"> <i class="spr_book2 ico_check"></i> <em class="tit">이용완료</em> <span class="figure" id="used_count">1</span> </a>
                         </li>
                         <li class="item">
-                            <a href="#" class="link_summary_board"> <i class="spr_book2 ico_back"></i> <em class="tit">취소·환불</em> <span class="figure">1</span> </a>
+                            <a class="link_summary_board"> <i class="spr_book2 ico_back"></i> <em class="tit">취소·환불</em> <span class="figure" id="canceled_count">1</span> </a>
                         </li>
                     </ul>
                 </div>
@@ -50,7 +41,7 @@
                 <div class="wrap_mylist">
                     <ul class="list_cards" ng-if="bookedLists.length > 0">
                         <!--[D] 예약확정: .confirmed, 취소된 예약&이용완료: .used 추가 card -->
-                        <li class="card">
+                        <li class="card" id="requesting">
 							<div class=link_booking_details>
 	                            <div class="card_header">
 	                                <div class="left"></div>
@@ -63,7 +54,7 @@
 	                            </div>
 							</div>
 							<article class="card_item">
-	                            <a href="#" class="link_booking_details">
+	                            <a class="link_booking_details">
 	                                <div class="card_body">
 	                                    <div class="left"></div>
 	                                    <div class="middle">
@@ -117,10 +108,10 @@
 	                                    <div class="right"></div>
 	                                </div>
 	                            </a>
-								<a href="#" class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
+								<a class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
 							</article>
 							<article class="card_item">
-	                            <a href="#" class="link_booking_details">
+	                            <a class="link_booking_details">
 	                                <div class="card_body">
 	                                    <div class="left"></div>
 	                                    <div class="middle">
@@ -174,10 +165,10 @@
 	                                    <div class="right"></div>
 	                                </div>
 	                            </a>
-								<a href="#" class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
+								<a class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
 							</article>
                         </li>
-                        <li class="card confirmed">
+                        <li class="card confirmed" id="card_confirmed">
                             <div class="link_booking_details">
                                 <div class="card_header">
                                     <div class="left"></div>
@@ -190,7 +181,7 @@
                                 </div>
 							</div>
 							<article class="card_item">
-								<a href="#" class="link_booking_details">
+								<a class="link_booking_details">
 	                                <div class="card_body">
 	                                    <div class="left"></div>
 	                                    <div class="middle">
@@ -244,10 +235,10 @@
 	                                    <div class="right"></div>
 	                                </div>
 	                            </a>
-								<a href="#" class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
+								<a class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
 							</article>
 							<article class="card_item">
-								<a href="#" class="link_booking_details">
+								<a class="link_booking_details">
 	                                <div class="card_body">
 	                                    <div class="left"></div>
 	                                    <div class="middle">
@@ -302,10 +293,10 @@
 	                                    <div class="right"></div>
 	                                </div>
 	                            </a>
-								<a href="#" class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
+								<a class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
 							</article>
                         </li>
-                        <li class="card used">
+                        <li class="card used" id="card_used">
                             <div class="link_booking_details">
                                 <div class="card_header">
                                     <div class="left"></div>
@@ -318,7 +309,7 @@
                                 </div>
 							</div>
 							<article class="card_item">
-								<a href="#" class="link_booking_details">
+								<a class="link_booking_details">
 	                                <div class="card_body">
 	                                    <div class="left"></div>
 	                                    <div class="middle">
@@ -373,7 +364,7 @@
                             	</a>
 							</article>
 							<article class="card_item">
-								<a href="#" class="link_booking_details">
+								<a class="link_booking_details">
 									<div class="card_body">
 										<div class="left"></div>
 										<div class="middle">
@@ -425,7 +416,7 @@
 								</a>
 							</article>
                         </li>
-                        <li class="card used">
+                        <li class="card used" id="card_canceled">
                             <div class="link_booking_details">
                                 <div class="card_header">
                                     <div class="left"></div>
@@ -438,7 +429,7 @@
                                 </div>
 							</div>
 							<article class="card_item">
-								<a href="#" class="link_booking_details">
+								<a class="link_booking_details">
 	                                <div class="card_body">
 	                                    <div class="left"></div>
 	                                    <div class="middle">
@@ -490,7 +481,7 @@
 	                            </a>
 							</article>
 							<article class="card_item">
-								<a href="#" class="link_booking_details">
+								<a class="link_booking_details">
 	                                <div class="card_body">
 	                                    <div class="left"></div>
 	                                    <div class="middle">
@@ -555,15 +546,7 @@
         </div>
         <hr>
     </div>
-    <footer>
-        <div class="gototop">
-            <a href="#" class="lnk_top"> <span class="lnk_top_text">TOP</span> </a>
-        </div>
-        <div id="footer" class="footer">
-            <p class="dsc_footer">네이버(주)는 통신판매의 당사자가 아니며, 상품의정보, 거래조건, 이용 및 환불 등과 관련한 의무와 책임은 각 회원에게 있습니다.</p>
-            <span class="copyright">© NAVER Corp.</span>
-        </div>
-    </footer>
+    <c:import url="/WEB-INF/views/footer.jsp" />
 
     <!-- 취소 팝업 -->
     <!-- [D] 활성화 display:block, 아니오 버튼 or 닫기 버튼 클릭 시 숨김 display:none; -->
@@ -571,7 +554,7 @@
         <div class="dimm_dark" style="display:block"></div>
         <div class="popup_booking refund">
             <h1 class="pop_tit">
-                <span>서비스명/상품명</span>
+                <span>test</span>
                 <small class="sm">2000.0.00.(월)2000.0.00.(일)</small>
             </h1>
             <div class="nomember_alert">
@@ -579,21 +562,46 @@
             </div>
             <div class="pop_bottom_btnarea">
                 <div class="btn_gray">
-                    <a href="#" class="btn_bottom"><span>아니오</span></a>
+                    <a class="btn_bottom"><span>아니오</span></a>
                 </div>
                 <div class="btn_green">
-                    <a href="#" class="btn_bottom"><span>예</span></a>
+                    <a class="btn_bottom"><span>예</span></a>
                 </div>
             </div>
             <!-- 닫기 -->
-            <a href="#" class="popup_btn_close" title="close">
+            <a class="popup_btn_close" title="close">
                 <i class="spr_book2 ico_cls"></i>
             </a>
             <!--// 닫기 -->
         </div>
     </div>
     <!--// 취소 팝업 -->
-
+	<script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
+	<script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
+	<script src="/resources/js/node_modules/@egjs/component/dist/component.js"></script>
+	<script src="/resources/js/messenger.js"></script>
+	<script src="/resources/js/confirmPopup.js"></script>
+	<script src="/resources/js/summary.js"></script>
+	<script src="/resources/js/reservationList.js"></script>
+	<script>
+	$(function() {
+		var messenger = new Messenger();
+		var popup = new ConfirmPopup($('.popup_booking_wrapper'), messenger);
+		var requesting = new ReservationList($('#requesting'), messenger);
+		var confirmed = new ReservationList($('#card_confirmed'), messenger);
+		var used = new ReservationList($('#card_used'), messenger);
+		var canceled = new ReservationList($('#card_canceled'), messenger);
+		var opt = {
+				obj0 : requesting,
+				obj1 : confirmed,
+				obj2 : used,
+				obj3 : canceled,
+				messenger : messenger
+		}
+		var summary = new Summary($('.my_summary'), opt);
+		messenger.trigger('reCount');
+	});
+	</script>
 </body>
 
 </html>
