@@ -69,8 +69,10 @@ public class MainController {
 	public String mvMyPage(HttpSession session) {
 		if(null == session.getAttribute("loginOk"))
 			return "redirect:/login?type=myPage";
-		else
+		else {
+			session.setAttribute("userId", 9);	// 지우기
 			return "myreservation";
+		}
 	}
 
 	@GetMapping("/mvDetail")
@@ -104,7 +106,6 @@ public class MainController {
 		try {
 			map = productService.getReserveInfo(productId);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
