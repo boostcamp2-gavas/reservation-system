@@ -142,7 +142,7 @@
 		<div class="card_body">
 			<div class="left"></div>
 			<div class="middle">
-				<div class="card_detail" data-id = {{id}} data-type = {{reservationType}} >
+				<div class="card_detail" data-id = {{id}}  >
 					<em class="booking_number">No. {{id}}</em>
 					<h4 class="tit">{{name}}</h4>
 					<ul class="detail">
@@ -209,21 +209,16 @@
 	
 	var $expectation = $(".link_summary_board > .figure").eq(1);
 	var $cancellation = $(".link_summary_board > .figure").eq(3);
-	$(".expectation").on("click",".booking_cancel .btn",function(event){
+	$(".expectation, .confirmed").on("click",".booking_cancel .btn",function(event){
 		event.preventDefault();
 		$cardDetail = $(this).parents(".card_detail"),
 		$popoup = $(".popup_booking_wrapper");
 		var productId = $cardDetail.data("id"),
-		type = $cardDetail.data("type");
-		if(type ===0){
-			$article = $cardDetail.parents("article");
-			console.log($article);
-			$popoup.removeClass("none");
-			// id값을 인자로 넘길 방법이 없어, id로 설정하고 가져오는 방식
-			$popoup.data("id",productId);
-		}else if(type ===2){
-			alert("리뷰남기기로 이동");
-		}
+		$article = $cardDetail.parents("article");
+		console.log($article);
+		$popoup.removeClass("none");
+		// id값을 인자로 넘길 방법이 없어, id로 설정하고 가져오는 방식
+		$popoup.data("id",productId);
 	
 	});
 	
@@ -284,7 +279,8 @@ moment.locale('ko', {
 });
 
 
-
+// 할일 :: 모둘화 진행
+//
 $(function(){
 	// helper 정의 
 	Handlebars.registerHelper('exit', function (string,value) {
@@ -317,7 +313,10 @@ $(function(){
 	});
 	
 	var templateSource = $("#reservation-content").html();
-	
+	var expectationLength =0,
+	confirmedLength = 0,
+	usedLength =0,
+	cancellationLength = 0;
 	var Template = Handlebars.compile(templateSource);
 	$.ajax({
 		method : "GET",
@@ -334,7 +333,7 @@ $(function(){
 				data[i].btns = "취소"
 				item.reservation.push(data[i]);
 			}
-			
+			expectationLength = max ;
 			var html = Template(item);
 			$('.expectation').append(html);
 		}
@@ -356,7 +355,7 @@ $(function(){
 				data[i].btns = "취소"
 				item.reservation.push(data[i]);
 			}
-			
+			expectationLength += max;
 			var html = Template(item);
 			$('.confirmed').append(html);
 		}
@@ -378,8 +377,8 @@ $(function(){
 				data[i].btns = "예매자 리뷰 남기기"
 				item.reservation.push(data[i]);
 			}
-			console.log(item)
-			
+			expectationLength +=max;
+	
 			var html = Template(item);
 			$('.used:first').append(html);
 		}
@@ -400,11 +399,21 @@ $(function(){
 			for (var i = 0, max = data.length; i < max; ++i) {
 				item.reservation.push(data[i]);
 			}
-			console.log(item);
+			cancellationLength = max;
 			var html = Template(item);
 			$('.used:last').append(html);
 		}
-	});
+	}).always(function(){
+		// 이부분은 모듈화 할떄 뺼 것. 
+		$(".figure").eq(0).text(expectationLength+usedLength+cancellationLength)
+		$(".figure").eq(1).text(expectationLength)
+		$(".figure").eq(2).text(usedLength)
+		$(".figure").eq(3).text(cancellationLength)	
+	})
+	
+	
+	
+	
 });
 
 </script>
