@@ -201,6 +201,9 @@
 <script src="/resources/js/node_modules/handlebars/dist/handlebars.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
+
+<script src="/resources/js/reservationState.js"></script>
+
 <script>
 	// 모듈화 진행해야함. 
 	var $article;
@@ -267,7 +270,8 @@
 		$(".popup_booking_wrapper").addClass("none");
 	})
 	
-
+	var module = ReservationState;
+	module.init();
 	
 </script>
 
@@ -282,7 +286,7 @@ moment.locale('ko', {
 // 할일 :: 모둘화 진행
 //
 var test ;
-$(function(){
+/* $(function(){
 	// helper 정의 
 	Handlebars.registerHelper('exit', function (string,value) {
 		if(value){
@@ -428,7 +432,7 @@ $(function(){
 	}
 	
 });
-
+ */
 </script>
 
 </body>
