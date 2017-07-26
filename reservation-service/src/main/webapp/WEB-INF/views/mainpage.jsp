@@ -88,7 +88,7 @@
                     	<script id="product_template" type="text/x-handlebars-template">
 							{{#productList}}
 								<li class="product_list item">
-                    	        <a href="/mvDetail/{{productId}}" class="item_book">
+                    	        <a href="/mvDetail?productId={{productId}}" class="item_book">
                         	        <div class="item_preview"> 
                             	    	<img alt="{{fileName}}" class="img_thumb" src="{{saveFileName}}">
                                 		<span class="img_border"></span> 
@@ -118,7 +118,6 @@
     <c:import url="/WEB-INF/views/footer.jsp" />
 </body>
 <script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
-<!-- <script src="/resources/js/handlebars-v4.0.5.js"></script> -->
 <script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
 <script src="/resources/js/modules.js"></script>
 <script src="/resources/js/main.js"></script>

@@ -132,8 +132,9 @@ $('.bk_btn').click(function(){
 	for(var i=0; i<$('.qty').length; i++) {
 		$countInfo += $('.count_control_input:eq('+i+')').val() + '-';
 	}
-	
+	$countInfo += 0;
+	console.log($('#reserve_date').val());
 	$('#count_info').val($countInfo);
 	$('.form_horizontal').attr('action', '/reserve?productId='+$('#productId').val());
-	$('.form_horizontal').submit();
+	//$('.form_horizontal').submit();
 })

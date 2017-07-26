@@ -1,5 +1,7 @@
 package connect.reservation.domain;
 
+import java.sql.Timestamp;
+
 public class Users {
 	
 	private int id;
@@ -11,8 +13,8 @@ public class Users {
 	private String snsType;
 	private String snsProfile;
 	private int adminFlag;
-	private String createDate;
-	private String modifyDate;
+	private Timestamp createDate;
+	private Timestamp modifyDate;
 	
 	public Users() {
 		
@@ -71,16 +73,16 @@ public class Users {
 	public void setAdminFlag(int adminFlag) {
 		this.adminFlag = adminFlag;
 	}
-	public String getCreateDate() {
+	public Timestamp getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(String createDate) {
+	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
 	}
-	public String getModifyDate() {
+	public Timestamp getModifyDate() {
 		return modifyDate;
 	}
-	public void setModifyDate(String modifyDate) {
+	public void setModifyDate(Timestamp modifyDate) {
 		this.modifyDate = modifyDate;
 	}
 

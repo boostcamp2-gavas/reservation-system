@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	rolling.setting();
+	Rolling.setting();
 	$('.header').addClass('fade');
 	
 	$('.lazy').lazyload();
@@ -10,19 +10,19 @@ var startTouchX = null;
 var moveTouchX = null; 
 
 
-$('.visual_img').bind('touchstart',function (e) {
+$('.visual_img').on('touchstart',function (e) {
 	event.preventDefault(); 
     var e = event.originalEvent; 
     startTouchX = event.touches[0].pageX; 
 
 });
-$('.visual_img').bind('touchmove',function (e) {
+$('.visual_img').on('touchmove',function (e) {
 	event.preventDefault(); 
     var e = event.originalEvent; 
     moveTouchX = event.touches[0].pageX; 
  
 });
-$('.visual_img').bind('touchend',function (e) {
+$('.visual_img').on('touchend',function (e) {
 	var temp;
 	temp = startTouchX-moveTouchX;
 	if(temp > 0) {
@@ -39,9 +39,8 @@ var $imgNum = parseInt($('.imgNum').text());
 
 $('.imgBtn ').click(function() {
 	var element = $(this).children();
-	var btn = element.attr('class');
 
-	if(btn == 'nxt_inn') {
+	if(element.hasClass('nxt_inn')) {
 		imgBtnNxt();
 	}
 	else {
@@ -55,7 +54,7 @@ function imgBtnNxt() {
 		return;
 	
 	$('.imgCurrent').html(++imgCount);
-	rolling.rollingNxt();
+	Rolling.rollingNxt();
 }
 
 function imgBtnPre() {
@@ -63,7 +62,7 @@ function imgBtnPre() {
 		return;
 	
 	$('.imgCurrent').html(--imgCount);		
-	rolling.rollingPre();
+	Rolling.rollingPre();
 }
 
 function imgBtnManage(){
@@ -125,7 +124,7 @@ $('.thumb_area').click(function() {
 	var commentId = $(this).data('comment_id');
 	
 	$.ajax({
-		url : "/productInfo/commentImage/commentId="+commentId,
+		url : "/productInfo/commentImage?commentId="+commentId,
 		data : "commentId="+commentId,
 		type : "GET",
 		success : function(data){
@@ -162,7 +161,7 @@ var popImgCount = 1;
 
 $('.popImgBtn ').click(function() {
 	event.preventDefault();
-	rolling.init($('.comment_popup_img'));
+	Rolling.init($('.comment_popup_img'));
 	
 	var element = $(this).children();
 	var btn = element.attr('class');
@@ -180,7 +179,7 @@ function popimgBtnNxt() {
 		return;
 	
 	popImgCount++;
-	rolling.rollingNxt();
+	Rolling.rollingNxt();
 }
 
 function popimgBtnPre() {
@@ -189,7 +188,7 @@ function popimgBtnPre() {
 	
 	popImgCount--;
 	// 수정하기
-	rolling.rollingPre();
+	Rolling.rollingPre();
 }
 
 

@@ -1,19 +1,20 @@
 package connect.reservation.dto;
 
+import java.sql.Timestamp;
 
 public class ReservationComment {
 	private int productId;
 	private int categoryId;
 	private int userId;
 	private String nickname;
-	private String reservationDate;
+	private Timestamp reservationDate;
 	private String reservationName;
 	private double score;
 	private String comment;
 	private String fileName;
 	private String saveFileName;
-	private String createDate;
-	private String modifyDate;
+	private Timestamp createDate;
+	private Timestamp modifyDate;
 	private String contentType;
 	private int imgCount;
 	private int rucId;
@@ -49,10 +50,10 @@ public class ReservationComment {
 	public void setNickname(String ninkname) {
 		this.nickname = ninkname;
 	}
-	public String getReservationDate() {
+	public Timestamp getReservationDate() {
 		return reservationDate;
 	}
-	public void setReservationDate(String reservationDate) {
+	public void setReservationDate(Timestamp reservationDate) {
 		this.reservationDate = reservationDate;
 	}
 	public String getReservationName() {
@@ -85,16 +86,16 @@ public class ReservationComment {
 	public void setSaveFileName(String saveFileName) {
 		this.saveFileName = saveFileName;
 	}
-	public String getCreateDate() {
+	public Timestamp getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(String createDate) {
+	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
 	}
-	public String getModifyDate() {
+	public Timestamp getModifyDate() {
 		return modifyDate;
 	}
-	public void setModifyDate(String modifyDate) {
+	public void setModifyDate(Timestamp modifyDate) {
 		this.modifyDate = modifyDate;
 	}
 	public String getContentType() {

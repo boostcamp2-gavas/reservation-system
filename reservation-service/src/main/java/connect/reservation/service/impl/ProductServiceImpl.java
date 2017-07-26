@@ -1,5 +1,6 @@
 package connect.reservation.service.impl;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,30 +12,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import connect.reservation.dao.ProductInfoDao;
-import connect.reservation.dto.ProductInfo;
-import connect.reservation.service.ProductInfoService;
+import connect.reservation.dao.ProductDao;
+import connect.reservation.dto.Product;
+import connect.reservation.service.ProductService;
 
 @Service
 @Transactional
-public class ProductInfoServiceImpl implements ProductInfoService {
+public class ProductServiceImpl implements ProductService {
 	
-	private ProductInfoDao productInfoDao;
+	private ProductDao productDao;
 	
 	
 	@Autowired
-	private void setProductInfoDao(ProductInfoDao productInfoDao) {
-		this.productInfoDao = productInfoDao;
+	private void setProductDao(ProductDao productDao) {
+		this.productDao = productDao;
 	}
 	
 	@Override
 	public int getProductCount() {
-		return productInfoDao.getProductCount();
+		return productDao.getProductCount();
 	}
 	
 	@Override
 	public int getCategoryProductCount(int categoryId) {
-		return productInfoDao.getCategoryProductCount(categoryId);
+		return productDao.getCategoryProductCount(categoryId);
 	}
 	
 	@Override
@@ -44,8 +45,8 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		map.put("productList", productInfoDao.getMainInfo(start));
-		map.put("productCount", productInfoDao.getProductCount());
+		map.put("productList", productDao.getMainInfo(start));
+		map.put("productCount", productDao.getProductCount());
 	
 		return map;
 	}
@@ -53,38 +54,38 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 	@Override
 	public Map<String, Object> getCategoryInfo(int categoryId, int start) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("productList", productInfoDao.getCategoryInfo(categoryId, start));
-		map.put("productCount", productInfoDao.getCategoryProductCount(categoryId));
+		map.put("productList", productDao.getCategoryInfo(categoryId, start));
+		map.put("productCount", productDao.getCategoryProductCount(categoryId));
 	
 		return map;
 	}
 
 	@Override
-	public List<ProductInfo> getImage(int productId) {
-		return productInfoDao.getProductImage(productId);
+	public List<Product> getImage(int productId) {
+		return productDao.getProductImage(productId);
 	}
 	
 	@Override
-	public ProductInfo getDetail(int productId) {
-		return productInfoDao.getProductDetailInfo(productId);
+	public Product getDetail(int productId) {
+		return productDao.getProductDetailInfo(productId);
 	}
 	
 	@Override
-	public List<ProductInfo> getNoticeImage(int productId) {
-		return productInfoDao.getProductNoticeImage(productId);
+	public List<Product> getNoticeImage(int productId) {
+		return productDao.getProductNoticeImage(productId);
 	}
 	
 	@Override
-	public List<ProductInfo> getInfoImage(int productId) {
-		return productInfoDao.getProductInfoImage(productId);
+	public List<Product> getInfoImage(int productId) {
+		return productDao.getProductInfoImage(productId);
 	}
 	
 	@Override
 	public Map<String, Object> getReserveInfo(int productId) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		ProductInfo info = new ProductInfo();
-		info = productInfoDao.getReserveInfo(productId);
+		Product info = new Product();
+		info = productDao.getReserveInfo(productId);
 		
 		map.put("info", info);
 		map.put("startDay", getDateDay(info.getDisplayStart()));
@@ -94,15 +95,15 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 	}
 	
 	@Override
-	public List<ProductInfo> getPriceInfo(int productId) {
-		return productInfoDao.getPriceInfo(productId);
+	public List<Product> getPriceInfo(int productId) {
+		return productDao.getPriceInfo(productId);
 	}
 	
-	public String getDateDay(String date) throws Exception {
+	public String getDateDay(Timestamp date) throws Exception {
 	    String day = "" ;
 	     
 	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd") ;
-	    Date nDate = dateFormat.parse(date) ;
+	    Date nDate = date;
 	     
 	    Calendar cal = Calendar.getInstance() ;
 	    cal.setTime(nDate);

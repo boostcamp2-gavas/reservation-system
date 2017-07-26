@@ -39,10 +39,6 @@ public class ReservationCommentServiceImpl implements ReservationCommentService{
 		return map;
 	}
 	
-//	public List<ReservationComment> getImageList(int commentId) {
-//		return reservationCommentDao.getImageList(commentId);
-//	}
-	
 	public Map<String, Object> getImage(int commentId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		

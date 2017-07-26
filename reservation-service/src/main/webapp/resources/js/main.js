@@ -1,27 +1,26 @@
 $(function() {
 	
-	rolling.setting();
-	rolling.setRollings();
+	Rolling.setting();
+	Rolling.setRollings();
 
 	category.setting();
 	category.manageCategory();
 	
-	getProducts.setting();
-	getProducts.getProducInfo(false, 0, 0);
+	ProductList.setting();
+	ProductList.getProducInfo(false, 0, 0);
 	
 	
 	$('.imgBtn ').click(function() {
 		var element = $(this).children();
-		var btn = element.attr('class');
 
-		rolling.clear();
-		if(btn == 'nxt_inn') {
-			rolling.rollingNxt();
+		Rolling.clear();
+		if(element.hasClass('nxt_inn')) {
+			Rolling.rollingNxt();
 		}
 		else {
-			rolling.rollingPre();
+			Rolling.rollingPre();
 		}
-		rolling.setTimerID(setTimeout(rolling.autoRolling, 2000));
+		Rolling.setTimerID(setTimeout(Rolling.autoRolling, 2000));
 	});
 
 	$('.cate_list').click(function(){
@@ -29,7 +28,7 @@ $(function() {
 		$('#moreCnt').val(0);
 		
 		category.addActiveClass($(this));
-		getProducts.getProducInfo(false, $('#currentCategory').val(), 0);
+		ProductList.getProducInfo(false, $('#currentCategory').val(), 0);
 	});
 	
 	function getMoreInfo() {
@@ -37,7 +36,7 @@ $(function() {
 		moreCnt += 1;
 		$('#moreCnt').val(moreCnt);
 
-		getProducts.getProducInfo(true, $('#currentCategory').val(), moreCnt-1);
+		ProductList.getProducInfo(true, $('#currentCategory').val(), moreCnt-1);
 	}
 	
 	$('.btnMore').click(function(){

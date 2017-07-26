@@ -1,5 +1,6 @@
 package connect.reservation.service.impl;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -10,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import connect.reservation.dao.UsersDao;
 import connect.reservation.domain.Users;
 import connect.reservation.dto.NaverLoginUser;
-import connect.reservation.service.UsersService;
+import connect.reservation.service.UserService;
 
 @Service
-public class UsersServiceImpl implements UsersService {
+public class UserServiceImpl implements UserService {
 	
 	private UsersDao usersDao;
 	
@@ -46,10 +47,10 @@ public class UsersServiceImpl implements UsersService {
 		return usersDao.insert(user);
 	}
 
-	public String getDate(){
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(date);
+	public Timestamp getDate(){
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
+		return java.sql.Timestamp.valueOf(sdf.format(timestamp));
 	}
 	
 	@Override

@@ -1,6 +1,8 @@
 package connect.reservation.dto;
 
-public class ProductInfo {
+import java.sql.Timestamp;
+
+public class Product {
 	private int productId;
 	private int categoryId;
 	private String productName;
@@ -17,8 +19,8 @@ public class ProductInfo {
 	private String email;
 	private String content;
 	private String observationTime;
-	private String displayStart;
-	private String displayEnd;
+	private Timestamp displayStart;
+	private Timestamp displayEnd;
 	private String event;
 	private String salesEnd;
 	private int salesFlag;
@@ -132,16 +134,16 @@ public class ProductInfo {
 	public void setObservationTime(String observationTime) {
 		this.observationTime = observationTime;
 	}
-	public String getDisplayStart() {
+	public Timestamp getDisplayStart() {
 		return displayStart;
 	}
-	public void setDisplayStart(String displayStart) {
+	public void setDisplayStart(Timestamp displayStart) {
 		this.displayStart = displayStart;
 	}
-	public String getDisplayEnd() {
+	public Timestamp getDisplayEnd() {
 		return displayEnd;
 	}
-	public void setDisplayEnd(String displayEnd) {
+	public void setDisplayEnd(Timestamp displayEnd) {
 		this.displayEnd = displayEnd;
 	}
 	public String getEvent() {
@@ -184,7 +186,7 @@ public class ProductInfo {
 	
 	@Override
 	public String toString() {
-		return "ProductInfo [productId=" + productId + ", categoryId=" + categoryId + ", productName=" + productName
+		return "Product [productId=" + productId + ", categoryId=" + categoryId + ", productName=" + productName
 				+ ", description=" + description + ", placeName=" + placeName + ", type=" + type + ", fileName="
 				+ fileName + ", saveFileName=" + saveFileName + ", placeLot=" + placeLot + ", placeStreet="
 				+ placeStreet + ", tel=" + tel + ", homepage=" + homepage + ", email=" + email + ", content=" + content

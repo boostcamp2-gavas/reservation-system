@@ -1,5 +1,6 @@
 package connect.reservation.dao;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +46,7 @@ public class UsersDao {
         }
     }
     
-    public int updateSnsUser(String sns_id, String nickname, String sns_profile, String modify_date) {
+    public int updateSnsUser(String sns_id, String nickname, String sns_profile, Timestamp modify_date) {
 //    	SqlParameterSource params = new BeanPropertySqlParameterSource(user);
     	Map<String, Object> params = new HashMap<>();
         params.put("sns_id", sns_id);

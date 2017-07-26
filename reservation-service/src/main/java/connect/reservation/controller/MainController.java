@@ -1,5 +1,6 @@
 package connect.reservation.controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,41 +13,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import connect.reservation.domain.Category;
 import connect.reservation.service.CategoryService;
-import connect.reservation.service.ProductInfoService;
+import connect.reservation.service.ProductService;
 import connect.reservation.service.ReservationCommentService;
-import connect.reservation.service.ReservationInfoService;
-import connect.reservation.service.UsersService;
+import connect.reservation.service.ReservationService;
+import connect.reservation.service.UserService;
 
 @Controller
 @RequestMapping("/")
 public class MainController {
 	
 	private final CategoryService categoryService;
-	private final ProductInfoService productInfoService;
+	private final ProductService productService;
 	private final ReservationCommentService reservationCommentService;
-	private final UsersService usersService;
-	private final ReservationInfoService reservationInfoService;
+	private final UserService userService;
+	private final ReservationService reservationService;
 	
 	
 	@Autowired
 	public MainController(
 			CategoryService categoryService, 
-			ProductInfoService productInfoService,
+			ProductService productService,
 			ReservationCommentService reservationCommentService,
-			UsersService usersService,
-			ReservationInfoService reservationInfoService) {
+			UserService userService,
+			ReservationService reservationService) {
 		this.categoryService = categoryService;
-		this.productInfoService = productInfoService;
+		this.productService = productService;
 		this.reservationCommentService = reservationCommentService;
-		this.usersService = usersService;
-		this.reservationInfoService = reservationInfoService;
+		this.userService = userService;
+		this.reservationService = reservationService;
 	}
 	
 	@GetMapping("/category")
@@ -67,29 +67,33 @@ public class MainController {
 	
 	@GetMapping("/mvMyPage")
 	public String mvMyPage(HttpSession session) {
-		// 로그인을 하지 않은 유저는 로그인 페이지로
-		// 로그인 한 후라면 "나의 예약 메인"페이지로 이동한다
-		if(!("true").equals(session.getAttribute("loginOk")))
+		if(null == session.getAttribute("loginOk"))
 			return "redirect:/login?type=myPage";
 		else
 			return "myreservation";
 	}
 
-	@GetMapping("/mvDetail/{productId}")
-	public String mvDetail(Model model, @PathVariable int productId) {
+	@GetMapping("/mvDetail")
+	public String mvDetail(Model model, @RequestParam("productId") Integer productId) {
+		if(productId < 1)
+			return null;
+		
 		model.addAttribute("productId", productId);
-		model.addAttribute("productImage", productInfoService.getImage(productId));
-		model.addAttribute("detailInfo", productInfoService.getDetail(productId));
+		model.addAttribute("productImage", productService.getImage(productId));
+		model.addAttribute("detailInfo", productService.getDetail(productId));
 		model.addAttribute("commentMap", reservationCommentService.getList(productId));
-		model.addAttribute("NoticeImage", productInfoService.getNoticeImage(productId));
-		model.addAttribute("InfoImage", productInfoService.getInfoImage(productId));
+		model.addAttribute("NoticeImage", productService.getNoticeImage(productId));
+		model.addAttribute("InfoImage", productService.getInfoImage(productId));
 		
 		return "detail";
 	}
 	
 	@GetMapping("/reserve")
-	public String mvReserve(HttpSession session, Model model, @RequestParam("productId") int productId) {
-		if(!("true").equals(session.getAttribute("loginOk"))) {
+	public String mvReserve(HttpSession session, Model model, @RequestParam("productId") Integer productId) {
+		if(productId < 1)
+			return null;
+		
+		if(null == session.getAttribute("loginOk")) {
 			session.setAttribute("beforeUrl", "redirect:/reserve?productId="+productId);
 			return "redirect:/login?type=reserve";
 		}
@@ -98,7 +102,7 @@ public class MainController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			map = productInfoService.getReserveInfo(productId);
+			map = productService.getReserveInfo(productId);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -107,22 +111,26 @@ public class MainController {
 		model.addAttribute("reserveInfo", map.get("info"));
 		model.addAttribute("startDay", map.get("startDay"));
 		model.addAttribute("endDay", map.get("endDay"));
-		model.addAttribute("price", productInfoService.getPriceInfo(productId));
-		model.addAttribute("user", usersService.getUserInfo(userId));
+		model.addAttribute("price", productService.getPriceInfo(productId));
+		model.addAttribute("user", userService.getUserInfo(userId));
 		return "reserve";
 	}
 	
 	@PostMapping("/reserve")
-	public String add(HttpSession session, HttpServletRequest request, @RequestParam("productId") int productId) {
+	public String add(HttpSession session, HttpServletRequest request, @RequestParam("productId") Integer productId) {
+		if(productId < 1)
+			return null;
+		
 		// getParameter, getAttribute 차이
 		int userId = Integer.parseInt(session.getAttribute("userId")+"");
 		String countInfo = request.getParameter("count_info");
 		String userName = request.getParameter("name");
 		String userTel = request.getParameter("tel");
 		String userEmail = request.getParameter("email");
-		String reserveDate = request.getParameter("reserve_date");
+		System.out.println(request.getParameter("reserve_date"));
+		Timestamp reserveDate = java.sql.Timestamp.valueOf("reserve_date");
 		
-		reservationInfoService.add(productId, userId, countInfo, userName, userTel, userEmail, reserveDate);
+		reservationService.add(productId, userId, countInfo, userName, userTel, userEmail, reserveDate);
 		
 		return "redirect:/mvMyPage";
 	}

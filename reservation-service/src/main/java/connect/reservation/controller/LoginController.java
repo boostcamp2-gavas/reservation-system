@@ -24,12 +24,13 @@ import org.springframework.web.client.RestTemplate;
 import connect.reservation.domain.Users;
 import connect.reservation.dto.NaverLoginUser;
 import connect.reservation.dto.NaverLoginUserResult;
-import connect.reservation.service.UsersService;
+import connect.reservation.service.UserService;
 import net.minidev.json.JSONObject;
 
 @Controller
 @RequestMapping("/login")
 public class LoginController {
+	private final UserService userService;
 	
 	private String clientId = "eGDuy2NMeDv1C1QCsPGF";
 	private String clientSecret = "hw2sty6mby";
@@ -39,10 +40,12 @@ public class LoginController {
 	private String type = "";
 	
 
-	@Autowired
-	UsersService usersService;
 	
-
+	
+	@Autowired
+	public LoginController(UserService userService) {
+		this.userService = userService;
+	}
 
 	@GetMapping("")
 	public String mvLogin(HttpServletRequest request, @RequestParam("type") String type) {
@@ -157,18 +160,18 @@ public class LoginController {
 		ResponseEntity<NaverLoginUserResult> responseEntity = profileRest.exchange(profileUrl, HttpMethod.GET, httpEntity, new ParameterizedTypeReference<NaverLoginUserResult>(){});	
 		
 		if(responseEntity.getBody().getMessage() != "success"){
-			session.setAttribute("loginOk", "false");
+			session.setAttribute("loginOk", false);
 			// 에러발생
 		}
 		
 		NaverLoginUser snsUser = responseEntity.getBody().getResponse();
 		String snsId = snsUser.getId();
-		Users user = usersService.getSnsUser(snsId);
+		Users user = userService.getSnsUser(snsId);
 		
 		if(user == null) {
 			// 가입 기록이 없으면 user 추가
-			usersService.addSnsUser(snsUser);
-			user = usersService.getSnsUser(snsId);
+			userService.addSnsUser(snsUser);
+			user = userService.getSnsUser(snsId);
 		}
 		else {
 			// 정보업데이트 있을 경우 DB 업데이트
@@ -176,11 +179,12 @@ public class LoginController {
 			String profile = snsUser.getProfileImage();
 			
 			if(!nickname.equals(user.getNickname()) || !profile.equals(user.getSnsProfile())) {
-				usersService.updateSnsUser(snsId, nickname, profile);
+				userService.updateSnsUser(snsId, nickname, profile);
 			}
 		}
 		// 가입된 user면 session 설정
-		session.setAttribute("loginOk", "true");
+		// user객체 만들어서 로그인 확인 메소드 추가
+		session.setAttribute("loginOk", true);
 		session.setAttribute("userId", user.getId());
 		session.setAttribute("userName", user.getUsername());
 	}

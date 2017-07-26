@@ -1,5 +1,7 @@
 package connect.reservation.domain;
 
+import java.sql.Timestamp;
+
 public class ReservationInfo {
 	private int productId;
 	private int userId;
@@ -9,10 +11,10 @@ public class ReservationInfo {
 	private String reservationName;
 	private String reservationTel;
 	private String reservationEmail;
-	private String reservationDate;
+	private Timestamp reservationDate;
 	private int reservationType;
-	private String createDate;
-	private String modifyDate;
+	private Timestamp createDate;
+	private Timestamp modifyDate;
 	
 	
 	public int getProductId() {
@@ -63,10 +65,10 @@ public class ReservationInfo {
 	public void setReservationEmail(String reservationEmail) {
 		this.reservationEmail = reservationEmail;
 	}
-	public String getReservationDate() {
+	public Timestamp getReservationDate() {
 		return reservationDate;
 	}
-	public void setReservationDate(String reservationDate) {
+	public void setReservationDate(Timestamp reservationDate) {
 		this.reservationDate = reservationDate;
 	}
 	public int getReservationType() {
@@ -75,16 +77,16 @@ public class ReservationInfo {
 	public void setReservationType(int reservationType) {
 		this.reservationType = reservationType;
 	}
-	public String getCreateDate() {
+	public Timestamp getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(String createDate) {
+	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
 	}
-	public String getModifyDate() {
+	public Timestamp getModifyDate() {
 		return modifyDate;
 	}
-	public void setModifyDate(String modifyDate) {
+	public void setModifyDate(Timestamp modifyDate) {
 		this.modifyDate = modifyDate;
 	}
 	

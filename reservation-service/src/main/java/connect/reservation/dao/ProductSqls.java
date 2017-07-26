@@ -1,6 +1,6 @@
 package connect.reservation.dao;
 
-public class ProductInfoSqls {
+public class ProductSqls {
 	final static String endNum = "10";
 	
 	final static String COUNT_PRODUCT = "SELECT count(*) FROM product";

@@ -1,4 +1,4 @@
-var rolling = (function(ul) {
+var Rolling = (function(ul) {
 	var setRolling=0,
 	 	timeCheck=0,
 		rollingList,
@@ -12,7 +12,7 @@ var rolling = (function(ul) {
 	return {
 		init : function(newUl) {
 			$ul = newUl;
-			rolling.setting();
+			Rolling.setting();
 		},
 		setting : function() {
 			rollingList = $ul.find('li');
@@ -37,7 +37,7 @@ var rolling = (function(ul) {
 		},
 		autoRolling : function() {
 			// 상단 배너 자동 롤
-			setRolling = setInterval(rolling.rollingNxt, 2000);
+			setRolling = setInterval(Rolling.rollingNxt, 2000);
 		},
 		clear :function() {
 			// 이벤트 해제
@@ -45,7 +45,7 @@ var rolling = (function(ul) {
 			clearTimeout(timeCheck);
 		},
 		setRollings : function(){
-			setRolling = setInterval(rolling.rollingNxt, 2000);
+			setRolling = setInterval(Rolling.rollingNxt, 2000);
 		},
 		setTimerID:function(value){
 			timeCheck = value;
@@ -85,7 +85,7 @@ var category = (function(list) {
 })($('.cate_list'));
 
 
-var getProducts = (function(countArea, ul) {
+var ProductList = (function(countArea, ul) {
 	var start,
 		categoryFlag,
 		countData,
@@ -108,11 +108,11 @@ var getProducts = (function(countArea, ul) {
 			var dataInfo = "";
 
 			if(categoryId == 0 || categoryId == undefined) {	// 전체보기 상품
-				urlInfo += "/all/"+start;
+				urlInfo += "/all?start="+start;
 				dataInfo = "start="+start;
 			}
 			else {	// 카테고리별 상품
-				urlInfo += "/category/"+categoryId+"/start/"+start;
+				urlInfo += "/category?categoryId="+categoryId+"&start="+start;
 				dataInfo = "categoryId="+categoryId+"&start="+start;
 			}
 			
@@ -121,12 +121,12 @@ var getProducts = (function(countArea, ul) {
 			    type : "GET",
 			    data : dataInfo,
 			    success: function(data) {
-			    	getProducts.countProduct(data.productCount);
+			    	ProductList.countProduct(data.productCount);
 			    	
 			    	if(data.productList.length == 0)
 			    		alert("더이상 상품이 없습니다!");
 			    	else 
-			    		getProducts.productAppend(flag, data.productList);
+			    		ProductList.productAppend(flag, data.productList);
 			    },
 			    error:function(request,status,error){
 			        alert("code:"+request.status+"\n"+"error:"+error);

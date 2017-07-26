@@ -15,25 +15,25 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import connect.reservation.config.RootApplicationContextConfig;
-import connect.reservation.dto.ProductInfo;
+import connect.reservation.dto.Product;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = RootApplicationContextConfig.class)
 @Transactional  // Transactional이 있을 때와 없을 때 각각 실행해보고 그 때마다 msyql에서 결과를 select해본다.
 public class ProductInfoDaoTest {
 	@Autowired
-	ProductInfoDao productInfoDao;
+	ProductDao productDao;
 	
 	@Test
 	public void shouldSelectAll() {		
-		List<ProductInfo> list = new ArrayList<ProductInfo>();
-		list = productInfoDao.getMainInfo(0);
+		List<Product> list = new ArrayList<Product>();
+		list = productDao.getMainInfo(0);
 		
 //		for(int i=0; i<list.size(); i++) {
 //			System.out.println(list.get(i).toString());
 //		}
 		
-		int count = productInfoDao.getProductCount();
+		int count = productDao.getProductCount();
 		
 		if(count > 10)
 			assertThat(list.size(), is(10));
@@ -43,7 +43,7 @@ public class ProductInfoDaoTest {
 	
 	@Test
 	public void shouldCountCategoryProduct() {
-		int cnt = productInfoDao.getCategoryProductCount(1);
+		int cnt = productDao.getCategoryProductCount(1);
 		
 		assertNotNull(cnt);
 	}
@@ -51,14 +51,14 @@ public class ProductInfoDaoTest {
 	@Test
 	public void shouldSelectCategoryProduct() {
 		int categoryId = 1;
-		List<ProductInfo> list = new ArrayList<ProductInfo>();
-		list = productInfoDao.getCategoryInfo(categoryId, 0);
+		List<Product> list = new ArrayList<Product>();
+		list = productDao.getCategoryInfo(categoryId, 0);
 		
 //		for(int i=0; i<list.size(); i++) {
 //			System.out.println(list.get(i).toString());
 //		}
 		
-		int count = productInfoDao.getCategoryProductCount(categoryId);
+		int count = productDao.getCategoryProductCount(categoryId);
 		
 		if(count > 10)
 			assertThat(list.size(), is(10));
