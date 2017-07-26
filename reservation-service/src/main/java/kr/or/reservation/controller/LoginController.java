@@ -12,17 +12,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.or.reservation.api.NaverLogin;
 import kr.or.reservation.dto.NaverUserDTO;
 import kr.or.reservation.service.LoginService;
+import kr.or.reservation.service.UserReservationService;
 
 @Controller
 public class LoginController {
 	// 로그 선언
 	Logger log = Logger.getLogger(this.getClass());
 	LoginService loginService;
-
+	
+	
 	@Autowired
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
 	}
+
 
 	@GetMapping(path = "/callback")
 	public String enrollSession(Model model, HttpSession session, @RequestParam String code,
@@ -32,10 +35,11 @@ public class LoginController {
 		if (state.equals(session.getAttribute("state"))) {
 			dto = login.convertToNaverDTO(code, state);
 			if (dto != null) {
-				loginService.progressLogin(dto);
-				session.setAttribute("id", dto.getSnsId());
-				session.setAttribute("name", dto.getUsername());
-				session.setAttribute("email", dto.getEmail());
+				if(loginService.progressLogin(dto)) {
+					session.setAttribute("id", loginService.selectId(dto.getSnsId()));
+					session.setAttribute("name", dto.getUsername());
+					session.setAttribute("email", dto.getEmail());
+				}
 			}
 		}
 		return "redirect:/";

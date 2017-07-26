@@ -6,4 +6,5 @@ public interface LoginService {
 	
 	public boolean progressLogin(NaverUserDTO dto);
 
+	public int selectId(int snsId);
 }

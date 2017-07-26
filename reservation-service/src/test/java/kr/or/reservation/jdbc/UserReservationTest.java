@@ -1,8 +1,10 @@
 package kr.or.reservation.jdbc;
 
 import java.util.List;
-
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 import org.apache.log4j.Logger;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ import kr.or.reservation.dto.UserReservationDTO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = RootApplicationContextConfig.class)
-@Transactional
+
 public class UserReservationTest {
 	
 	@Autowired
@@ -32,6 +34,12 @@ public class UserReservationTest {
 		
 		List<UserReservationDTO> list = dao.selectAll(userId);
 		log.info(list.toString());
+	}
+	
+	@Test
+	public void update() {
+		boolean value=  dao.cancelReservation(15,7);
+		Assert.assertThat(value, is(true));
 	}
 
 }

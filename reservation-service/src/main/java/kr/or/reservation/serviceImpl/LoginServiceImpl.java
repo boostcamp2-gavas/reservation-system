@@ -13,6 +13,8 @@ import kr.or.reservation.service.LoginService;
 public class LoginServiceImpl implements LoginService {
 
 	private UserDao loginDao;
+	UserDao userDao;
+	
 	Logger log = Logger.getLogger(this.getClass());
 	
 	@Override
@@ -27,6 +29,11 @@ public class LoginServiceImpl implements LoginService {
 		}
 		return false;
 	}
+	
+	@Override
+	public int selectId(int snsId) {
+		return  userDao.selectId(snsId);
+	}
 
 	
 	@Autowired
@@ -34,6 +41,11 @@ public class LoginServiceImpl implements LoginService {
 		this.loginDao = loginDao;
 	}
 	
+	@Autowired
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
+
 	
 
 }

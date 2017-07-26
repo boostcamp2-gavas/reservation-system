@@ -15,12 +15,6 @@ import kr.or.reservation.service.ReservationInfoService;
 public class ReservationInfoServiceImpl implements ReservationInfoService {
 
 	ReservationInfoDao reservationInfoDao;
-	UserDao userDao;
-	
-	@Autowired
-	protected void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
-	}
 
 	@Autowired
 	public void setReservationDao(ReservationInfoDao reservationInfoDao) {
@@ -33,15 +27,12 @@ public class ReservationInfoServiceImpl implements ReservationInfoService {
 		if(reservationInfo == null) {
 			return null;
 		}
-		int id = userDao.selectId(reservationInfo.getUserId());
-		if(id <0) {
-			return null;
-		}
-		reservationInfo.setUserId(id);
 		reservationInfo.setCreateDate(new Timestamp(System.currentTimeMillis()));
 		reservationInfo.setReservationDate(new Timestamp(System.currentTimeMillis()));
 		return reservationInfoDao.insert(reservationInfo);
 	}
+	
+
 
 
 
