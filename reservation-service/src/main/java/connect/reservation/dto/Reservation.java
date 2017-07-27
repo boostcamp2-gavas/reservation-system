@@ -2,12 +2,14 @@ package connect.reservation.dto;
 
 import java.sql.Timestamp;
 
+import connect.reservation.domain.ReservationType;
+
 public class Reservation {
 	private int id;
 	private int generalTicketCount;
 	private int youthTicketCount;
 	private int childTicketCount;
-	private int reservationType;
+	private ReservationType reservationType;
 	private int productId;
 	private String productName;
 	private Timestamp displayStart;
@@ -16,7 +18,7 @@ public class Reservation {
 	
 	public Reservation() {}
 
-	public Reservation(int id, int generalTicketCount, int youthTicketCount, int childTicketCount, int reservationType,
+	public Reservation(int id, int generalTicketCount, int youthTicketCount, int childTicketCount, ReservationType reservationType,
 			int productId, String productName, Timestamp displayStart, Timestamp displayEnd, String placeName) {
 		this.id = id;
 		this.generalTicketCount = generalTicketCount;
@@ -62,11 +64,11 @@ public class Reservation {
 		this.childTicketCount = childTicketCount;
 	}
 
-	public int getReservationType() {
+	public ReservationType getReservationType() {
 		return reservationType;
 	}
 
-	public void setReservationType(int reservationType) {
+	public void setReservationType(ReservationType reservationType) {
 		this.reservationType = reservationType;
 	}
 
