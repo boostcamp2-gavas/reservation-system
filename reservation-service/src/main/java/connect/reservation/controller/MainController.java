@@ -72,8 +72,7 @@ public class MainController {
 	public String mvMyPage(Model model, HttpSession session) {
 		User currentUser = (User)session.getAttribute("currentUser");
 		if(null != currentUser) {
-			//int userId = currentUser.getId();
-			int userId = 10;
+			int userId = currentUser.getId();
 			model.addAttribute("reservation", reservationService.get(userId));
 			model.addAttribute("reservationStatus", reservationService.getCount(userId));
 			return "myreservation";
