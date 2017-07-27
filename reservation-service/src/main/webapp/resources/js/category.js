@@ -33,8 +33,9 @@ $('document').ready(function(){
 				$(".anchor:last").addClass("last");
 			},
 			
-			fail  : function failFunc(){
-				alert("가져오기 실패");
+			fail  : function failFunc(request,status,error){
+				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
 			}
 	};
 	

@@ -25,7 +25,7 @@ public class NaverLogin {
 	final static String REDIRECT_URL = "http://localhost/callback";
 	final static String URL = "https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id="
 			+ "&redirect_uri=" + "&state=";
-	final static String SECRET_ID = "8l7dk3V5VW";
+	final static String SECRET_ID = "IxSbeRZI3A";
 
 	// Logger 설정
 

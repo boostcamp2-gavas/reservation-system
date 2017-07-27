@@ -17,7 +17,7 @@ import kr.or.reservation.common.LoggerInterceptor;
 // config 설정들을 얘들이 갖고 있음. 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"kr.or.reservation.controller, kr.or.reservation.restcontroller"})
+@ComponentScan(basePackages = {"kr.or.reservation.controller, kr.or.reservation.restController"})
 public class ServletContextConfig extends WebMvcConfigurerAdapter {
 	
     @Bean
