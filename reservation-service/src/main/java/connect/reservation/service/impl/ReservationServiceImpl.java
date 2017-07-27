@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import connect.reservation.dao.ProductDao;
 import connect.reservation.dao.ReservationDao;
 import connect.reservation.domain.ReservationInfo;
+import connect.reservation.domain.ReservationType;
 import connect.reservation.dto.Product;
 import connect.reservation.dto.Reservation;
 import connect.reservation.dto.ReservationCount;
@@ -89,5 +90,10 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public List<ReservationCount> getCount(int userId) {
 		return dao.selectCount(userId);
+	}
+
+	@Override
+	public int modify(int id, int reservationType) {
+		return dao.update(id, reservationType);
 	}
 }
