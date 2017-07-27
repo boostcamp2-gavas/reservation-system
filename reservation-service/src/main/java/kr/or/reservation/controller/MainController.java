@@ -26,7 +26,6 @@ public class MainController {
     		String url = login.getLoginURL(session);
         	model.addAttribute("loginURL", url);
     	}
-    	log.info("?");
     	return "mainpage";
     }
  

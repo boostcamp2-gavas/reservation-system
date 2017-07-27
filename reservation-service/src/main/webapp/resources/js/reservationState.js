@@ -33,19 +33,23 @@ Handlebars.registerHelper("btnText", function(btn) {
 });
 
 var ReservationState = (function(){
-
+	// 이 부분은 Hendlebar 설정 부분 
 	var templateSource = $("#reservation-content").html(),
 	Template = Handlebars.compile(templateSource),
+	
+	// 총 갯수를 저장할 변수 
 	expectationLength =0,
 	confirmedLength = 0,
 	usedLength =0,
 	cancellationLength = 0;
 	
+	// 상단 bar의 contents들을 저장하고 있음. 
 	var $all = $(".link_summary_board ").eq(0),
 	$expectation =$(".link_summary_board ").eq(1),
 	$usedLength = $(".link_summary_board ").eq(2),
 	$cancellation = $(".link_summary_board").eq(3);
 	
+	// li 부분을 들고 있음 
 	var $allCards = $(".card"),
 	$usedCard = $(".used:first"),
 	$expectationCard = $(".expectation, .confirmed"),
