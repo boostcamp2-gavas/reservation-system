@@ -76,6 +76,6 @@ public class ReservationServiceImpl implements ReservationService{
 
 	@Override
 	public int modify(int id, int reservationType) {
-		return dao.update(id, reservationType);
+		return reservationDao.update(id, reservationType);
 	}
 }
