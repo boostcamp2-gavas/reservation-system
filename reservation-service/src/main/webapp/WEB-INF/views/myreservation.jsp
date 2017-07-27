@@ -10,6 +10,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
     <link href="/resources/css/style.css" rel="stylesheet">
+    <style>
+        .invisible {
+            display: none
+        }
+    </style>
 </head>
 
 <body>
@@ -19,20 +24,37 @@
         <div class="ct">
             <div class="section_my">
                 <!-- 예약 현황 -->
+                <c:set var="totalCnt" value="0"></c:set>
+                <c:forEach var="cntStatus" items="${reservationStatus }">
+                	<c:if test="${cntStatus.reservationType eq 'REQUESTING' }">
+                		<c:set var="requestCnt" value="${cntStatus.cnt }"></c:set>
+                	</c:if>
+                	<c:if test="${cntStatus.reservationType eq 'DUE' }">
+                		<c:set var="dueCnt" value="${cntStatus.cnt }"></c:set>
+                	</c:if>
+                	<c:if test="${cntStatus.reservationType eq 'USED' }">
+                		<c:set var="usedCnt" value="${cntStatus.cnt }"></c:set>
+                	</c:if>
+                	<c:if test="${cntStatus.reservationType eq 'REFUND_CANCEL' }">
+                		<c:set var="canceledCnt" value="${cntStatus.cnt }"></c:set>
+                	</c:if>
+                	<c:set var="tmp" value="${totalCnt }"></c:set>
+                	<c:set var="totalCnt" value="${tmp + cntStatus.cnt }"></c:set>
+                </c:forEach>
                <div class="my_summary">
                     <ul class="summary_board">
                    		<li class="item">
                            	<!--[D] 선택 후 .on 추가 link_summary_board -->
-                           	<a class="link_summary_board on"> <i class="spr_book2 ico_book2"></i> <em class="tit">전체</em> <span class="figure" id="total_count"><c:out value="${reservationStatus[0].cnt+reservationStatus[1].cnt+reservationStatus[2].cnt+reservationStatus[3].cnt }" default="0"></c:out></span> </a>
+                           	<a class="link_summary_board on"> <i class="spr_book2 ico_book2"></i> <em class="tit">전체</em> <span class="figure" id="total_count"><c:out value="${totalCnt }" default="0"></c:out></span> </a>
                        	</li>
                        	<li class="item">
-                            <a class="link_summary_board"> <i class="spr_book2 ico_book_ss"></i> <em class="tit">이용예정</em> <span class="figure" id="due_count"><c:out value="${reservationStatus[0].cnt + reservationStatus[1].cnt }" default="0"></c:out></span> </a>
+                            <a class="link_summary_board"> <i class="spr_book2 ico_book_ss"></i> <em class="tit">이용예정</em> <span class="figure" id="due_count"><c:out value="${requestCnt + dueCnt }" default="0"></c:out></span> </a>
                         </li>
                         <li class="item">
-                        	<a class="link_summary_board"> <i class="spr_book2 ico_check"></i> <em class="tit">이용완료</em> <span class="figure" id="used_count"><c:out value="${reservationStatus[2].cnt }" default="0"></c:out></span> </a>
+                        	<a class="link_summary_board"> <i class="spr_book2 ico_check"></i> <em class="tit">이용완료</em> <span class="figure" id="used_count"><c:out value="${usedCnt }" default="0"></c:out></span> </a>
                     	</li>
                     	<li class="item">
-                            <a class="link_summary_board"> <i class="spr_book2 ico_back"></i> <em class="tit">취소·환불</em> <span class="figure" id="canceled_count"><c:out value="${reservationStatus[3].cnt }" default="0"></c:out></span> </a>
+                            <a class="link_summary_board"> <i class="spr_book2 ico_back"></i> <em class="tit">취소·환불</em> <span class="figure" id="canceled_count"><c:out value="${canceledCnt}" default="0"></c:out></span> </a>
                         </li>
                     </ul>
                 </div>
@@ -59,7 +81,7 @@
 								</div>
 							</c:if>
 							<c:if test="${ritem.reservationType == 'DUE' }">
-							<li class="card confirmed">
+							<li class="card confirmed" id="card_confirmed">
 	                            <div class="link_booking_details">
 	                                <div class="card_header">
 	                                    <div class="left"></div>
@@ -73,7 +95,7 @@
 								</div>
 							</c:if>
 							<c:if test="${ritem.reservationType == 'USED' }">
-							<li class="card used">
+							<li class="card used" id="card_used">
 	                            <div class="link_booking_details">
 	                                <div class="card_header">
 	                                    <div class="left"></div>
@@ -87,7 +109,7 @@
 	                            </div>
 							</c:if>
 							<c:if test="${ritem.reservationType == 'REFUND_CANCEL' }">
-							<li class="card used">
+							<li class="card used" id="card_canceled">
 	                            <div class="link_booking_details">
 	                                <div class="card_header">
 	                                    <div class="left"></div>
@@ -107,12 +129,12 @@
 	                                    <div class="left"></div>
 	                                    <div class="middle">
 	                                        <div class="card_detail">
-	                                            <em class="booking_number">No.<fmt:formatNumber value="${ritem.id }" pattern="00000000"></fmt:formatNumber></em>
+	                                            <em class="booking_number" data-reservation-id="${ritem.id }">No.<fmt:formatNumber value="${ritem.id }" pattern="00000000"></fmt:formatNumber></em>
 	                                            <h4 class="tit">${ritem.productName }</h4>
 	                                            <ul class="detail">
 	                                                <li class="item">
 	                                                    <span class="item_tit">일정</span>
-	                                                    <em class="item_dsc">
+	                                                    <em class="item_dsc" id="item_schedule">
 	                                                    	<fmt:formatDate value="${ritem.displayStart }" pattern="yyyy.MM.dd.(E)"/> ~ <fmt:formatDate value="${ritem.displayEnd}" pattern="yyyy.MM.dd.(E)"/>
 														</em>
 	                                                </li>
@@ -178,11 +200,11 @@
                 <!--// 내 예약 리스트 -->
 
                 <!-- 예약 리스트 없음 -->
-                <c:if test="${reservation.size() == 0 }">
-                <div class="err"> <i class="spr_book ico_info_nolist"></i>
+                
+                <div class="err <c:if test="${reservation.size() != 0 }">invisible</c:if>"> <i class="spr_book ico_info_nolist"></i>
                     <h1 class="tit">예약 리스트가 없습니다</h1>
                 </div>
-                </c:if>
+                
                 <!--// 예약 리스트 없음 -->
             </div>
         </div>
@@ -221,6 +243,7 @@
 	<script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
 	<script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
 	<script src="/resources/js/node_modules/@egjs/component/dist/component.js"></script>
+	<script src="/resources/js/callAjax.js"></script>
 	<script src="/resources/js/messenger.js"></script>
 	<script src="/resources/js/confirmPopup.js"></script>
 	<script src="/resources/js/summary.js"></script>
@@ -241,7 +264,6 @@
 				messenger : messenger
 		}
 		var summary = new Summary($('.my_summary'), opt);
-		/* messenger.trigger('reCount'); */
 	});
 	</script>
 </body>

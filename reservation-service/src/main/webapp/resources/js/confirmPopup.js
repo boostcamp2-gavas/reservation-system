@@ -15,12 +15,18 @@ class ConfirmPopup extends eg.Component {
 		this.card = cardObj.card;
 		this.cardObj = cardObj;
 		this.root.find('.pop_tit span').html(this.card.find('.tit').html());
+        this.root.find('small.sm').html(this.card.find('em#item_schedule').html());
 		this.root.show();
 	}
 	removeReservation() {
-		this.card.find('.booking_cancel').remove();
-		$('#card_canceled').append(this.card);
-		this.root.hide();
-		this.cardObj.trigger('removed');
+        var reservationId = this.card.find('em.booking_number').data('reservation-id');
+        var url = '/api/reservations/' + reservationId + '?type=REFUND_CANCEL'
+        callAjax(url, 'put').then(this.removeSuccess.bind(this));
 	}
+    removeSuccess() {
+        this.card.find('.booking_cancel').remove();
+        $('#card_canceled').append(this.card);
+        this.root.hide();
+        this.cardObj.trigger('removed');
+    }
 }

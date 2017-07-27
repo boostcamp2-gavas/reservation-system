@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import connect.reservation.domain.Category;
 import connect.reservation.domain.ReservationInfo;
-import connect.reservation.domain.ReservationType;
 import connect.reservation.domain.User;
 import connect.reservation.dto.Product;
+import connect.reservation.dto.ReservationCount;
 import connect.reservation.service.CategoryService;
-import connect.reservation.service.ProductService;
 import connect.reservation.service.CommentService;
+import connect.reservation.service.ProductService;
 import connect.reservation.service.ReservationService;
 import connect.reservation.service.UserService;
 
