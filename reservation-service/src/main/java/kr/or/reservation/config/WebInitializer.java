@@ -40,12 +40,7 @@ public class WebInitializer implements WebApplicationInitializer {
         FilterRegistration.Dynamic characterEncoding = servletContext.addFilter("characterEncoding", characterEncodingFilter);
         characterEncoding.addMappingForUrlPatterns(dispatcherTypes, true, "/*");
 
-    	servletContext.setInitParameter( "log4jConfigLocation" , "classpath:log4j.xml" );
-		servletContext.setInitParameter( "log4jRefreshInterval" , "10000" );
-		servletContext.setInitParameter( "log4jExposeWebAppRoot", "false" );
-		
-		Log4jConfigListener log4jListener = new Log4jConfigListener();
-		servletContext.addListener( log4jListener );
+   
         
         // dispatchder servlet 설정
         servletContext.addListener(new ContextLoaderListener(context));
@@ -60,4 +55,7 @@ public class WebInitializer implements WebApplicationInitializer {
         context.setConfigLocation(CONFIG_LOCATION);
         return context;
     }
+    
+    
+  
 }

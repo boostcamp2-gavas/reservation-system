@@ -6,16 +6,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+
+import kr.or.reservation.common.LoggerInterceptor;
 
 // config 설정들을 얘들이 갖고 있음. 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"kr.or.reservation.controller, kr.or.reservation.restcontroller"})
 public class ServletContextConfig extends WebMvcConfigurerAdapter {
+	
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -38,6 +42,10 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
         return multipartResolver;
     }
     
-    
+    // interceptor 로 log 설정 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+      registry.addInterceptor(new LoggerInterceptor()).addPathPatterns("/**");
+    }
     
 }

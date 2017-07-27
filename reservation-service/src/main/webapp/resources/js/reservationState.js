@@ -4,6 +4,8 @@ moment.locale('ko', {
 });
 
 
+// 소스 수정 진행할 것. 
+
 // 핸들바 helper 설정
 Handlebars.registerHelper('exit', function (string,value) {
 	if(value){
