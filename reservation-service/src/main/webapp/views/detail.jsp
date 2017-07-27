@@ -80,7 +80,7 @@
                         <div class="container_visual" style="width: 414px;">
                             <ul class="visual_img">
                             <c:forEach items="${img}" var="list" varStatus="status">
-                                <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="/${list.fileId}"> <span class="img_bg"></span>
+                                <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="/img/${list.fileId}"> <span class="img_bg"></span>
                                     <!-- if 문을 추가. 이렇게 하면 매번 if문 체크를 해야되는데 ...   -->
                                     <c:if test="${status.index == 0}">
 					    			<div class="visual_txt">

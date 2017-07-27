@@ -10,10 +10,12 @@ public class CommentSqls {
 			"where product_id = :id " + 
 			"group by reservation_user_comment_id;";*/
 	
-	public final static String SELCET_ALL = "select users.nickname,comment.*\r\n" + 
-			"from reservation_user_comment as comment inner join users   \r\n" + 
-			"	on comment.user_id = users.id    \r\n" + 
-			"	where product_id = :id  ";
+	public final static String SELCET_ALL = "SELECT  comment.id,comment.comment,comment.create_date,comment.score,comment.user_id ,users.nickname " + 
+			"FROM reservation_user_comment as comment " + 
+			"INNER JOIN users " + 
+			"ON users.id = comment.user_id " + 
+			"where product_id = :id " + 
+			"limit 3; ";
 	
 	public final static String SELECT_COUNT_AND_AVGSCORE = "SELECT  count(*) as amount_of_count,ROUND(AVG(score),1) as avg_score " + 
 			"FROM reservation_user_comment " + 
