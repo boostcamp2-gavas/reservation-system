@@ -50,7 +50,6 @@ public class ReservationServiceImpl implements ReservationService{
 		for(Reservation i : list) {
 			List<Product> priceList = productService.getPriceInfo(i.getProductId());
 			for(Product p : priceList) {
-				System.out.print(p.getPriceType() +" / " + p.getDiscountPrice());
 				switch (p.getPriceType()) {
 					case 1:
 						tempTotalPrice += i.getGeneralTicketCount()*p.getDiscountPrice();
@@ -66,7 +65,6 @@ public class ReservationServiceImpl implements ReservationService{
 				}
 			}
 			i.setTotalPrice(tempTotalPrice);
-			System.out.println(i.getId() +" / " + tempTotalPrice);
 		}
 		return list;
 	}
