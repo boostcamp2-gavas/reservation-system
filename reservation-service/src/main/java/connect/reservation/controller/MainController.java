@@ -20,6 +20,7 @@ import connect.reservation.domain.Category;
 import connect.reservation.domain.ReservationInfo;
 import connect.reservation.domain.ReservationType;
 import connect.reservation.domain.User;
+import connect.reservation.dto.Product;
 import connect.reservation.service.CategoryService;
 import connect.reservation.service.ProductService;
 import connect.reservation.service.ReservationCommentService;
@@ -118,10 +119,13 @@ public class MainController {
 			e.printStackTrace();
 		}
 		
+		List<Product> list = productService.getPriceInfo(productId);
+		
 		model.addAttribute("reserveInfo", map.get("info"));
 		model.addAttribute("startDay", map.get("startDay"));
 		model.addAttribute("endDay", map.get("endDay"));
-		model.addAttribute("price", productService.getPriceInfo(productId));
+		model.addAttribute("price", list);
+		model.addAttribute("minPrice", productService.getMinimunPrice(list));
 		model.addAttribute("user", userService.getUserInfo(userId));
 		return "reserve";
 	}

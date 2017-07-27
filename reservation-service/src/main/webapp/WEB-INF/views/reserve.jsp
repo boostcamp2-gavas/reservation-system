@@ -33,7 +33,7 @@
                             	<span class="img_bg"></span>
                                 <div class="preview_txt">
                                     <h2 class="preview_txt_tit">${reserveInfo.productName}</h2> 
-                                    <em class="preview_txt_dsc">₩${reserveInfo.minimumPrice} ~ </em>
+                                    <em class="preview_txt_dsc">₩<fmt:formatNumber value="${minPrice}" pattern="#,###" /> ~ </em>
                                     <!-- 2017.2.17.(금)~2017.4.18.(화), 잔여티켓 2769매 -->
                                     <em class="preview_txt_dsc">
                                     	<fmt:formatDate value="${reserveInfo.displayStart}" pattern="yyyy.MM.dd"/>(${startDay})
