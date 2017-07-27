@@ -5,9 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import connect.reservation.domain.ReservationInfo;
 import connect.reservation.service.CommentService;
 
 @Controller
@@ -28,8 +30,8 @@ public class CommentController {
 	}
 	
 	@PostMapping("/write")
-	public String add(Model model, @RequestParam("reservationId") int reservationId) {
+	public String add(Model model, @RequestBody ReservationInfo reservationInfo) {
 		
-		return "";
+		return "review";
 	}
 }
