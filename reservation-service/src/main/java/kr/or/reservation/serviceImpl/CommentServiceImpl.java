@@ -34,6 +34,7 @@ public class CommentServiceImpl implements CommentService{
 	}
 	
 
+	
 	public AVGForComment selectAvgScoreByProductId(int producId) {
 		if(producId>0) {
 			Long count =AVGForComment.getCount(producId);

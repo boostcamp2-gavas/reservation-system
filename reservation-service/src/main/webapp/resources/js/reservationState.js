@@ -106,15 +106,17 @@ var ReservationState = (function(){
 			if($article.siblings().length == 1 ){
 			 	$cardHeader.remove();
 			}
-			// 삭제시 메뉴 bar 가 안보이는 현상 
-			$(".cancellation").append(outerHtml($article));
+			
 			$(".popup_booking_wrapper").addClass("none");
 			$article.remove();	
-			// count 변경하는 작업 
+		
+			// count 변경 및 cancellation 가져오는 작업 
 			expectationCount = $expectation.find(".figure").text();
-			cancellationCount = $cancellation.find(".figure").text();
 			$expectation.find(".figure").text(--expectationCount);
-			$cancellation.find(".figure").text(++cancellationCount)
+			
+			$('.used:last').children().remove();
+			cancellationCount = loading(3,$('.used:last'),"취소된 예약","ico_cancel","");
+			$cancellation.find(".figure").text(cancellationCount);
 			alert("취소 되었습니다.");
 		}else{
 			alert("예상치 못한 에러가 ...");
@@ -169,6 +171,7 @@ var ReservationState = (function(){
 			// 0
 			$allCards.removeClass("none");
 			$dumy = $allCards;
+			
 		}else if(index === reservationTypeEnum.EXPECTATION){
 			// 1
 			$expectationCard.removeClass("none");
@@ -186,6 +189,9 @@ var ReservationState = (function(){
 			$cancellationCard.removeClass("none");
 			$dumy = $cancellationCard;
 		}
+		
+		$(".on").removeClass("on");
+		$(".link_summary_board").eq(index).addClass("on");
 		if($dumy.children("article").length){
 			$(".err").addClass("none");
 		}else{
@@ -194,7 +200,9 @@ var ReservationState = (function(){
 	}
 	
 	return{
+		
 		init : function(){
+			
 			// ajax 값 호출 
 			expectationLength =loading(0,$('.expectation'),"예약 신청중","ico_clock","취소");
 			confirmedLength =loading(1,$('.confirmed'),"예약 확정","ico_check2","취소");
