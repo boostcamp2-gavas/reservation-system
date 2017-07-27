@@ -15,7 +15,6 @@
 <body>
 	<div id="container">
 		<c:import url="/WEB-INF/views/header.jsp" />
-		</div>
 		<div class="ct">
 			<div class="ct_wrap">
 				<div class="top_title review_header">
