@@ -43,14 +43,6 @@ public class UserReservationImpl implements UserReservationService {
 		
 	}
 	
-	/**
-	 * getReservationType 
-	 * 0 : 예정
-	 * 1 : 확정
-	 * 2 : 완료
-	 * 3 : 취소
-	 */
-
 
 	@Override
 	public boolean cancelReservation(int userId,int reservationId) {

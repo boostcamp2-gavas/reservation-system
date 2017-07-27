@@ -34,10 +34,20 @@ var ReservationState = (function(){
 	usedLength =0,
 	cancellationLength = 0;
 	
-	var $all = $(".figure").eq(0),
-	$expectation =$(".figure").eq(1),
-	$usedLength = $(".figure").eq(2),
-	$cancellation = $(".figure").eq(3);
+	var $all = $(".link_summary_board ").eq(0),
+	$expectation =$(".link_summary_board ").eq(1),
+	$usedLength = $(".link_summary_board ").eq(2),
+	$cancellation = $(".link_summary_board").eq(3);
+	
+	// enum 같은 느낌으로 사용.
+	// ENUM 을 이렇게 사용하는게 맞는지 의문이 생김.
+	var reservationTypeEnum = {
+		    ALL_RESERVATION : 0,
+		    EXPECTATION : 1,
+		    END : 2,
+		    CENCELLATION : 3
+		}
+
 	
 	function loading(type,$card,_menubar,_icon,_btns){
 		var max = 0;
@@ -70,8 +80,35 @@ var ReservationState = (function(){
 	
 
 	
-	function menuClickEvent(eq){
-		console.log($(".figure").not(eq));
+	function menuClickEvent(event){
+		// 선택된 인자외에 다 none 처리 
+		event.preventDefault();
+		var index = $(".link_summary_board").index(this);
+		var $allCards = $(".card"),
+		$used = $(".used");
+		$allCards.addClass("none");
+		this.removeClass("none");
+		if(index === reservationTypeEnum.ALL_RESERVATION){
+			// 0
+			$allCards.removeClass("none");
+		}else if(index === reservationTypeEnum.EXPECTATION){
+			// 1
+			/**
+			 * cards들 모두를 none 하고 2개를 지울까 생각햇지만,
+			 * 옳지 않은것 같아 다음과 같이 구현했습니다 .
+			 * -재사용이 불가능한 부분이 조금 아쉽긴 합니다.
+			 * (기능자체가 종속되어 있다고 생각되어 재사용은 고려하지 않았습니다.) 
+			 */
+			$(".expectation, confirmed").remove("none");
+			$(".card:eq(2),.card:eq(3)").addClass("none");
+		}else if(index === reservationTypeEnum.END){
+			// 2
+			$used.remove("none");
+			$(".card").not($used).addClass("none");
+		}else if(index === reservationTypeEnum.CENCELLATION){
+			// 3
+			
+		}
 		
 	}
 	
@@ -84,16 +121,17 @@ var ReservationState = (function(){
 			cancellationLength =loading(3,$('.used:last'),"취소된 예약","ico_cancel","");
 			
 			// menu bar 초기화 
-			$expectation.text(expectationLength);
-			$usedLength.text(usedLength);
-			$cancellation.text(cancellationLength);
-			$all.text(expectationLength+usedLength+cancellationLength);
+			console.log(expectationLength);
+			$expectation.find(".figure").text(expectationLength);
+			$usedLength.find(".figure").text(usedLength);
+			$cancellation.find(".figure").text(cancellationLength);
+			$all.find(".figure").text(expectationLength+usedLength+cancellationLength);
 		
 			// menu bar 이벤트 등록
-			$all.on("click",function(){
-				alert("test")
-			});
-			
+			$all.on("click",menuClickEvent.bind($all));
+			$expectation.on("click",menuClickEvent.bind($expectation));
+			$usedLength.on("click",menuClickEvent.bind($usedLength));
+			$cancellation.on("click",menuClickEvent.bind($cancellation));
 		}
 	}
 })();
