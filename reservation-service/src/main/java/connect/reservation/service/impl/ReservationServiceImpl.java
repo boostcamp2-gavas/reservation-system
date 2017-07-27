@@ -34,25 +34,7 @@ public class ReservationServiceImpl implements ReservationService{
 	
 	@Override
 	@Transactional(readOnly = false)
-	public int add(int productId, int userId, String countInfo, String name, String tel, String email, Timestamp reserveDate) {
-		String count[] = countInfo.split("-");	
-		ReservationInfo reservationInfo = new ReservationInfo();
-		
-		reservationInfo.setProductId(productId);
-		reservationInfo.setUserId(userId);
-		reservationInfo.setGeneralTicketCount(Integer.parseInt(count[0]));
-		reservationInfo.setYouthTicketCount(Integer.parseInt(count[1]));
-		reservationInfo.setChildTicketCount(Integer.parseInt(count[2]));
-		reservationInfo.setReservationName(name);
-		reservationInfo.setReservationTel(tel);
-		reservationInfo.setReservationEmail(email);
-		reservationInfo.setReservationDate(reserveDate);
-		reservationInfo.setCreateDate(getDate());
-		
-		for(int i=0; i<count.length; i++) {
-			System.out.println(count[i]);
-		}
-		
+	public int add(ReservationInfo reservationInfo) {		
 		return reservationDao.insert(reservationInfo);
 	}
 

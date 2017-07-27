@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -123,22 +124,15 @@ public class MainController {
 	}
 	
 	@PostMapping("/reserve")
-	public String add(HttpSession session, @RequestParam("productId") Integer productId, ReservationInfo reservationInfo) {
-		System.out.println("controller");
-		if(productId < 1)
-			return null;
-		
-		User currentUser = (User)session.getAttribute("currentUser");
-		
-		// getParameter, getAttribute 차이
-		int userId = currentUser.getId();
-		reservationInfo.setUserId(userId);
-		reservationInfo.setReservationType(0);
+	public String add(HttpSession session, @RequestBody ReservationInfo reservationInfo) {
 
-		System.out.println(reservationInfo.getReservationDate());
+		User currentUser = (User)session.getAttribute("currentUser");
+
+		reservationInfo.setUserId(currentUser.getId());
+		reservationInfo.setReservationDate(userService.getDate());
+		reservationInfo.setCreateDate(userService.getDate());
 		
-		//reservationService.add(productId, userId, countInfo, userName, userTel, userEmail, reserveDate);
-		
-		return "redirect:/mvMyPage";
+		reservationService.add(reservationInfo);
+		return "success";
 	}
 }

@@ -46,7 +46,8 @@ public class UserServiceImpl implements UserService {
 		
 		return usersDao.insert(user);
 	}
-
+	
+	@Override
 	public Timestamp getDate(){
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

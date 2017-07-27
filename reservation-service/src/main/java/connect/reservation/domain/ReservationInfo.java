@@ -2,17 +2,18 @@ package connect.reservation.domain;
 
 import java.sql.Timestamp;
 
+
 public class ReservationInfo {
-	private int productId;
-	private int userId;
-	private int generalTicketCount;
-	private int youthTicketCount;
-	private int childTicketCount;
+	private Integer productId;
+	private Integer userId;
+	private Integer generalTicketCount;
+	private Integer youthTicketCount;
+	private Integer childTicketCount;
 	private String reservationName;
 	private String reservationTel;
 	private String reservationEmail;
 	private Timestamp reservationDate;
-	private int reservationType;
+	private Integer reservationType;
 	private Timestamp createDate;
 	private Timestamp modifyDate;
 	

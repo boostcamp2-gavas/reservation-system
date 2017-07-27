@@ -13,7 +13,6 @@
 </head>
 
 <body>
-<input type="hidden" id="productId" name="productId" value="${reserveInfo.productId}">
     <div id="container">
         <c:import url="/WEB-INF/views/header.jsp" />
         <div class="ct">
@@ -135,12 +134,11 @@
                             	<span class="spr_book ico_nessasary"></span> 
                             	<span>필수입력</span> 
                             </div>
-                            <form class="form_horizontal" action="" method="POST">
+                            <form class="form_horizontal" action="/reserve" method="POST">
+<input type="hidden" id="productId" name="productId" value="${reserveInfo.productId}">
 <input type="hidden" id="ticket_count_0" name="generalTicketCount" value="0">
 <input type="hidden" id="ticket_count_1" name="youthTicketCount" value="0">
 <input type="hidden" id="ticket_count_2" name="childTicketCount" value="0">
-<input type="hidden" id="reserve_date" name="reservationDate" 
-value="<fmt:formatDate value="${reserveInfo.displayStart}" pattern="yyyy.MM.dd"/>(${startDay}) ~ <fmt:formatDate value="${reserveInfo.displayEnd}" pattern="yyyy.MM.dd"/>(${endDay})">
                                 <div class="inline_form"> 
                                 	<label class="label" for="name"> 
                                 		<span class="spr_book ico_nessasary">필수</span> 
