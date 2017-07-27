@@ -20,4 +20,10 @@ public class ReservationInfoSqls {
 			" FROM reservation_info" + 
 			" WHERE user_id = :user_id" + 
 			" GROUP BY reservation_type";
+	
+	final static String UPDATE_RESERVATION_TYPE_BY_ID = "UPDATE reservation_info" + 
+			" SET" + 
+			" reservation_type = :reservation_type," +
+			" modify_date = now()" +
+			" WHERE id = :id";
 }

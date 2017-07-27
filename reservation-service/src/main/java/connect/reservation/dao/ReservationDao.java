@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import connect.reservation.domain.ReservationInfo;
+import connect.reservation.domain.ReservationType;
 import connect.reservation.dto.Reservation;
 import connect.reservation.dto.ReservationCount;
 
@@ -33,7 +34,7 @@ public class ReservationDao {
                 .usingGeneratedKeyColumns("id"); // pk 칼럼을 지정
     }
     
-    public int add(ReservationInfo reservationInfo){
+    public int insert(ReservationInfo reservationInfo){
         SqlParameterSource params = new BeanPropertySqlParameterSource(reservationInfo); 
         return insertAction.executeAndReturnKey(params).intValue();	
     }
@@ -49,6 +50,13 @@ public class ReservationDao {
     	params.put("user_id", userId);
     	RowMapper<ReservationCount> rm = BeanPropertyRowMapper.newInstance(ReservationCount.class);
     	return jdbc.query(ReservationInfoSqls.SELECT_COUNT, params, rm);
+    }
+    
+    public int update(int id, int reservationType) {
+    	Map<String, Object> params = new HashMap<>();
+    	params.put("id", id);
+    	params.put("reservation_type", reservationType);
+    	return jdbc.update(ReservationInfoSqls.UPDATE_RESERVATION_TYPE_BY_ID, params);
     }
     
 }

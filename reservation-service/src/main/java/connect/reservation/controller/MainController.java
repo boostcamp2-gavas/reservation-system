@@ -33,7 +33,7 @@ public class MainController {
 	
 	private final CategoryService categoryService;
 	private final ProductService productService;
-	private final CommentService reservationCommentService;
+	private final CommentService commentService;
 	private final UserService userService;
 	private final ReservationService reservationService;
 	
@@ -42,12 +42,12 @@ public class MainController {
 	public MainController(
 			CategoryService categoryService, 
 			ProductService productService,
-			CommentService reservationCommentService,
+			CommentService commentService,
 			UserService userService,
 			ReservationService reservationService) {
 		this.categoryService = categoryService;
 		this.productService = productService;
-		this.reservationCommentService = reservationCommentService;
+		this.commentService = commentService;
 		this.userService = userService;
 		this.reservationService = reservationService;
 	}
@@ -72,8 +72,7 @@ public class MainController {
 	public String mvMyPage(Model model, HttpSession session) {
 		User currentUser = (User)session.getAttribute("currentUser");
 		if(null != currentUser) {
-			//int userId = currentUser.getId();
-			int userId = 10;
+			int userId = currentUser.getId();
 			model.addAttribute("reservation", reservationService.get(userId));
 			model.addAttribute("reservationStatus", reservationService.getCount(userId));
 			return "myreservation";
@@ -91,7 +90,7 @@ public class MainController {
 		model.addAttribute("productId", productId);
 		model.addAttribute("productImage", productService.getImage(productId));
 		model.addAttribute("detailInfo", productService.getDetail(productId));
-		model.addAttribute("commentMap", reservationCommentService.getList(productId));
+		model.addAttribute("commentMap", commentService.getList(productId));
 		model.addAttribute("NoticeImage", productService.getNoticeImage(productId));
 		model.addAttribute("InfoImage", productService.getInfoImage(productId));
 		
@@ -143,5 +142,4 @@ public class MainController {
 		reservationService.add(reservationInfo);
 		return "success";
 	}
-	
 }

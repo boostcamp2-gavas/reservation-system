@@ -23,44 +23,17 @@
                     <ul class="summary_board">
                    		<li class="item">
                            	<!--[D] 선택 후 .on 추가 link_summary_board -->
-                           	<a class="link_summary_board on"> <i class="spr_book2 ico_book2"></i> <em class="tit">전체</em> <span class="figure" id="total_count">${reservationStatus[0].cnt +reservationStatus[1].cnt+reservationStatus[2].cnt+reservationStatus[3].cnt  }</span> </a>
+                           	<a class="link_summary_board on"> <i class="spr_book2 ico_book2"></i> <em class="tit">전체</em> <span class="figure" id="total_count"><c:out value="${reservationStatus[0].cnt+reservationStatus[1].cnt+reservationStatus[2].cnt+reservationStatus[3].cnt }" default="0"></c:out></span> </a>
                        	</li>
-                       	
-                       	<c:set var="tempcnt" value="0"></c:set>
-                    	<c:forEach var="count" items="${reservationStatus }">
-                    		<c:if test="${count.reservationType == 'REQUESTING' }">
-                    			<c:set var="tempcnt" value="${count.cnt}"></c:set>
-                    		</c:if>
-                    		<c:if test="${count.reservationType == 'DUE' }">
-                    			<li class="item">
-		                            <a class="link_summary_board"> <i class="spr_book2 ico_book_ss"></i> <em class="tit">이용예정</em> <span class="figure" id="due_count">${tempcnt+count.cnt}</span> </a>
-		                        </li>
-                    		</c:if>
-                    		<c:if test="${count.reservationType == 'USED' }">
-                    			<li class="item">
-                            		<a class="link_summary_board"> <i class="spr_book2 ico_check"></i> <em class="tit">이용완료</em> <span class="figure" id="used_count">${count.cnt}</span> </a>
-                        		</li>
-                    		</c:if>
-                    		<c:if test="${count.reservationType == 'REFUND_CANCEL' }">
-                    			<li class="item">
-                            		<a class="link_summary_board"> <i class="spr_book2 ico_back"></i> <em class="tit">취소·환불</em> <span class="figure" id="canceled_count">${count.cnt}</span> </a>
-                        		</li>
-                    		</c:if>
-                    	</c:forEach>
-                    
-<!--                         <li class="item">
-                            [D] 선택 후 .on 추가 link_summary_board
-                            <a class="link_summary_board on"> <i class="spr_book2 ico_book2"></i> <em class="tit">전체</em> <span class="figure" id="total_count">4</span> </a>
+                       	<li class="item">
+                            <a class="link_summary_board"> <i class="spr_book2 ico_book_ss"></i> <em class="tit">이용예정</em> <span class="figure" id="due_count"><c:out value="${reservationStatus[0].cnt + reservationStatus[1].cnt }" default="0"></c:out></span> </a>
                         </li>
                         <li class="item">
-                            <a class="link_summary_board"> <i class="spr_book2 ico_book_ss"></i> <em class="tit">이용예정</em> <span class="figure" id="due_count">2</span> </a>
+                        	<a class="link_summary_board"> <i class="spr_book2 ico_check"></i> <em class="tit">이용완료</em> <span class="figure" id="used_count"><c:out value="${reservationStatus[2].cnt }" default="0"></c:out></span> </a>
+                    	</li>
+                    	<li class="item">
+                            <a class="link_summary_board"> <i class="spr_book2 ico_back"></i> <em class="tit">취소·환불</em> <span class="figure" id="canceled_count"><c:out value="${reservationStatus[3].cnt }" default="0"></c:out></span> </a>
                         </li>
-                        <li class="item">
-                            <a class="link_summary_board"> <i class="spr_book2 ico_check"></i> <em class="tit">이용완료</em> <span class="figure" id="used_count">1</span> </a>
-                        </li>
-                        <li class="item">
-                            <a class="link_summary_board"> <i class="spr_book2 ico_back"></i> <em class="tit">취소·환불</em> <span class="figure" id="canceled_count">1</span> </a>
-                        </li> -->
                     </ul>
                 </div>
                 <!--// 예약 현황 -->
@@ -71,18 +44,62 @@
                         <!--[D] 예약확정: .confirmed, 취소된 예약&이용완료: .used 추가 card -->
                         <c:forEach var="ritem" items="${reservation }" varStatus="status">
                         <c:if test="${status.index == 0 or (status.index > 0 and reservation[status.index-1].reservationType ne ritem.reservationType )}">
-                        <li class="card" id="requesting">
-                        	<div class=link_booking_details>
-	                            <div class="card_header">
-	                                <div class="left"></div>
-	                                <div class="middle">
-	                                    <!--[D] 예약 신청중: .ico_clock, 예약확정&이용완료: .ico_check2, 취소된 예약: .ico_cancel 추가 spr_book2 -->
-	                                    <i class="spr_book2 ico_clock"></i>
-	                                    <span class="tit">예약 신청중</span>
+	                        <c:if test="${ritem.reservationType == 'REQUESTING' }">
+	                        <li class="card" id="requesting">
+	                        	<div class=link_booking_details>
+		                            <div class="card_header">
+		                                <div class="left"></div>
+		                                <div class="middle">
+		                                    <!--[D] 예약 신청중: .ico_clock, 예약확정&이용완료: .ico_check2, 취소된 예약: .ico_cancel 추가 spr_book2 -->
+		                                    <i class="spr_book2 ico_clock"></i>
+		                                    <span class="tit">예약 신청중</span>
+		                                </div>
+		                                <div class="right"></div>
+		                            </div>
+								</div>
+							</c:if>
+							<c:if test="${ritem.reservationType == 'DUE' }">
+							<li class="card confirmed">
+	                            <div class="link_booking_details">
+	                                <div class="card_header">
+	                                    <div class="left"></div>
+	                                    <div class="middle">
+	                                        <!--[D] 예약 신청중: .ico_clock, 예약확정&이용완료: .ico_check2, 취소된 예약: .ico_cancel 추가 spr_book -->
+	                                        <i class="spr_book2 ico_check2"></i>
+	                                        <span class="tit">예약 확정</span>
+	                                    </div>
+	                                    <div class="right"></div>
 	                                </div>
-	                                <div class="right"></div>
+								</div>
+							</c:if>
+							<c:if test="${ritem.reservationType == 'USED' }">
+							<li class="card used">
+	                            <div class="link_booking_details">
+	                                <div class="card_header">
+	                                    <div class="left"></div>
+	                                    <div class="middle">
+	                                        <!--[D] 예약 신청중: .ico_clock, 예약확정&이용완료: .ico_check2, 취소된 예약: .ico_cancel 추가 spr_book -->
+	                                        <i class="spr_book2 ico_check2"></i>
+	                                        <span class="tit">이용 완료</span>
+	                                    </div>
+	                                    <div class="right"></div>
+	                                </div>
 	                            </div>
-							</div>
+							</c:if>
+							<c:if test="${ritem.reservationType == 'REFUND_CANCEL' }">
+							<li class="card used">
+	                            <div class="link_booking_details">
+	                                <div class="card_header">
+	                                    <div class="left"></div>
+	                                    <div class="middle">
+	                                        <!--[D] 예약 신청중: .ico_clock, 예약확정&이용완료: .ico_check2, 취소된 예약: .ico_cancel 추가 spr_book -->
+	                                        <i class="spr_book2 ico_cancel"></i>
+	                                        <span class="tit">취소된 예약</span>
+	                                    </div>
+	                                    <div class="right"></div>
+	                                </div>
+								</div>
+							</c:if>
                         	</c:if>
                         	<article class="card_item">
 	                            <a class="link_booking_details">
@@ -130,9 +147,16 @@
 													</em>
 	                                            </div>
 	                                            <!-- [D] 예약 신청중, 예약 확정 만 취소가능, 취소 버튼 클릭 시 취소 팝업 활성화 -->
+	                                            <c:if test="${ritem.reservationType == 'REQUESTING' or ritem.reservationType == 'DUE' }">
 	                                            <div class="booking_cancel">
 	                                                <button class="btn"><span>취소</span></button>
 	                                            </div>
+	                                            </c:if>
+	                                            <c:if test="${ritem.reservationType == 'USED' }">
+	                                            <div class="booking_cancel">
+	                                                <button class="btn"><span>예매자 리뷰 남기기</span></button>
+	                                            </div>
+	                                            </c:if>
 	                                        </div>
 	                                    </div>
 	                                    <div class="right"></div>
@@ -154,9 +178,11 @@
                 <!--// 내 예약 리스트 -->
 
                 <!-- 예약 리스트 없음 -->
+                <c:if test="${reservation.size() == 0 }">
                 <div class="err"> <i class="spr_book ico_info_nolist"></i>
                     <h1 class="tit">예약 리스트가 없습니다</h1>
                 </div>
+                </c:if>
                 <!--// 예약 리스트 없음 -->
             </div>
         </div>

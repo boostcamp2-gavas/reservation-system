@@ -29,7 +29,7 @@ public class ReservationDaoTest {
 	public void shouldSelect() {
 		int userId = 10;
 		List<Reservation> list = dao.select(userId);
-		assertThat(list.size(), is(4));
+		assertThat(list.size(), is(28));
 		
 	}
 	
@@ -47,6 +47,13 @@ public class ReservationDaoTest {
 			}
 			i++;
 		}
+	}
+	
+	@Test
+	public void shouldUpdate() {
+		int id = 1;
+		ReservationType type = ReservationType.REFUND_CANCEL;
+		assertThat(dao.update(id, type.ordinal()), is(1));
 	}
 	
 }
