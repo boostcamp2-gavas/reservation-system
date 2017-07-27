@@ -18,7 +18,7 @@
         <div class="ct">
             <div class="ct_wrap">
                 <div class="top_title">
-                    <a href="#" class="btn_back" title="이전 화면으로 이동"> 
+                    <a href="javascript:history.back()" class="btn_back" title="이전 화면으로 이동"> 
                     	<i class="fn fn-backward1"></i> 
                     </a>
                     <h2>

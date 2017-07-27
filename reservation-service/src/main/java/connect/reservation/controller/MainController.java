@@ -23,7 +23,7 @@ import connect.reservation.domain.User;
 import connect.reservation.dto.Product;
 import connect.reservation.service.CategoryService;
 import connect.reservation.service.ProductService;
-import connect.reservation.service.ReservationCommentService;
+import connect.reservation.service.CommentService;
 import connect.reservation.service.ReservationService;
 import connect.reservation.service.UserService;
 
@@ -33,7 +33,7 @@ public class MainController {
 	
 	private final CategoryService categoryService;
 	private final ProductService productService;
-	private final ReservationCommentService reservationCommentService;
+	private final CommentService reservationCommentService;
 	private final UserService userService;
 	private final ReservationService reservationService;
 	
@@ -42,7 +42,7 @@ public class MainController {
 	public MainController(
 			CategoryService categoryService, 
 			ProductService productService,
-			ReservationCommentService reservationCommentService,
+			CommentService reservationCommentService,
 			UserService userService,
 			ReservationService reservationService) {
 		this.categoryService = categoryService;
@@ -143,4 +143,5 @@ public class MainController {
 		reservationService.add(reservationInfo);
 		return "success";
 	}
+	
 }

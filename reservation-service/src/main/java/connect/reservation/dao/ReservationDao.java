@@ -33,7 +33,7 @@ public class ReservationDao {
                 .usingGeneratedKeyColumns("id"); // pk 칼럼을 지정
     }
     
-    public int insert(ReservationInfo reservationInfo){
+    public int add(ReservationInfo reservationInfo){
         SqlParameterSource params = new BeanPropertySqlParameterSource(reservationInfo); 
         return insertAction.executeAndReturnKey(params).intValue();	
     }

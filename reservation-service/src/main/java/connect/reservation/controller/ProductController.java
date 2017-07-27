@@ -9,20 +9,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import connect.reservation.service.ProductService;
-import connect.reservation.service.ReservationCommentService;
+import connect.reservation.service.CommentService;
 
 @RestController
 @RequestMapping("/productInfo")
 public class ProductController {
 	private final ProductService productService;
-	private final ReservationCommentService reservationCommentService;
+	private final CommentService reservationCommentService;
 
 	final static int productNum = 10;
 	
 	@Autowired
 	public ProductController(
 			ProductService productService, 
-			ReservationCommentService reservationCommentService) {
+			CommentService reservationCommentService) {
 		this.productService = productService;
 		this.reservationCommentService = reservationCommentService;
 	}
