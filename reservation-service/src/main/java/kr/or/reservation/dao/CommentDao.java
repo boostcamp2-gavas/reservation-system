@@ -31,7 +31,7 @@ public class CommentDao {
 	
 	public List<CommentDTO> select(int productId) {
 		Map<String , ?> map = Collections.singletonMap("id",productId);
-		return jdbc.query(CommentSqls.SELECT_ALL,map,rowMapper);
+		return jdbc.query(CommentSqls.SELCET_ALL,map,rowMapper);
 	}
 	
 	// 이름이 너무긴데? 
