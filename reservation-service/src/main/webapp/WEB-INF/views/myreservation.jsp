@@ -10,6 +10,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
     <link href="/resources/css/style.css" rel="stylesheet">
+    <style>
+        .invisible {
+            display: none
+        }
+    </style>
 </head>
 
 <body>
@@ -195,11 +200,11 @@
                 <!--// 내 예약 리스트 -->
 
                 <!-- 예약 리스트 없음 -->
-                <c:if test="${reservation.size() == 0 }">
-                <div class="err"> <i class="spr_book ico_info_nolist"></i>
+                
+                <div class="err <c:if test="${reservation.size() != 0 }">invisible</c:if>"> <i class="spr_book ico_info_nolist"></i>
                     <h1 class="tit">예약 리스트가 없습니다</h1>
                 </div>
-                </c:if>
+                
                 <!--// 예약 리스트 없음 -->
             </div>
         </div>
