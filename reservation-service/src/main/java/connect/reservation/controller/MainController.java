@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -19,6 +20,7 @@ import connect.reservation.domain.Category;
 import connect.reservation.domain.ReservationInfo;
 import connect.reservation.domain.ReservationType;
 import connect.reservation.domain.User;
+import connect.reservation.dto.Product;
 import connect.reservation.service.CategoryService;
 import connect.reservation.service.ProductService;
 import connect.reservation.service.ReservationCommentService;
@@ -117,31 +119,28 @@ public class MainController {
 			e.printStackTrace();
 		}
 		
+		List<Product> list = productService.getPriceInfo(productId);
+		
 		model.addAttribute("reserveInfo", map.get("info"));
 		model.addAttribute("startDay", map.get("startDay"));
 		model.addAttribute("endDay", map.get("endDay"));
-		model.addAttribute("price", productService.getPriceInfo(productId));
+		model.addAttribute("price", list);
+		model.addAttribute("minPrice", productService.getMinimunPrice(list));
 		model.addAttribute("user", userService.getUserInfo(userId));
 		return "reserve";
 	}
 	
 	@PostMapping("/reserve")
-	public String add(HttpSession session, @RequestParam("productId") Integer productId, ReservationInfo reservationInfo) {
-		System.out.println("controller");
-		if(productId < 1)
-			return null;
-		
-		User currentUser = (User)session.getAttribute("currentUser");
-		
-		// getParameter, getAttribute 차이
-		int userId = currentUser.getId();
-		reservationInfo.setUserId(userId);
-		reservationInfo.setReservationType(ReservationType.REQUESTING);
+	public String addReservation(HttpSession session, @RequestBody ReservationInfo reservationInfo) {
 
-		System.out.println(reservationInfo.getReservationDate());
+		User currentUser = (User)session.getAttribute("currentUser");
+
+		// getParameter, getAttribute 차이
+		reservationInfo.setUserId(currentUser.getId());
+		reservationInfo.setReservationDate(userService.getDate());
+		reservationInfo.setCreateDate(userService.getDate());
 		
-		//reservationService.add(productId, userId, countInfo, userName, userTel, userEmail, reserveDate);
-		
-		return "redirect:/mvMyPage";
+		reservationService.add(reservationInfo);
+		return "success";
 	}
 }

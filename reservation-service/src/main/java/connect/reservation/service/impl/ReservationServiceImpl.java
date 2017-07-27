@@ -21,12 +21,12 @@ import connect.reservation.service.ReservationService;
 public class ReservationServiceImpl implements ReservationService{
 	final static int General = 0;
 	
-	private ReservationDao dao;
+	private ReservationDao reservationDao;
 	private ProductDao productDao;
 	
 	@Autowired
-	public void setReservationInfoDao(ReservationDao dao, ProductDao productDao) {
-		this.dao = dao;
+	public void setReservationInfoDao(ReservationDao reservationDao, ProductDao productDao) {
+		this.reservationDao = reservationDao;
 		this.productDao = productDao;
 	}
 	
@@ -39,31 +39,13 @@ public class ReservationServiceImpl implements ReservationService{
 	
 	@Override
 	@Transactional(readOnly = false)
-	public int add(int productId, int userId, String countInfo, String name, String tel, String email, Timestamp reserveDate) {
-		String count[] = countInfo.split("-");	
-		ReservationInfo reservationInfo = new ReservationInfo();
-		
-		reservationInfo.setProductId(productId);
-		reservationInfo.setUserId(userId);
-		reservationInfo.setGeneralTicketCount(Integer.parseInt(count[0]));
-		reservationInfo.setYouthTicketCount(Integer.parseInt(count[1]));
-		reservationInfo.setChildTicketCount(Integer.parseInt(count[2]));
-		reservationInfo.setReservationName(name);
-		reservationInfo.setReservationTel(tel);
-		reservationInfo.setReservationEmail(email);
-		reservationInfo.setReservationDate(reserveDate);
-		reservationInfo.setCreateDate(getDate());
-		
-		for(int i=0; i<count.length; i++) {
-			System.out.println(count[i]);
-		}
-		
-		return dao.insert(reservationInfo);
+	public int add(ReservationInfo reservationInfo) {		
+		return reservationDao.insert(reservationInfo);
 	}
 
 	@Override
 	public List<Reservation> get(int userId) {
-		List<Reservation> list = dao.select(userId);
+		List<Reservation> list = reservationDao.select(userId);
 		Double tempTotalPrice = 0.0;
 		for(Reservation i : list) {
 			List<Product> priceList = productDao.getPriceInfo(i.getProductId());
@@ -89,7 +71,7 @@ public class ReservationServiceImpl implements ReservationService{
 
 	@Override
 	public List<ReservationCount> getCount(int userId) {
-		return dao.selectCount(userId);
+		return reservationDao.selectCount(userId);
 	}
 
 	@Override

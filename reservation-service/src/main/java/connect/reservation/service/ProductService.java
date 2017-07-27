@@ -18,4 +18,5 @@ public interface ProductService {
 	
 	public Map<String, Object> getReserveInfo(int productId) throws Exception;
 	public List<Product> getPriceInfo(int productId);
+	public int getMinimunPrice(List<Product> list);
 }

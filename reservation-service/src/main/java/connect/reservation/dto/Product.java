@@ -28,14 +28,14 @@ public class Product {
 	private int priceType;
 	private int price;
 	private double discountRate;
-	private double discountPrice;
+	private int discountPrice;
 	private int minimumPrice;
 	
 	
-	public double getDiscountPrice() {
+	public int getDiscountPrice() {
 		return discountPrice;
 	}
-	public void setDiscountPrice(double discountPrice) {
+	public void setDiscountPrice(int discountPrice) {
 		this.discountPrice = discountPrice;
 	}
 	public int getMinimumPrice() {

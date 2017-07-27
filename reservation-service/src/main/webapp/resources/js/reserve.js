@@ -134,6 +134,31 @@ $('.btn_agreement').click(function(){
 });
 
 $('.bk_btn').click(function(){
-	$('.form_horizontal').attr('action', '/reserve?productId='+$('#productId').val());
-	$('.form_horizontal').submit();
+//	var reservationInfo = JSON.stringify($(".form_horizontal").serializeObject());
+	var obj = {
+			productId : $('#productId').val(),
+			reservationName : "test",
+			generalTicketCount : $('#ticket_count_0').val(),
+			youthTicketCount : $('#ticket_count_1').val(),
+			childTicketCount : $('#ticket_count_2').val(),
+			reservationName : $('#name').val(),
+			reservationTel : $('#tel').val(),
+			reservationEmail : $('#email').val(),
+			reservationType : 0
+	}
+	var reservationInfo = JSON.stringify(obj);
+
+	$.ajax({
+		type : "POST",
+		url : $(".form_horizontal").attr('action'),
+		data : reservationInfo,
+		contentType : "application/json",
+		success : function(data){
+			location.href='/mvMyPage';
+		},
+		error : function(request,status,error){
+			alert("code:"+request.status+"\n"+"error:"+error);
+		}
+	});
 })
+

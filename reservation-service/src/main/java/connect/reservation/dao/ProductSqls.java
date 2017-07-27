@@ -39,7 +39,7 @@ public class ProductSqls {
 			+ "WHERE pi.product_id = :product_id AND pi.file_id = f.id AND f.content_type like '%공연정보%' "
 			+ "ORDER BY f.content_type";
 	
-	final static String GET_RESERVE_INFO = "SELECT p.id product_id, p.name product_name, FORMAT(pp.price*(1-pp.discount_rate),0) minimum_price, f.file_name, f.save_file_name, di.place_name, di.place_street, di.place_lot, di.display_start, di.display_end, di.observation_time"
+	final static String GET_RESERVE_INFO = "SELECT p.id product_id, p.name product_name, f.file_name, f.save_file_name, di.place_name, di.place_street, di.place_lot, di.display_start, di.display_end, di.observation_time"
 			+ " FROM product p INNER JOIN product_price pp ON p.id = pp.product_id"
 			+ " LEFT JOIN product_image pi ON p.id = pi.product_id"
 			+ " LEFT JOIN file f ON pi.file_id = f.id"
@@ -47,7 +47,7 @@ public class ProductSqls {
 			+ " WHERE p.id = :product_id AND pi.type = 1"
 			+ " ORDER BY pp.price*(1-pp.discount_rate)"
 			+ " LIMIT 1";
-	final static String GET_PRICE_INFO = "SELECT pp.price_type, pp.price, pp.discount_rate, pp.price*(1-pp.discount_rate) discount_price"
+	final static String GET_PRICE_INFO = "SELECT pp.price_type, pp.price, pp.discount_rate"
 			+ " FROM product p INNER JOIN product_price pp ON p.id = pp.product_id"
 			+ " WHERE p.id = :product_id";
 }

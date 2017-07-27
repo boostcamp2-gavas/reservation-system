@@ -2,6 +2,7 @@ package connect.reservation.service.impl;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -96,7 +97,27 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override
 	public List<Product> getPriceInfo(int productId) {
-		return productDao.getPriceInfo(productId);
+		List<Product> list = new ArrayList<Product>();
+		list = productDao.getPriceInfo(productId);
+		
+		int discountPrice;
+		for(int i=0; i<list.size(); i++) {
+			discountPrice = (int) (list.get(i).getPrice() * (1 - list.get(i).getDiscountRate()));
+			list.get(i).setDiscountPrice(discountPrice);
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public int getMinimunPrice(List<Product> list) {
+		int minimun = list.get(0).getDiscountPrice();
+		
+		for(int i=1; i<list.size(); i++) {
+			if(minimun > list.get(i).getDiscountPrice())
+				minimun = list.get(i).getDiscountPrice();
+		}
+		return minimun;
 	}
 	
 	public String getDateDay(Timestamp date) throws Exception {
