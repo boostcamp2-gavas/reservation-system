@@ -204,7 +204,7 @@
 
 <script>
 	// 모듈화 진행해야함. 
-	var $article;
+	var $article =null;
 	var $cardDetail ;
 	var $cardHeader;
 	
@@ -212,15 +212,19 @@
 	var $cancellation = $(".link_summary_board > .figure").eq(3);
 	$(".expectation, .confirmed").on("click",".booking_cancel .btn",function(event){
 		event.preventDefault();
-		$cardDetail = $(this).parents(".card_detail"),
-		$popoup = $(".popup_booking_wrapper");
-		var productId = $cardDetail.data("id"),
+		var productId =0,
+		$popoup;
+		
+		$cardDetail = $(this).parents(".card_detail");
 		$article = $cardDetail.parents("article");
-		console.log($article);
+		
+		productId = $cardDetail.data("id");
+		$popoup = $(".popup_booking_wrapper");
+
 		$popoup.removeClass("none");
-		// id값을 인자로 넘길 방법이 없어, id로 설정하고 가져오는 방식
 		$popoup.data("id",productId);
 	});
+	
 	
 	
 	$(".btn_green").on("click",function(event){
