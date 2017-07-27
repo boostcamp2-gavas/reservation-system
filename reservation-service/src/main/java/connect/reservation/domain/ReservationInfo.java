@@ -12,7 +12,7 @@ public class ReservationInfo {
 	private String reservationTel;
 	private String reservationEmail;
 	private Timestamp reservationDate;
-	private int reservationType;
+	private ReservationType reservationType;
 	private Timestamp createDate;
 	private Timestamp modifyDate;
 	
@@ -71,10 +71,10 @@ public class ReservationInfo {
 	public void setReservationDate(Timestamp reservationDate) {
 		this.reservationDate = reservationDate;
 	}
-	public int getReservationType() {
+	public ReservationType getReservationType() {
 		return reservationType;
 	}
-	public void setReservationType(int reservationType) {
+	public void setReservationType(ReservationType reservationType) {
 		this.reservationType = reservationType;
 	}
 	public Timestamp getCreateDate() {
