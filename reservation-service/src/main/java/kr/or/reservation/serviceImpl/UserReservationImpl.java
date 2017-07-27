@@ -22,6 +22,8 @@ public class UserReservationImpl implements UserReservationService {
 	
 	UserReservationDao userReservationDao;
 	UserDao userDao;
+	
+	// DB에서 가져올떄 ENUM으로 수정해 볼것.
 	protected enum Type {
 		EXPECTATION(0), CONFIRMED(1)  , USED(2), CANCELLATION(3);
 		protected int type;
@@ -30,8 +32,7 @@ public class UserReservationImpl implements UserReservationService {
 		}
 		int getType(){
 			return type;
-		}
-		
+		}	
 	}
 	
 	@Autowired
