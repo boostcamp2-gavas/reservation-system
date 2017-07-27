@@ -15,7 +15,7 @@ public class CommentSqls {
 			+ " FROM reservation_user_comment_image ruci, file f "
 			+ " WHERE ruci.reservation_user_comment_id = :reservation_user_comment_id AND ruci.file_id = f.id";
 			
-	final static String GET_RESERVAION_NAME = "SELECT p.name reservation_name"
+	final static String GET_RESERVAION_NAME = "SELECT p.id product_id, p.name reservation_name"
 			+ " FROM reservation_info ri, product p "
 			+ " WHERE ri.id = :reservation_id AND ri.product_id = p.id;";
 	final static String ADD = "INSERT INTO reservation_user_comment(product_id, user_id, score, comment, create_date) "

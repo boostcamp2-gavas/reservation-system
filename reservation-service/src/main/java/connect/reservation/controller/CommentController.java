@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import connect.reservation.domain.ReservationInfo;
+import connect.reservation.domain.Product;
+import connect.reservation.domain.ReservationUserComment;
 import connect.reservation.service.CommentService;
 
 @Controller
@@ -25,13 +26,18 @@ public class CommentController {
 
 	@GetMapping("/write")
 	public String mvWrite(Model model, @RequestParam("reservationId") int reservationId) {
-		model.addAttribute("reserveName", reservationCommentService.getName(reservationId));
+		Product product = new Product();
+		product = reservationCommentService.getName(reservationId);
+		
+		model.addAttribute("productId", product.getId());
+		model.addAttribute("productName", product.getName());
+		
 		return "reviewWrite";
 	}
 	
 	@PostMapping("/write")
-	public String add(Model model, @RequestBody ReservationInfo reservationInfo) {
-		
+	public String add(Model model, @RequestBody ReservationUserComment ReservationUserComment) {
+		System.out.println(ReservationUserComment.toString());
 		return "review";
 	}
 }

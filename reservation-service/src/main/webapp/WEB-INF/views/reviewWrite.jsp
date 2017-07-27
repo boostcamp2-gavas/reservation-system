@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -14,14 +13,16 @@
 </head>
 
 <body>
+<input type="hidden" id="productId" name="productId" value="${productId}">
+<input type="hidden" id="score" name="score" value="">
+<input type="hidden" id="comment" name="comment" value="">
 	<div id="container">
 		<c:import url="/WEB-INF/views/header.jsp" />
-		</div>
 		<div class="ct">
 			<div class="ct_wrap">
 				<div class="top_title review_header">
 					<a class="btn_back" title="이전 화면으로 이동"> <i class="fn fn-backward1"></i> </a>
-					<h2><span class="title">${reserveName}</span></h2>
+					<h2><span class="title">${productName}</span></h2>
 				</div>
 				<!-- 리뷰 별점 -->
 				<div class="write_act">
@@ -97,6 +98,11 @@
 					<button class="bk_btn"><span class="btn_txt">리뷰 등록</span></button>
 				</div>
 				<!-- //리뷰 등록 -->
+				<form id="comment_form" name="comment_form" action="/comment/write" method="POST">
+					<input type="hidden" id="productId" name="productId" value="${productId}">
+					<input type="hidden" id="score" name="score" value="">
+					<input type="hidden" id="comment" name="comment" value="">
+				</form>
 			</div>
 		</div>
 	</div>
@@ -131,6 +137,26 @@
             $('a.btn_back').on('click', function() {
                 window.history.back();
             });
+        });
+        
+        $('.bk_btn').click(function(){
+        	$('#score').val($('.star_rank').text());
+        	$('#comment').val($('.review_textarea').val());
+        	
+        	var commentInfo = JSON.stringify($(".form_horizontal").serializeObject());
+        	
+        	$.ajax({
+        		type : "POST",
+        		url : "/comment/write",
+        		data : commentInfo,
+        		contentType : "application/json",
+        		success : function(data){
+        			location.href='/review';
+        		},
+        		error : function(request,status,error){
+        			alert("code:"+request.status+"\n"+"error:"+error);
+        		}
+        	});
         });
     </script>
 </body>

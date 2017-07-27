@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import connect.reservation.dao.CommentDao;
+import connect.reservation.domain.Product;
 import connect.reservation.domain.ReservationInfo;
 import connect.reservation.dto.ReservationComment;
 import connect.reservation.service.CommentService;
@@ -53,7 +54,7 @@ public class CommentServiceImpl implements CommentService{
 	}
 	
 	@Override
-	public String getName(int reservationId) {
+	public Product getName(int reservationId) {
 		return commentDao.getReservationName(reservationId);
 	}
 	
