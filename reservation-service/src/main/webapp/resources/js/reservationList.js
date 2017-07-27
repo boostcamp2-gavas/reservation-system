@@ -18,7 +18,10 @@ class ReservationList extends eg.Component {
 		var cardHead = this.card.closest('li.card');
 		if(cardHead.prop('id') === 'requesting' || cardHead.prop('id') === 'card_confirmed') {
 			this.messenger.trigger('showPopup', this);
-		}
+		} else if (cardHead.prop('id') === 'card_used') {
+            var reservationId = this.card.find('em.booking_number').data('reservation-id');
+            location.href = '/comment/write?reservationId=' + reservationId;
+        }
 	}
 	reCount() {
 		this.childrenLength = this.root.children('.card_item').length;
