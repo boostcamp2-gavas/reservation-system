@@ -88,6 +88,7 @@ public class UserReservationImpl implements UserReservationService {
 			log.info("신청 code "+Type.EXPECTATION.getType());
 			log.info("type code "+type);
 			
+			//Type.EXPECTATION.ordinal()
 			if(Type.EXPECTATION.getType() == type || Type.CONFIRMED.getType()==type) {
 				expectataion += count;
 			}else if(Type.USED.getType()== type) {
