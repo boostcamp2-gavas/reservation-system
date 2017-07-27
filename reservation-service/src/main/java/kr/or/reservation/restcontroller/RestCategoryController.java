@@ -1,4 +1,4 @@
-package kr.or.reservation.restController;
+package kr.or.reservation.restcontroller;
 
 import java.util.List;
 

@@ -1,0 +1,27 @@
+From 86dcc21c0460babbc318c6600502c4f14dad6bc6 Mon Sep 17 00:00:00 2001
+From: "DESKTOP-7JJA5K6\\lusiu" <luisue@gmail.com>
+Date: Thu, 27 Jul 2017 20:06:59 +0900
+Subject: [PATCH] =?UTF-8?q?query=20=EC=88=98=EC=A0=95?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ .../src/main/java/kr/or/reservation/sqls/ReservationSqls.java           | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/reservation-service/src/main/java/kr/or/reservation/sqls/ReservationSqls.java b/reservation-service/src/main/java/kr/or/reservation/sqls/ReservationSqls.java
+index 6ede282..d438fdc 100644
+--- a/reservation-service/src/main/java/kr/or/reservation/sqls/ReservationSqls.java
++++ b/reservation-service/src/main/java/kr/or/reservation/sqls/ReservationSqls.java
+@@ -11,6 +11,6 @@ public class ReservationSqls {
+ 			"where product.id = :id " + 
+ 			"order by img.type desc " + 
+ 			"limit 1; ";
+-	public static final String SELECT_PRICE = "SELECT price_type,price,discount_rate FROM reservation.product_price where product_id = :id;";
++	public static final String SELECT_PRICE = "SELECT price_type,price,discount_rate FROM product_price where product_id = :id;";
+ 
+ }
+-- 
+2.11.0.windows.1
+

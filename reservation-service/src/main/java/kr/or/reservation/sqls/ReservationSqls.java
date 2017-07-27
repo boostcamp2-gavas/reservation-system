@@ -11,6 +11,6 @@ public class ReservationSqls {
 			"where product.id = :id " + 
 			"order by img.type desc " + 
 			"limit 1; ";
-	public static final String SELECT_PRICE = "SELECT price_type,price,discount_rate FROM reservation.product_price where product_id = :id;";
+	public static final String SELECT_PRICE = "SELECT price_type,price,discount_rate FROM product_price where product_id = :id;";
 
 }

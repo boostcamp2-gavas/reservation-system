@@ -197,6 +197,7 @@
 
 <!--  Handlebar -->
 <script src="/resources/js/node_modules/handlebars/dist/handlebars.min.js"></script>
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
 
