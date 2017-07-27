@@ -21,7 +21,6 @@ Handlebars.registerHelper("timeStamp", function(timestamp) {
 });
 
 Handlebars.registerHelper("btnText", function(btn) {
-	console.log(btn);
 	 return btn;
 });
 
@@ -38,6 +37,11 @@ var ReservationState = (function(){
 	$expectation =$(".link_summary_board ").eq(1),
 	$usedLength = $(".link_summary_board ").eq(2),
 	$cancellation = $(".link_summary_board").eq(3);
+	
+	var $allCards = $(".card"),
+	$usedCard = $(".used:first"),
+	$expectationCard = $(".expectation, .confirmed"),
+	$cancellationCard = $(".cancellation");
 	
 	// enum 같은 느낌으로 사용.
 	// ENUM 을 이렇게 사용하는게 맞는지 의문이 생김.
@@ -58,7 +62,7 @@ var ReservationState = (function(){
 			  async: false
 		}).done(function(data) {
 			if (data.length === 0) {
-				$(".err").remove();
+				$(".err").addClass("none");
 			}else{
 				var item = {
 						reservation : [],
@@ -78,38 +82,42 @@ var ReservationState = (function(){
 	}
 	
 	
-
 	
+	// 함수가 조금 길지 않나 ... 
 	function menuClickEvent(event){
 		// 선택된 인자외에 다 none 처리 
 		event.preventDefault();
 		var index = $(".link_summary_board").index(this);
-		var $allCards = $(".card"),
-		$used = $(".used");
-		$allCards.addClass("none");
-		this.removeClass("none");
+		$dumyCard = null;
+		
 		if(index === reservationTypeEnum.ALL_RESERVATION){
 			// 0
 			$allCards.removeClass("none");
+			$dumyCard = $allCards;
 		}else if(index === reservationTypeEnum.EXPECTATION){
 			// 1
-			/**
-			 * cards들 모두를 none 하고 2개를 지울까 생각햇지만,
-			 * 옳지 않은것 같아 다음과 같이 구현했습니다 .
-			 * -재사용이 불가능한 부분이 조금 아쉽긴 합니다.
-			 * (기능자체가 종속되어 있다고 생각되어 재사용은 고려하지 않았습니다.) 
-			 */
-			$(".expectation, confirmed").remove("none");
-			$(".card:eq(2),.card:eq(3)").addClass("none");
+			$expectationCard.removeClass("none");
+			$(".card:eq(2), .card:eq(3)").addClass("none");
+			
+			$dumy = $expectationCard;
 		}else if(index === reservationTypeEnum.END){
 			// 2
-			$used.remove("none");
-			$(".card").not($used).addClass("none");
+			$usedCard.removeClass("none");
+			$(".card").not($usedCard).addClass("none");
+			$dumy = $usedCard;
 		}else if(index === reservationTypeEnum.CENCELLATION){
 			// 3
-			
+			$allCards.not($cancellationCard).addClass("none");
+			$cancellationCard.removeClass("none");
+			$dumy = $cancellationCard;
 		}
 		
+		if($dumy.children("article").length){
+			// content가 없으면, 
+			$(".err").addClass("none");
+		}else{
+			$(".err").removeClass("none");
+		}
 	}
 	
 	return{
@@ -122,10 +130,10 @@ var ReservationState = (function(){
 			
 			// menu bar 초기화 
 			console.log(expectationLength);
-			$expectation.find(".figure").text(expectationLength);
+			$expectation.find(".figure").text(expectationLength+confirmedLength);
 			$usedLength.find(".figure").text(usedLength);
 			$cancellation.find(".figure").text(cancellationLength);
-			$all.find(".figure").text(expectationLength+usedLength+cancellationLength);
+			$all.find(".figure").text(expectationLength+usedLength+cancellationLength+confirmedLength);
 		
 			// menu bar 이벤트 등록
 			$all.on("click",menuClickEvent.bind($all));
