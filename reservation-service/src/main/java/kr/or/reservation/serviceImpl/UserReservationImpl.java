@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.reservation.dao.UserDao;
 import kr.or.reservation.dao.UserReservationDao;
+import kr.or.reservation.dto.ReservationTypeCountDTO;
 import kr.or.reservation.dto.UserReservationDTO;
 import kr.or.reservation.service.UserReservationService;
 
@@ -21,7 +22,17 @@ public class UserReservationImpl implements UserReservationService {
 	
 	UserReservationDao userReservationDao;
 	UserDao userDao;
-	
+	protected enum Type {
+		EXPECTATION(0), CONFIRMED(1)  , USED(2), CANCELLATION(3);
+		protected int type;
+		Type(int type) {
+			this.type = type;
+		}
+		int getType(){
+			return type;
+		}
+		
+	}
 	
 	@Autowired
 	public void setUserDao(UserDao userDao) {
@@ -51,6 +62,45 @@ public class UserReservationImpl implements UserReservationService {
 		}
 		log.info(" userID ::  "+userId + "  reservationId :: " +reservationId );
 		return userReservationDao.cancelReservation(userId,reservationId);
+	}
+	
+	public Map<String,Integer> selectTypeCount(int userId){
+		if(userId<= 0) {
+			return null;
+		}
+		List<ReservationTypeCountDTO> list = userReservationDao.selectTypeCount(userId);
+		convertToMap(list);
+		return convertToMap(list);
+	}
+
+	// 넘겨 받은 List로 알맞게 변환
+	private Map<String,Integer> convertToMap(List<ReservationTypeCountDTO> list ) {
+		int type,count;
+		int all =0, expectataion=0 , used =0, cancellation=0;
+		
+		Map<String , Integer> map = new HashMap<>();
+		for(ReservationTypeCountDTO dto : list) {
+			type =dto.getReservationType();
+			count = dto.getCount();
+			all += count;
+			log.info(Type.EXPECTATION.equals(type));
+			log.info("신청 code "+Type.EXPECTATION.getType());
+			log.info("type code "+type);
+			
+			if(Type.EXPECTATION.getType() == type || Type.CONFIRMED.getType()==type) {
+				expectataion += count;
+			}else if(Type.USED.getType()== type) {
+				used += count;
+			}else {
+				cancellation += count;
+			}
+		}
+		map.put("All", all);
+		map.put("EXPECTATION",expectataion);
+		map.put("USED",used);
+		map.put("CANCELLATION", cancellation);
+		return map;
+		
 	}
 
 }

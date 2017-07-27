@@ -16,4 +16,9 @@ public class UserReservationSqls {
 			"reservation_type = 3, " + 
 			"modify_date = now() " + 
 			"WHERE id = :id and user_id = :userId;";
+	
+	public static final String SELECT_TYPECOUNT ="SELECT reservation_type , count(*) as count " + 
+			"FROM reservation.reservation_info " + 
+			"WHERE user_id = :id " + 
+			"GROUP BY reservation_type; ";
 }

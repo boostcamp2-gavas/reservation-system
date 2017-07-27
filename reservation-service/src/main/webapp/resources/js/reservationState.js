@@ -129,20 +129,12 @@ var ReservationState = (function(){
 		}
 	}
 	
-
-	
-	
-	
-
-
 	
 	function loading(type,$card,_menubar,_icon,_btns){
-		var max = 0;
 		// 받아온 data의 길이로 max를 설정하고, return 받기 위해  비동기를 막아 두었습니다. 
 		$.ajax({
 			method : "GET",
-			url : "/reservation/type/"+type,
-			  async: false
+			url : "/reservation/type/"+type
 		}).done(function(data) {
 			if (data.length === 0) {
 				$(".err").addClass("none");
@@ -151,8 +143,7 @@ var ReservationState = (function(){
 						reservation : [],
 						menubar : [{ menubar : _menubar, icon : _icon}]
 				};
-				max = data.length;
-				for (var i = 0; i < max; ++i) {
+				for (var i = 0, max = data.length; i < max; ++i) {
 					data[i].btns = _btns
 					item.reservation.push(data[i]);
 				}
@@ -161,7 +152,6 @@ var ReservationState = (function(){
 				$card.append(html);
 			}
 		});
-		return max;
 	}
 	
 	
@@ -210,18 +200,15 @@ var ReservationState = (function(){
 		init : function(){
 			
 			// ajax 값 호출 
+			// 여기 까진 만족 ok 
 			expectationLength =loading(0,$('.expectation'),"예약 신청중","ico_clock","취소");
 			confirmedLength =loading(1,$('.confirmed'),"예약 확정","ico_check2","취소");
 			usedLength =loading(2,$('.used:first'),"이용 완료","ico_check2","예매자 리뷰 남기기");
 			cancellationLength =loading(3,$('.used:last'),"취소된 예약","ico_cancel","");
+			// count 가져오는 부분까지 js에서 하기엔 너무 스크립트가 많아서 서버로 넘김.
+			// 삭제시 삭제 count 올라가는 부분 수정해야됨.
 			
-			// menu bar 초기화 
-			console.log(expectationLength+confirmedLength);
-			$expectation.find(".figure").text(expectationLength+confirmedLength);
-			$usedLength.find(".figure").text(usedLength);
-			$cancellation.find(".figure").text(cancellationLength);
-			$all.find(".figure").text(expectationLength+usedLength+cancellationLength+confirmedLength);
-		
+			
 			// menu bar 이벤트 등록
 			$all.on("click",menuClickEvent.bind($all));
 			$expectation.on("click",menuClickEvent.bind($expectation));
@@ -233,7 +220,7 @@ var ReservationState = (function(){
 			$(".btn_gray, .popup_btn_close").on("click",function(event){
 				event.preventDefault();
 				$(".popup_booking_wrapper").addClass("none");
-			})
+			});
 			$(".btn_green").on("click",cancellationBtn);
 			$(".expectation, .confirmed").on("click",".booking_cancel .btn",confirmCancellationBtn);
 		}

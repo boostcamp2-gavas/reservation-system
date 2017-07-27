@@ -29,6 +29,7 @@ public class UserReservationController {
 	@GetMapping(path = "/my")
     public String selectAll(Model model,HttpSession session){
 		int sessionId= (Integer)session.getAttribute("id");
+		model.addAttribute("count",userReservationService.selectTypeCount(sessionId));
     	return "myreservation";
     }
 	

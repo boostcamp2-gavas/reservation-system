@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.reservation.dto.CommentDTO;
 import kr.or.reservation.dto.ReservationDTO;
+import kr.or.reservation.dto.ReservationTypeCountDTO;
 import kr.or.reservation.dto.UserReservationDTO;
 import kr.or.reservation.sqls.CommentSqls;
 import kr.or.reservation.sqls.ReservationSqls;
@@ -28,6 +29,7 @@ public class UserReservationDao {
 	Logger log = Logger.getLogger(this.getClass());
 	private NamedParameterJdbcTemplate jdbc;
 	private RowMapper<UserReservationDTO> mapper = BeanPropertyRowMapper.newInstance(UserReservationDTO.class);
+	private RowMapper<ReservationTypeCountDTO> countMapper = BeanPropertyRowMapper.newInstance(ReservationTypeCountDTO.class);
 	
 	public UserReservationDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -46,4 +48,12 @@ public class UserReservationDao {
 		map.put("userId", userId);
 		return jdbc.update(UserReservationSqls.CANCEL_RESERVATION_ONE,map)==1;
 	}
+	
+	
+	public List<ReservationTypeCountDTO> selectTypeCount(int userId) {
+		Map<String , ?> map = Collections.singletonMap("id", userId);
+		return jdbc.query(UserReservationSqls.SELECT_TYPECOUNT,map,countMapper);
+	}
+	
+	
 }
