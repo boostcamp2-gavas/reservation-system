@@ -22,32 +22,16 @@
                     <ul class="summary_board">
                         <li class="item">
                             <!--[D] 선택 후 .on 추가 link_summary_board -->
-                            <a href="#" class="link_summary_board on"> 
-                            	<i class="spr_book2 ico_book2"></i> 
-                            	<em class="tit">전체</em> 
-                            	<span class="figure">4</span> 
-                            </a>
+                            <a class="link_summary_board on"> <i class="spr_book2 ico_book2"></i> <em class="tit">전체</em> <span class="figure" id="total_count">4</span> </a>
                         </li>
                         <li class="item">
-                            <a href="#" class="link_summary_board"> 
-                           		<i class="spr_book2 ico_book_ss"></i> 
-                            	<em class="tit">이용예정</em> 
-                            	<span class="figure">2</span> 
-                            </a>
+                            <a class="link_summary_board"> <i class="spr_book2 ico_book_ss"></i> <em class="tit">이용예정</em> <span class="figure" id="due_count">2</span> </a>
                         </li>
                         <li class="item">
-                            <a href="#" class="link_summary_board"> 
-                            	<i class="spr_book2 ico_check"></i> 
-                            	<em class="tit">이용완료</em> 
-                            	<span class="figure">1</span> 
-                            </a>
+                            <a class="link_summary_board"> <i class="spr_book2 ico_check"></i> <em class="tit">이용완료</em> <span class="figure" id="used_count">1</span> </a>
                         </li>
                         <li class="item">
-                            <a href="#" class="link_summary_board"> 
-                            	<i class="spr_book2 ico_back"></i> 
-                            	<em class="tit">취소·환불</em> 
-                            	<span class="figure">1</span> 
-                            </a>
+                            <a class="link_summary_board"> <i class="spr_book2 ico_back"></i> <em class="tit">취소·환불</em> <span class="figure" id="canceled_count">1</span> </a>
                         </li>
                     </ul>
                 </div>
@@ -57,33 +41,20 @@
                 <%--<div class="wrap_mylist">
                     <ul class="list_cards" ng-if="bookedLists.length > 0">
                         <!--[D] 예약확정: .confirmed, 취소된 예약&이용완료: .used 추가 card -->
-<c:forEach var="" items="">                        
-                        <li class="card">
+                        <li class="card" id="requesting">
 							<div class=link_booking_details>
 	                            <div class="card_header">
 	                                <div class="left"></div>
 	                                <div class="middle">
-	                                    <!--[D]  예약 신청중: .ico_clock, 예약확정&이용완료: .ico_check2, 취소된 예약: .ico_cancel 추가 spr_book2 -->
-	<c:choose>	
-		<c:when test="">                                    
+	                                    <!--[D] 예약 신청중: .ico_clock, 예약확정&이용완료: .ico_check2, 취소된 예약: .ico_cancel 추가 spr_book2 -->
+	                                    <i class="spr_book2 ico_clock"></i>
 	                                    <span class="tit">예약 신청중</span>
-		</c:when>
-		<c:when test="">	                                    
-                                        <span class="tit">예약 확정</span>
-        </c:when>
-    	<c:when test="">
-    									<span class="tit">이용 완료</span>
-    	</c:when>
-    	<c:when test="">
-    									<span class="tit">취소된 예약</span>
-    	</c:when>   
-	</c:choose>                                
 	                                </div>
 	                                <div class="right"></div>
 	                            </div>
 							</div>
 							<article class="card_item">
-	                            <a href="#" class="link_booking_details">
+	                            <a class="link_booking_details">
 	                                <div class="card_body">
 	                                    <div class="left"></div>
 	                                    <div class="middle">
@@ -137,10 +108,10 @@
 	                                    <div class="right"></div>
 	                                </div>
 	                            </a>
-								<a href="#" class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
+								<a class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
 							</article>
 							<article class="card_item">
-	                            <a href="#" class="link_booking_details">
+	                            <a class="link_booking_details">
 	                                <div class="card_body">
 	                                    <div class="left"></div>
 	                                    <div class="middle">
@@ -194,11 +165,10 @@
 	                                    <div class="right"></div>
 	                                </div>
 	                            </a>
-								<a href="#" class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
+								<a class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
 							</article>
                         </li>
-</c:forEach>
-                        <li class="card confirmed">
+                        <li class="card confirmed" id="card_confirmed">
                             <div class="link_booking_details">
                                 <div class="card_header">
                                     <div class="left"></div>
@@ -211,7 +181,7 @@
                                 </div>
 							</div>
 							<article class="card_item">
-								<a href="#" class="link_booking_details">
+								<a class="link_booking_details">
 	                                <div class="card_body">
 	                                    <div class="left"></div>
 	                                    <div class="middle">
@@ -265,10 +235,10 @@
 	                                    <div class="right"></div>
 	                                </div>
 	                            </a>
-								<a href="#" class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
+								<a class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
 							</article>
 							<article class="card_item">
-								<a href="#" class="link_booking_details">
+								<a class="link_booking_details">
 	                                <div class="card_body">
 	                                    <div class="left"></div>
 	                                    <div class="middle">
@@ -323,10 +293,10 @@
 	                                    <div class="right"></div>
 	                                </div>
 	                            </a>
-								<a href="#" class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
+								<a class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
 							</article>
                         </li>
-                        <li class="card used">
+                        <li class="card used" id="card_used">
                             <div class="link_booking_details">
                                 <div class="card_header">
                                     <div class="left"></div>
@@ -339,7 +309,7 @@
                                 </div>
 							</div>
 							<article class="card_item">
-								<a href="#" class="link_booking_details">
+								<a class="link_booking_details">
 	                                <div class="card_body">
 	                                    <div class="left"></div>
 	                                    <div class="middle">
@@ -394,7 +364,7 @@
                             	</a>
 							</article>
 							<article class="card_item">
-								<a href="#" class="link_booking_details">
+								<a class="link_booking_details">
 									<div class="card_body">
 										<div class="left"></div>
 										<div class="middle">
@@ -446,7 +416,7 @@
 								</a>
 							</article>
                         </li>
-                        <li class="card used">
+                        <li class="card used" id="card_canceled">
                             <div class="link_booking_details">
                                 <div class="card_header">
                                     <div class="left"></div>
@@ -459,7 +429,7 @@
                                 </div>
 							</div>
 							<article class="card_item">
-								<a href="#" class="link_booking_details">
+								<a class="link_booking_details">
 	                                <div class="card_body">
 	                                    <div class="left"></div>
 	                                    <div class="middle">
@@ -511,7 +481,7 @@
 	                            </a>
 							</article>
 							<article class="card_item">
-								<a href="#" class="link_booking_details">
+								<a class="link_booking_details">
 	                                <div class="card_body">
 	                                    <div class="left"></div>
 	                                    <div class="middle">
@@ -584,7 +554,7 @@
         <div class="dimm_dark" style="display:block"></div>
         <div class="popup_booking refund">
             <h1 class="pop_tit">
-                <span>서비스명/상품명</span>
+                <span>test</span>
                 <small class="sm">2000.0.00.(월)2000.0.00.(일)</small>
             </h1>
             <div class="nomember_alert">
@@ -592,21 +562,46 @@
             </div>
             <div class="pop_bottom_btnarea">
                 <div class="btn_gray">
-                    <a href="#" class="btn_bottom"><span>아니오</span></a>
+                    <a class="btn_bottom"><span>아니오</span></a>
                 </div>
                 <div class="btn_green">
-                    <a href="#" class="btn_bottom"><span>예</span></a>
+                    <a class="btn_bottom"><span>예</span></a>
                 </div>
             </div>
             <!-- 닫기 -->
-            <a href="#" class="popup_btn_close" title="close">
+            <a class="popup_btn_close" title="close">
                 <i class="spr_book2 ico_cls"></i>
             </a>
             <!--// 닫기 -->
         </div>
     </div>
     <!--// 취소 팝업 -->
-
+	<script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
+	<script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
+	<script src="/resources/js/node_modules/@egjs/component/dist/component.js"></script>
+	<script src="/resources/js/messenger.js"></script>
+	<script src="/resources/js/confirmPopup.js"></script>
+	<script src="/resources/js/summary.js"></script>
+	<script src="/resources/js/reservationList.js"></script>
+	<script>
+	$(function() {
+		var messenger = new Messenger();
+		var popup = new ConfirmPopup($('.popup_booking_wrapper'), messenger);
+		var requesting = new ReservationList($('#requesting'), messenger);
+		var confirmed = new ReservationList($('#card_confirmed'), messenger);
+		var used = new ReservationList($('#card_used'), messenger);
+		var canceled = new ReservationList($('#card_canceled'), messenger);
+		var opt = {
+				obj0 : requesting,
+				obj1 : confirmed,
+				obj2 : used,
+				obj3 : canceled,
+				messenger : messenger
+		}
+		var summary = new Summary($('.my_summary'), opt);
+		messenger.trigger('reCount');
+	});
+	</script>
 </body>
 
 </html>

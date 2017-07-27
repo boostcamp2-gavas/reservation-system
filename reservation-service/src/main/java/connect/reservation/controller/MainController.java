@@ -75,6 +75,7 @@ public class MainController {
 		}
 		else 
 			return "redirect:/login?type=myPage";
+
 	}
 
 	@GetMapping("/mvDetail")
@@ -110,7 +111,6 @@ public class MainController {
 		try {
 			map = productService.getReserveInfo(productId);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
