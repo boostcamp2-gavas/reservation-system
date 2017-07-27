@@ -19,20 +19,37 @@
         <div class="ct">
             <div class="section_my">
                 <!-- 예약 현황 -->
+                <c:set var="totalCnt" value="0"></c:set>
+                <c:forEach var="cntStatus" items="${reservationStatus }">
+                	<c:if test="${cntStatus.reservationType eq 'REQUESTING' }">
+                		<c:set var="requestCnt" value="${cntStatus.cnt }"></c:set>
+                	</c:if>
+                	<c:if test="${cntStatus.reservationType eq 'DUE' }">
+                		<c:set var="dueCnt" value="${cntStatus.cnt }"></c:set>
+                	</c:if>
+                	<c:if test="${cntStatus.reservationType eq 'USED' }">
+                		<c:set var="usedCnt" value="${cntStatus.cnt }"></c:set>
+                	</c:if>
+                	<c:if test="${cntStatus.reservationType eq 'REFUND_CANCEL' }">
+                		<c:set var="canceledCnt" value="${cntStatus.cnt }"></c:set>
+                	</c:if>
+                	<c:set var="tmp" value="${totalCnt }"></c:set>
+                	<c:set var="totalCnt" value="${tmp + cntStatus.cnt }"></c:set>
+                </c:forEach>
                <div class="my_summary">
                     <ul class="summary_board">
                    		<li class="item">
                            	<!--[D] 선택 후 .on 추가 link_summary_board -->
-                           	<a class="link_summary_board on"> <i class="spr_book2 ico_book2"></i> <em class="tit">전체</em> <span class="figure" id="total_count"><c:out value="${reservationStatus[0].cnt+reservationStatus[1].cnt+reservationStatus[2].cnt+reservationStatus[3].cnt }" default="0"></c:out></span> </a>
+                           	<a class="link_summary_board on"> <i class="spr_book2 ico_book2"></i> <em class="tit">전체</em> <span class="figure" id="total_count"><c:out value="${totalCnt }" default="0"></c:out></span> </a>
                        	</li>
                        	<li class="item">
-                            <a class="link_summary_board"> <i class="spr_book2 ico_book_ss"></i> <em class="tit">이용예정</em> <span class="figure" id="due_count"><c:out value="${reservationStatus[0].cnt + reservationStatus[1].cnt }" default="0"></c:out></span> </a>
+                            <a class="link_summary_board"> <i class="spr_book2 ico_book_ss"></i> <em class="tit">이용예정</em> <span class="figure" id="due_count"><c:out value="${requestCnt + dueCnt }" default="0"></c:out></span> </a>
                         </li>
                         <li class="item">
-                        	<a class="link_summary_board"> <i class="spr_book2 ico_check"></i> <em class="tit">이용완료</em> <span class="figure" id="used_count"><c:out value="${reservationStatus[2].cnt }" default="0"></c:out></span> </a>
+                        	<a class="link_summary_board"> <i class="spr_book2 ico_check"></i> <em class="tit">이용완료</em> <span class="figure" id="used_count"><c:out value="${usedCnt }" default="0"></c:out></span> </a>
                     	</li>
                     	<li class="item">
-                            <a class="link_summary_board"> <i class="spr_book2 ico_back"></i> <em class="tit">취소·환불</em> <span class="figure" id="canceled_count"><c:out value="${reservationStatus[3].cnt }" default="0"></c:out></span> </a>
+                            <a class="link_summary_board"> <i class="spr_book2 ico_back"></i> <em class="tit">취소·환불</em> <span class="figure" id="canceled_count"><c:out value="${canceledCnt}" default="0"></c:out></span> </a>
                         </li>
                     </ul>
                 </div>
