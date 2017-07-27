@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import connect.reservation.domain.Category;
 import connect.reservation.domain.ReservationInfo;
+import connect.reservation.domain.ReservationType;
 import connect.reservation.domain.User;
 import connect.reservation.service.CategoryService;
 import connect.reservation.service.ProductService;
@@ -69,8 +70,8 @@ public class MainController {
 	public String mvMyPage(Model model, HttpSession session) {
 		User currentUser = (User)session.getAttribute("currentUser");
 		if(null != currentUser) {
+			//int userId = currentUser.getId();
 			int userId = 10;
-			//session.setAttribute("userId", 10);	// 지우기
 			model.addAttribute("reservation", reservationService.get(userId));
 			model.addAttribute("reservationStatus", reservationService.getCount(userId));
 			return "myreservation";
@@ -135,7 +136,7 @@ public class MainController {
 		// getParameter, getAttribute 차이
 		int userId = currentUser.getId();
 		reservationInfo.setUserId(userId);
-		reservationInfo.setReservationType(0);
+		reservationInfo.setReservationType(ReservationType.REQUESTING);
 
 		System.out.println(reservationInfo.getReservationDate());
 		
