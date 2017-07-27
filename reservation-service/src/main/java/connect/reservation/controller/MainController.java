@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import connect.reservation.domain.Category;
 import connect.reservation.domain.ReservationInfo;
+import connect.reservation.domain.ReservationType;
 import connect.reservation.domain.User;
 import connect.reservation.service.CategoryService;
 import connect.reservation.service.ProductService;
@@ -67,11 +68,13 @@ public class MainController {
 	}
 	
 	@GetMapping("/mvMyPage")
-	public String mvMyPage(HttpSession session) {
+	public String mvMyPage(Model model, HttpSession session) {
 		User currentUser = (User)session.getAttribute("currentUser");
 		if(null != currentUser) {
-			
-			
+			//int userId = currentUser.getId();
+			int userId = 10;
+			model.addAttribute("reservation", reservationService.get(userId));
+			model.addAttribute("reservationStatus", reservationService.getCount(userId));
 			return "myreservation";
 		}
 		else 
@@ -124,10 +127,11 @@ public class MainController {
 	}
 	
 	@PostMapping("/reserve")
-	public String add(HttpSession session, @RequestBody ReservationInfo reservationInfo) {
+	public String addReservation(HttpSession session, @RequestBody ReservationInfo reservationInfo) {
 
 		User currentUser = (User)session.getAttribute("currentUser");
 
+		// getParameter, getAttribute 차이
 		reservationInfo.setUserId(currentUser.getId());
 		reservationInfo.setReservationDate(userService.getDate());
 		reservationInfo.setCreateDate(userService.getDate());
