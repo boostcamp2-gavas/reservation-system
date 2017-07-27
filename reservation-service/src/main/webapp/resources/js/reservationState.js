@@ -1,3 +1,9 @@
+moment.locale('ko', {
+    weekdays: ["일요일","월요일","화요일","수요일","목요일","금요일","토요일"],
+    weekdaysShort: ["일","월","화","수","목","금","토"],
+});
+
+
 // 핸들바 helper 설정
 Handlebars.registerHelper('exit', function (string,value) {
 	if(value){
@@ -43,6 +49,12 @@ var ReservationState = (function(){
 	$expectationCard = $(".expectation, .confirmed"),
 	$cancellationCard = $(".cancellation");
 	
+	
+	var $article =null;
+	var $cardDetail ;
+	var $cardHeader;
+	
+	
 	// enum 같은 느낌으로 사용.
 	// ENUM 을 이렇게 사용하는게 맞는지 의문이 생김.
 	var reservationTypeEnum = {
@@ -51,6 +63,69 @@ var ReservationState = (function(){
 		    END : 2,
 		    CENCELLATION : 3
 		}
+	
+	// 취소하겠냐는 확인을 보여주는 event 
+	function confirmCancellationBtn(event){
+		event.preventDefault();
+		var productId =0,
+		$popoup;
+		
+		$cardDetail = $(this).parents(".card_detail");
+		$article = $cardDetail.parents("article");
+		
+		productId = $cardDetail.data("id");
+		$popoup = $(".popup_booking_wrapper");
+
+		$popoup.removeClass("none");
+		$popoup.data("id",productId);
+	}
+	
+	// 클릭시 취소됨 
+	function cancellationBtn(event){
+		event.preventDefault();
+		var id = $(".popup_booking_wrapper").data("id");
+		// card_item 
+		$.ajax({
+			  method: "Delete",
+			  url: "/reservation/"+id
+		}).done(cancellationSuccess); 
+	}
+	
+	// outerHtml 구현 
+	function outerHtml(url){
+		return url.clone().wrapAll("<div/>").parent().html();
+	}
+	
+	
+	function cancellationSuccess(data){
+		var expectationCount;
+		var cancellationCount;
+		
+		if(data){
+			$cardHeader = $article.siblings(".link_booking_details");
+			if($article.siblings().length == 1 ){
+			 	$cardHeader.remove();
+			}
+			// 삭제시 메뉴 bar 가 안보이는 현상 
+			$(".cancellation").append(outerHtml($article));
+			$(".popup_booking_wrapper").addClass("none");
+			$article.remove();	
+			// count 변경하는 작업 
+			expectationCount = $expectation.find(".figure").text();
+			cancellationCount = $cancellation.find(".figure").text();
+			$expectation.find(".figure").text(--expectationCount);
+			$cancellation.find(".figure").text(++cancellationCount)
+			alert("취소 되었습니다.");
+		}else{
+			alert("예상치 못한 에러가 ...");
+		}
+	}
+	
+
+	
+	
+	
+
 
 	
 	function loading(type,$card,_menubar,_icon,_btns){
@@ -93,7 +168,7 @@ var ReservationState = (function(){
 		if(index === reservationTypeEnum.ALL_RESERVATION){
 			// 0
 			$allCards.removeClass("none");
-			$dumyCard = $allCards;
+			$dumy = $allCards;
 		}else if(index === reservationTypeEnum.EXPECTATION){
 			// 1
 			$expectationCard.removeClass("none");
@@ -111,9 +186,7 @@ var ReservationState = (function(){
 			$cancellationCard.removeClass("none");
 			$dumy = $cancellationCard;
 		}
-		
 		if($dumy.children("article").length){
-			// content가 없으면, 
 			$(".err").addClass("none");
 		}else{
 			$(".err").removeClass("none");
@@ -129,7 +202,7 @@ var ReservationState = (function(){
 			cancellationLength =loading(3,$('.used:last'),"취소된 예약","ico_cancel","");
 			
 			// menu bar 초기화 
-			console.log(expectationLength);
+			console.log(expectationLength+confirmedLength);
 			$expectation.find(".figure").text(expectationLength+confirmedLength);
 			$usedLength.find(".figure").text(usedLength);
 			$cancellation.find(".figure").text(cancellationLength);
@@ -140,6 +213,15 @@ var ReservationState = (function(){
 			$expectation.on("click",menuClickEvent.bind($expectation));
 			$usedLength.on("click",menuClickEvent.bind($usedLength));
 			$cancellation.on("click",menuClickEvent.bind($cancellation));
+			
+			// 버튼 취소 이벤트 
+			// 취소 버튼과 x 버튼 누르면 안보이게 진행
+			$(".btn_gray, .popup_btn_close").on("click",function(event){
+				event.preventDefault();
+				$(".popup_booking_wrapper").addClass("none");
+			})
+			$(".btn_green").on("click",cancellationBtn);
+			$(".expectation, .confirmed").on("click",".booking_cancel .btn",confirmCancellationBtn);
 		}
 	}
 })();
