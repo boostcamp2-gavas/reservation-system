@@ -145,7 +145,7 @@
 	                            </a>
 								<a class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기" href=""></a>
 							</article>
-							<c:if test="${status.index == reservation.size()-1 or (status.index < 7 and reservation[status.index+1].reservationType ne ritem.reservationType )}">
+							<c:if test="${status.index == reservation.size()-1 or (status.index < reservation.size()-1 and reservation[status.index+1].reservationType ne ritem.reservationType )}">
                         	</li>
                         	</c:if>
                         </c:forEach>
