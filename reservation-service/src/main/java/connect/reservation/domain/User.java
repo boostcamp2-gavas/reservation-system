@@ -2,7 +2,7 @@ package connect.reservation.domain;
 
 import java.sql.Timestamp;
 
-public class Users {
+public class User {
 	
 	private int id;
 	private String username;
@@ -16,7 +16,7 @@ public class Users {
 	private Timestamp createDate;
 	private Timestamp modifyDate;
 	
-	public Users() {
+	public User() {
 		
 	}
 	public int getId() {

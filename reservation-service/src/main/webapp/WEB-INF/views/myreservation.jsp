@@ -54,7 +54,7 @@
                 <!--// 예약 현황 -->
 
                 <!-- 내 예약 리스트 -->
-                <div class="wrap_mylist">
+                <%--<div class="wrap_mylist">
                     <ul class="list_cards" ng-if="bookedLists.length > 0">
                         <!--[D] 예약확정: .confirmed, 취소된 예약&이용완료: .used 추가 card -->
 <c:forEach var="" items="">                        
@@ -564,7 +564,7 @@
 							</article>
                         </li>
                     </ul>
-                </div>
+                </div> --%>
                 <!--// 내 예약 리스트 -->
 
                 <!-- 예약 리스트 없음 -->

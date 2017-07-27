@@ -11,11 +11,16 @@ var countQty = 0;
 var maximun = 10; // maximum 10이라 가정
 
 class QtyCount extends eg.Component {
-	constructor(qty) {
+	constructor(info) {
 		super();
-		this.qty = qty;
+		this.qty = info.qty;
+		this.index = info.index;
+		this.price = info.price;
+		this.max = info.max;
+		
+		this.on("cntQty", this.cntQty);
 		}
-	minus(obj, index, price, max) {
+	minus(obj) {
 		if(this.qty == 1) {
 			obj.addClass('disabled');
 			obj.next().addClass('disabled');
@@ -24,40 +29,39 @@ class QtyCount extends eg.Component {
 		else if(this.qty == 0) {
 			return;
 		}
-		else if(this.qty == max) {
+		else if(this.qty == this.max) {
 			obj.nextAll().removeClass('disabled');
 		}
 		
 		this.qty--;
 		obj.next().val(this.qty);
-		$('.total_price:eq('+index+')').html((this.qty * price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+		$('.total_price:eq('+this.index+')').html((this.qty * this.price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 		countQty--;
 		
-		this.on("cntQty", this.cntQty);
 		this.trigger("cntQty");
 	}
-	plus(obj, index, price, max) {
+	plus(obj) {
 		if(this.qty == 0) {
 			obj.prevAll().removeClass('disabled');
 			obj.parent().siblings().addClass('on_color');
 		}
-		else if(this.qty == max-1) {
+		else if(this.qty == this.max-1) {
 			obj.addClass('disabled');
 		}
-		else if(this.qty == max) {
+		else if(this.qty == this.max) {
 			return;
 		}
 		
 		this.qty++;
 		obj.prev().val(this.qty);
-		$('.total_price:eq('+index+')').html((this.qty * price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+		$('.total_price:eq('+this.index+')').html((this.qty * this.price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 		countQty++;
 		
-		this.on("cntQty", this.cntQty);
 		this.trigger("cntQty");
 	}
 	cntQty() {
 		$('#qty_count').html(countQty);
+		$('#ticket_count_'+this.index).val(this.qty);
 	}
 };
 
@@ -66,23 +70,26 @@ var qtyCount = [];
 manageQty();
 function manageQty() {
 	for(var i=0; i<$('.qty').length; i++) {
-		qtyCount[i] = new QtyCount(0);
+		qtyCount[i] = new QtyCount({
+			qty : 0,
+			index : i,
+			price : $('.price:eq('+i+')').data('price'),
+			max : maximun
+		});
 	}
 };
 
 $('.ico_minus3').click(function(){
 	event.preventDefault(); 
 	var index = $(".qty .ico_minus3").index($(this));
-	var $price = $('.price:eq('+index+')').data('price');
 	
-	qtyCount[index].minus($(this), index, $price, maximun);
+	qtyCount[index].minus($(this));
 });
 $('.ico_plus3').click(function(){
 	event.preventDefault(); 
 	var index = $(".qty .ico_plus3").index($(this));
-	var $price = $('.price:eq('+index+')').data('price');
 	
-	qtyCount[index].plus($(this), index, $price, maximun);
+	qtyCount[index].plus($(this));
 });
 
 function checkInfo() {
@@ -127,14 +134,6 @@ $('.btn_agreement').click(function(){
 });
 
 $('.bk_btn').click(function(){
-	var $countInfo = "";
-	
-	for(var i=0; i<$('.qty').length; i++) {
-		$countInfo += $('.count_control_input:eq('+i+')').val() + '-';
-	}
-	$countInfo += 0;
-	console.log($('#reserve_date').val());
-	$('#count_info').val($countInfo);
 	$('.form_horizontal').attr('action', '/reserve?productId='+$('#productId').val());
-	//$('.form_horizontal').submit();
+	$('.form_horizontal').submit();
 })

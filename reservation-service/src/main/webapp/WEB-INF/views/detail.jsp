@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -88,7 +89,7 @@
                     <div class="store_details close3">
                         <p class="dsc">
                             ${detailInfo.content}<br><br>
-                            ${detailInfo.displayStart} - ${detailInfo.displayEnd}<br>
+                            <fmt:formatDate value="${detailInfo.displayStart}" pattern="yyyy.MM.dd"/> - <fmt:formatDate value="${detailInfo.displayEnd}" pattern="yyyy.MM.dd"/><br>
                             ${detailInfo.observationTime}<br><br>
                         </p>
                     </div>
@@ -159,8 +160,9 @@
                                         <div class="info_area">
                                             <div class="review_info"> 
 	                                            <span class="grade">${comment.score}</span> 
-	                                            <span class="name">${comment.nickname}****</span> 
-	                                            <span class="date">${comment.reservationDate} 방문</span> 
+	                                            <c:set var="nickname" value="${comment.nickname}"/>
+	                                            <span class="name">${fn:substring(nickname,0,4)}****</span> 
+	                                            <span class="date"><fmt:formatDate value="${comment.reservationDate}" pattern="yyyy.MM.dd"/> 방문</span> 
 	                                        </div>
                                         </div>
                                     </div>

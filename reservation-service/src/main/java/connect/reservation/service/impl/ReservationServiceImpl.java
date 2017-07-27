@@ -13,6 +13,8 @@ import connect.reservation.service.ReservationService;
 
 @Service
 public class ReservationServiceImpl implements ReservationService{
+	final static int General = 0;
+	
 	private ReservationDao reservationDao;
 	
 	@Autowired
@@ -23,7 +25,7 @@ public class ReservationServiceImpl implements ReservationService{
 	
 	public Timestamp getDate(){
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return java.sql.Timestamp.valueOf(sdf.format(timestamp));
 	}
 	

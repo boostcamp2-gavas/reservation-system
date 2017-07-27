@@ -15,7 +15,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import connect.reservation.domain.ReservationInfo;
-import connect.reservation.domain.Users;
+import connect.reservation.domain.User;
 
 @Repository
 public class ReservationDao {

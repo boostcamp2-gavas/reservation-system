@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
-import connect.reservation.domain.Users;
+import connect.reservation.domain.User;
 import connect.reservation.dto.NaverLoginUser;
 import connect.reservation.dto.NaverLoginUserResult;
 import connect.reservation.service.UserService;
@@ -171,29 +171,30 @@ public class LoginController {
 			session.setAttribute("loginOk", false);
 			// 에러발생
 		}
-		
 		NaverLoginUser snsUser = responseEntity.getBody().getResponse();
 		String snsId = snsUser.getId();
-		Users user = userService.getSnsUser(snsId);
+		User currentUser = userService.getSnsUser(snsId);
 		
-		if(user == null) {
+		if(currentUser == null) {
 			// 가입 기록이 없으면 user 추가
 			userService.addSnsUser(snsUser);
-			user = userService.getSnsUser(snsId);
+			
+			
+			
+			currentUser = userService.getSnsUser(snsId);
 		}
 		else {
 			// 정보업데이트 있을 경우 DB 업데이트
 			String nickname = snsUser.getNickname();
 			String profile = snsUser.getProfileImage();
 			
-			if(!nickname.equals(user.getNickname()) || !profile.equals(user.getSnsProfile())) {
+			if(!nickname.equals(currentUser.getNickname()) || !profile.equals(currentUser.getSnsProfile())) {
 				userService.updateSnsUser(snsId, nickname, profile);
 			}
 		}
 		// 가입된 user면 session 설정
 		// user객체 만들어서 로그인 확인 메소드 추가
 		session.setAttribute("loginOk", true);
-		session.setAttribute("userId", user.getId());
-		session.setAttribute("userName", user.getUsername());
+		session.setAttribute("currentUser", currentUser);
 	}
 }

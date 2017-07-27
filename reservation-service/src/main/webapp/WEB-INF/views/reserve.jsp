@@ -37,7 +37,8 @@
                                     <em class="preview_txt_dsc">₩${reserveInfo.minimumPrice} ~ </em>
                                     <!-- 2017.2.17.(금)~2017.4.18.(화), 잔여티켓 2769매 -->
                                     <em class="preview_txt_dsc">
-                                    	${reserveInfo.displayStart}(${startDay}) ~ ${reserveInfo.displayEnd}(${endDay})
+                                    	<fmt:formatDate value="${reserveInfo.displayStart}" pattern="yyyy.MM.dd"/>(${startDay})
+                                    	 ~ <fmt:formatDate value="${reserveInfo.displayStart}" pattern="yyyy.MM.dd"/>(${endDay})
                                     </em>  
                                 </div>
                             </li>
@@ -49,7 +50,8 @@
                         <h3 class="in_tit">${reserveInfo.productName}</h3>
                         <p class="dsc">
                             장소 : ${reserveInfo.placeStreet}(${reserveInfo.placeLot})<br> 
-                            기간 : ${reserveInfo.displayStart}(${startDay}) ~ ${reserveInfo.displayEnd}(${endDay})
+                            기간 : <fmt:formatDate value="${reserveInfo.displayStart}" pattern="yyyy.MM.dd"/>(${startDay})
+                             ~ <fmt:formatDate value="${reserveInfo.displayStart}" pattern="yyyy.MM.dd"/>(${endDay})
                         </p>
                         <h3 class="in_tit">관람시간</h3>
                         <p class="dsc">
@@ -134,15 +136,18 @@
                             	<span>필수입력</span> 
                             </div>
                             <form class="form_horizontal" action="" method="POST">
-<input type="hidden" id="count_info" name="count_info" value="">
-<inpur type="hidden" id="reserve_date" name="reserve_date" value="${reserveInfo.displayStart}(${startDay}) ~ ${reserveInfo.displayEnd}(${endDay})">
+<input type="hidden" id="ticket_count_0" name="generalTicketCount" value="0">
+<input type="hidden" id="ticket_count_1" name="youthTicketCount" value="0">
+<input type="hidden" id="ticket_count_2" name="childTicketCount" value="0">
+<input type="hidden" id="reserve_date" name="reservationDate" 
+value="<fmt:formatDate value="${reserveInfo.displayStart}" pattern="yyyy.MM.dd"/>(${startDay}) ~ <fmt:formatDate value="${reserveInfo.displayEnd}" pattern="yyyy.MM.dd"/>(${endDay})">
                                 <div class="inline_form"> 
                                 	<label class="label" for="name"> 
                                 		<span class="spr_book ico_nessasary">필수</span> 
                                 		<span>예매자</span> 
                                 	</label>
                                     <div class="inline_control"> 
-                                    	<input type="text" name="name" id="name" class="text" value="${user.username}" maxlength="17"> 
+                                    	<input type="text" name="reservationName" id="name" class="text" value="${user.username}" maxlength="17"> 
                                     </div>
                                 </div>
                                 <div class="inline_form"> 
@@ -151,7 +156,7 @@
                                 		<span>연락처</span> 
                                 	</label>
                                     <div class="inline_control"> 
-                                    	<input type="tel" name="tel" id="tel" class="tel" value="${user.tel}" placeholder="휴대폰 입력 시 예매내역 문자발송"> 
+                                    	<input type="tel" name="reservationTel" id="tel" class="tel" value="${user.tel}" placeholder="휴대폰 입력 시 예매내역 문자발송"> 
                                     </div>
                                 </div>
                                 <div class="inline_form"> 
@@ -159,14 +164,15 @@
                                 		<span>이메일</span> 
                                 	</label>
                                     <div class="inline_control"> 
-                                    	<input type="email" name="email" id="email" class="email" value="${user.email}" maxlength="50"> 
+                                    	<input type="email" name="reservationEmail" id="email" class="email" value="${user.email}" maxlength="50"> 
                                     </div>
                                 </div>
                                 <div class="inline_form last"> 
                                 	<label class="label" for="message">예매내용</label>
                                     <div class="inline_control">
-                                        <p class="inline_txt selected" style="fint-size:16px;">
-                                        	${reserveInfo.displayStart}(${startDay})~${reserveInfo.displayEnd}(${endDay}), 총 <span id="qty_count">0</span>매
+                                        <p class="inline_txt selected" style="fint-size:16px;" name="dd">
+                                        	<fmt:formatDate value="${reserveInfo.displayStart}" pattern="yyyy.MM.dd"/>(${startDay})
+                                        	~<fmt:formatDate value="${reserveInfo.displayEnd}" pattern="yyyy.MM.dd"/>(${endDay}), 총 <span id="qty_count">0</span>매
                                         </p>
                                     </div>
                                 </div>

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import connect.reservation.dao.UsersDao;
-import connect.reservation.domain.Users;
+import connect.reservation.domain.User;
 import connect.reservation.dto.NaverLoginUser;
 import connect.reservation.service.UserService;
 
@@ -26,14 +26,14 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Users getSnsUser(String snsId) {
+	public User getSnsUser(String snsId) {
 		return usersDao.selectBySnsId(snsId);
 	}
 	
 	@Override
 	@Transactional(readOnly = false)
 	public int addSnsUser(NaverLoginUser naverUser) {
-		Users user = new Users();
+		User user = new User();
 		
 		user.setUsername(naverUser.getName());
 		user.setEmail(naverUser.getEmail());
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
 	public Timestamp getDate(){
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return java.sql.Timestamp.valueOf(sdf.format(timestamp));
 	}
 	
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public Users getUserInfo(int userId) {
+	public User getUserInfo(int userId) {
 		return usersDao.getUserInfo(userId);
 	}
 }
