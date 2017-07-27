@@ -15,13 +15,13 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import connect.reservation.domain.Users;
+import connect.reservation.domain.User;
 
 @Repository
 public class UsersDao {
 	private NamedParameterJdbcTemplate jdbc; // sql 을 실행하기 위해 사용되는 객체
     private SimpleJdbcInsert insertAction; // insert 를 편리하게 하기 위한 객체
-    private RowMapper<Users> rowMapper = BeanPropertyRowMapper.newInstance(Users.class); // 칼럼 이름을 보통 user_name 과 같이 '_'를 활용하는데 자바는 낙타표기법을 사용한다 이것을 자동 맵핑한다.
+    private RowMapper<User> rowMapper = BeanPropertyRowMapper.newInstance(User.class); // 칼럼 이름을 보통 user_name 과 같이 '_'를 활용하는데 자바는 낙타표기법을 사용한다 이것을 자동 맵핑한다.
     
     // Spring은 생성자를 통하여 주입을 하게 된다.
     public UsersDao(DataSource dataSource) {
@@ -31,12 +31,12 @@ public class UsersDao {
                 .usingGeneratedKeyColumns("id"); // pk 칼럼을 지정
     }
     
-    public int insert(Users user){
+    public int insert(User user){
         SqlParameterSource params = new BeanPropertySqlParameterSource(user); 
         return insertAction.executeAndReturnKey(params).intValue();	
     }
     
-    public Users selectBySnsId(String sns_id){
+    public User selectBySnsId(String sns_id){
         Map<String, Object> params = new HashMap<>();
         params.put("sns_id", sns_id);
         try {
@@ -57,7 +57,7 @@ public class UsersDao {
     	return jdbc.update(UsersSqls.UPDATE_BY_SNS_ID, params);
     }
     
-    public Users getUserInfo(int user_id) {
+    public User getUserInfo(int user_id) {
     	Map<String, Object> params = new HashMap<>();
         params.put("user_id", user_id);
         try {

@@ -1,12 +1,10 @@
 package connect.reservation.controller;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import connect.reservation.domain.Category;
+import connect.reservation.domain.ReservationInfo;
+import connect.reservation.domain.User;
 import connect.reservation.service.CategoryService;
 import connect.reservation.service.ProductService;
 import connect.reservation.service.ReservationCommentService;
@@ -67,15 +67,17 @@ public class MainController {
 	
 	@GetMapping("/mvMyPage")
 	public String mvMyPage(Model model, HttpSession session) {
-		if(null == session.getAttribute("loginOk"))
-			return "redirect:/login?type=myPage";
-		else {
-			int userId = (int) session.getAttribute("userId");
-			session.setAttribute("userId", 10);	// 지우기
+		User currentUser = (User)session.getAttribute("currentUser");
+		if(null != currentUser) {
+			int userId = 10;
+			//session.setAttribute("userId", 10);	// 지우기
 			model.addAttribute("reservation", reservationService.get(userId));
 			model.addAttribute("reservationStatus", reservationService.getCount(userId));
 			return "myreservation";
 		}
+		else 
+			return "redirect:/login?type=myPage";
+
 	}
 
 	@GetMapping("/mvDetail")
@@ -98,12 +100,14 @@ public class MainController {
 		if(productId < 1)
 			return null;
 		
-		if(null == session.getAttribute("loginOk")) {
+		User currentUser = (User)session.getAttribute("currentUser");
+		
+		if(null == currentUser) {
 			session.setAttribute("beforeUrl", "redirect:/reserve?productId="+productId);
 			return "redirect:/login?type=reserve";
 		}
 		
-		int userId = Integer.parseInt(session.getAttribute("userId")+"");
+		int userId = currentUser.getId();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
@@ -121,20 +125,21 @@ public class MainController {
 	}
 	
 	@PostMapping("/reserve")
-	public String add(HttpSession session, HttpServletRequest request, @RequestParam("productId") Integer productId) {
+	public String add(HttpSession session, @RequestParam("productId") Integer productId, ReservationInfo reservationInfo) {
+		System.out.println("controller");
 		if(productId < 1)
 			return null;
 		
-		// getParameter, getAttribute 차이
-		int userId = Integer.parseInt(session.getAttribute("userId")+"");
-		String countInfo = request.getParameter("count_info");
-		String userName = request.getParameter("name");
-		String userTel = request.getParameter("tel");
-		String userEmail = request.getParameter("email");
-		System.out.println(request.getParameter("reserve_date"));
-		Timestamp reserveDate = java.sql.Timestamp.valueOf("reserve_date");
+		User currentUser = (User)session.getAttribute("currentUser");
 		
-		reservationService.add(productId, userId, countInfo, userName, userTel, userEmail, reserveDate);
+		// getParameter, getAttribute 차이
+		int userId = currentUser.getId();
+		reservationInfo.setUserId(userId);
+		reservationInfo.setReservationType(0);
+
+		System.out.println(reservationInfo.getReservationDate());
+		
+		//reservationService.add(productId, userId, countInfo, userName, userTel, userEmail, reserveDate);
 		
 		return "redirect:/mvMyPage";
 	}
