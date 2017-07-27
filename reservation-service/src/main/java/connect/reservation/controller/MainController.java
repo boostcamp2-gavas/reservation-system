@@ -66,11 +66,14 @@ public class MainController {
 	}
 	
 	@GetMapping("/mvMyPage")
-	public String mvMyPage(HttpSession session) {
+	public String mvMyPage(Model model, HttpSession session) {
 		if(null == session.getAttribute("loginOk"))
 			return "redirect:/login?type=myPage";
 		else {
-			session.setAttribute("userId", 9);	// 지우기
+			int userId = (int) session.getAttribute("userId");
+			session.setAttribute("userId", 10);	// 지우기
+			model.addAttribute("reservation", reservationService.get(userId));
+			model.addAttribute("reservationStatus", reservationService.getCount(userId));
 			return "myreservation";
 		}
 	}
