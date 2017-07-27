@@ -59,7 +59,7 @@
 								</div>
 							</c:if>
 							<c:if test="${ritem.reservationType == 'DUE' }">
-							<li class="card confirmed">
+							<li class="card confirmed" id="card_confirmed">
 	                            <div class="link_booking_details">
 	                                <div class="card_header">
 	                                    <div class="left"></div>
@@ -73,7 +73,7 @@
 								</div>
 							</c:if>
 							<c:if test="${ritem.reservationType == 'USED' }">
-							<li class="card used">
+							<li class="card used" id="card_used">
 	                            <div class="link_booking_details">
 	                                <div class="card_header">
 	                                    <div class="left"></div>
@@ -87,7 +87,7 @@
 	                            </div>
 							</c:if>
 							<c:if test="${ritem.reservationType == 'REFUND_CANCEL' }">
-							<li class="card used">
+							<li class="card used" id="card_canceled">
 	                            <div class="link_booking_details">
 	                                <div class="card_header">
 	                                    <div class="left"></div>
@@ -107,12 +107,12 @@
 	                                    <div class="left"></div>
 	                                    <div class="middle">
 	                                        <div class="card_detail">
-	                                            <em class="booking_number">No.<fmt:formatNumber value="${ritem.id }" pattern="00000000"></fmt:formatNumber></em>
+	                                            <em class="booking_number" data-reservation-id="${ritem.id }">No.<fmt:formatNumber value="${ritem.id }" pattern="00000000"></fmt:formatNumber></em>
 	                                            <h4 class="tit">${ritem.productName }</h4>
 	                                            <ul class="detail">
 	                                                <li class="item">
 	                                                    <span class="item_tit">일정</span>
-	                                                    <em class="item_dsc">
+	                                                    <em class="item_dsc" id="item_schedule">
 	                                                    	<fmt:formatDate value="${ritem.displayStart }" pattern="yyyy.MM.dd.(E)"/> ~ <fmt:formatDate value="${ritem.displayEnd}" pattern="yyyy.MM.dd.(E)"/>
 														</em>
 	                                                </li>
@@ -221,6 +221,7 @@
 	<script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
 	<script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
 	<script src="/resources/js/node_modules/@egjs/component/dist/component.js"></script>
+	<script src="/resources/js/callAjax.js"></script>
 	<script src="/resources/js/messenger.js"></script>
 	<script src="/resources/js/confirmPopup.js"></script>
 	<script src="/resources/js/summary.js"></script>
@@ -241,7 +242,6 @@
 				messenger : messenger
 		}
 		var summary = new Summary($('.my_summary'), opt);
-		/* messenger.trigger('reCount'); */
 	});
 	</script>
 </body>
