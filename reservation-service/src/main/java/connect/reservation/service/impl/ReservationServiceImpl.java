@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import connect.reservation.dao.ProductDao;
 import connect.reservation.dao.ReservationDao;
 import connect.reservation.domain.ReservationInfo;
+import connect.reservation.dto.Product;
 import connect.reservation.dto.Reservation;
 import connect.reservation.dto.ReservationCount;
 import connect.reservation.service.ReservationService;
@@ -18,11 +20,13 @@ import connect.reservation.service.ReservationService;
 public class ReservationServiceImpl implements ReservationService{
 	final static int General = 0;
 	
-	private ReservationDao reservationDao;
+	private ReservationDao dao;
+	private ProductDao productDao;
 	
 	@Autowired
-	public void setReservationInfoDao(ReservationDao reservationDao) {
-		this.reservationDao = reservationDao;
+	public void setReservationInfoDao(ReservationDao dao, ProductDao productDao) {
+		this.dao = dao;
+		this.productDao = productDao;
 	}
 	
 	
@@ -53,16 +57,37 @@ public class ReservationServiceImpl implements ReservationService{
 			System.out.println(count[i]);
 		}
 		
-		return reservationDao.insert(reservationInfo);
+		return dao.insert(reservationInfo);
 	}
 
 	@Override
 	public List<Reservation> get(int userId) {
-		return reservationDao.select(userId);
+		List<Reservation> list = dao.select(userId);
+		Double tempTotalPrice = 0.0;
+		for(Reservation i : list) {
+			List<Product> priceList = productDao.getPriceInfo(i.getProductId());
+			for(Product p : priceList) {
+				switch (p.getPriceType()) {
+					case 1:
+						tempTotalPrice += i.getGeneralTicketCount()*p.getDiscountPrice();
+						break;
+					case 2:
+						tempTotalPrice += i.getYouthTicketCount()*p.getDiscountPrice();
+						break;
+					case 3:
+						tempTotalPrice += i.getChildTicketCount()*p.getDiscountPrice();
+						break;
+					default:
+						break;
+				}
+			}
+			i.setTotalPrice(tempTotalPrice);
+		}
+		return list;
 	}
 
 	@Override
 	public List<ReservationCount> getCount(int userId) {
-		return reservationDao.selectCount(userId);
+		return dao.selectCount(userId);
 	}
 }

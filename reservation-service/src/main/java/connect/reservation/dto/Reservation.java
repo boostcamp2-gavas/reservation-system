@@ -15,11 +15,12 @@ public class Reservation {
 	private Timestamp displayStart;
 	private Timestamp displayEnd;
 	private String placeName;
+	private Double totalPrice;
 	
 	public Reservation() {}
 
 	public Reservation(int id, int generalTicketCount, int youthTicketCount, int childTicketCount, ReservationType reservationType,
-			int productId, String productName, Timestamp displayStart, Timestamp displayEnd, String placeName) {
+			int productId, String productName, Timestamp displayStart, Timestamp displayEnd, String placeName, Double totalPrice) {
 		this.id = id;
 		this.generalTicketCount = generalTicketCount;
 		this.youthTicketCount = youthTicketCount;
@@ -30,6 +31,7 @@ public class Reservation {
 		this.displayStart = displayStart;
 		this.displayEnd = displayEnd;
 		this.placeName = placeName;
+		this.totalPrice = totalPrice;
 	}
 
 	public int getId() {
@@ -110,6 +112,14 @@ public class Reservation {
 
 	public void setPlaceName(String placeName) {
 		this.placeName = placeName;
+	}
+
+	public Double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(Double totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 }
