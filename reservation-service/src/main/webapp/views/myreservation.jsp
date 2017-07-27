@@ -220,7 +220,6 @@
 		$popoup.removeClass("none");
 		// id값을 인자로 넘길 방법이 없어, id로 설정하고 가져오는 방식
 		$popoup.data("id",productId);
-	
 	});
 	
 	
