@@ -16,23 +16,9 @@ import kr.or.reservation.service.CategoryService;
 @RequestMapping(path = "/categorys")
 public class RestCategoryController {
 
-	// 차이점 ?
 	@Autowired
 	CategoryService catergoryservice;
-/*	
-	@Autowired
-	public RestCategoryController(CategoryService catergoryservice) {
-		this.catergoryservice = catergoryservice;
-	}
-	
-	@Autowired
-	public void setCategoryService(CategoryService catergoryservice) {
-		this.catergoryservice = catergoryservice;
-	}
-	*/
-	
-	
-	
+
 	@GetMapping
 	public List<Category> selectAll(Model model){
     	List<Category> list = catergoryservice.selectforList();
