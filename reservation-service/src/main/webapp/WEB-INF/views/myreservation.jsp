@@ -147,9 +147,16 @@
 													</em>
 	                                            </div>
 	                                            <!-- [D] 예약 신청중, 예약 확정 만 취소가능, 취소 버튼 클릭 시 취소 팝업 활성화 -->
+	                                            <c:if test="${ritem.reservationType == 'REQUESTING' or ritem.reservationType == 'DUE' }">
 	                                            <div class="booking_cancel">
 	                                                <button class="btn"><span>취소</span></button>
 	                                            </div>
+	                                            </c:if>
+	                                            <c:if test="${ritem.reservationType == 'USED' }">
+	                                            <div class="booking_cancel">
+	                                                <button class="btn"><span>예매자 리뷰 남기기</span></button>
+	                                            </div>
+	                                            </c:if>
 	                                        </div>
 	                                    </div>
 	                                    <div class="right"></div>
