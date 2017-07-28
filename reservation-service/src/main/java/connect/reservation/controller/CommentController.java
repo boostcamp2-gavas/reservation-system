@@ -53,7 +53,6 @@ public class CommentController {
 			@RequestParam("comment") String comment, 
 			@RequestParam("score") int score) {
 
-
 		User currentUser = (User) session.getAttribute("currentUser");
 
 		ReservationUserComment commentDomain = new ReservationUserComment();
