@@ -1,6 +1,7 @@
 package kr.or.reservation.api;
 
 import java.io.UnsupportedEncodingException;
+
 import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -20,12 +23,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.reservation.dto.NaverUserDTO;
 
+@PropertySource("classpath:/application.properties")
 public class NaverLogin {
-	final static String CLIENT_ID = "jy__UyeFifErJITIn25n";
+	
+	@Value("${spring.naver.apiKey}")
+	private static String CLIENT_ID;
 	final static String REDIRECT_URL = "http://220.230.121.117/callback";
 	final static String URL = "https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id="
 			+ "&redirect_uri=" + "&state=";
-	final static String SECRET_ID = "9GqpYaw2aC";
+	
+	@Value("${spring.naver.apiSecretKey}")
+	private static String SECRET_ID;
 
 	// Logger 설정
 
