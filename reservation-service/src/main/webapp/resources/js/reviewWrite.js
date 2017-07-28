@@ -1,3 +1,15 @@
+$(document).ready(function() {
+	
+	var rating = new Rating( $(".ct_wrap") );
+	rating.init();
+	
+	var reviewContents = new ReviewContents( $(".ct_wrap") );
+	reviewContents.init();
+	
+});
+
+
+
 function Rating(root) {
 	this.score = 3;
 	this.root = root;
@@ -27,7 +39,7 @@ Rating.prototype.update = function () {
 	} else {
 		this.root.find(".rating_rdo").removeClass("checked").attr("checked","unchecked");
 		this.root.find(".rating_rdo[value='0']").addClass("checked").attr("checked","checked");
-		this.root.find(".star_rank gray_star").html("0");
+		this.root.find(".star_rank").html("0");
 	}
 }
 
@@ -40,13 +52,22 @@ Rating.prototype.init = function() {
 	}).bind(this));
 	
 	this.update();
+} 
+
+Rating.prototype.getScore = function() {
+	return this.score;
 }
 
+//Rating ends
 
 
+
+//ReviewContents start
 function ReviewContents(root) {
 	this.root = root;
 	this.fileList = new Array();
+	this.index = 0;
+	this.resultList = new Array();
 }
 ReviewContents.prototype = new eg.Component;
 ReviewContents.prototype.constructer = ReviewContents;
@@ -75,73 +96,107 @@ ReviewContents.prototype.lengthUpdate = function(e) {
 
 ReviewContents.prototype.fileUpload = function() {
 	var fileBlock = this.root.find("#reviewImageFileOpenInput");
-	var index = 0;
 	
 	this.root.find(".review_photos").on("click", ".spr_book.ico_del", deleteImage.bind(this));
-	
-	
-	
-	fileBlock.change( (function(fileBlock, event) {
-		
-		var files = fileBlock.prop("files");
-		for(var index=0; index < files.length; index++) { // this: ReviewContents
-			
-			var file = files[index];
-			
-			this.fileList.push(file);
-			
-			
-		    var reader = new FileReader();
-		    
-		    reader.readAsDataURL(file);
-		    console.log(reader);
-		    
-		    reader.onload = (function() {   // this == reader
-		    	
-		    	var source = $("#review_photos_template").html();
-				var template = Handlebars.compile(source);
-				var data = {
-						index : index,
-						imgSrc : this.result,
-						imgAlt : this.name		
-				}
-				var html = template(data);
-				
-				$(".lst_thumb").append(html);
-				index++;
-		    });		    
 
+	fileBlock.change( (function(fileBlock) { // this: ReviewContents	
+		var files = fileBlock.prop("files");
+
+		for(var i=0; i < files.length; i++) { 
+			
+			if( this.fileList.length + i >= 5) {
+				break;
+			}
+			
+			var file = files[i];
+		    var reader = new FileReader();   
+		    reader.readAsDataURL(file);
+		    
+		    reader.onload = addImage.bind(this, file);    
 		}
 		
-		 
-		 
 	}).bind(this, fileBlock));
 	
-	function addImage() {
+	
+	function addImage(file, event) {
+		const MAX_FILE_SIZE = 1024 * 1024;
 		
+    	var reader = event.currentTarget;
+    	var result = reader.result;
+    	
+    	if(file.size > MAX_FILE_SIZE) {
+    		return;
+    	}
+    	
+    	var source = $("#review_photos_template").html();
+		var template = Handlebars.compile(source);
+		var data = {
+				index : this.index,
+				imgSrc : result,
+				imgAlt : file.name		
+		}
+		var html = template(data);
+		this.root.find(".lst_thumb").append(html);
+		
+		this.fileList.push(file);
+		this.resultList.push(result)
+		
+		this.index++;
+		console.log(this.fileList);
 	}
+
 	
 	function deleteImage(e) {
 		e.preventDefault();
 		var index = $(e.currentTarget).parent().parent().data("index");
 		this.root.find(".review_photos .item[data-index='"+index+"']").remove();
-		delete this.fileList[index];
+		this.fileList[index] = null;
+		this.resultList[index] = null;
+		console.log(this.fileList);
+		console.log(this.resultList);
 	}
-	
+}	// ReviewContents.prototype.fileUpload ends.
 
+
+ReviewContents.prototype.getText = function() {
+	return this.root.find(".review_textarea").val();
 }
 
 
+ReviewContents.prototype.getFileData = function() {
+	
+	var fileData = new Array();
+	
+	for (var i=0; i < this.fileList.length; i++) {
+		var file = this.fileList[i];
+		var dataUrl = this.resultList[i];
+		
+		if(file != null && dataUrl != null){
+			var data = {
+					"file": file,
+					"dataUrl": dataUrl,
+				}
+			filedata.push(data);
+		}
+	}
+	console.log(fileData);
+	return fileData;
+}
+// ReviewContents ends
 
 
-$(document).ready(function() {
+function FormModule(root) {
+	this.formData = new FormData();
+}
+FormModule.prototype = new eg.Component();
+FormModule.prototype.constructer = FormModule;
+
+FormModule.prototype.append
+
+FormModule.prototype.doPost = function() {
 	
-	var rating = new Rating( $(".ct_wrap") );
-	rating.init();
-	
-	var reviewContents = new ReviewContents( $(".ct_wrap") );
-	reviewContents.init();
-	
-});
+}
+
+
 
 
