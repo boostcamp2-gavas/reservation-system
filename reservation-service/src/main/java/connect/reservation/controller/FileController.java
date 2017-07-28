@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/files")
-public class FilesController {
+public class FileController {
 	private String baseDir = "c:" + File.separator + "temp" + File.separator; // c:\temp 디렉토리를 미리 만들어둔다.
 
     @GetMapping

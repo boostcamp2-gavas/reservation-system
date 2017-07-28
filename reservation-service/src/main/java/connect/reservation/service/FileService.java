@@ -1,5 +1,5 @@
 package connect.reservation.service;
 
-public interface FilesService {
+public interface FileService {
 
 }
