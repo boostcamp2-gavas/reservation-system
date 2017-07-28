@@ -245,9 +245,9 @@
 	<script src="/resources/js/node_modules/@egjs/component/dist/component.js"></script>
 	<script src="/resources/js/callAjax.js"></script>
 	<script src="/resources/js/messenger.js"></script>
-	<script src="/resources/js/confirmPopup.js"></script>
-	<script src="/resources/js/summary.js"></script>
-	<script src="/resources/js/reservationList.js"></script>
+	<script src="/resources/js/myreservaion/confirmPopup.js"></script>
+	<script src="/resources/js/myreservaion/summary.js"></script>
+	<script src="/resources/js/myreservaion/reservationList.js"></script>
 	<script>
 	$(function() {
 		var messenger = new Messenger();

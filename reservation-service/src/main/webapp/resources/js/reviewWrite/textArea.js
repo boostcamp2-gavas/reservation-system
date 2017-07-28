@@ -15,6 +15,8 @@ class TextArea extends eg.Component {
         this.firstC.on('click', this.convertToWriter.bind(this));
         this.lastC.on('keyup', this.countChar.bind(this))
                   .on('blur', this.convertToInfo.bind(this));
+        this.messenger.on('submit', this.commentLoad.bind(this))
+                      .on('uploadSuccess', this.clearComment.bind(this));
     }
     convertToWriter(e) {
         this.firstC.hide();
@@ -31,5 +33,13 @@ class TextArea extends eg.Component {
         if(this.currentChar == 0) {
             this.firstC.show();
         }
+    }
+    commentLoad() {
+        if(this.currentChar >= this.minChar && this.currentChar <= this.maxChar) {
+            this.messenger.formData.append('comment', this.lastC.val());
+        }
+    }
+    clearComment() {
+        this.lastC.empty();
     }
 }

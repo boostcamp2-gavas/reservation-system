@@ -13,8 +13,7 @@
 </head>
 
 <body>
-	<div id="container">
-		<c:import url="/WEB-INF/views/header.jsp" />
+	<div id="container" data-reservation-id="${reservationId}">
 		<div class="ct">
 			<div class="ct_wrap">
 				<div class="top_title review_header">
@@ -103,31 +102,33 @@
 	<script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
 	<script src="/resources/js/node_modules/@egjs/component/dist/component.js"></script>
 	<script src="/resources/js/messenger.js"></script>
-	<script src="/resources/js/writerFooter.js"></script>
-	<script src="/resources/js/textArea.js"></script>
-	<script src="/resources/js/util.js"></script>
+	<script src="/resources/js/reviewWrite/writerFooter.js"></script>
+	<script src="/resources/js/reviewWrite/textArea.js"></script>
+	<script src="/resources/js/reviewWrite/util.js"></script>
     <script id="thumb_nail_tempalte" type="text/x-handlebars-template">
         {{#items}}
         <li class="item">
             <a class="anchor">
                 <span class="spr_book ico_del">삭제</span>
             </a>
-            <img src="{{url}}" width="130" alt="" class="item_thumb">
+            <img src="{{url}}" width="130" alt="{{name}}" class="item_thumb">
             <span class="img_border"></span>
         </li>
         {{/items}}
     </script>
     <script>
         $(function() {
-        	$('.header').addClass('fade');
-        	
             var messenger = new Messenger();
+            messenger.formData = new FormData();
             var rating = new Rating($('div.rating'), messenger);
             var textArea = new TextArea($('div.review_contents'), messenger);
             var thumbTemplate = Handlebars.compile($('#thumb_nail_tempalte').html());
             var writerFooter = new WriterFooter($('div.review_write_footer_wrap'), messenger, thumbTemplate);
             $('a.btn_back').on('click', function() {
                 window.history.back();
+            });
+            $('button.bk_btn').on('click', function() {
+                messenger.trigger('submit'); 
             });
         });
     </script>

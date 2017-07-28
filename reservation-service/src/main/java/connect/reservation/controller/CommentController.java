@@ -26,6 +26,7 @@ public class CommentController {
 	@GetMapping("/write")
 	public String mvWrite(Model model, @RequestParam("reservationId") int reservationId) {
 		model.addAttribute("reserveName", reservationCommentService.getName(reservationId));
+		model.addAttribute("reservationId", reservationId);
 		return "reviewWrite";
 	}
 	
