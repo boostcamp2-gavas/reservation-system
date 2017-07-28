@@ -21,10 +21,6 @@ public class LoginController {
 	Logger log = Logger.getLogger(this.getClass());
 	LoginService loginService;
 	
-	@Value("${spring.naver.apikey}")
-	private String CLIENT_ID;
-	@Value("${spring.naver.apisecretkey}")
-	private String SECRET_ID;
 	
 	@Autowired
 	public void setLoginService(LoginService loginService) {
@@ -37,7 +33,7 @@ public class LoginController {
 			@RequestParam String state) {
 		NaverLogin login = new NaverLogin();
 		NaverUserDTO dto = null;
-		if (state.equals(session.getAttribute("state"))) {
+		/*if (state.equals(session.getAttribute("state"))) {
 			dto = login.convertToNaverDTO(code, state);
 			if (dto != null) {
 				if(loginService.progressLogin(dto)) {
@@ -46,7 +42,10 @@ public class LoginController {
 					session.setAttribute("email", dto.getEmail());
 				}
 			}
-		}
+		}*/
+		session.setAttribute("id", 15);
+		session.setAttribute("name", "Jangchulwoon");
+		session.setAttribute("email", "lusiue@naver.com");
 		return "redirect:/";
 	}
 

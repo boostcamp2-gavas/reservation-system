@@ -24,23 +24,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.reservation.dto.NaverUserDTO;
 
+@PropertySource("classpath:/application.properties")
 public class NaverLogin {
 	
-	private static String CLIENT_ID;
-	private static String SECRET_ID;
+	@Value("${spring.naver.apikey}")
+	private String CLIENT_ID;
 	
-	final static String REDIRECT_URL = "http://220.230.121.117/callback";
-	final static String URL = "https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id="
-			+ "&redirect_uri=" + "&state=";
+	@Value("${spring.naver.apisecretkey}")
+	private String SECRET_ID;
 	
-
+	@Value("${spring.naver.callback}")
+	private String REDIRECT_URL;
 	
-
 	Logger log = Logger.getLogger(this.getClass());
 
 	public String getLoginURL(HttpSession session) {
-		log.info("Client ID ::  "+CLIENT_ID);
-		log.info("SECRET_ID  ::  "+SECRET_ID);
 		
 		String redirectUrl = "";
 		SecureRandom random = null;
@@ -130,13 +128,6 @@ public class NaverLogin {
 			}
 			return dto;
 		
-	}
-	public static void setCLIENT_ID(String cLIENT_ID) {
-		CLIENT_ID = cLIENT_ID;
-	}
-
-	public static void setSECRET_ID(String sECRET_ID) {
-		SECRET_ID = sECRET_ID;
 	}
 
 
