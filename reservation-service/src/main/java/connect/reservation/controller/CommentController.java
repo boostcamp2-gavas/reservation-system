@@ -53,11 +53,12 @@ public class CommentController {
 			@RequestParam("comment") String comment, 
 			@RequestParam("score") int score) {
 
-		User currentUser = (User) session.getAttribute("currentUser");
+		//User currentUser = (User) session.getAttribute("currentUser");
 
 		ReservationUserComment commentDomain = new ReservationUserComment();
 		commentDomain.setProductId(productId);		
-		commentDomain.setUserId(currentUser.getId());
+		//commentDomain.setUserId(currentUser.getId());
+		commentDomain.setUserId(11);
 		commentDomain.setScore(score);
 		commentDomain.setComment(comment);
 		
@@ -65,7 +66,8 @@ public class CommentController {
 		
 		if(null != files) {
 			UploadFile uploadFile = new UploadFile();
-			uploadFile.setUserId(currentUser.getId());
+			//uploadFile.setUserId(currentUser.getId());
+			uploadFile.setUserId(11);
 			uploadFile.setCommentId(commentId);
 			uploadFile.setPath(session.getServletContext().getRealPath("/"));
 			uploadFile.setContentType("한줄평이미지");
