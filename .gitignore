@@ -163,7 +163,8 @@ reservation-service/src/main/webapp/resources/js/node_modules/handlebars/*
 reservation-service/src/main/webapp/resources/js/node_modules/handlebars/dist/*
 !reservation-service/src/main/webapp/resources/js/node_modules/handlebars/dist/handlebars.js
 
-
 # for api 
 
-src/
+reservation-service/src/main/java/kr/or/reservation/api/NaverLogin.java
+
+
