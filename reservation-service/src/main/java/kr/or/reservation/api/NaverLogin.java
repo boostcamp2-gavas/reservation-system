@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,23 +24,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.reservation.dto.NaverUserDTO;
 
-@PropertySource("classpath:/application.properties")
 public class NaverLogin {
 	
-	@Value("${spring.naver.apiKey}")
 	private static String CLIENT_ID;
-	final static String REDIRECT_URL = "http://220.230.121.117/callback";
+	private static String SECRET_ID;
+	
+	final static String REDIRECT_URL = "http://localhost/callback";
 	final static String URL = "https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id="
 			+ "&redirect_uri=" + "&state=";
 	
-	@Value("${spring.naver.apiSecretKey}")
-	private static String SECRET_ID;
 
-	// Logger 설정
+	
 
 	Logger log = Logger.getLogger(this.getClass());
 
 	public String getLoginURL(HttpSession session) {
+		log.info("Client ID ::  "+CLIENT_ID);
+		log.info("SECRET_ID  ::  "+SECRET_ID);
+		
 		String redirectUrl = "";
 		SecureRandom random = null;
 		String state = "", apiURL = "";
@@ -129,5 +131,13 @@ public class NaverLogin {
 			return dto;
 		
 	}
+	public static void setCLIENT_ID(String cLIENT_ID) {
+		CLIENT_ID = cLIENT_ID;
+	}
+
+	public static void setSECRET_ID(String sECRET_ID) {
+		SECRET_ID = sECRET_ID;
+	}
+
 
 }
