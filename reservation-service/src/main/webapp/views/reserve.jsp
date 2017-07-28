@@ -309,6 +309,7 @@
 				data.reservationName = $("#name").val();
 				data.reservationTel = $("#tel").val();
 				data.reservationEmail = $("#email").val();
+				data.totalPrice = getTotalPrice();
 				
 				$.ajax({  method: "post",
 						  url: "/reservation",
@@ -316,13 +317,23 @@
 				}).done(function(){
 					console.log("성공");
 				});
-				
+			
 				alert("작성완료");
 				location.href = "/myPage";
 			}else{
 				alert("약관 동의 및 티켓을 입력해주세요.");
 			}
 		});
-</script>
+		
+		function getTotalPrice(){
+			var $total = $(".total_price"),
+			amount =0;
+			$total.map(function(i,v){
+				amount += parseInt($(v).text());
+			});
+			return amount;
+		}
+	
+		</script>
 
 </html>
