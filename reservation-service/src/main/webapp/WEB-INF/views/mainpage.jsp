@@ -90,7 +90,7 @@
 								<li class="product_list item">
                     	        <a href="/mvDetail?productId={{productId}}" class="item_book">
                         	        <div class="item_preview"> 
-                            	    	<img alt="{{fileName}}" class="img_thumb" src="{{saveFileName}}">
+                            	    	<img alt="{{fileName}}" class="img_thumb" src="/files/{{fileId}}">
                                 		<span class="img_border"></span> 
                               	  </div>
                      	           <div class="event_txt">
