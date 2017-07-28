@@ -25,7 +25,7 @@
                 <div class="group_visual">
                     <div class="container_visual" style="width: 414px;">
                         <ul class="visual_img">
-                            <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="/${reservation.fileId}"> <span class="img_bg"></span>
+                            <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="/img/${reservation.fileId}"> <span class="img_bg"></span>
                                 <div class="preview_txt">
                                     <h2 class="preview_txt_tit">${reservation.name}</h2> <em class="preview_txt_dsc">₩ ${reservation.priceList[0].price} ~ </em>
                                     <em class="preview_txt_dsc">${reservation.salesStart}~${reservation.salesEnd}, 잔여티켓 ?? </em> </div>
@@ -318,6 +318,7 @@
 				});
 				
 				alert("작성완료");
+				location.href = "/myPage";
 			}else{
 				alert("약관 동의 및 티켓을 입력해주세요.");
 			}

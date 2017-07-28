@@ -4,7 +4,6 @@ moment.locale('ko', {
 });
 
 
-// 소스 수정 진행할 것. 
 
 // 핸들바 helper 설정
 Handlebars.registerHelper('exit', function (string,value) {
@@ -35,13 +34,7 @@ Handlebars.registerHelper("btnText", function(btn) {
 var ReservationState = (function(){
 	// 이 부분은 Hendlebar 설정 부분 
 	var templateSource = $("#reservation-content").html(),
-	Template = Handlebars.compile(templateSource),
-	
-	// 총 갯수를 저장할 변수 
-	expectationLength =0,
-	confirmedLength = 0,
-	usedLength =0,
-	cancellationLength = 0;
+	Template = Handlebars.compile(templateSource);
 	
 	// 상단 bar의 contents들을 저장하고 있음. 
 	var $all = $(".link_summary_board ").eq(0),
@@ -119,10 +112,11 @@ var ReservationState = (function(){
 			// count 변경 및 cancellation 가져오는 작업 
 			expectationCount = $expectation.find(".figure").text();
 			$expectation.find(".figure").text(--expectationCount);
-			
 			$('.used:last').children().remove();
-			cancellationCount = loading(3,$('.used:last'),"취소된 예약","ico_cancel","");
-			$cancellation.find(".figure").text(cancellationCount);
+			loading(3,$('.used:last'),"취소된 예약","ico_cancel","");
+			cancellationCount = $cancellation.find(".figure").text();
+			$cancellation.find(".figure").text(++cancellationCount);
+			
 			alert("취소 되었습니다.");
 		}else{
 			alert("예상치 못한 에러가 ...");
@@ -137,7 +131,7 @@ var ReservationState = (function(){
 			url : "/reservation/type/"+type
 		}).done(function(data) {
 			if (data.length === 0) {
-				$(".err").addClass("none");
+				// 데이터가 없음. 
 			}else{
 				var item = {
 						reservation : [],
@@ -201,13 +195,10 @@ var ReservationState = (function(){
 			
 			// ajax 값 호출 
 			// 여기 까진 만족 ok 
-			expectationLength =loading(0,$('.expectation'),"예약 신청중","ico_clock","취소");
-			confirmedLength =loading(1,$('.confirmed'),"예약 확정","ico_check2","취소");
-			usedLength =loading(2,$('.used:first'),"이용 완료","ico_check2","예매자 리뷰 남기기");
-			cancellationLength =loading(3,$('.used:last'),"취소된 예약","ico_cancel","");
-			// count 가져오는 부분까지 js에서 하기엔 너무 스크립트가 많아서 서버로 넘김.
-			// 삭제시 삭제 count 올라가는 부분 수정해야됨.
-			
+			loading(0,$('.expectation'),"예약 신청중","ico_clock","취소");
+			loading(1,$('.confirmed'),"예약 확정","ico_check2","취소");
+			loading(2,$('.used:first'),"이용 완료","ico_check2","예매자 리뷰 남기기");
+			loading(3,$('.used:last'),"취소된 예약","ico_cancel","");
 			
 			// menu bar 이벤트 등록
 			$all.on("click",menuClickEvent.bind($all));
@@ -223,6 +214,13 @@ var ReservationState = (function(){
 			});
 			$(".btn_green").on("click",cancellationBtn);
 			$(".expectation, .confirmed").on("click",".booking_cancel .btn",confirmCancellationBtn);
+		},
+		isEmpty : function(){
+			var txt = $all.find(".figure:first").text();
+			if(parseInt(txt)===0){
+				$(".err").removeClass("none");
+			}
 		}
+		
 	}
 })();

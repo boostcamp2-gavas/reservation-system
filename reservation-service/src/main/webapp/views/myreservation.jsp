@@ -207,6 +207,7 @@
 	
 	var module = ReservationState;
 	module.init();
+	module.isEmpty();
 	
 </script>
 
