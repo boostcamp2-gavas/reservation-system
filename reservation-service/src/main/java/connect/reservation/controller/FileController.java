@@ -8,10 +8,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -135,6 +137,10 @@ public class FileController {
             }
         }
 
+    }
+    
+    public void serverPath(Model model, HttpServletRequest request) {
+    	String path = request.getSession().getServletContext().getRealPath("/");
     }
 
 }
