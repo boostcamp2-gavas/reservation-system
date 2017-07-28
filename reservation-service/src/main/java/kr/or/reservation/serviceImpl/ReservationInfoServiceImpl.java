@@ -31,6 +31,13 @@ public class ReservationInfoServiceImpl implements ReservationInfoService {
 		reservationInfo.setReservationDate(new Timestamp(System.currentTimeMillis()));
 		return reservationInfoDao.insert(reservationInfo);
 	}
+	@Override
+	public ReservationInfo selectById(int id) {
+		if(id < 0) {
+			return null;
+		}
+		return reservationInfoDao.selectById(id);
+	}
 	
 
 

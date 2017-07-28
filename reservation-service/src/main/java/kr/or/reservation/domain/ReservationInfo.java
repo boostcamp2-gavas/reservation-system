@@ -3,6 +3,7 @@ package kr.or.reservation.domain;
 import java.sql.Timestamp;
 
 public class ReservationInfo {
+	private int id;
 	private int productId;
 	private int userId;
 	private int generalTicketCount;
@@ -15,6 +16,7 @@ public class ReservationInfo {
 	private int reservationType;
 	private Timestamp createDate;
 	private Timestamp modifyDate;
+	private int totalPrice;
 
 
 
@@ -24,10 +26,12 @@ public class ReservationInfo {
 	
 	
 
-	public ReservationInfo(int productId, int userId, int generalTicketCount, int youthTicketCount,
+	public ReservationInfo(int id, int productId, int userId, int generalTicketCount, int youthTicketCount,
 			int childTicketCount, String reservationName, String reservationTel, String reservationEmail,
-			Timestamp reservationDate, int reservationType, Timestamp createDate, Timestamp modifyDate) {
+			Timestamp reservationDate, int reservationType, Timestamp createDate, Timestamp modifyDate,
+			int totalPrice) {
 		super();
+		this.id = id;
 		this.productId = productId;
 		this.userId = userId;
 		this.generalTicketCount = generalTicketCount;
@@ -40,9 +44,18 @@ public class ReservationInfo {
 		this.reservationType = reservationType;
 		this.createDate = createDate;
 		this.modifyDate = modifyDate;
+		this.totalPrice = totalPrice;
 	}
 
 
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public int getProductId() {
 		return productId;
@@ -139,15 +152,30 @@ public class ReservationInfo {
 	public void setModifyDate(Timestamp modifyDate) {
 		this.modifyDate = modifyDate;
 	}
+	
+	
+
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+
+
+
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+
 
 	@Override
 	public String toString() {
-		return "productId : \"" + productId + "\", userId : \"" + userId + "\", generalTicketCount : \""
-				+ generalTicketCount + "\", youthTicketCount : \"" + youthTicketCount + "\", childTicketCount : \""
-				+ childTicketCount + "\", reservationName : \"" + reservationName + "\", reservationTel : \""
-				+ reservationTel + "\", reservationEmail : \"" + reservationEmail + "\", reservationDate : \""
-				+ reservationDate + "\", reservationType : \"" + reservationType + "\", createDate : \"" + createDate
-				+ "\", modifyDate : \"" + modifyDate;
+		return "ReservationInfo [productId=" + productId + ", userId=" + userId + ", generalTicketCount="
+				+ generalTicketCount + ", youthTicketCount=" + youthTicketCount + ", childTicketCount="
+				+ childTicketCount + ", reservationName=" + reservationName + ", reservationTel=" + reservationTel
+				+ ", reservationEmail=" + reservationEmail + ", reservationDate=" + reservationDate
+				+ ", reservationType=" + reservationType + ", createDate=" + createDate + ", modifyDate=" + modifyDate
+				+ ", totalPrice=" + totalPrice + "]";
 	}
+
 
 }

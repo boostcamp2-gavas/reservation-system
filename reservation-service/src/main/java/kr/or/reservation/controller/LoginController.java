@@ -4,7 +4,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +32,7 @@ public class LoginController {
 			@RequestParam String state) {
 		NaverLogin login = new NaverLogin();
 		NaverUserDTO dto = null;
-		/*if (state.equals(session.getAttribute("state"))) {
+		if (state.equals(session.getAttribute("state"))) {
 			dto = login.convertToNaverDTO(code, state);
 			if (dto != null) {
 				if(loginService.progressLogin(dto)) {
@@ -42,10 +41,7 @@ public class LoginController {
 					session.setAttribute("email", dto.getEmail());
 				}
 			}
-		}*/
-		session.setAttribute("id", 15);
-		session.setAttribute("name", "Jangchulwoon");
-		session.setAttribute("email", "lusiue@naver.com");
+		}
 		return "redirect:/";
 	}
 

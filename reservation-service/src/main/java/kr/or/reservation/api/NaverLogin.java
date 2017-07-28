@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -27,19 +26,20 @@ import kr.or.reservation.dto.NaverUserDTO;
 @PropertySource("classpath:/application.properties")
 public class NaverLogin {
 	
-	@Value("${spring.naver.apikey}")
-	private String CLIENT_ID;
+	@Value("${spring.naver.apiKey}")
+	private static String CLIENT_ID;
+	final static String REDIRECT_URL = "http://220.230.121.117/callback";
+	final static String URL = "https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id="
+			+ "&redirect_uri=" + "&state=";
 	
-	@Value("${spring.naver.apisecretkey}")
-	private String SECRET_ID;
-	
-	@Value("${spring.naver.callback}")
-	private String REDIRECT_URL;
-	
+	@Value("${spring.naver.apiSecretKey}")
+	private static String SECRET_ID;
+
+	// Logger 설정
+
 	Logger log = Logger.getLogger(this.getClass());
 
 	public String getLoginURL(HttpSession session) {
-		
 		String redirectUrl = "";
 		SecureRandom random = null;
 		String state = "", apiURL = "";
@@ -129,6 +129,5 @@ public class NaverLogin {
 			return dto;
 		
 	}
-
 
 }

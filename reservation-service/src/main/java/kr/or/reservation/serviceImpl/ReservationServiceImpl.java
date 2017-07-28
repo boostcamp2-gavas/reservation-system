@@ -18,11 +18,12 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public ReservationDTO selectOne(int productId) {
+	public ReservationDTO selectByProductId(int productId) {
 		if(productId <=0) {
 			return null;
 		}
-		ReservationDTO dto = reservationDao.selectOne(productId);
+		
+		ReservationDTO dto = reservationDao.selectByProductId(productId);
 		dto.setPriceList(reservationDao.selectPrice(productId));
 		return dto;
 	}
