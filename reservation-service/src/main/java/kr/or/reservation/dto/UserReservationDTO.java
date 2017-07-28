@@ -13,6 +13,7 @@ public class UserReservationDTO {
 	private int reservationType;
 	private int totalPrice;
 
+	
 	public UserReservationDTO() {
 	}
 
