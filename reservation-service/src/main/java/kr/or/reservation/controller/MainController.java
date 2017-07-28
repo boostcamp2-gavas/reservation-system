@@ -15,16 +15,8 @@ public class MainController {
 	Logger log = Logger.getLogger(this.getClass());
 	
     @GetMapping(path = "/")
-    public String viewMain(Model model,HttpSession session){
-    	// session 이 존재하면, mypageURI를 줌 
-    	// 이 부분 여러 페이지에서 사용될 수 있으니, 함수로 따로 뺄까 ? 
-    	if(session.getAttribute("id") !=null) {
-    		model.addAttribute("loginURL", "/my");
-    	}else {
-    		NaverLogin login = new NaverLogin();
-    		String url = login.getLoginURL(session);
-        	model.addAttribute("loginURL", url);
-    	}
+    public String viewMain(Model model){
+    	
     	return "mainpage";
     }
  
