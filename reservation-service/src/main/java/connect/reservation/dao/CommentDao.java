@@ -31,7 +31,7 @@ public class CommentDao {
     public CommentDao(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource); // Datasource를 주입
         this.insertAction = new SimpleJdbcInsert(dataSource)  // Datasource를 주입
-                .withTableName("reservatino_user_comment")   // table명을 지정
+                .withTableName("reservation_user_comment")   // table명을 지정
                 .usingGeneratedKeyColumns("id"); // pk 칼럼을 지정
     }
     

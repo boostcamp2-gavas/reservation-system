@@ -1,5 +1,7 @@
 package connect.reservation.service.impl;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,9 +63,14 @@ public class CommentServiceImpl implements CommentService{
 	@Override
 	@Transactional(readOnly = false)
 	public int add(ReservationUserComment reservationUserComment) {
-		
-		
-		
+		reservationUserComment.setCreateDate(getDate());
+				
 		return commentDao.add(reservationUserComment);
+	}
+	
+	public Timestamp getDate(){
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return java.sql.Timestamp.valueOf(sdf.format(timestamp));
 	}
 }

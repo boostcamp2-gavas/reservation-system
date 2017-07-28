@@ -1,14 +1,11 @@
 package connect.reservation.service.impl;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import connect.reservation.dao.ProductDao;
 import connect.reservation.dao.ReservationDao;
 import connect.reservation.domain.ReservationInfo;
 import connect.reservation.dto.Product;
@@ -28,13 +25,6 @@ public class ReservationServiceImpl implements ReservationService{
 	public void setReservationInfoDao(ReservationDao reservationDao, ProductService productService) {
 		this.reservationDao = reservationDao;
 		this.productService = productService;
-	}
-	
-	
-	public Timestamp getDate(){
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		return java.sql.Timestamp.valueOf(sdf.format(timestamp));
 	}
 	
 	@Override

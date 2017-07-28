@@ -64,8 +64,8 @@ public class MainController {
 		
 		model.addAttribute("category", categoryList);
 		
-		return "mainpage";
-		//return "files";
+		//return "mainpage";
+		return "files";
 	}
 	
 	@GetMapping("/mvMyPage")

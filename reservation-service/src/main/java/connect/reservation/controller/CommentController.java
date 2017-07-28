@@ -10,25 +10,30 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import connect.reservation.domain.File;
 import connect.reservation.domain.Product;
 import connect.reservation.domain.ReservationUserComment;
+import connect.reservation.domain.User;
 import connect.reservation.service.CommentService;
+import connect.reservation.service.FileService;
 
 @Controller
 @RequestMapping("/comment")
 public class CommentController {
 	
-	private final CommentService reservationCommentService;
+	private final CommentService commentService;
+	private final FileService fileService;
 	
 	@Autowired
-	public CommentController(CommentService reservationCommentService) {
-		this.reservationCommentService = reservationCommentService;
+	public CommentController(CommentService commentService, FileService fileService) {
+		this.commentService = commentService;
+		this.fileService = fileService;
 	}
 
 	@GetMapping("/write")
 	public String mvWrite(Model model, @RequestParam("reservationId") int reservationId) {
 		Product product = new Product();
-		product = reservationCommentService.getName(reservationId);
+		product = commentService.getName(reservationId);
 		
 		model.addAttribute("productId", product.getId());
 		model.addAttribute("productName", product.getName());
@@ -39,9 +44,24 @@ public class CommentController {
 	@PostMapping("/write")
 	//public String add(Model model, @RequestBody ReservationUserComment reservationUserComment) {
 	public String add(HttpSession session, Model model) 	{
-		
+		User currentUser = (User) session.getAttribute("currentUser");
+
 		ReservationUserComment comment = new ReservationUserComment();
-		comment.setProductId(0);
+		comment.setProductId(3);
+		comment.setUserId(currentUser.getId());
+		comment.setScore(5.0);
+		comment.setComment("test용");
+		
+		int commentId = commentService.add(comment);
+		
+		// 사진 있을 경우 - for문
+		File file = new File();
+		file.setUserId(currentUser.getId());
+		
+		file.setContentType("한줄평이미지");
+		
+		fileService.add(commentId, file);
+		
 		
 		return "review";
 	}

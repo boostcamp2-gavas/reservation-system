@@ -4,51 +4,72 @@ import java.sql.Timestamp;
 
 public class ProductDetail {
 	private int id;
-	private int product_id;
+	private int productId;
 	private String content;
-	private Timestamp create_date;
-	private Timestamp modify_date;
+	private Timestamp createDate;
+	private Timestamp modifyDate;
 	
 	
 	public ProductDetail() {
 		
 	}
-	
+
+
 	public int getId() {
 		return id;
 	}
+
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getProduct_id() {
-		return product_id;
+
+
+	public int getProductId() {
+		return productId;
 	}
-	public void setProduct_id(int product_id) {
-		this.product_id = product_id;
+
+
+	public void setProductId(int productId) {
+		this.productId = productId;
 	}
+
+
 	public String getContent() {
 		return content;
 	}
+
+
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Timestamp getCreate_date() {
-		return create_date;
+
+
+	public Timestamp getCreateDate() {
+		return createDate;
 	}
-	public void setCreate_date(Timestamp create_date) {
-		this.create_date = create_date;
+
+
+	public void setCreateDate(Timestamp createDate) {
+		this.createDate = createDate;
 	}
-	public Timestamp getModify_date() {
-		return modify_date;
+
+
+	public Timestamp getModifyDate() {
+		return modifyDate;
 	}
-	public void setModify_date(Timestamp modify_date) {
-		this.modify_date = modify_date;
+
+
+	public void setModifyDate(Timestamp modifyDate) {
+		this.modifyDate = modifyDate;
 	}
-	
-	
+
+
 	@Override
 	public String toString() {
-		return "ProductDetail [id=" + id + ", product_id=" + product_id + ", content=" + content + ", create_date="
-				+ create_date + ", modify_date=" + modify_date + "]";
+		return "ProductDetail [id=" + id + ", productId=" + productId + ", content=" + content + ", createDate="
+				+ createDate + ", modifyDate=" + modifyDate + "]";
 	}
+	
+	
 }

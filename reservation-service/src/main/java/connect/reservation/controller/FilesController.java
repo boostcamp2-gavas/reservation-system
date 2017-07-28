@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/files")
 public class FilesController {
-	private String baseDir = "c:" + File.separator + "temp" + File.separator; // c:\temp 디렉토리를 미리 만들어둔다.
+	private String baseDir = "c:" + File.separator + "boost" + File.separator + "img" + File.separator; // c:\boost\img 디렉토리를 미리 만들어둔다.
 
     @GetMapping
     public String fileform(){
@@ -31,7 +31,6 @@ public class FilesController {
 
     @PostMapping
     public String create(
-            @RequestParam("title") String title,
             @RequestParam("file") MultipartFile[] files)
     {
 
@@ -55,12 +54,18 @@ public class FilesController {
 
                 // 아래에서 출력되는 결과는 모두 database에 저장되야 한다.
                 // pk 값은 자동으로 생성되도록 한다.
-                System.out.println("title :" + title);
                 System.out.println("contentType :" + contentType);
                 System.out.println("name :" + name);
                 System.out.println("originalFilename : " + originalFilename);
                 System.out.println("size : " + size);
                 System.out.println("saveFileName : " + saveFileName);
+                
+                
+                connect.reservation.domain.File fileDomain = new connect.reservation.domain.File();
+                fileDomain.setFileName(originalFilename);
+                fileDomain.setSaveFileName(saveFileName);
+                fileDomain.setFileLength(size);
+                fileDomain.setDeleteFlag(0);
 
                 // 실제 파일을 저장함.
                 // try-with-resource 구문. close()를 할 필요가 없다. java 7 이상에서 가능
@@ -75,6 +80,8 @@ public class FilesController {
                 }catch(Exception ex){
                     ex.printStackTrace();
                 }
+                
+                
             } // for
         } // if
 

@@ -140,7 +140,9 @@
         });
         
         $('.bk_btn').click(function(){
-        	$('#score').val($('.star_rank').text());
+        	$('#comment_form').submit();
+        	
+        	/* $('#score').val($('.star_rank').text());
         	$('#comment').val($('.review_textarea').val());
         	
         	var commentInfo = JSON.stringify($(".form_horizontal").serializeObject());
@@ -156,7 +158,7 @@
         		error : function(request,status,error){
         			alert("code:"+request.status+"\n"+"error:"+error);
         		}
-        	});
+        	}); */
         });
     </script>
 </body>
