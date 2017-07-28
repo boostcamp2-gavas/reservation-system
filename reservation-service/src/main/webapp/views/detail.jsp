@@ -163,7 +163,7 @@
                                 <div>
                                     <div class="review_area">
                                         <div class="thumb_area" >
-                                            <a  class="thumb" title="이미지 크게 보기" data-id="${list.id}"> <img width="90" height="90" class="img_vertical_top" src='/${list.fileId }' alt="리뷰이미지"> </a> <span class="img_count">${list.count}</span>                                                </div>
+                                            <a  class="thumb" title="이미지 크게 보기" data-id="${list.id}"> <img width="90" height="90" class="img_vertical_top" src='/img/${list.firstImageSaveFileName}' alt="리뷰이미지"> </a> <span class="img_count">${list.imageCount}</span>                                                </div>
                                         <h4 class="resoc_name">${detail.name}</h4>
                                         <p class="review">${list.comment }</p>
                                     </div>
@@ -298,7 +298,7 @@
 	<script id="layer-content" type="text/x-handlebars-template">
                     {{#items}}
 					<li class="item" style="width: 414px;"> 
-                		<img alt="" class="img_thumb" src="/{{file_id}}">
+                		<img alt="" class="img_thumb" src="/img/{{file_id}}">
                	 	</li>
 					{{/items}}
  	</script>	

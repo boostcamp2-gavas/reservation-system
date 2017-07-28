@@ -1,7 +1,6 @@
 package kr.or.reservation.dto;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 public class CommentDTO {
 	private String nickname;
@@ -12,33 +11,12 @@ public class CommentDTO {
 	private String score;
 	private String comment;
 	private Timestamp createDate;
-	private int count;
-	
+	private int imageCount;
+	private String firstImageSaveFileName;
+
 	public CommentDTO() {
 		// TODO Auto-generated constructor stub
 	}
-
-
-
-
-
-	public CommentDTO(String nickname, String id, String fileId, String productId, String userId, String score,
-			String comment, Timestamp createDate, int count) {
-		super();
-		this.nickname = nickname;
-		this.id = id;
-		this.fileId = fileId;
-		this.productId = productId;
-		this.userId = userId;
-		this.score = score;
-		this.comment = comment;
-		this.createDate = createDate;
-		this.count = count;
-	}
-
-
-
-
 
 	public String getNickname() {
 		return nickname;
@@ -96,43 +74,36 @@ public class CommentDTO {
 		this.createDate = createDate;
 	}
 
-
-	public int getCount() {
-		return count;
-	}
-
-	public void setCount(int count) {
-		this.count = count;
-	}
-
-
-
-
-
 	public String getFileId() {
 		return fileId;
 	}
-
-
-
-
 
 	public void setFileId(String fileId) {
 		this.fileId = fileId;
 	}
 
+	public int getImageCount() {
+		return imageCount;
+	}
 
+	public void setImageCount(int imageCount) {
+		this.imageCount = imageCount;
+	}
 
+	public String getFirstImageSaveFileName() {
+		return firstImageSaveFileName;
+	}
 
+	public void setFirstImageSaveFileName(String firstImageSaveFileName) {
+		this.firstImageSaveFileName = firstImageSaveFileName;
+	}
 
 	@Override
 	public String toString() {
 		return "nickname : \"" + nickname + "\", id : \"" + id + "\", fileId : \"" + fileId + "\", productId : \""
 				+ productId + "\", userId : \"" + userId + "\", score : \"" + score + "\", comment : \"" + comment
-				+ "\", createDate : \"" + createDate + "\", count : \"" + count;
+				+ "\", createDate : \"" + createDate + "\", imageCount : \"" + imageCount
+				+ "\", firstImageSaveFileName : \"" + firstImageSaveFileName;
 	}
 
-
-
-	
 }
