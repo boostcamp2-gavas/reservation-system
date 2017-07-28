@@ -140,8 +140,10 @@
 		</div>
 	</footer>
 	
-	<script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
+	<script src="/resources/js/node_modules/jquery/dist/jquery.min.js"></script>
 	<script src="/resources/js/node_modules/handlebars/dist/handlebars.min.js"></script>
+	<script src = "/resources/js/node_modules/@egjs/component/dist/component.min.js"></script>
+	<script src="/resources/js/reviewWrite"></script>
 </body>
 
 </html>
