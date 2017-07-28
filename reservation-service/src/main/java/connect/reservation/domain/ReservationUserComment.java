@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 public class ReservationUserComment {
 	private Integer id;
-	private Integer productId;
+	private Integer reservationId;
 	private Integer userId;
 	private double score;
 	private String comment;
@@ -22,11 +22,11 @@ public class ReservationUserComment {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getProductId() {
-		return productId;
+	public Integer getReservationId() {
+		return reservationId;
 	}
-	public void setProductId(Integer productId) {
-		this.productId = productId;
+	public void setReservationId(Integer reservationId) {
+		this.reservationId = reservationId;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -62,7 +62,7 @@ public class ReservationUserComment {
 	
 	@Override
 	public String toString() {
-		return "ReservationUserComment [id=" + id + ", productId=" + productId + ", userId=" + userId + ", score="
+		return "ReservationUserComment [id=" + id + ", reservationId=" + reservationId + ", userId=" + userId + ", score="
 				+ score + ", comment=" + comment + ", createDate=" + createDate + ", modifyDate=" + modifyDate + "]";
 	}
 }

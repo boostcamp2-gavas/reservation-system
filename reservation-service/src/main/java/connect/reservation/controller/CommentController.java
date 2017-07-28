@@ -47,13 +47,14 @@ public class CommentController {
 	@PostMapping("/write")
 	//public String add(Model model, @RequestBody ReservationUserComment reservationUserComment) {
 	public String add(HttpSession session, 
-			@RequestParam("commentImg") MultipartFile[] files, 
+			@RequestParam("commentImg") MultipartFile[] files,
+			@RequestParam("reservationId") int reservationId,
 			@RequestParam("comment") String comment, 
 			@RequestParam("score") int score) {
 		User currentUser = (User) session.getAttribute("currentUser");
 
 		ReservationUserComment commentDomain = new ReservationUserComment();
-		commentDomain.setProductId(3);
+		commentDomain.setReservationId(reservationId);
 		commentDomain.setUserId(currentUser.getId());
 		commentDomain.setScore(score);
 		commentDomain.setComment(comment);
