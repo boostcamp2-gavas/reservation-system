@@ -12,12 +12,11 @@ public class File {
 	private int deleteFlag;
 	private Timestamp createDate;
 	private Timestamp modifyDate;
-	
+
 	
 	public File() {
 		
 	}
-
 
 	public int getId() {
 		return id;

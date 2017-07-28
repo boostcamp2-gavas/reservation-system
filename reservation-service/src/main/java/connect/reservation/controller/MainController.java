@@ -142,4 +142,11 @@ public class MainController {
 		reservationService.add(reservationInfo);
 		return "success";
 	}
+	
+	@GetMapping("/review")
+	public String mvReviewList(HttpSession session, Model model) {
+		User currentUser = (User) session.getAttribute("currentUser");
+		
+		return "review";
+	}
 }

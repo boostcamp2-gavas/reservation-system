@@ -9,16 +9,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import connect.reservation.domain.File;
 import connect.reservation.domain.Product;
 import connect.reservation.domain.ReservationUserComment;
 import connect.reservation.domain.User;
+import connect.reservation.dto.UploadFile;
 import connect.reservation.service.CommentService;
 import connect.reservation.service.FileService;
 
 @Controller
-@RequestMapping("/comment")
+@RequestMapping("/comments")
 public class CommentController {
 	
 	private final CommentService commentService;
@@ -43,7 +45,7 @@ public class CommentController {
 	
 	@PostMapping("/write")
 	//public String add(Model model, @RequestBody ReservationUserComment reservationUserComment) {
-	public String add(HttpSession session, Model model) 	{
+	public String add(HttpSession session, MultipartFile[] files) {
 		User currentUser = (User) session.getAttribute("currentUser");
 
 		ReservationUserComment comment = new ReservationUserComment();
@@ -54,15 +56,15 @@ public class CommentController {
 		
 		int commentId = commentService.add(comment);
 		
-		// 사진 있을 경우 - for문
-		File file = new File();
-		file.setUserId(currentUser.getId());
-		
-		file.setContentType("한줄평이미지");
-		
-		fileService.add(commentId, file);
-		
-		
-		return "review";
+		if(null != files) {
+			UploadFile uploadFile = new UploadFile();
+			uploadFile.setUserId(currentUser.getId());
+			uploadFile.setCommentId(commentId);
+			uploadFile.setPath(session.getServletContext().getRealPath("/"));
+			uploadFile.setContentType("한줄평이미지");
+			
+			fileService.uploadFile(files, uploadFile);
+		}
+		return "redirect:/review";
 	}
 }

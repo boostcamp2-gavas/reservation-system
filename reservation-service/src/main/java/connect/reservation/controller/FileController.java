@@ -146,8 +146,8 @@ public class FileController {
 
     }
     
-    public void serverPath(Model model, HttpServletRequest request) {
-    	String path = request.getSession().getServletContext().getRealPath("/");
+    public String serverPath(Model model, HttpServletRequest request) {
+    	return request.getSession().getServletContext().getRealPath("/");
     }
 
 }
