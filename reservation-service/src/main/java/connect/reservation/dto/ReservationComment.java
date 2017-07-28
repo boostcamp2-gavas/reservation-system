@@ -11,6 +11,7 @@ public class ReservationComment {
 	private String reservationName;
 	private double score;
 	private String comment;
+	private Integer fileId;
 	private String fileName;
 	private String saveFileName;
 	private Timestamp createDate;
@@ -73,6 +74,12 @@ public class ReservationComment {
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	public Integer getFileId() {
+		return fileId;
+	}
+	public void setFileId(Integer fileId) {
+		this.fileId = fileId;
 	}
 	public String getFileName() {
 		return fileName;
