@@ -39,7 +39,7 @@ public class FileServiceImpl implements FileService {
         if(files != null && files.length > 0){
 
             // windows 사용자라면 "c:\temp\년도\월\일" 형태의 문자열을 구한다.
-            String formattedDate = uploadFile.getPath() + java.io.File.separator + "uploadImg" + java.io.File.separator 
+            String formattedDate = uploadFile.getPath() + "uploadImg" + java.io.File.separator 
             		+ new SimpleDateFormat("yyyy" + java.io.File.separator + "MM" + java.io.File.separator + "dd").format(new Date());
            
             java.io.File f = new java.io.File(formattedDate);

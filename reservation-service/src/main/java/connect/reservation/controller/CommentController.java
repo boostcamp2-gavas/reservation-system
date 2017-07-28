@@ -26,6 +26,8 @@ public class CommentController {
 	private final CommentService commentService;
 	private final FileService fileService;
 	
+	static final String FILE_PATH = "/apps/apache-tomcat-8.5.16/webapps/";
+	
 	@Autowired
 	public CommentController(CommentService commentService, FileService fileService) {
 		this.commentService = commentService;
@@ -69,7 +71,7 @@ public class CommentController {
 			//uploadFile.setUserId(currentUser.getId());
 			uploadFile.setUserId(11);
 			uploadFile.setCommentId(commentId);
-			uploadFile.setPath(session.getServletContext().getRealPath("/"));
+			uploadFile.setPath(FILE_PATH);
 			uploadFile.setContentType("한줄평이미지");
 			
 			fileService.uploadFile(files, uploadFile);
