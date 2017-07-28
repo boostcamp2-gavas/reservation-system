@@ -29,7 +29,7 @@ public class NaverLogin {
 	private static String CLIENT_ID;
 	private static String SECRET_ID;
 	
-	final static String REDIRECT_URL = "http://localhost/callback";
+	final static String REDIRECT_URL = "http://220.230.121.117/callback";
 	final static String URL = "https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id="
 			+ "&redirect_uri=" + "&state=";
 	
