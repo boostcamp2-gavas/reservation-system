@@ -5,7 +5,7 @@ public class ProductSqls {
 	
 	final static String COUNT_PRODUCT = "SELECT count(*) FROM product";
 	final static String COUNT_CATEGORY_PRODUCT = "SELECT count(*) FROM product WHERE category_id = :category_id";
-	final static String GET_MAIN_INFO = "SELECT p.id product_id, p.category_id category_id, p.name product_name, p.description description, di.place_name, f.file_name, f.save_file_name"
+	final static String GET_MAIN_INFO = "SELECT p.id product_id, p.category_id category_id, p.name product_name, p.description description, di.place_name, f.id file_id, f.file_name, f.save_file_name"
 			+ " FROM product p"
 			+ " INNER JOIN display_info di ON p.id = di.product_id"
 			+ " LEFT JOIN product_image pi ON p.id = pi.product_id"
@@ -13,7 +13,7 @@ public class ProductSqls {
 			+ " WHERE pi.type = 1"
 			+ " ORDER BY p.id"
 			+ " LIMIT :start , "+endNum;
-	final static String GET_CATEGORY_INFO = "SELECT p.id product_id, p.category_id category_id, p.name product_name, p.description description, di.place_name, f.file_name, f.save_file_name"
+	final static String GET_CATEGORY_INFO = "SELECT p.id product_id, p.category_id category_id, p.name product_name, p.description description, di.place_name, f.id file_id, f.file_name, f.save_file_name"
 			+ "	FROM product p"
 			+ " INNER JOIN display_info di ON p.id = di.product_id"
 			+ "	LEFT JOIN product_image pi ON p.id = pi.product_id"

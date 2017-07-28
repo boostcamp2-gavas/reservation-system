@@ -9,6 +9,7 @@ public class Product {
 	private String description;
 	private String placeName;
 	private int type;
+	private int fileId;
 	private String fileName;
 	private String saveFileName;
 	
@@ -79,6 +80,12 @@ public class Product {
 	}
 	public void setType(int type) {
 		this.type = type;
+	}
+	public int getFileId() {
+		return fileId;
+	}
+	public void setFileId(int fileId) {
+		this.fileId = fileId;
 	}
 	public String getFileName() {
 		return fileName;

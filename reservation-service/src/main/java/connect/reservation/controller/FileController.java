@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,13 +18,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import connect.reservation.service.FileService;
 
 @Controller
 @RequestMapping("/files")
 public class FileController {
-	private String baseDir = "c:" + File.separator + "temp" + File.separator; // c:\temp 디렉토리를 미리 만들어둔다.
+	private String baseDir = "c:" + File.separator + "boost" + File.separator  + "img" + File.separator; // c:\boost\img 디렉토리를 미리 만들어둔다.
 
+	private FileService fileService;
+	
+	@Autowired
+	public FileController(FileService fileService) {
+		this.fileService = fileService;
+	}
+	
+	
     @GetMapping
     public String fileform(){
         return "files";
@@ -84,22 +96,23 @@ public class FileController {
     // files/dbPk값 을 받아들여서 다운로드 하도록 한다.
     // 여기에서는 db에서 읽어들였다는 것을 가정하고 프로그래밍한다.
     @GetMapping(path="/{id}")
+    @ResponseBody
     public void downloadReservationUserCommentImage(
-            @PathVariable(name="id") long id,
-            HttpServletResponse response){
+            @PathVariable(name="id") int id,
+            HttpServletResponse response) {
         // id를 이용하여 파일의 정보를 읽어온다.
         // 이 부분은 원래 db에서 읽어오는 것인데 db부분은 생략했다.
 
         String originalFilename = "원본파일명";
         String contentType = "image/jpeg";
-        int fileSize = 271621;
+        //int fileSize = 271621;
         // 해당 파일이 이미 존재해야한다.
-        String saveFileName = "c:/temp/2017/07/12/61405ccf-5147-493a-9b9a-ef0375e40dfd";
+        String saveFileName = fileService.getSaveFileName(id);//"c:/temp/2017/07/12/61405ccf-5147-493a-9b9a-ef0375e40dfd";
 
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + originalFilename + "\";");
+        //response.setHeader("Content-Disposition", "attachment; filename=\"" + originalFilename + "\";");
         response.setHeader("Content-Transfer-Encoding", "binary");
         response.setHeader("Content-Type", contentType);
-        response.setHeader("Content-Length", ""+ fileSize);
+        //response.setHeader("Content-Length", ""+ fileSize);
         response.setHeader("Pragma", "no-cache;");
         response.setHeader("Expires", "-1;");
 
