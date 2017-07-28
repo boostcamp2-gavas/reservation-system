@@ -23,17 +23,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.reservation.dto.NaverUserDTO;
 
-@PropertySource("classpath:/application.properties")
+
 public class NaverLogin {
 	
-	@Value("${spring.naver.apiKey}")
-	private static String CLIENT_ID;
-	final static String REDIRECT_URL = "http://220.230.121.117/callback";
+	final static String CLIENT_ID = "wA3oI1jXRSoN692oVoev";
+	final static String REDIRECT_URL = "http://localhost/callback";
 	final static String URL = "https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id="
 			+ "&redirect_uri=" + "&state=";
-	
-	@Value("${spring.naver.apiSecretKey}")
-	private static String SECRET_ID;
+	final static String SECRET_ID = "jd8jAo5mZy";
 
 	// Logger 설정
 

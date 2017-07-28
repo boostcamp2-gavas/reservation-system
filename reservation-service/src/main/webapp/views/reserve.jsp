@@ -290,6 +290,15 @@
 			}
 		});
 	
+		function getTotalPrice(){
+			var $total = $(".total_price"),
+			amount =0;
+			$total.map(function(i,v){
+				amount += parseInt($(v).text());
+			});
+			return amount;
+		}
+		
 		$(".bk_btn").on("click",function(){
 			if($("#chk3").is(":checked") && Number($(".tickat_count").text())!==0){
 				
@@ -325,14 +334,7 @@
 			}
 		});
 		
-		function getTotalPrice(){
-			var $total = $(".total_price"),
-			amount =0;
-			$total.map(function(i,v){
-				amount += parseInt($(v).text());
-			});
-			return amount;
-		}
+
 	
 		</script>
 

@@ -49,10 +49,6 @@ public class RestReservationInfoController {
 	@GetMapping("/type/{type}")
 	public List<UserReservationDTO> getReservationByType(@PathVariable int type,HttpSession session) {
 		int id = (Integer)session.getAttribute("id");
-		log.info(id);
-		log.info(type);
-		
-		log.info(userReservationService.selectReservationByType(id, type));
 		return 	userReservationService.selectReservationByType(id, type);
 	}
 	

@@ -137,6 +137,7 @@ var ReservationState = (function(){
 						reservation : [],
 						menubar : [{ menubar : _menubar, icon : _icon}]
 				};
+				console.log(data);
 				for (var i = 0, max = data.length; i < max; ++i) {
 					data[i].btns = _btns
 					item.reservation.push(data[i]);
