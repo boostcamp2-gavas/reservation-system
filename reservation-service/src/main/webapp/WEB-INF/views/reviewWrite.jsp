@@ -127,7 +127,7 @@
                 window.history.back();
             });
             $('button.bk_btn').on('click', function() {
-                messenger.trigger('submit'); 
+                messenger.trigger('checkComment'); 
             });
         });
     </script>
