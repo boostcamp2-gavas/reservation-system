@@ -26,9 +26,10 @@ public class FileDao {
                 .usingGeneratedKeyColumns("id"); // pk 칼럼을 지정
 	}
     
-    public String getSaveFileName(int id) {
+    public File get(int id) {
     	Map<String, Integer> params = new HashMap<>();
     	params.put("id", id);
-    	return jdbc.queryForObject(FileSqls.SELECT_SAVE_FILE_NAME_BY_ID, params, String.class);
+    	return jdbc.queryForObject(FileSqls.SELECT_BY_ID, params, rowMapper);
     }
+    
 }

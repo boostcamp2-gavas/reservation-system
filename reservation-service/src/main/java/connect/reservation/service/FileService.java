@@ -1,5 +1,7 @@
 package connect.reservation.service;
 
+import connect.reservation.domain.File;
+
 public interface FileService {
-	public String getSaveFileName(int id);
+	public File get(int id);
 }

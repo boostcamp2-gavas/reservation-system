@@ -102,14 +102,13 @@ public class FileController {
             HttpServletResponse response) {
         // id를 이용하여 파일의 정보를 읽어온다.
         // 이 부분은 원래 db에서 읽어오는 것인데 db부분은 생략했다.
-
-        String originalFilename = "원본파일명";
+    	connect.reservation.domain.File imgFile = fileService.get(id);
+        String originalFilename = imgFile.getFile_name();
         String contentType = "image/jpeg";
-        //int fileSize = 271621;
         // 해당 파일이 이미 존재해야한다.
-        String saveFileName = fileService.getSaveFileName(id);//"c:/temp/2017/07/12/61405ccf-5147-493a-9b9a-ef0375e40dfd";
+        String saveFileName = imgFile.getSave_file_name();//"c:/temp/2017/07/12/61405ccf-5147-493a-9b9a-ef0375e40dfd";
 
-        //response.setHeader("Content-Disposition", "attachment; filename=\"" + originalFilename + "\";");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + originalFilename + "\";");
         response.setHeader("Content-Transfer-Encoding", "binary");
         response.setHeader("Content-Type", contentType);
         //response.setHeader("Content-Length", ""+ fileSize);
