@@ -11,6 +11,7 @@ public class UserReservationDTO {
 	private int youthTicketCount;
 	private int childTicketCount;
 	private int reservationType;
+	private int totalPrice;
 
 	public UserReservationDTO() {
 	}
@@ -79,6 +80,14 @@ public class UserReservationDTO {
 		this.reservationType = reservationType;
 	}
 
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
 	@Override
 	public String toString() {
 		return "id : \"" + id + "\", name : \"" + name + "\", displayStart : \"" + displayStart + "\", displayEnd : \""
@@ -86,7 +95,5 @@ public class UserReservationDTO {
 				+ youthTicketCount + "\", childTicketCount : \"" + childTicketCount + "\", reservationType : \""
 				+ reservationType + "}";
 	}
-
-	
 
 }

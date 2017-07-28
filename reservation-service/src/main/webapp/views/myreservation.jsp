@@ -164,9 +164,9 @@
 						</li>
 					</ul>
 					<div class="price_summary">
-						<span class="price_tit">결제 예정금액</span>
+						<span class="price_tit">결제 금액</span>
 						<em class="price_amount">
-						<span>000,000,000</span>
+						<span>{{totalPrice}}</span>
 						<span class="unit">원</span>
 						</em>
 					</div>
