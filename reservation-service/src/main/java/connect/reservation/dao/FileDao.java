@@ -1,5 +1,8 @@
 package connect.reservation.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -13,8 +16,6 @@ import org.springframework.stereotype.Repository;
 import connect.reservation.domain.File;
 import connect.reservation.domain.ReservationUserCommentImage;
 
-
-
 @Repository
 public class FileDao {
 	private NamedParameterJdbcTemplate jdbc; // sql 을 실행하기 위해 사용되는 객체
@@ -23,11 +24,18 @@ public class FileDao {
     private RowMapper<ReservationUserCommentImage> commentImageRowMapper = BeanPropertyRowMapper.newInstance(ReservationUserCommentImage.class);
     
     // Spring은 생성자를 통하여 주입을 하게 된다.
+
     public FileDao(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource); // Datasource를 주입
         this.insertAction = new SimpleJdbcInsert(dataSource)  // Datasource를 주입
                 .withTableName("file")   // table명을 지정
                 .usingGeneratedKeyColumns("id"); // pk 칼럼을 지정
+    }
+    
+    public File get(int id) {
+    	Map<String, Integer> params = new HashMap<>();
+    	params.put("id", id);
+    	return jdbc.queryForObject(FileSqls.SELECT_BY_ID, params, rowMapper);
     }
     
     public int add(File file) {
@@ -37,6 +45,7 @@ public class FileDao {
     
     public int addCommentImage(ReservationUserCommentImage commentImage) {
     	SqlParameterSource params = new BeanPropertySqlParameterSource(commentImage);
-    	return jdbc.update(FIleSqls.ADD_COMMENT_IMAGE, params);
+    	return jdbc.update(FileSqls.ADD_COMMENT_IMAGE, params);
     }
+
 }

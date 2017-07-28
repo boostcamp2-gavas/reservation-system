@@ -10,12 +10,18 @@ import connect.reservation.domain.ReservationUserCommentImage;
 import connect.reservation.service.FileService;
 
 @Service
-public class FileServiceImpl implements FileService{
+public class FileServiceImpl implements FileService {
+	
 	private FileDao fileDao;
 	
 	@Autowired
-	public void setFileDao (FileDao fileDao) {
+	public FileServiceImpl(FileDao fileDao) {
 		this.fileDao = fileDao;
+	}
+	
+	
+	public File get(int id) {
+		return fileDao.get(id);
 	}
 	
 	@Override
@@ -29,6 +35,5 @@ public class FileServiceImpl implements FileService{
 		
 		return fileDao.addCommentImage(commentImage);
 	}
-	
 	
 }

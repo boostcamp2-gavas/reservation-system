@@ -29,7 +29,7 @@
                     <div class="container_visual" style="width: 414px;">
                         <ul class="visual_img">
                             <li class="item" style="width: 414px;"> 
-                            	<img alt="${reserveInfo.fileName}" class="img_thumb" src="${reserveInfo.saveFileName}"> 
+                            	<img alt="${reserveInfo.fileName}" class="img_thumb" src="/files/${reserveInfo.fileId}"> 
                             	<span class="img_bg"></span>
                                 <div class="preview_txt">
                                     <h2 class="preview_txt_tit">${reserveInfo.productName}</h2> 
