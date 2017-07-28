@@ -80,7 +80,6 @@ public class ImgController {
     private String baseDir = "c:" + File.separator + "temp" + File.separator; // c:\temp 디렉토리를 미리 만들어둔다.
 
 
-
     @PostMapping
     public String create(
             @RequestParam("title") String title,
@@ -133,8 +132,4 @@ public class ImgController {
         return "redirect:/img";
     }
     
-    @GetMapping(path="/enroll")
-    public String Testenroll(Model model) {
-    	return "test/upload";
-    }
 }

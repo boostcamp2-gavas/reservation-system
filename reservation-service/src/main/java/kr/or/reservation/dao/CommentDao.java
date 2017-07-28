@@ -22,7 +22,6 @@ public class CommentDao {
 	
 	private NamedParameterJdbcTemplate jdbc;
 	private RowMapper<CommentDTO> rowMapper = BeanPropertyRowMapper.newInstance(CommentDTO.class);
-	private RowMapper<AVGForComment> avgRowMapper = BeanPropertyRowMapper.newInstance(AVGForComment.class);
 	
 	
 	public CommentDao(DataSource dataSource) {

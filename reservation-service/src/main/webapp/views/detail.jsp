@@ -162,10 +162,19 @@
                           <li class="list_item">
                                 <div>
                                     <div class="review_area">
+                                    <c:if test="${list.imageCount != 0}">
                                         <div class="thumb_area" >
-                                            <a  class="thumb" title="이미지 크게 보기" data-id="${list.id}"> <img width="90" height="90" class="img_vertical_top" src='/img/${list.firstImageSaveFileName}' alt="리뷰이미지"> </a> <span class="img_count">${list.imageCount}</span>                                                </div>
+                                            <a  class="thumb" title="이미지 크게 보기" data-id="${list.id}"> 
+                                            	<img width="90" height="90" class="img_vertical_top" src='/img/${list.firstImageSaveFileName}' alt="리뷰이미지"> 
+                                            </a> 
+                                            <span class="img_count">${list.imageCount}
+                                            </span>                                                
+                                        </div>
+                                     </c:if>
+                                        
                                         <h4 class="resoc_name">${detail.name}</h4>
                                         <p class="review">${list.comment }</p>
+                                        
                                     </div>
                                     <div class="info_area">
                                         <div class="review_info"> <span class="grade">${list.score }</span> <span class="name">${list.nickname }</span> <span class="date">${list.createDate } 방문</span> </div>
