@@ -16,19 +16,19 @@ import kr.or.reservation.service.CommentService;
 @Service
 public class CommentServiceImpl implements CommentService{
 
-	CommentDao dao ;
+	CommentDao commentDao ;
 	Logger log = Logger.getLogger(this.getClass());
 	
 	@Autowired
-	public CommentServiceImpl(CommentDao dao) {
-		this.dao = dao;
+	public CommentServiceImpl(CommentDao commentDao) {
+		this.commentDao = commentDao;
 	}
 	
 	@Override
 	public List<CommentDTO> selectByProductId(int productId) {
 		// TODO Auto-generated method stub
 		if(productId > 0) {
-			return dao.select(productId);
+			return commentDao.select(productId);
 		}
 		return null;
 	}
@@ -40,7 +40,7 @@ public class CommentServiceImpl implements CommentService{
 			Long count =AVGForComment.getCount(producId);
 			Float AVG = AVGForComment.getAVG(producId);
 			if(count ==null || AVG ==null) {
-				Map<String, Object> map = dao.selectAvgScoreByProductId(producId).get(0);
+				Map<String, Object> map = commentDao.selectAvgScoreByProductId(producId).get(0);
 				// null check
 				AVG= (map.get("avg_score") ==null)? 0 : ((BigDecimal)map.get("avg_score")).floatValue();
 				count = (map.get("avg_score") ==null)? 0 : (Long)map.get("amount_of_count");
@@ -59,7 +59,7 @@ public class CommentServiceImpl implements CommentService{
 	public List<?> getFileIdByCommentId(int commentId) {
 		// TODO Auto-generated method stub
 		if(commentId>0) {
-			return dao.getFileId(commentId);
+			return commentDao.getFileId(commentId);
 		}
 		return null;
 	}

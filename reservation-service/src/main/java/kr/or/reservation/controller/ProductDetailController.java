@@ -41,7 +41,7 @@ public class ProductDetailController {
 	public String getProductDetail(Model model, @PathVariable(name = "id") int id) {
 		model.addAttribute("detail", productService.selectOne(id));
 		model.addAttribute("img",imgService.selectList(id));
-		//model.addAttribute("comment",commentService.selectByProductId(id));
+		model.addAttribute("comment",commentService.selectByProductId(id));
 		model.addAttribute("avg",commentService.selectAvgScoreByProductId(id));
 		return "detail";
 	}
