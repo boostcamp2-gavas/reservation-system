@@ -15,8 +15,7 @@ class TextArea extends eg.Component {
         this.firstC.on('click', this.convertToWriter.bind(this));
         this.lastC.on('keyup', this.countChar.bind(this))
                   .on('blur', this.convertToInfo.bind(this));
-        this.messenger.on('submit', this.commentLoad.bind(this))
-                      .on('uploadSuccess', this.clearComment.bind(this));
+        this.messenger.on('checkComment', this.commentLoad.bind(this));
     }
     convertToWriter(e) {
         this.firstC.hide();
@@ -37,9 +36,9 @@ class TextArea extends eg.Component {
     commentLoad() {
         if(this.currentChar >= this.minChar && this.currentChar <= this.maxChar) {
             this.messenger.formData.append('comment', this.lastC.val());
+            this.messenger.trigger('submit');
+        } else {
+            alert('글자수를 맞춰주세요');
         }
-    }
-    clearComment() {
-        this.lastC.empty();
     }
 }
