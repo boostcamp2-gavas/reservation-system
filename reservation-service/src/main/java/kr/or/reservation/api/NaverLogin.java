@@ -21,11 +21,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.or.reservation.dto.NaverUserDTO;
 
 public class NaverLogin {
-	final static String CLIENT_ID = "w0YSpFZqo6SXUXy5itSy";
-	final static String REDIRECT_URL = "http://localhost/callback";
+	final static String CLIENT_ID = "jy__UyeFifErJITIn25n";
+	final static String REDIRECT_URL = "http://220.230.121.117/callback";
 	final static String URL = "https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id="
 			+ "&redirect_uri=" + "&state=";
-	final static String SECRET_ID = "8l7dk3V5VW";
+	final static String SECRET_ID = "9GqpYaw2aC";
 
 	// Logger 설정
 
@@ -57,6 +57,7 @@ public class NaverLogin {
 		String redirectUrl = "", apiURL = "";
 		ResponseEntity<JSONObject> response  =null;
 		try {
+			
 			redirectUrl = URLEncoder.encode(REDIRECT_URL, "UTF-8");
 			apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
 			apiURL += "client_id=" + CLIENT_ID;
