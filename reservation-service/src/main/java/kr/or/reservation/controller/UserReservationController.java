@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import kr.or.reservation.api.NaverLogin;
 import kr.or.reservation.dto.UserReservationDTO;
 import kr.or.reservation.service.UserReservationService;
 
@@ -29,24 +28,12 @@ public class UserReservationController {
 
 	@GetMapping(path = "/my")
     public String selectAll(Model model,HttpSession session){
-		if(session.getAttribute("id") !=null) {
-    		return "redirect:/myPage";
-    	}else {
-    		NaverLogin login = new NaverLogin();
-    		String url = login.getLoginURL(session);
-    		return "redirect:"+url;
-        	//model.addAttribute("loginURL", url);
-    	}
-    }
-	
-	
-	@GetMapping(path = "/myPage")
-    public String viewMyPage(Model model,HttpSession session){
-		
 		int sessionId= (Integer)session.getAttribute("id");
 		model.addAttribute("count",userReservationService.selectTypeCount(sessionId));
     	return "myreservation";
     }
 	
+	
+  
 
 }

@@ -36,14 +36,14 @@ public class ReservationTest {
 	@Test
 	public void SelectOne() {
 		// config
-		int id  = 2;
+		int productId  = 2;
 		//ProductForDetail detail =dao.selectOne(id);
-		ReservationDTO dto =dao.selectOne(id);
+		ReservationDTO dto =dao.selectByProductId(productId);
 		
 		// test 
 		log.info(dto.toString());
 		
-		assertThat(id, is(dto.getId()));
+		assertThat(productId, is(dto.getId()));
 	}
 	
 	
@@ -61,7 +61,7 @@ public class ReservationTest {
 	
 	@Test
 	public void SelectReservation() {
-		ReservationDTO dto = service.selectOne(2);
+		ReservationDTO dto = service.selectByProductId(2);
 		log.info(dto.toString());
 	}
 	

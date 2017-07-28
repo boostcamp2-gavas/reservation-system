@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.or.reservation.api.NaverLogin;
 import kr.or.reservation.dto.NaverUserDTO;
 import kr.or.reservation.service.LoginService;
+import kr.or.reservation.service.UserReservationService;
 
 @Controller
 public class LoginController {
@@ -41,7 +42,7 @@ public class LoginController {
 				}
 			}
 		}
-		return "redirect:/myPage";
+		return "redirect:/";
 	}
 
 }

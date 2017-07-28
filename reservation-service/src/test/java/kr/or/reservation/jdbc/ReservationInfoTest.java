@@ -1,7 +1,7 @@
 package kr.or.reservation.jdbc;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -37,11 +37,16 @@ public class ReservationInfoTest {
 	Logger log = Logger.getLogger(this.getClass());
 	
 	@Test
-	public void insert() {
-		ReservationInfo reservationInfo 
-		= new ReservationInfo(2,1,3,4,2,"장철운","010-4156-0938","email",new Timestamp(System.currentTimeMillis()),0,new Timestamp(System.currentTimeMillis()),null);
+	public void shouldInsertAndSelectById() {
+		ReservationInfo reservationInfo
+		= new ReservationInfo(2,2,1,3,4,2,"장철운","010-4156-0938","email",new Timestamp(System.currentTimeMillis()),0,new Timestamp(System.currentTimeMillis()),null,30);
 		service.insert(reservationInfo);
 		
+		ReservationInfo reservationInfo2 = service.selectById(2);
+		log.info(reservationInfo);
+		log.info(reservationInfo2);
+		
+		assertEquals(reservationInfo.getReservationEmail(), reservationInfo2.getReservationEmail());
 	}
 	
 

@@ -23,10 +23,9 @@ public class ReservationController {
 		this.reservationService = reservationService;
 	}
 
-	@GetMapping
-	@RequestMapping("/reservation/{id}")
+	@GetMapping("/reservation/{id}")
 	public String getProductDetail(Model model, @PathVariable(name = "id") int productId) {
-		model.addAttribute("reservation",reservationService.selectOne(productId));
+		model.addAttribute("reservation",reservationService.selectByProductId(productId));
 		return "reserve";
 	}
 	
