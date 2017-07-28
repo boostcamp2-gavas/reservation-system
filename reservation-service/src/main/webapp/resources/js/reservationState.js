@@ -66,17 +66,17 @@ var ReservationState = (function(){
 	// 취소하겠냐는 확인을 보여주는 event 
 	function confirmCancellationBtn(event){
 		event.preventDefault();
-		var productId =0,
+		var reservation_info =0,
 		$popoup;
 		
 		$cardDetail = $(this).parents(".card_detail");
 		$article = $cardDetail.parents("article");
 		
-		productId = $cardDetail.data("id");
+		reservation_info = $cardDetail.data("id");
 		$popoup = $(".popup_booking_wrapper");
 
 		$popoup.removeClass("none");
-		$popoup.data("id",productId);
+		$popoup.data("id",reservation_info);
 	}
 	
 	// 클릭시 취소됨 
@@ -137,7 +137,6 @@ var ReservationState = (function(){
 						reservation : [],
 						menubar : [{ menubar : _menubar, icon : _icon}]
 				};
-				console.log(data);
 				for (var i = 0, max = data.length; i < max; ++i) {
 					data[i].btns = _btns
 					item.reservation.push(data[i]);
@@ -215,6 +214,15 @@ var ReservationState = (function(){
 			});
 			$(".btn_green").on("click",cancellationBtn);
 			$(".expectation, .confirmed").on("click",".booking_cancel .btn",confirmCancellationBtn);
+			
+			$(".used:first").on("click",".booking_cancel .btn",function(event){
+				// 이동하기 
+				event.preventDefault();
+				var reservation_info =0;
+				$cardDetail = $(this).parents(".card_detail");
+				reservation_info = $cardDetail.data("id");
+				location.href = "/review-write/"+reservation_info;
+			});
 		},
 		isEmpty : function(){
 			var txt = $all.find(".figure:first").text();
