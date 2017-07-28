@@ -47,13 +47,11 @@ var ReservationState = (function(){
 	$usedCard = $(".used:first"),
 	$expectationCard = $(".expectation, .confirmed"),
 	$cancellationCard = $(".cancellation");
-	
-	
+
 	var $article =null;
 	var $cardDetail ;
 	var $cardHeader;
-	
-	
+
 	// enum 같은 느낌으로 사용.
 	// ENUM 을 이렇게 사용하는게 맞는지 의문이 생김.
 	var reservationTypeEnum = {

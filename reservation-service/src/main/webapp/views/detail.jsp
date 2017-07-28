@@ -396,7 +396,7 @@ $(document).ready(function(){
 			$btn.on("click",function(){
 				location.href='/product/reservation/'+${detail.id};
 			});
-		}else (config === 1){
+		}else if(config === 1){
 			$span.text("매진");
 		}else{
 			$span.text("판매기간 종료");

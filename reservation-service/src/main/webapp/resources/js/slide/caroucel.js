@@ -9,13 +9,9 @@
  */
 function Caroucel(){
 	this.$ul ='$';
+	this.imgLength= 0;
+	this.moveLength =0;
 };
-
-Caroucel.prototype.setting = {
-		imgLength : 0,
-		moveLength :0
-};
-
 
 /**
  * @function rightClick / leftClick
@@ -34,8 +30,8 @@ Caroucel.prototype.rightClick = function caroucelRight(){
 		return false;
 	}else{
 		// ul 의 자식중 current_length 번쨰 를 선택 .
-		this.$ul.animate({"right": "+="+this.setting.imgLength}, "fast");
-		this.setting.moveLength += this.setting.imgLength;
+		this.$ul.animate({"right": "+="+this.imgLength}, "fast");
+		this.moveLength += this.imgLength;
 		++this.current_length;
 		return true;
 	}
@@ -45,8 +41,8 @@ Caroucel.prototype.rightClick = function caroucelRight(){
 Caroucel.prototype.leftClick =   function caroucelLeft(){
 	if(this.current_length !== 0){
 		// ul 의 자식중 current_length 번쨰 를 선택 .
-		this.$ul.animate({"right": "-="+this.setting.imgLength}, "fast");
-		this.setting.moveLength -= this.setting.imgLength;
+		this.$ul.animate({"right": "-="+this.imgLength}, "fast");
+		this.moveLength -= this.imgLength;
 		this.current_length --;
 		return true;
 	}else{
@@ -67,7 +63,7 @@ Caroucel.prototype.leftClick =   function caroucelLeft(){
  */
 Caroucel.prototype.setInit = function(size){
 
-	this.setting.imgLength = size;
+	this.imgLength = size;
 	this.total_length = this.$ul.children().length - 1
 	this.currentPoint = 1;
 };
@@ -94,7 +90,7 @@ function CaroucelTouch($ul,$point){
 	
 	this.caroucelLeftClick = function(){
 		if(this.leftClick()){
-			 this.save_a -= this.setting.imgLength;	
+			 this.save_a -= this.imgLength;	
 			 // main 쪽에선 point 가 없으므로.. 
 			 if(this.$point){
 				 this.$point.text(--this.currentPoint);
@@ -106,7 +102,7 @@ function CaroucelTouch($ul,$point){
 	
 	this.caroucelRightClick = function(){
 		if(this.rightClick()){
-			 this.save_a += this.setting.imgLength;
+			 this.save_a += this.imgLength;
 			 if(this.$point){
 				 this.$point.text(++this.currentPoint);
 			 }
@@ -200,13 +196,13 @@ function AutoCaaroucel($ul){
 		this.clearfunc();
 		if(this.current_length !== 0){
 			// ul 의 자식중 current_length 번쨰 를 선택 .
-			this.$ul.animate({"right": "-="+this.setting.imgLength}, "slow");
-			this.setting.moveLength -= this.setting.imgLength;
+			this.$ul.animate({"right": "-="+this.imgLength}, "slow");
+			this.moveLength -= this.imgLength;
 			this.current_length --;
 		}else{
-			this.$ul.animate({"right": this.setting.imgLength*2}, 0);
-			this.$ul.animate({"right": "-="+this.setting.imgLength}, "slow");
-			this.setting.moveLength = this.setting.imgLength;
+			this.$ul.animate({"right": this.imgLength*2}, 0);
+			this.$ul.animate({"right": "-="+this.imgLength}, "slow");
+			this.moveLength = this.imgLength;
 			this.current_length = 1;
 		}
 	}
@@ -215,15 +211,15 @@ function AutoCaaroucel($ul){
 		this.clearfunc();
 		if(this.current_length === this.total_length-1){
 			this.$ul.animate({"right": 0}, 0);
-			this.$ul.animate({"right": "+="+this.setting.imgLength}, "slow");
+			this.$ul.animate({"right": "+="+this.imgLength}, "slow");
 			
-			this.setting.moveLength = this.setting.imgLength;
+			this.moveLength = this.imgLength;
 			this.current_length =1;
 			// 처음으로 돌아가는 코드
 		}else{
 			// ul 의 자식중 current_length 번쨰 를 선택 .
-			this.$ul.animate({"right": "+="+this.setting.imgLength}, "slow");
-			this.setting.moveLength += this.setting.imgLength;
+			this.$ul.animate({"right": "+="+this.imgLength}, "slow");
+			this.moveLength += this.imgLength;
 			++this.current_length;
 		}
 	}
