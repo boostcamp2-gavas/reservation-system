@@ -134,10 +134,12 @@ target
 .idea
 *.iml
 
+
 # for js
 
 
 reservation-service/src/main/webapp/resources/js/node_modules/*
+
 
 
 !reservation-service/src/main/webapp/resources/js/node_modules/@egjs/
@@ -160,3 +162,8 @@ reservation-service/src/main/webapp/resources/js/node_modules/handlebars/*
 !reservation-service/src/main/webapp/resources/js/node_modules/handlebars/dist/
 reservation-service/src/main/webapp/resources/js/node_modules/handlebars/dist/*
 !reservation-service/src/main/webapp/resources/js/node_modules/handlebars/dist/handlebars.js
+
+
+# for api 
+
+src/
