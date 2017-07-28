@@ -260,36 +260,15 @@
     </script>
     <script>
         $(function() {
-        	$('.header').addClass('fade');
-        	
             var messenger = new Messenger();
+            messenger.formData = new FormData();
             var rating = new Rating($('div.rating'), messenger);
             var textArea = new TextArea($('div.review_contents'), messenger);
             var thumbTemplate = Handlebars.compile($('#thumb_nail_tempalte').html());
-            var writerFooter = new WriterFooter($('div.review_write_footer_wrap'), messenger, thumbTemplate);
+            var writerFooter = new WriterFooter($('div.review_write_footer_wrap'), messenger, thumbTemplate, $('div.container').data('reservation-id'));
             $('a.btn_back').on('click', function() {
                 window.history.back();
             });
-        });
-        
-        $('.bk_btn').click(function(){
-        	$('#score').val($('.star_rank').text());
-        	$('#comment').val($('.review_textarea').val());
-        	
-        	var commentInfo = JSON.stringify($(".form_horizontal").serializeObject());
-        	
-        	$.ajax({
-        		type : "POST",
-        		url : "/comment/write",
-        		data : commentInfo,
-        		contentType : "application/json",
-        		success : function(data){
-        			location.href='/review';
-        		},
-        		error : function(request,status,error){
-        			alert("code:"+request.status+"\n"+"error:"+error);
-        		}
-        	});
         });
     </script>
 </body>
