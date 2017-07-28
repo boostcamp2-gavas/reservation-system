@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import connect.reservation.domain.File;
 import connect.reservation.domain.Product;
 import connect.reservation.domain.ReservationUserComment;
 import connect.reservation.domain.User;
@@ -34,6 +33,8 @@ public class CommentController {
 
 	@GetMapping("/write")
 	public String mvWrite(Model model, @RequestParam("reservationId") int reservationId) {
+		model.addAttribute("reserveName", commentService.getName(reservationId));
+		model.addAttribute("reservationId", reservationId);
 		Product product = new Product();
 		product = commentService.getName(reservationId);
 		

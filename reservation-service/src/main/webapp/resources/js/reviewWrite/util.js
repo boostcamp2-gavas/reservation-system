@@ -10,6 +10,7 @@ class Rating extends eg.Component {
     }
     bindEvents() {
         this.root.children('input').on('click', this.rate.bind(this));
+        this.messenger.on('submit', this.scoreLoad.bind(this));
     }
     rate(e) {
         var target = $(e.target);
@@ -28,5 +29,7 @@ class Rating extends eg.Component {
     score() {
         return this.starScore;
     }
-
+    scoreLoad() {
+        this.messenger.formData.append('score', this.starScore);
+    }
 }
