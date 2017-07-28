@@ -630,7 +630,4 @@ alter table users
 modify column admin_flag int not null default 0;
 
 alter table reservation_info
-drop column total_price;
-
-alter table reservation_info
-add column total_price int default 0;
+add column total_price int not null default 0;

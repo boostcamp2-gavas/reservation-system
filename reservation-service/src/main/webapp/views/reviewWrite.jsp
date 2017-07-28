@@ -18,7 +18,7 @@
 			<div class="ct_wrap">
 				<div class="top_title review_header">
 					<a href="#" class="btn_back" title="이전 화면으로 이동"> <i class="fn fn-backward1"></i> </a>
-					<h2><span class="title">{$reservation.name}</span></h2>
+					<h2><span class="title">클림트 인사이드</span></h2>
 				</div>
 				<!-- 리뷰 별점 -->
 				<div class="write_act">
@@ -139,9 +139,6 @@
 			<span class="copyright">© NAVER Corp.</span>
 		</div>
 	</footer>
-	
-	<script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
-	<script src="/resources/js/node_modules/handlebars/dist/handlebars.min.js"></script>
 </body>
 
 </html>

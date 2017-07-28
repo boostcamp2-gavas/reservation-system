@@ -17,7 +17,6 @@ import org.springframework.stereotype.Repository;
 import kr.or.reservation.domain.Category;
 import kr.or.reservation.domain.ReservationInfo;
 import kr.or.reservation.dto.ReservationDTO;
-import kr.or.reservation.sqls.ReservationInfoSqls;
 import kr.or.reservation.sqls.ReservationSqls;
 
 @Repository
@@ -37,11 +36,6 @@ public class ReservationInfoDao {
 	public Long insert(ReservationInfo reservationInfo) {
 		SqlParameterSource params = new BeanPropertySqlParameterSource(reservationInfo);
 		return insertAction.executeAndReturnKey(params).longValue();
-	}
-	
-	public ReservationInfo selectById(int id) {
-		Map<String , ?> params = Collections.singletonMap("id", id);
-		return jdbc.queryForObject(ReservationInfoSqls.SELECT_BY_ID, params, rowMapper);
 	}
 	
 	

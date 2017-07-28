@@ -6,6 +6,6 @@ import kr.or.reservation.dto.ReservationDTO;
 
 public interface ReservationService {
 	
-	public ReservationDTO selectByProductId(int productId);
+	public ReservationDTO selectOne(int productId);
 
 }

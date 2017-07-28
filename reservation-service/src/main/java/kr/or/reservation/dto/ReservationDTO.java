@@ -21,7 +21,6 @@ public class ReservationDTO {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
 	public int getId() {
 		return id;
 	}
