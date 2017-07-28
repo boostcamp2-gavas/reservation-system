@@ -20,7 +20,7 @@ class ReservationList extends eg.Component {
 			this.messenger.trigger('showPopup', this);
 		} else if (cardHead.prop('id') === 'card_used') {
             var reservationId = this.card.find('em.booking_number').data('reservation-id');
-            location.href = '/comment/write?reservationId=' + reservationId;
+            location.href = '/comments/write?reservationId=' + reservationId;
         }
 	}
 	reCount() {

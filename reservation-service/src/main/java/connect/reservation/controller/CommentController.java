@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import connect.reservation.domain.Product;
@@ -33,28 +34,30 @@ public class CommentController {
 
 	@GetMapping("/write")
 	public String mvWrite(Model model, @RequestParam("reservationId") int reservationId) {
-		model.addAttribute("reserveName", commentService.getName(reservationId));
+		model.addAttribute("reserveName", commentService.getName(reservationId).getName());
 		model.addAttribute("reservationId", reservationId);
 		Product product = new Product();
 		product = commentService.getName(reservationId);
 		
 		model.addAttribute("productId", product.getId());
 		model.addAttribute("productName", product.getName());
-		
 		return "reviewWrite";
 	}
 	
 	@PostMapping("/write")
-	//public String add(Model model, @RequestBody ReservationUserComment reservationUserComment) {
-	public String add(HttpSession session, 
-			@RequestParam("commentImg") MultipartFile[] files,
-			@RequestParam("reservationId") int reservationId,
+	@ResponseBody
+	public String add(
+			HttpSession session,
+			@RequestParam(name="commentImg", required=false) MultipartFile[] files,
+			@RequestParam("productId") int productId,
 			@RequestParam("comment") String comment, 
 			@RequestParam("score") int score) {
+
+
 		User currentUser = (User) session.getAttribute("currentUser");
 
 		ReservationUserComment commentDomain = new ReservationUserComment();
-		commentDomain.setReservationId(reservationId);
+		commentDomain.setProductId(productId);		
 		commentDomain.setUserId(currentUser.getId());
 		commentDomain.setScore(score);
 		commentDomain.setComment(comment);
@@ -70,6 +73,6 @@ public class CommentController {
 			
 			fileService.uploadFile(files, uploadFile);
 		}
-		return "redirect:/review";
+		return "success";
 	}
 }

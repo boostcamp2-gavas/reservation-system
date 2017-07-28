@@ -1,11 +1,11 @@
 class WriterFooter extends eg.Component {
-    constructor(root, messenger, template, reservationId) {
+    constructor(root, messenger, template, productId) {
         super();
         this.root = root;
         this.ul = root.find('ul.lst_thumb');
         this.messenger = messenger;
         this.template = template;
-        this.reservationId = reservationId;
+        this.productId = productId;
         this.files = [];
         this.bindEvents();
     }
@@ -60,7 +60,7 @@ class WriterFooter extends eg.Component {
         for(var i = 0; i < this.files.length; i++) {
             this.messenger.formData.append('commentImg', this.files[i]);
         }
-        this.messenger.formData.append('reservationId', this.reservationId);
+        this.messenger.formData.append('productId', this.productId);
         var theThis = this;
         $.ajax({
             url: '/comments/write',

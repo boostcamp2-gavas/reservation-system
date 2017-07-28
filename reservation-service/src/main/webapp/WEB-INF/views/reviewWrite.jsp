@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -13,16 +12,12 @@
 </head>
 
 <body>
-<input type="hidden" id="productId" name="productId" value="${productId}">
-<input type="hidden" id="score" name="score" value="">
-<input type="hidden" id="comment" name="comment" value="">
-	<div id="container">
-		<c:import url="/WEB-INF/views/header.jsp" />
+	<div id="container" data-product-id="${productId}">
 		<div class="ct">
 			<div class="ct_wrap">
 				<div class="top_title review_header">
 					<a class="btn_back" title="이전 화면으로 이동"> <i class="fn fn-backward1"></i> </a>
-					<h2><span class="title">${productName}</span></h2>
+					<h2><span class="title">${reserveName}</span></h2>
 				</div>
 				<!-- 리뷰 별점 -->
 				<div class="write_act">
@@ -98,11 +93,6 @@
 					<button class="bk_btn"><span class="btn_txt">리뷰 등록</span></button>
 				</div>
 				<!-- //리뷰 등록 -->
-				<form id="comment_form" name="comment_form" action="/comments/write" method="POST">
-					<input type="hidden" id="productId" name="productId" value="${productId}">
-					<input type="hidden" id="score" name="score" value="">
-					<input type="hidden" id="comment" name="comment" value="">
-				</form>
 			</div>
 		</div>
 	</div>
@@ -120,7 +110,7 @@
             <a class="anchor">
                 <span class="spr_book ico_del">삭제</span>
             </a>
-            <img src="{{url}}" width="130" alt="" class="item_thumb">
+            <img src="{{url}}" width="130" alt="{{name}}" class="item_thumb">
             <span class="img_border"></span>
         </li>
         {{/items}}
@@ -132,9 +122,12 @@
             var rating = new Rating($('div.rating'), messenger);
             var textArea = new TextArea($('div.review_contents'), messenger);
             var thumbTemplate = Handlebars.compile($('#thumb_nail_tempalte').html());
-            var writerFooter = new WriterFooter($('div.review_write_footer_wrap'), messenger, thumbTemplate, $('div.container').data('reservation-id'));
+            var writerFooter = new WriterFooter($('div.review_write_footer_wrap'), messenger, thumbTemplate, $('div#container').data('product-id'));
             $('a.btn_back').on('click', function() {
                 window.history.back();
+            });
+            $('button.bk_btn').on('click', function() {
+                messenger.trigger('submit'); 
             });
         });
     </script>
