@@ -15,7 +15,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import connect.reservation.domain.Product;
-import connect.reservation.domain.ReservationInfo;
+import connect.reservation.domain.ReservationUserComment;
 import connect.reservation.dto.ReservationComment;
 
 
@@ -53,8 +53,8 @@ public class CommentDao {
     	return jdbc.queryForObject(CommentSqls.GET_RESERVAION_NAME, params, productMapper);
     }
     
-    public int add(ReservationInfo reservationInfo) {
-    	SqlParameterSource params = new BeanPropertySqlParameterSource(reservationInfo); 
+    public int add(ReservationUserComment reservationUserComment) {
+    	SqlParameterSource params = new BeanPropertySqlParameterSource(reservationUserComment); 
         return insertAction.executeAndReturnKey(params).intValue();	
     }
 }

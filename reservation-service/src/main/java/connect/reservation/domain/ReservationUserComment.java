@@ -12,6 +12,9 @@ public class ReservationUserComment {
 	private Timestamp createDate;
 	private Timestamp modifyDate;
 
+	public ReservationUserComment() {
+
+	}
 	
 	public Integer getId() {
 		return id;
