@@ -37,7 +37,6 @@ public class FileController {
 		this.fileService = fileService;
 	}
 	
-	
     @GetMapping
     public String fileform(){
         return "files";
@@ -146,8 +145,8 @@ public class FileController {
 
     }
     
-    public String serverPath(Model model, HttpServletRequest request) {
-    	return request.getSession().getServletContext().getRealPath("/");
+    public void serverPath(Model model, HttpServletRequest request) {
+    	String path = request.getSession().getServletContext().getRealPath("/");
     }
 
 }

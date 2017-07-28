@@ -46,16 +46,19 @@ public class CommentController {
 	
 	@PostMapping("/write")
 	//public String add(Model model, @RequestBody ReservationUserComment reservationUserComment) {
-	public String add(HttpSession session, MultipartFile[] files) {
+	public String add(HttpSession session, 
+			@RequestParam("commentImg") MultipartFile[] files, 
+			@RequestParam("comment") String comment, 
+			@RequestParam("score") int score) {
 		User currentUser = (User) session.getAttribute("currentUser");
 
-		ReservationUserComment comment = new ReservationUserComment();
-		comment.setProductId(3);
-		comment.setUserId(currentUser.getId());
-		comment.setScore(5.0);
-		comment.setComment("test용");
+		ReservationUserComment commentDomain = new ReservationUserComment();
+		commentDomain.setProductId(3);
+		commentDomain.setUserId(currentUser.getId());
+		commentDomain.setScore(score);
+		commentDomain.setComment(comment);
 		
-		int commentId = commentService.add(comment);
+		int commentId = commentService.add(commentDomain);
 		
 		if(null != files) {
 			UploadFile uploadFile = new UploadFile();
