@@ -66,25 +66,37 @@ Rating.prototype.getScore = function() {
 function ReviewContents(root) {
 	this.root = root;
 	this.fileList = new Array();
-	this.index = 0;
 	this.resultList = new Array();
+	this.index = 0;
+	this.fileListlengh = 0;
 }
 ReviewContents.prototype = new eg.Component;
 ReviewContents.prototype.constructer = ReviewContents;
 
 ReviewContents.prototype.init = function() {
 	
-	this.root.on("click", ".review_write_info", this.textareaFocus.bind(this));
+	this.root.on("click", ".review_write_info", this.textareaFocusOn.bind(this));
+	this.root.on("focusout", ".review_contents", this.textareaFocusOut.bind(this));
 	this.root.on("keyup", this.lengthUpdate.bind(this));
 	this.fileUpload();
 }
 
 
 
-ReviewContents.prototype.textareaFocus  = function(e) {
+ReviewContents.prototype.textareaFocusOn  = function(e) {
 	e.preventDefault();
 	this.root.find(".review_write_info").hide();
 	this.root.find(".review_textarea").focus();
+}
+
+ReviewContents.prototype.textareaFocusOut  = function(e) {
+	e.preventDefault();
+	var text = this.root.find(".review_textarea").val();
+	if(text == null || text.length == 0 ){
+		this.root.find(".review_write_info").show();
+		this.root.find(".review_textarea").focus();
+	}
+
 }
 
 ReviewContents.prototype.lengthUpdate = function(e) {
@@ -104,7 +116,8 @@ ReviewContents.prototype.fileUpload = function() {
 
 		for(var i=0; i < files.length; i++) { 
 			
-			if( this.fileList.length + i >= 5) {
+			if( this.fileListlengh + i >= 5) {
+				console.log("max image quantity is 5.")
 				break;
 			}
 			
@@ -123,8 +136,8 @@ ReviewContents.prototype.fileUpload = function() {
 		
     	var reader = event.currentTarget;
     	var result = reader.result;
-    	
     	if(file.size > MAX_FILE_SIZE) {
+    		console.log("file size is too big.");
     		return;
     	}
     	
@@ -142,6 +155,7 @@ ReviewContents.prototype.fileUpload = function() {
 		this.resultList.push(result)
 		
 		this.index++;
+		this.fileListlengh++;
 		console.log(this.fileList);
 	}
 
@@ -154,6 +168,7 @@ ReviewContents.prototype.fileUpload = function() {
 		this.resultList[index] = null;
 		console.log(this.fileList);
 		console.log(this.resultList);
+		this.fileListlengh--;
 	}
 }	// ReviewContents.prototype.fileUpload ends.
 
