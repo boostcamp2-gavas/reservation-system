@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,7 @@ public class ImgController {
 
 	ImgService imgService;
 	
+	Logger log = Logger.getLogger(this.getClass());
 	
 	@Autowired
 	public void setImgService(ImgService imgService) {
@@ -42,6 +44,7 @@ public class ImgController {
             @PathVariable(name="id") long id,
             HttpServletResponse response
     ){
+    	
         // id를 이용하여 파일의 정보를 읽어온다.
         // 이 부분은 원래 db에서 읽어오는 것인데 db부분은 생략했다.
     	String fileName = imgService.selectOne(id).getSaveFileName();
@@ -83,8 +86,11 @@ public class ImgController {
     @PostMapping
     public String create(
             @RequestParam("title") String title,
-            @RequestParam("file") MultipartFile[] files){
-
+            @RequestParam("files") MultipartFile[] files){
+    	
+    	log.info(title);
+    	log.info(files.length);
+    	
         if(files != null && files.length > 0){
 
             // windows 사용자라면 "c:\temp\년도\월\일" 형태의 문자열을 구한다.
@@ -106,12 +112,12 @@ public class ImgController {
                 
                 // 아래에서 출력되는 결과는 모두 database에 저장되야 한다.
                 // pk 값은 자동으로 생성되도록 한다.
-                System.out.println("title :" + title);
-                System.out.println("contentType :" + contentType);
-                System.out.println("name :" + name);
-                System.out.println("originalFilename : " + originalFilename);
-                System.out.println("size : " + size);
-                System.out.println("saveFileName : " + saveFileName);
+                log.info("title :" + title);
+                log.info("contentType :" + contentType);
+                log.info("name :" + name);
+                log.info("originalFilename : " + originalFilename);
+                log.info("size : " + size);
+                log.info("saveFileName : " + saveFileName);
 
                 // 실제 파일을 저장함.
                 // try-with-resource 구문. close()를 할 필요가 없다. java 7 이상에서 가능

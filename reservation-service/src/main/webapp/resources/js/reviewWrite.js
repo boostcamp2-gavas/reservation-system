@@ -8,14 +8,11 @@ $(document).ready(function() {
 	
 	var formModule = new FormModule(rating, reviewContents);
 	
-	
 	$(".bk_btn").on("click", (function(){
-		formModule.postComment().then(
-				formModule.postFile)
-		
+		formModule.postComment();
 	}).bind(this));
 	
-	
+	formModule.on("postCommentOnload", formModule.postFile);
 
 	
 });
@@ -192,20 +189,19 @@ ReviewContents.prototype.getText = function() {
 
 ReviewContents.prototype.getFileData = function() {
 	
-	var fileData = new Array();
+	var files = new Array();
+	var dataUrls = new Array();
 	
 	for (var i=0; i < this.fileList.length; i++) {
 		var file = this.fileList[i];
 		var dataUrl = this.resultList[i];
 		
 		if(file != null && dataUrl != null){
-//			var data = {
-//					"file": file
-//					//"dataUrl": dataUrl
-//				}
-			filedata.push(file);
+			files.push(file);
+			dataUrls.push(dataUrl);
 		}
 	}
+	var fileData = {files: files, dataUrls: dataUrls};
 	console.log(fileData);
 	return fileData;
 }
@@ -240,23 +236,53 @@ FormModule.prototype.postComment = function() {
 	var request = new XMLHttpRequest();
 	request.open("POST", url);
 	request.send(data);
+	request.onload = (function(event) {
+		this.trigger("postCommentOnload", event);
+	}).bind(this);
 }
 
-FormModule.prototype.postFile = function(commentId) {
+FormModule.prototype.postFile = function(prevOnloadEvent) {
+	console.log("postFile:");
+	console.log(prevOnloadEvent);
 	
-	var files = this.commentComponent.getFileData;
 	
-	var data = new FormData(data);
 	
-	data.append("commentId", commentId);
-	data.append("files", files);
+	var commentId = prevOnloadEvent.currentTarget.response;
+	if(commentId == null) {
+		return;
+	}
+	
+	var fileData = this.commentComponent.getFileData();
+	var files = fileData.files;
+	//var dataUrls = fileData.dataUrls;
+	var formData = new FormData();
+	
+	formData.append("commentId", commentId);
+	formData.append("title", "testTitle");
+	
+	for (var i in files) {
+		console.log(files[i]);
+		formData.append("files", files[i]);
+	}
 
 	
-	var url = "/comment";
+	var url = "/img";
 	
-	var request = new XMLHttpRequest();
-	request.open("POST", url);
-	request.send(data);
+	$.ajax({
+        url: url,
+        type: "POST",
+        xhr: function() {
+            var myXhr = $.ajaxSettings.xhr();
+            return myXhr;
+        },
+        success: function (data) {
+            alert("Data Uploaded: "+data);
+        },
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false
+    });
 }
 
 

@@ -123,7 +123,7 @@
 			var reservationInfo = {
 					productId : ${reservationInfo.productId},
 					userId : ${reservationInfo.userId}
-			};
+				};
 			return reservationInfo;
 		}
 	</script>
