@@ -1,6 +1,7 @@
 package kr.or.reservation.serviceImpl;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.reservation.dao.CommentDao;
 import kr.or.reservation.domain.AVGForComment;
+import kr.or.reservation.domain.ReservationInfo;
 import kr.or.reservation.dto.CommentDTO;
 import kr.or.reservation.service.CommentService;
 
@@ -22,6 +24,16 @@ public class CommentServiceImpl implements CommentService{
 	@Autowired
 	public CommentServiceImpl(CommentDao commentDao) {
 		this.commentDao = commentDao;
+	}
+	
+	@Override
+	public Long insert(CommentDTO comment) {
+		// TODO Auto-generated method stub
+		if(comment == null) {
+			return null;
+		}
+		System.out.println(comment);
+		return commentDao.insert(comment);
 	}
 	
 	@Override

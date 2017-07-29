@@ -116,7 +116,17 @@
 	
 	<script src="/resources/js/node_modules/jquery/dist/jquery.min.js"></script>
 	<script src="/resources/js/node_modules/handlebars/dist/handlebars.min.js"></script>
-	<script src = "/resources/js/node_modules/@egjs/component/dist/component.min.js"></script>
+	<script src="/resources/js/node_modules/@egjs/component/dist/component.min.js"></script>
+	
+	<script>
+		function getReservationInfo() {
+			var reservationInfo = {
+					productId : ${reservationInfo.productId},
+					userId : ${reservationInfo.userId}
+			};
+			return reservationInfo;
+		}
+	</script>
 	<script src="/resources/js/reviewWrite.js"></script>
 </body>
 

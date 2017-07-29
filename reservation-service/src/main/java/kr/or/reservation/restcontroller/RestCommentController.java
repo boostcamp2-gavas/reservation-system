@@ -1,29 +1,28 @@
 package kr.or.reservation.restcontroller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.or.reservation.domain.Product;
+import kr.or.reservation.dto.CommentDTO;
 import kr.or.reservation.service.CommentService;
-import kr.or.reservation.service.ProductService;
 
 @RestController
 public class RestCommentController {
 
-	CommentService commentForDetailService;
+	CommentService commentService;
 	
 	@Autowired
 	public RestCommentController(CommentService commentForDetailService) {
-		this.commentForDetailService =commentForDetailService;
+		this.commentService =commentForDetailService;
 	}
 	
 	Logger log = Logger.getLogger(this.getClass());
@@ -33,8 +32,14 @@ public class RestCommentController {
 	@RequestMapping("/commentImg/{id}")
 	public List<?> selectAll(@PathVariable(name = "id") int commentId){
 		// 타입 체크 할것
-		return commentForDetailService.getFileIdByCommentId(commentId);
+		return commentService.getFileIdByCommentId(commentId);
 	}
-
+	
+	@PostMapping("/comment")
+	@ResponseBody
+	public long insert(@ModelAttribute CommentDTO comment ){
+		
+		return commentService.insert(comment);
+	}
 
 }

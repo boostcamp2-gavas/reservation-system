@@ -9,10 +9,14 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import kr.or.reservation.domain.AVGForComment;
+import kr.or.reservation.domain.ReservationInfo;
 import kr.or.reservation.dto.CommentDTO;
 import kr.or.reservation.sqls.CommentSqls;
 
@@ -21,12 +25,22 @@ public class CommentDao {
 	Logger log = Logger.getLogger(this.getClass());
 	
 	private NamedParameterJdbcTemplate jdbc;
+	private SimpleJdbcInsert insertAction;
 	private RowMapper<CommentDTO> rowMapper = BeanPropertyRowMapper.newInstance(CommentDTO.class);
 	
 	
 	public CommentDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource); 
+		this.insertAction = new SimpleJdbcInsert(dataSource) 
+				.withTableName("reservation_user_comment") 
+				.usingGeneratedKeyColumns("id"); 
+	}	
+	
+	public Long insert(CommentDTO comment) {
+		SqlParameterSource params = new BeanPropertySqlParameterSource(comment);
+		return insertAction.executeAndReturnKey(params).longValue();
 	}
+
 	
 	public List<CommentDTO> select(int productId) {
 		Map<String , ?> map = Collections.singletonMap("id",productId);

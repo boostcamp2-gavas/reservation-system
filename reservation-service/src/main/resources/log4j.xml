@@ -9,11 +9,11 @@
     </appender>
 	
     <category name="org.apache.log4j.xml">
-        <priority value="info" />
+        <priority value="DEBUG" />
     </category>
     
     <root>
-        <priority value ="debug" />
+        <priority value ="DEBUG" />
         <appender-ref ref="STDOUT" />
     </root>
 </log4j:configuration>

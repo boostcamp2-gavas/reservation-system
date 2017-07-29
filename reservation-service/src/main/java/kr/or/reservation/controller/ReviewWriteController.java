@@ -1,5 +1,6 @@
 package kr.or.reservation.controller;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +34,8 @@ public class ReviewWriteController {
 	@GetMapping(path="/{reservationId}")
 	public ModelAndView getReservation(@PathVariable int reservationId) {
 		ModelAndView model = new ModelAndView("reviewWrite");
-		model.addObject("reservation", reservationService.selectById(reservationId));
+
+		model.addObject("reservationInfo", reservationService.selectById(reservationId));
 		return model;
 	}
 	

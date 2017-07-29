@@ -26,7 +26,7 @@ public class CommentForDetailTest {
 	@Test
 	public void seletAll() {
 		
-		List<?> list= service.selectByProductId(2);
+		//List<?> list= service.selectByProductId(2);
 		// 가져 오는지 테스트 
 		//log.info(service.selectAvgScoreByProductId(3));
 	}

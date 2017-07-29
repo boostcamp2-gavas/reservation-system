@@ -6,6 +6,18 @@ $(document).ready(function() {
 	var reviewContents = new ReviewContents( $(".ct_wrap") );
 	reviewContents.init();
 	
+	var formModule = new FormModule(rating, reviewContents);
+	
+	
+	$(".bk_btn").on("click", (function(){
+		formModule.postComment().then(
+				formModule.postFile)
+		
+	}).bind(this));
+	
+	
+
+	
 });
 
 
@@ -76,7 +88,7 @@ ReviewContents.prototype.constructer = ReviewContents;
 ReviewContents.prototype.init = function() {
 	
 	this.root.on("click", ".review_write_info", this.textareaFocusOn.bind(this));
-	this.root.on("focusout", ".review_contents", this.textareaFocusOut.bind(this));
+	this.root.on("focusout", ".review_textarea", this.textareaFocusOut.bind(this));
 	this.root.on("keyup", this.lengthUpdate.bind(this));
 	this.fileUpload();
 }
@@ -87,6 +99,7 @@ ReviewContents.prototype.textareaFocusOn  = function(e) {
 	e.preventDefault();
 	this.root.find(".review_write_info").hide();
 	this.root.find(".review_textarea").focus();
+
 }
 
 ReviewContents.prototype.textareaFocusOut  = function(e) {
@@ -94,7 +107,6 @@ ReviewContents.prototype.textareaFocusOut  = function(e) {
 	var text = this.root.find(".review_textarea").val();
 	if(text == null || text.length == 0 ){
 		this.root.find(".review_write_info").show();
-		this.root.find(".review_textarea").focus();
 	}
 
 }
@@ -187,11 +199,11 @@ ReviewContents.prototype.getFileData = function() {
 		var dataUrl = this.resultList[i];
 		
 		if(file != null && dataUrl != null){
-			var data = {
-					"file": file,
-					"dataUrl": dataUrl,
-				}
-			filedata.push(data);
+//			var data = {
+//					"file": file
+//					//"dataUrl": dataUrl
+//				}
+			filedata.push(file);
 		}
 	}
 	console.log(fileData);
@@ -200,17 +212,54 @@ ReviewContents.prototype.getFileData = function() {
 // ReviewContents ends
 
 
-function FormModule(root) {
-	this.formData = new FormData();
+function FormModule(ratingComponent, commentComponent) 
+{
+	this.ratingComponent = ratingComponent;
+	this.commentComponent = commentComponent;
 }
 FormModule.prototype = new eg.Component();
 FormModule.prototype.constructer = FormModule;
 
-FormModule.prototype.append
 
-FormModule.prototype.doPost = function() {
+FormModule.prototype.postComment = function() {
 	
+	var reservationInfo = getReservationInfo();
+	
+	var score = this.ratingComponent.getScore();
+	var comment = this.commentComponent.getText();
+	
+	var data = new FormData(data);
+	
+	data.append("productId", reservationInfo.productId);
+	data.append("userId", reservationInfo.userId);
+	data.append("score", score);
+	data.append("comment", comment);
+	
+	var url = "/comment";
+	
+	var request = new XMLHttpRequest();
+	request.open("POST", url);
+	request.send(data);
 }
+
+FormModule.prototype.postFile = function(commentId) {
+	
+	var files = this.commentComponent.getFileData;
+	
+	var data = new FormData(data);
+	
+	data.append("commentId", commentId);
+	data.append("files", files);
+
+	
+	var url = "/comment";
+	
+	var request = new XMLHttpRequest();
+	request.open("POST", url);
+	request.send(data);
+}
+
+
 
 
 
