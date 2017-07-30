@@ -1,5 +1,9 @@
 package kr.or.reservation.dao;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -10,29 +14,31 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import kr.or.reservation.domain.CommentImage;
 import kr.or.reservation.domain.FileDomain;
+import kr.or.reservation.dto.ImgDTO;
+import kr.or.reservation.sqls.ImgSqls;
 
 @Repository
-public class FileDao {
+public class CommentImageDao {
 
 	private NamedParameterJdbcTemplate jdbc;
 	private SimpleJdbcInsert insertAction;
-	//private RowMapper<FileDomain> rowMapper = BeanPropertyRowMapper.newInstance(FileDomain.class);
+	//private RowMapper<CommentImage> rowMapper = BeanPropertyRowMapper.newInstance(CommentImage.class);
 
-	public FileDao(DataSource dataSource) {
+	public CommentImageDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 		this.insertAction = new SimpleJdbcInsert(dataSource) 
-				.withTableName("file") 
+				.withTableName("reservation_user_comment_image") 
 				.usingGeneratedKeyColumns("id"); 
 	}
 
-
-	// 여러개의 데이터에 대해, insert 마다 connection을 열여 접근하는건 비효율적.
-	// 때문에 batch를 이용하여 한번에 보내도록 구현. 
-	public int[] insertArray(FileDomain[] files) {
-		SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(files);
-		
+	public int[] insertArray(CommentImage[] commentImage) {
+		SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(commentImage);
 		return insertAction.executeBatch(batch);
-		
 	}
+
+
+	
+
 }

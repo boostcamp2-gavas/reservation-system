@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.reservation.common.FileRead;
 import kr.or.reservation.domain.FileDomain;
 import kr.or.reservation.service.ImgService;
 
@@ -36,9 +37,6 @@ public class ImgFileController {
 	ImgService imgService;
 	Logger log = Logger.getLogger(this.getClass());
 	
-	// 파일 경로는 리눅스에 맞게 변경해야할듯.
-	private String baseDir = "c:" + File.separator + "temp" + File.separator; // c:\temp 디렉토리를 미리 만들어둔다.
-	   
 	@Autowired
 	public void setImgService(ImgService imgService) {
 		this.imgService = imgService;
@@ -89,61 +87,15 @@ public class ImgFileController {
     public String create(
             @RequestParam("title") String title,
             @RequestParam("files") MultipartFile[] files,
+            @RequestParam("commentId") int commentId,
             HttpSession session){
     	
-    	log.info(title);
-    	log.info(files.length);
-    	int userId = (Integer)session.getAttribute("id");
-    	int fileLength = files.length;
-    	// 길이만큼 배열 생성 
-    	FileDomain[] fileArray = new FileDomain[fileLength];
-        if(files != null && fileLength > 0){
-
-            // windows 사용자라면 "c:\temp\년도\월\일" 형태의 문자열을 구한다.
-            String formattedDate = baseDir + new SimpleDateFormat("yyyy" + File.separator + "MM" + File.separator + "dd").format(new Date());
-            File f = new File(formattedDate);
-            if(!f.exists()){ // 파일이 존재하지 않는다면
-                f.mkdirs(); // 해당 디렉토리를 만든다. 하위폴더까지 한꺼번에 만든다.
-            }
-            for(int i =0; i<fileLength; ++i) {
-            	  String contentType = files[i].getContentType();
-                  String name = files[i].getName();
-                  String originalFilename = files[i].getOriginalFilename();
-                  long size = files[i].getSize();
-
-                  String uuid = UUID.randomUUID().toString(); // 중복될 일이 거의 없다.
-                  String saveFileName = formattedDate + File.separator + uuid+".jpg"; // 실제 저장되는 파일의 절대 경로
-                  
-                 // 실제 파일 저장
-                  //java try-with-resources 
-                  // try(여기에 자원을 표기하면) , finally을 사용하지않아도 닫힘 .
-                  try(
-                          InputStream in = files[i].getInputStream();
-                          FileOutputStream fos = new FileOutputStream(saveFileName)){
-                      int readCount = 0;
-                      byte[] buffer = new byte[512];
-                      while((readCount = in.read(buffer)) != -1){
-                          fos.write(buffer,0,readCount);
-                      }
-                  }catch(Exception ex){
-                      ex.printStackTrace();
-                  }
-                  // image 초기화 
-                  fileArray[i] = new FileDomain(userId,originalFilename,saveFileName,size,0,contentType,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()));
-                  // 아래에서 출력되는 결과는 모두 database에 저장되야 한다.
-                  // pk 값은 자동으로 생성되도록 한다.
-                  log.info("title :" + title);
-                  log.info("contentType :" + contentType);
-                  log.info("name :" + name);
-                  log.info("originalFilename : " + originalFilename);
-                  log.info("size : " + size);
-                  log.info("saveFileName : " + saveFileName);
-              
-            }//for
-            boolean bool  =imgService.insertFileArray(fileArray);
-            log.info(bool);
-        } // if
-
+    	FileDomain[] fileArray= FileRead.FileReader((Integer)session.getAttribute("id"), files);
+        int[] fileId = imgService.insertFileArray(fileArray);
+        for(int id : fileId) {
+        	log.info(id);
+        }
+        imgService.insertImageArray(commentId, fileId);
         return "redirect:/img";
     }
     
