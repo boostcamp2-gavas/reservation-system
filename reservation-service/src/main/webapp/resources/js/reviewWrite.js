@@ -237,6 +237,7 @@ FormModule.prototype.postComment = function() {
 	request.open("POST", url);
 	request.send(data);
 	request.onload = (function(event) {
+		console.log(event);
 		this.trigger("postCommentOnload", event);
 	}).bind(this);
 }

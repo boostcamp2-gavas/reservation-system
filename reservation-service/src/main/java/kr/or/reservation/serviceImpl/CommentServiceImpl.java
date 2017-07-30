@@ -32,7 +32,8 @@ public class CommentServiceImpl implements CommentService{
 		if(comment == null) {
 			return null;
 		}
-		System.out.println(comment);
+		log.info("들어온 값 :: "+comment.toString());
+		comment.setCreateDate(new Timestamp(System.currentTimeMillis()));
 		return commentDao.insert(comment);
 	}
 	
