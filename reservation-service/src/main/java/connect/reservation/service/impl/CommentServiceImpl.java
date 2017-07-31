@@ -46,7 +46,6 @@ public class CommentServiceImpl implements CommentService{
 		for (int i = 0; i < scoreList.size(); i++)
 			scoreAverage += scoreList.get(i).getScore();
 		scoreAverage = Double.parseDouble(String.format("%.1f", scoreAverage / scoreList.size()));
-		
 		map.put("commentCount", scoreList.size());
 		map.put("scoreAverage", scoreAverage);
 		map.put("starPoint", scoreAverage/5.0*100);

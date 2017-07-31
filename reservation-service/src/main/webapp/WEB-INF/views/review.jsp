@@ -29,7 +29,7 @@
                 <div class="review_header">
                     <div class="top_title gr">
                         <a href="history.back()" class="btn_back" title="이전 화면으로 이동"> <i class="fn fn-backward1"></i> </a>
-                        <h2><a class="title" href="#">${reviewList.commentList[0].productName}</a></h2>
+                        <h2><a class="title" href="#">${reviewList[0].productName}</a></h2>
                     </div>
                 </div>
                 <div class="section_review_list">
@@ -38,25 +38,25 @@
                         <div class="short_review_area">
                             <div class="grade_area"> 
                             	<span class="graph_mask"> 
-                            		<em class="graph_value" style="width: ${reviewList.starPoint }%;"></em> 
+                            		<em class="graph_value" style="width: ${reviewInfo.starPoint }%;"></em> 
                             	</span> 
                             	<strong class="text_value"> 
                             		<span>
-                            			<fmt:formatNumber value="${reviewList.scoreAverage }" pattern="0.0"></fmt:formatNumber>
+                            			<fmt:formatNumber value="${reviewInfo.scoreAverage }" pattern="0.0"></fmt:formatNumber>
                             		</span> 
                             		<em class="total">5.0</em> 
                             	</strong> 
                             	<span class="join_count">
-                            		<em class="green">${reviewList.commentCount }건</em> 등록
+                            		<em class="green">${reviewInfo.commentCount }건</em> 등록
                             	</span>
                             </div>
-                            <ul class="list_short_review">
-								<c:forEach var="ri" items="${reviewList.commentList }">
+                            <ul class="list_short_review" data-comment-count="${reviewList.commentCount }" data-product-id="${reviewList.commentList[0].productId}">
+								<c:forEach var="ri" items="${reviewList }">
                             	<li class="list_item">
                                     <div>
                                     	<c:if test="${ri.fileId eq null }">
                                         <div class="review_area no_img">
-                                            <h4 class="resoc_name">${reviewList.productName}</h4>
+                                            <h4 class="resoc_name">${reviewList[0].productName}</h4>
                                             <p class="review">${ri.comment }</p>
                                         </div>
                                     	</c:if>
@@ -90,11 +90,39 @@
             </div>
         </div>
         <hr> </div>
+		<c:import url="/WEB-INF/views/footer.jsp" />
         <div id="photoviewer">
             <div class="layer" id="layer"></div>
         </div>
+    <script id="comment_list_template" type="text/x-handlebars-template">
+        {{#commentList}}
+        <li class="list_item">
+            <div>
+                <div class="review_area">
+                    {{#if fileId}}
+                    <div class="thumb_area">
+                        <a href="#" class="thumb" title="이미지 크게 보기"> 
+                            <img width="90" height="90" class="img_vertical_top" src="/files/{{fileId }}" alt="리뷰이미지"> 
+                        </a> 
+                        <span class="img_count">{{imgCount}}</span>
+                    </div>
+                    {{/if}}
+                    <h4 class="resoc_name">{{productName}}</h4>
+                    <p class="review">{{comment }}</p>
+                </div>
+                <div class="info_area">
+                    <div class="review_info"> 
+                        <span class="grade">{{score }}</span> 
+                        <span class="name">{{nickname }}</span> 
+                        <span class="date">{{reservationDate}} 방문</span> 
+                    </div>
+                </div>
+            </div>
+        </li> 
+        {{/commentList}}
+    </script>
 	<script id="popup_layer_template" type="text/x-handlebars-template">
-		{{#items}}
+		{{#item}}
 		<div class="sub_layer" style="transform: translateX({{tranx}}%)">
     		<div class="wrapper">
 				<img src="/files/{{fileId}}">
@@ -104,17 +132,18 @@
     			<button class="com_img_btn prev"><</button><button class="com_img_btn nxt">></button>
 			</div>
     	</div>
-		{{/items}}
+		{{/item}}
 	</script>
     <script src="/resources/js/node_modules/jquery/dist/jquery.min.js"></script>
 	<script src="/resources/js/node_modules/handlebars/dist/handlebars.min.js"></script>
 	<script src="/resources/js/node_modules/@egjs/component/dist/component.min.js"></script>
 	<script src="/resources/js/messenger.js"></script>    
+	<script src="/resources/js/callAjax.js"></script>    
+	<script src="/resources/js/review/commentList.js"></script>    
 	<script src="/resources/js/review/thumbNail.js"></script>    
     <script>
         $(function() {
-            
+            CommentList.init($('ul.list_short_review'));
         });
     </script>
-		<c:import url="/WEB-INF/views/footer.jsp" />
 </body>
