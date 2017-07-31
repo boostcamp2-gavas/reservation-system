@@ -10,49 +10,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
     <link href="/resources/css/style.css" rel="stylesheet">
-    <style>
-		
-		._none{
-			/* visibility:hidden; */
-			display : none;
-		}
-		
-		.layer{
-			background : black;
-			position: fixed;
-  			top: 0px;
-  			left: 0px;
-  			width : 100%;
-  			height: 100%;
-  		}
-		
-		.align-right{
-			text-align: right;
-		}		
-		
-		.close{
-		    font-size: 35px;
-		    color : white;
-		    z-index : -1;
-		}
-		
-		.loaction_top{
-			top : 5% !important;
-		} 
-		
-		.layer .visual_img{
-			margin : auto;
-			width : 414px;
-			height :100%;
-		}
-		
-		.over-hidden{
-			width : 414px;
-		 	overflow: hidden;
-		 	margin: auto;
-		}
-		
-	</style>
+ 	<link href="/resources/css/layer.css" rel="stylesheet">
 	
 </head>
 

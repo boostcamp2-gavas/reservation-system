@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
     <link href="/resources/css/style.css" rel="stylesheet">
-    <script src="//code.jquery.com/jquery.min.js"></script>
+    <link href="/resources/css/layer.css" rel="stylesheet">
 </head>
 
 <body>
@@ -50,7 +50,49 @@
 	    </footer>
 	    
 	    
-
+<div id="photoviwer" class="layer _none">
+	<div class = "group_visual ">
+		<div class = "align-right">
+        	<a class ="close" >X</a>
+        </div>
+         <div class="pagination">
+                    <div class="bg_pagination"></div>
+                    <div class="figure_pagination">
+                        <span class="num popup">1</span>
+                        <span class="num off">/ <span> </span></span>
+                    </div>
+                </div>
+        <div class ="over-hidden">   
+            <ul class="visual_img" style="top: 5rem;">
+            <!--  template  -->
+            
+            </ul>
+        </div>
+        <div class="prev loaction_top">
+            <div class="prev_inn">
+                <a  class="btn_prev" title="이전">
+                    <!-- [D] 첫 이미지 이면 off 클래스 추가 -->
+                    <i class="spr_book2 ico_arr6_lt off"></i>
+                </a>
+            </div>
+        </div>
+        <div class="nxt loaction_top">
+            <div class="nxt_inn">
+                <a  class="btn_nxt" title="다음">
+                    <i class="spr_book2 ico_arr6_rt"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+	<script id="layer-content" type="text/x-handlebars-template">
+                    {{#items}}
+					<li class="item" style="width: 414px;"> 
+                		<img alt="" class="img_thumb" src="/img/{{file_id}}">
+               	 	</li>
+					{{/items}}
+ 	</script>	
+				
       	
 <!--  Handlebar -->
 <script src="/resources/js/node_modules/handlebars/dist/handlebars.min.js"></script>
@@ -66,12 +108,12 @@
 <script id="review-content" type="text/x-handlebars-template">
 
 {{# items}}
-	    <li class="list_item">
+	    <li class="list_item" >
 	        <div>
 	            <div class="review_area">
 					{{#if firstImageSaveFileName}}
 					<div class="thumb_area">
-                    	<a href="#" class="thumb" title="이미지 크게 보기"> 
+                    	<a href="#" class="thumb" title="이미지 크게 보기" data-comment = "{{id}}"> 
 							<img width="90" height="90" class="img_vertical_top" src="/img/{{firstImageSaveFileName}}" alt="리뷰이미지"> 
 						</a> 
 						<span class="img_count">{{imageCount}}</span>
@@ -121,6 +163,7 @@ var CommentListModule = (function(){
 				var item = {
 						items : []
 				};
+				console.log(data);
 				for(var i =0, max = data.length; i<max; ++i){
 					item.items.push(data[i]);
 				}
@@ -148,6 +191,7 @@ var CommentListModule = (function(){
 
 $(function(){
 	CommentListModule.init();
+	
 });
 
 
