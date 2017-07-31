@@ -79,7 +79,6 @@ var ThumbApp = (function() {
         $('#photoviewer').fadeTo("fast",1);    
 	}
 	function imgLoad(res) {
-        console.log(res);
 		var arr = res.imageList.map(function(v, i) {
     		return {
     			fileId: v.fileId,
