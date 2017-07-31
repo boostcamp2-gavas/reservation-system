@@ -36,8 +36,8 @@ public class CommentController {
 	}
 	
 	@GetMapping("/{productId}")
-	public String mvReviewList(Model model, @PathVariable int productId, @RequestParam int start, @RequestParam int end) {
-		model.addAttribute("reviewList", commentService.getList(productId, start, end));
+	public String mvReviewList(Model model, @PathVariable int productId, @RequestParam int start) {
+		model.addAttribute("reviewList", commentService.getList(productId, (start-1)*10, 10));
 		return "review";
 	}
 
