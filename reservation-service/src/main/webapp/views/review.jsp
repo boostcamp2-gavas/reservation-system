@@ -15,13 +15,22 @@
 <body>
     <div id="container">
 		<!-- [D] 예약하기로 들어오면 header에 fade 클래스 추가로 숨김 -->
-		<jsp:include page="common/header.jsp"/>
+		<div class="header fade">
+		    <header class="header_tit">
+		        <h1 class="logo">
+		            <a href="/" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
+		            <a href="/" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
+		        </h1>
+		        <a href="/my" class="btn_my"> <span title="내 예약">MY</span> </a>
+		    </header>
+		</div>
+
         <div class="ct">
             <div class="wrap_review_list">
-                <div class="review_header">
+                <div class="review_header" style = "z-index: 10;position: relative;">
                     <div class="top_title gr">
                         <a href="#" class="btn_back" title="이전 화면으로 이동"> <i class="fn fn-backward1"></i> </a>
-                        <h2><a class="title" href="#">오디컴퍼니 주식회사</a></h2>
+                        <h2><a class="title" href="#">${productName}</a></h2>
                     </div>
                 </div>
                 <div class="section_review_list">
@@ -39,7 +48,7 @@
             </div>
         </div>
         <hr> </div>
-		<footer>
+		<footer style = "z-index: 10;position: relative;">
 	        <div class="gototop">
 	            <a href="#" class="lnk_top"> <span class="lnk_top_text">TOP</span> </a>
 	        </div>
@@ -50,7 +59,7 @@
 	    </footer>
 	    
 	    
-<div id="photoviwer" class="layer _none">
+<div id="photoviewer" class="layer _none">
 	<div class = "group_visual ">
 		<div class = "align-right">
         	<a class ="close" >X</a>
@@ -103,6 +112,8 @@
 <!-- moment -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
+<script src="/resources/js/modules/visualModule.js"></script>
+<script src="/resources/js/modules/commentModule.js"></script>
 
 
 <script id="review-content" type="text/x-handlebars-template">
@@ -191,6 +202,8 @@ var CommentListModule = (function(){
 
 $(function(){
 	CommentListModule.init();
+	var commentModules = CommentModule;
+	commentModules.init();
 	
 });
 

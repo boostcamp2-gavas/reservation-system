@@ -19,7 +19,7 @@
     <div class="ct main">
         <div>
             <div class="section_visual">
-                <header>
+                <header style = "z-index: 10;position: relative;">
                     <h1 class="logo">
                         <a href="/" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
                         <a href="/" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
@@ -218,7 +218,7 @@
         </div>
     </div>
 </div>
-<footer>
+<footer style = "z-index: 10;position: relative;">
     <div class="gototop">
         <a href="#" class="lnk_top"> <span class="lnk_top_text">TOP</span> </a>
     </div>

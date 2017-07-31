@@ -61,7 +61,6 @@ var CommentModule = (function(){
 	
 	function getVisual(commentId) {
 		var url = HOST + "/commentImg/" + commentId;
-		
 		getVisualAjax = $.ajax({
 			url: url,
 			type: "GET",
@@ -76,35 +75,37 @@ var CommentModule = (function(){
 	}
 	
 	function showVisual(response) {
-		
-		var source = $("#container_popup_template").html();
+		console.log(response);
+		var source = $("#layer-content").html();
 		var template = Handlebars.compile(source);
-		var data = {commentVisual: response};
+		var data = {
+				items : response
+		};
 		var html = template(data);
-		$(".section_popup ul").find("li").remove();
-		$(".section_popup ul").append(html);
+		$(".over-hidden ul").find("li").remove();
+		$(".over-hidden ul").append(html);
 		
-		$(".section_popup .figure_pagination .num.off span").html(response.length);	
+		$("#photoviewer .figure_pagination .num.off span").html(response.length);	
 		
 		var setting = {
-				root: $(".section_popup"),
+				root: $("#photoviewer"),
 				visualImgSize: 414,
-				visualImgNum: $ul.children().length,
+				visualImgNum: response.length,
 				isAutoRoll: false,
 				isScrollEnd: true,
 				btnPreElement: $(".btn_prev"),
 				btnNxtElement: $(".btn_nxt"),
-				printPositionElement:$(".section_popup .figure_pagination .num:first-child")
+				printPositionElement:$("#photoviewer .figure_pagination .num:first-child")
 		}
 		var visualModule = VisualModule(setting);
 		visualModule.init();
 		
 		if(response.length <= 1) {
-			$(".section_popup .prev").css("visibility", "hidden");
-			$(".section_popup .nxt").css("visibility", "hidden");
+			$("#photoviewer .prev").css("visibility", "hidden");
+			$("#photoviewer .nxt").css("visibility", "hidden");
 		} else {
-			$(".section_popup .prev").css("visibility", "");
-			$(".section_popup .nxt").css("visibility", "");
+			$("#photoviewer .prev").css("visibility", "");
+			$("#photoviewer .nxt").css("visibility", "");
 		}
 		
 	}
@@ -112,15 +113,16 @@ var CommentModule = (function(){
 	function initButton() {
 		$(".list_short_review").on("click", ".thumb", function(event){
 			
-			$("#photoviewer").css({display: "inline-block"});
+			$("#photoviewer").removeClass("_none");
 			event.preventDefault(); 
 			event.stopPropagation();
 			var commentId = $(event.target).data("comment");
 			getVisual(commentId);
+			console.log("hello?");
 		});
 		
-		$(".photoviewer_closer").on("click", function(event){
-			$("#photoviewer").css({display: "none"});
+		$("#photoviewer .close").on("click", function(event){
+			$("#photoviewer").addClass("_none");
 			event.preventDefault(); 
 			event.stopPropagation();
 		});
