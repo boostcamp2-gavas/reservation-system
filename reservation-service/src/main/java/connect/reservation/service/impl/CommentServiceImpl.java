@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import connect.reservation.dao.CommentDao;
-import connect.reservation.dao.CommentSqls;
 import connect.reservation.domain.Product;
 import connect.reservation.domain.ReservationUserComment;
 import connect.reservation.dto.ReservationComment;
@@ -26,13 +25,19 @@ public class CommentServiceImpl implements CommentService{
 	CommentDao commentDao;
 	
 	@Override
-	public Map<String, Object> getList(int productId, int start, int end) {		
-		Map<String, Object> map = new HashMap<String, Object>();
+	public List<ReservationComment> getList(int productId, int start, int end) {		
 		List<ReservationComment> list = new ArrayList<ReservationComment>();
 		
 		list = commentDao.getCommentList(productId, start, end);
 		list = getNickname(list);
 
+		return list;
+	}
+	
+	@Override
+	public Map<String, Object> getCommentInfo(int productId){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
 		List<ReservationComment> scoreList = new ArrayList<ReservationComment>();
 		scoreList = commentDao.getScoreList(productId);
 
@@ -41,12 +46,10 @@ public class CommentServiceImpl implements CommentService{
 		for (int i = 0; i < scoreList.size(); i++)
 			scoreAverage += scoreList.get(i).getScore();
 		scoreAverage = Double.parseDouble(String.format("%.1f", scoreAverage / scoreList.size()));
-
-		map.put("commentList", list);
-		map.put("commentCount", list.size());
+		
+		map.put("commentCount", scoreList.size());
 		map.put("scoreAverage", scoreAverage);
 		map.put("starPoint", scoreAverage/5.0*100);
-		
 		return map;
 	}
 	
