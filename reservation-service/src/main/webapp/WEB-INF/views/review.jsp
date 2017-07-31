@@ -29,14 +29,27 @@
                 <div class="review_header">
                     <div class="top_title gr">
                         <a href="#" class="btn_back" title="이전 화면으로 이동"> <i class="fn fn-backward1"></i> </a>
-                        <h2><a class="title" href="#">${reviewList[0].productName}</a></h2>
+                        <h2><a class="title" href="#">${reviewList.commentList[0].productName}</a></h2>
                     </div>
                 </div>
                 <div class="section_review_list">
                     <div class="review_box">
                         <h3 class="title_h3">예매자 한줄평</h3>
                         <div class="short_review_area">
-                            <div class="grade_area"> <span class="graph_mask"> <em class="graph_value" style="width: ${reviewList.starPoint }%;"></em> </span> <strong class="text_value"> <span><fmt:formatNumber value="${reviewList.scoreAverage }" pattern="0.0"></fmt:formatNumber></span> <em class="total">5.0</em> </strong> <span class="join_count"><em class="green">${reviewList.commentCount }건</em> 등록</span></div>
+                            <div class="grade_area"> 
+                            	<span class="graph_mask"> 
+                            		<em class="graph_value" style="width: ${reviewList.starPoint }%;"></em> 
+                            	</span> 
+                            	<strong class="text_value"> 
+                            		<span>
+                            			<fmt:formatNumber value="${reviewList.scoreAverage }" pattern="0.0"></fmt:formatNumber>
+                            		</span> 
+                            		<em class="total">5.0</em> 
+                            	</strong> 
+                            	<span class="join_count">
+                            		<em class="green">${reviewList.commentCount }건</em> 등록
+                            	</span>
+                            </div>
                             <ul class="list_short_review">
 								<c:forEach var="ri" items="${reviewList.commentList }">
                             	<li class="list_item">
@@ -50,13 +63,21 @@
                                     	<c:if test="${ri.fileId ne null }">
                                     	<div class="review_area">
                                             <div class="thumb_area">
-                                                <a href="#" class="thumb" title="이미지 크게 보기"> <img width="90" height="90" class="img_vertical_top" src="/files/${ri.fileId }" alt="리뷰이미지"> </a> <span class="img_count">${ri.imgCount}</span></div>
+                                                <a href="#" class="thumb" title="이미지 크게 보기"> 
+                                                	<img width="90" height="90" class="img_vertical_top" src="/files/${ri.fileId }" alt="리뷰이미지"> 
+                                                </a> 
+                                                <span class="img_count">${ri.imgCount}</span>
+                                            </div>
                                             <h4 class="resoc_name">${ri.productName}</h4>
                                             <p class="review">${ri.comment }</p>
                                         </div>
                                     	</c:if>
                                         <div class="info_area">
-                                            <div class="review_info"> <span class="grade">${ri.score }</span> <span class="name">${ri.nickname }****</span> <span class="date"><fmt:formatDate value="${ri.reservationDate }" pattern="yyyy.MM.dd." /> 방문</span> </div>
+                                            <div class="review_info"> 
+                                            	<span class="grade">${ri.score }</span> 
+                                            	<span class="name">${ri.nickname }</span> 
+                                            	<span class="date">
+                                            		<fmt:formatDate value="${ri.reservationDate }" pattern="yyyy.MM.dd." /> 방문</span> </div>
                                         </div>
                                     </div>
                                 </li>                          	
@@ -71,34 +92,4 @@
         <hr> </div>
 		<c:import url="/WEB-INF/views/footer.jsp" />
 </body>
-<!-- 
 <script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
-<script id="comment_template" type="text/x-handlebars-template">
-<li class="list_item">
-	<div>
-		<div class="review_area">
-		    <div class="thumb_area">
-		           <a href="#" class="thumb" title="이미지 크게 보기"> <img width="90" height="90" class="img_vertical_top" src="/files/{{fileId }}" alt="리뷰이미지"> </a> <span class="img_count">{{imgCount }}</span></div>
-			<h4 class="resoc_name">{{productName}}</h4>
-			<p class="review">{{comment }}</p>
-		</div>
-		<div class="info_area">
-		    <div class="review_info"> <span class="grade">{{score }}</span> <span class="name">{{nickname}}****</span> <span class="date"><fmt:formatDate value="{{reservationDate }}" pattern="yyyy.MM.dd." /> 방문</span> </div>
-		</div>
-	 </div>
-</li>
-</script>
-<script id="comment_template_noimg" type="text/x-handlebars-template">
-<li class="list_item">
-	<div>
-		<div class="review_area no_img">
-        	<h4 class="resoc_name">{{productName}}</h4>
-			<p class="review">{{comment }}</p>
-		</div>
-		<div class="info_area">
-		    <div class="review_info"> <span class="grade">{{score }}</span> <span class="name">{{nickname}}****</span> <span class="date"><fmt:formatDate value="{{reservationDate }}" pattern="yyyy.MM.dd." /> 방문</span> </div>
-		</div>
-	</div>                     
-</li>
-</script>
- -->
