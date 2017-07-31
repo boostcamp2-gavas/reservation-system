@@ -175,7 +175,7 @@
                         </p>
                     </div>
 <c:if test="${commentMap.commentCount >= 3}">
-                    <a class="btn_review_more" href="#"> 
+                    <a class="btn_review_more" href="/comments/${productId}?start=0&end=10"> 
                     	<span>예매자 한줄평 더보기</span> 
                     	<i class="fn fn-forward1"></i> 
                     </a>
