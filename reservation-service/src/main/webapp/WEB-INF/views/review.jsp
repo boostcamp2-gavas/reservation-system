@@ -50,7 +50,7 @@
                             		<em class="green">${reviewInfo.commentCount }건</em> 등록
                             	</span>
                             </div>
-                            <ul class="list_short_review" data-comment-count="${reviewList.commentCount }" data-product-id="${reviewList.commentList[0].productId}">
+                            <ul class="list_short_review" data-comment-count="${reviewInfo.commentCount }" data-product-id="${productId}">
 								<c:forEach var="ri" items="${reviewList }">
                             	<li class="list_item">
                                     <div>
