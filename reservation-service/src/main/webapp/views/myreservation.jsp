@@ -193,7 +193,7 @@
 
 
     
-<script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
+<script src="/resources/js/node_modules/jquery/dist/jquery.min.js"></script>
 
 <!--  Handlebar -->
 <script src="/resources/js/node_modules/handlebars/dist/handlebars.min.js"></script>
