@@ -161,6 +161,46 @@
 	            <span class="copyright">© NAVER Corp.</span>
 	        </div>
 	    </footer>
+	    
+	    
+
+      	
+<!--  Handlebar -->
+<script src="/resources/js/node_modules/handlebars/dist/handlebars.min.js"></script>
+
+<!-- Jquery -->
+<script src="/resources/js/node_modules/jquery/dist/jquery.min.js"></script>
+
+<script id="review-content" type="text/x-handlebars-template">
+
+{{# items}}
+	    <li class="list_item">
+	        <div>
+	            <div class="review_area no_img">
+	                <h4 class="resoc_name">{{name}}</h4>
+	                <p class="review">{{contents}}</p>
+	            </div>
+	            <div class="info_area">
+	                <div class="review_info"> <span class="grade">{{score}}</span> <span class="name">{{nickname}}</span> <span class="date">{{date}} 방문</span> </div>
+	            </div>
+	        </div>
+      	</li>
+{{/items}}
+</script>	
+
+<script>
+var templateSource = $("#review-content").html(),
+Template = Handlebars.compile(templateSource);
+
+	var item = {
+			items : [ {name : "공연",contents : "재밋엇어요",score : "3.4",nickname : "nick",date : "date"}]
+	};
+
+	//expectationLength += max ;
+	var html = Template(item);
+	var $card = $(".list_short_review");
+	$card.append(html);
+	</script>
 </body>
 
 </html>

@@ -1,26 +1,465 @@
-From 86dcc21c0460babbc318c6600502c4f14dad6bc6 Mon Sep 17 00:00:00 2001
-From: "DESKTOP-7JJA5K6\\lusiu" <luisue@gmail.com>
-Date: Thu, 27 Jul 2017 20:06:59 +0900
-Subject: [PATCH] =?UTF-8?q?query=20=EC=88=98=EC=A0=95?=
+From aebdae344681138a2db7c49fdb556acb268a910c Mon Sep 17 00:00:00 2001
+From: Se-yeong <ilvh2430@gmail.com>
+Date: Mon, 31 Jul 2017 16:03:27 +0900
+Subject: [PATCH] =?UTF-8?q?controller=20=EB=B0=8F=20visual=20module?=
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 ---
- .../src/main/java/kr/or/reservation/sqls/ReservationSqls.java           | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../java/kr/or/reservation/dao/CommentDao.java     |   9 +
+ .../restcontroller/RestCommentController.java      |   8 +
+ .../kr/or/reservation/service/CommentService.java  |   2 +
+ .../serviceImpl/CommentServiceImpl.java            |   9 +
+ .../java/kr/or/reservation/sqls/CommentSqls.java   |   4 +
+ .../webapp/resources/js/modules/visualModule.js    | 222 +++++++++++++++++----
+ .../src/main/webapp/views/detail.jsp               |  24 ++-
+ ...{CommentForDetailTest.java => CommentTest.java} |  13 +-
+ 8 files changed, 242 insertions(+), 49 deletions(-)
+ rename reservation-service/src/test/java/kr/or/reservation/jdbc/{CommentForDetailTest.java => CommentTest.java} (78%)
 
-diff --git a/reservation-service/src/main/java/kr/or/reservation/sqls/ReservationSqls.java b/reservation-service/src/main/java/kr/or/reservation/sqls/ReservationSqls.java
-index 6ede282..d438fdc 100644
---- a/reservation-service/src/main/java/kr/or/reservation/sqls/ReservationSqls.java
-+++ b/reservation-service/src/main/java/kr/or/reservation/sqls/ReservationSqls.java
-@@ -11,6 +11,6 @@ public class ReservationSqls {
- 			"where product.id = :id " + 
- 			"order by img.type desc " + 
- 			"limit 1; ";
--	public static final String SELECT_PRICE = "SELECT price_type,price,discount_rate FROM reservation.product_price where product_id = :id;";
-+	public static final String SELECT_PRICE = "SELECT price_type,price,discount_rate FROM product_price where product_id = :id;";
+diff --git a/reservation-service/src/main/java/kr/or/reservation/dao/CommentDao.java b/reservation-service/src/main/java/kr/or/reservation/dao/CommentDao.java
+index dd7bcd2..c046dd9 100644
+--- a/reservation-service/src/main/java/kr/or/reservation/dao/CommentDao.java
++++ b/reservation-service/src/main/java/kr/or/reservation/dao/CommentDao.java
+@@ -46,6 +46,15 @@ public class CommentDao {
+ 		return jdbc.query(CommentSqls.SELCET_ALL,map,rowMapper);
+ 	}
+ 	
++	public List<Comment> selectByProductId(int productId, int start, int amount) {
++		Map<String , Integer> map = new HashMap<>();
++		map.put("productId", productId );
++		map.put("start", start );
++		map.put("amount", amount );
++		
++		return jdbc.query(CommentSqls.SELECT_BY_PRODUCT_ID_S_A, map, rowMapper);
++	}
++	
+ 	public List<Map<String,Object>> selectAvgScoreByProductId(int productId) {
+ 		Map<String , ?> map = Collections.singletonMap("id",productId);
+ 		List<Map<String,Object>> list = jdbc.queryForList(CommentSqls.SELECT_COUNT_AND_AVGSCORE,map);
+diff --git a/reservation-service/src/main/java/kr/or/reservation/restcontroller/RestCommentController.java b/reservation-service/src/main/java/kr/or/reservation/restcontroller/RestCommentController.java
+index 27103ed..39d7c54 100644
+--- a/reservation-service/src/main/java/kr/or/reservation/restcontroller/RestCommentController.java
++++ b/reservation-service/src/main/java/kr/or/reservation/restcontroller/RestCommentController.java
+@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
+ import org.springframework.web.bind.annotation.PathVariable;
+ import org.springframework.web.bind.annotation.PostMapping;
+ import org.springframework.web.bind.annotation.RequestMapping;
++import org.springframework.web.bind.annotation.RequestParam;
+ import org.springframework.web.bind.annotation.ResponseBody;
+ import org.springframework.web.bind.annotation.RestController;
  
+@@ -40,5 +41,12 @@ public class RestCommentController {
+ 	public long insert(@ModelAttribute Comment comment ){
+ 		return commentService.insert(comment);
+ 	}
++	
++	@GetMapping("/api/comment/{productId}")
++	public List<Comment> getByProductId(@PathVariable int productId, @RequestParam int start, @RequestParam int amount ){
++		
++		
++		return commentService.selectByProductId(productId, start, amount);
++	}
+ 
+ }
+diff --git a/reservation-service/src/main/java/kr/or/reservation/service/CommentService.java b/reservation-service/src/main/java/kr/or/reservation/service/CommentService.java
+index 446bfce..9ad0083 100644
+--- a/reservation-service/src/main/java/kr/or/reservation/service/CommentService.java
++++ b/reservation-service/src/main/java/kr/or/reservation/service/CommentService.java
+@@ -13,4 +13,6 @@ public interface CommentService {
+ 	public Long insert(Comment comment);
+ 	
+ 	public boolean updateFileName(int commentId, int fileId);
++	
++	public List<Comment> selectByProductId(int productId, int start, int amount);
+ }
+diff --git a/reservation-service/src/main/java/kr/or/reservation/serviceImpl/CommentServiceImpl.java b/reservation-service/src/main/java/kr/or/reservation/serviceImpl/CommentServiceImpl.java
+index a91eb0b..c62dbc5 100644
+--- a/reservation-service/src/main/java/kr/or/reservation/serviceImpl/CommentServiceImpl.java
++++ b/reservation-service/src/main/java/kr/or/reservation/serviceImpl/CommentServiceImpl.java
+@@ -44,6 +44,15 @@ public class CommentServiceImpl implements CommentService{
+ 		return null;
+ 	}
+ 	
++	@Override
++	public List<Comment> selectByProductId(int productId, int start, int amount) {
++		// TODO Auto-generated method stub
++		if(productId > 0 && start >= 0 && amount >= 0) {
++			return commentDao.selectByProductId(productId, start, amount);
++		}
++		return null;
++	}
++	
+ 
+ 	@Override
+ 	public AVGForComment selectAvgScoreByProductId(int producId) {
+diff --git a/reservation-service/src/main/java/kr/or/reservation/sqls/CommentSqls.java b/reservation-service/src/main/java/kr/or/reservation/sqls/CommentSqls.java
+index 8432fe4..205ffe2 100644
+--- a/reservation-service/src/main/java/kr/or/reservation/sqls/CommentSqls.java
++++ b/reservation-service/src/main/java/kr/or/reservation/sqls/CommentSqls.java
+@@ -25,5 +25,9 @@ public class CommentSqls {
+ 			"SET " + 
+ 			"first_image_save_file_name = :imageName " + 
+ 			"WHERE id = :id ";
++	
++	public final static String SELECT_BY_PRODUCT_ID_S_A = "select t2.nickname, t1.* from reservation_user_comment as t1"
++			+ " inner join users as t2 on t1.user_id = t2.id"
++			+ " where t1.product_id = :productId limit :start ,:amount";
+ 
+ }
+diff --git a/reservation-service/src/main/webapp/resources/js/modules/visualModule.js b/reservation-service/src/main/webapp/resources/js/modules/visualModule.js
+index 81669fb..8a66158 100644
+--- a/reservation-service/src/main/webapp/resources/js/modules/visualModule.js
++++ b/reservation-service/src/main/webapp/resources/js/modules/visualModule.js
+@@ -1,24 +1,157 @@
+-const VISUAL_IMG_SIZE = 414;
+-const VISUAL_IMG_NUM = 2;
+-
+-var VisualModule_ = (function(){
+-
+-	var instance;
+-
+-	function makeModule() {
+-
+-		var root = ""; // moduleClass : the ancestor class of this module
+-
+-		// private variables
+-		var position_num = 0;
+-		var autoRollId;
+-		var stopRollId;
+-		var visualImgNum;
+-		var visualImgSize;
+-		var autoRolling = autoRoll;
+-		var endFlag = 1;
+-		var btnPreElement= $( root + " .btn_pre_e");
+-		var btnNxtElement= $( root + " .btn_nxt_e");
++//const VISUAL_IMG_SIZE = 414;
++//const VISUAL_IMG_NUM = 2;
++
++
++/*
++function VisualModule(setting) {
++	
++	//initiallize
++	this.root = setting.root;
++	this.setVisualImgSize = setting.setVisualImgSize;
++	this.setVisualImgNum = setting.setVisualImgNum;
++	this.isAutoRoll = setting.isAutoRoll;
++	this.isScrollEnd = setting.isScrollEnd;
++	this.btnPreElement = setting.btnPreElement;
++	this.btnNxtElement = setting.btnNxtElement;
++	this.printPositionElement = setting.printPositionElement;
++	
++	
++	this. position_num = 0;
++	this. autoRollId = null;
++	this. stopRollId = null;
++	
++	//default setting
++	
++	if(this.isAutoRoll == null) { this.isAutoRoll = false; }
++	if(this.isScrollEnd == null) { this.isScrollEnd = 1; }
++	if(this.btnPreElement == null) { this.btnPreElement = $( root + " .btn_pre_e"); }
++	if(this.btnPreElement == null) { this.btnPreElement = $( root + " .btn_nxt_e"); }
++	
++}
++VisualModule.prototype.constructor = VisualModule;
++VisualModule.prototype.init = function() {
++	this.root.find(".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 0);
++	this.btnSetting();
++	this.position_num = 0;
++	if(this.isAutoRoll) { this.autoRolling(); }
++	touchHandler = touchHandle();
++}
++
++
++VisualModule.prototype.btnSetting = function() {
++	this.btnPreElement.off("click");
++	this.btnNxtElement.off("click");
++	this.btnPreElement.on("click", this.btnPreClick);
++	this.btnNxtElement.on("click", this.btnNxtClick);
++}
++
++
++VisualModule.prototype.btnPreClick = function(event) {
++	this.goPrev();
++	this.stopRoll();
++	this.event.preventDefault();
++	this.event.stopPropagation();
++	//console.log(position_num);
++}
++
++VisualModule.prototype.btnNxtClick = function(event) {
++	goNext();
++	stopRoll();
++	event.preventDefault();
++	event.stopPropagation();
++	//console.log(position_num);
++}
++
++VisualModule.prototype.goPrev = function() {
++	if(position_num == 0 && isScrollEnd != 0 ) {
++		position_num = visualImgNum - 1 ;
++		$( root + ".visual_img").animate({left: -visualImgNum* visualImgSize  + "px" }, 0);
++		$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
++
++	} else if (position_num > 0) {
++		position_num = position_num - 1;
++		$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
++
++	} else {
++		$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
++	}
++}
++
++VisualModule.prototype.goNext = function() {
++	if(position_num == visualImgNum -1 && isScrollEnd != 0) {
++		position_num = 0;
++		$( root + ".visual_img").animate( { left: "-=" + visualImgSize + "px" }, 'slow');
++		$( root + ".visual_img").animate({left: "0px" }, 0);
++		////console.log(position_num);
++	} else if(position_num < visualImgNum -1) {
++		position_num = position_num + 1;
++		$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
++		////console.log(position_num);
++	} else{
++		$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
++	}
++}
++
++VisualModule.prototype.autoRoll = function() {
++	autoRollId = setInterval(goNext, 2000);
++}
++
++VisualModule.prototype.stopRoll = function() {
++	clearTimeout(stopRollId);
++	clearInterval(autoRollId);
++	stopRollId = setTimeout(autoRolling, 4000);
++}
++
++VisualModule.prototype.printPositionNum = function (printObject) {
++	printObject.html(position_num+1);
++}
++*/
++
++
++
++
++
++
++/*setting = {
++root:
++visualImgSize:
++visualImgNum:
++isAutoRoll:
++isScrollEnd:
++btnPreElement:
++btnNxtElement:
++printPositionElement:
++}*/
++
++//const VISUAL_IMG_SIZE = 414;
++//const VISUAL_IMG_NUM = 2;
++function VisualModule() {
++
++
++	function makeModule(setting) {
++
++		//initiallize
++		var root = setting.root;
++		var visualImgSize = setting.visualImgSize;
++		var visualImgNum = setting.visualImgNum;
++		var isAutoRoll = setting.isAutoRoll;
++		var isScrollEnd = setting.isScrollEnd;
++		var btnPreElement = setting.btnPreElement;
++		var btnNxtElement = setting.btnNxtElement;
++		var printPositionElement = setting.printPositionElement;
++		
++		
++		var  position_num = 0;
++		var  autoRollId = null;
++		var  stopRollId = null;
++		
++		//default setting
++		if(visualImgSize == null) { visualImgSize = 414; }
++		if(visualImgNum == null) { visualImgNum = 2; }
++		if(isAutoRoll == null) { isAutoRoll = false; }
++		if(isScrollEnd == null) { isScrollEnd = 1; }
++		if(btnPreElement == null) { btnPreElement = $( root + " .btn_pre_e"); }
++		if(btnPreElement == null) { btnPreElement = $( root + " .btn_nxt_e"); }
+ 
+ 
+ 		// module
+@@ -26,11 +159,14 @@ var VisualModule_ = (function(){
+ 
+ 		// init
+ 		function init(){
+-			$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 0);
++			root.find(".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 0);
+ 			btnSetting();
+ 			position_num = 0;
+-			if(autoRolling != null) { autoRolling(); }
++			if(isAutoRoll) { autoRolling(); }
+ 			touchHandler = touchHandle();
++			printPositionNum(printPositionElement);
++			btnPreElement.on("click", printPositionNum.bind(this, printPositionElement));
++			btnNxtElement.on("click", printPositionNum.bind(this, printPositionElement));
+ 		}
+ 
+ 
+@@ -60,7 +196,7 @@ var VisualModule_ = (function(){
+ 		}
+ 
+ 		function goPrev() {
+-			if(position_num == 0 && endFlag != 0 ) {
++			if(position_num == 0 && !isScrollEnd ) {
+ 				position_num = visualImgNum - 1 ;
+ 				$( root + ".visual_img").animate({left: -visualImgNum* visualImgSize  + "px" }, 0);
+ 				$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
+@@ -75,7 +211,7 @@ var VisualModule_ = (function(){
+ 		}
+ 
+ 		function goNext() {
+-			if(position_num == visualImgNum -1 && endFlag != 0) {
++			if(position_num == visualImgNum -1 && !isScrollEnd) {
+ 				position_num = 0;
+ 				$( root + ".visual_img").animate( { left: "-=" + visualImgSize + "px" }, 'slow');
+ 				$( root + ".visual_img").animate({left: "0px" }, 0);
+@@ -201,7 +337,7 @@ var VisualModule_ = (function(){
+ 			},
+ 
+ 			setScrollEndFlag: function (flag) {
+-				endFlag = flag;
++				isScrollEnd = flag;
+ 			},
+ 
+ 			getPosition: function() {
+@@ -218,20 +354,22 @@ var VisualModule_ = (function(){
+ 		};
+ 
+ 
+-	};
+-
+-	return {
+-
+-	    getInstance: function () {
+-
+-
+-	        instance = makeModule();
+-
+-
+-	      return instance;
+-	    }
+-
+-	};
+-
+-})();
++	}
++	
++	return{
++		makeModule : function(setting) {
++			return makeModule(setting);
++		}
++	}
++	
++	
++//	
++//	this.constructor = function(setting) {
++//		console.log("call constructor");
++//		var instance = makeModule(setting);
++//		return instance;
++//	}
++
++
++}
+ 
+diff --git a/reservation-service/src/main/webapp/views/detail.jsp b/reservation-service/src/main/webapp/views/detail.jsp
+index 89c73d8..4c44d69 100644
+--- a/reservation-service/src/main/webapp/views/detail.jsp
++++ b/reservation-service/src/main/webapp/views/detail.jsp
+@@ -315,9 +315,9 @@
+ <!--  get JQuery   -->
+ <script src="//code.jquery.com/jquery.min.js"></script>
+ 
+-<!--  img Slide  -->
++<!--  img Slide  
+ <script src="/resources/js/slide/caroucel.js"></script>
+-
++-->
+ 
+ <!--  Handlebar -->
+ <script src="//cdn.jsdelivr.net/handlebarsjs/4.0.8/handlebars.min.js"></script>
+@@ -328,6 +328,7 @@
+ 
+ <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=w0YSpFZqo6SXUXy5itSy&submodules=geocoder"></script>
+ <script src="/resources/js/naverMap.js"></script>
++<script src="/resources/js/modules/visualModule.js"></script>
+  
+ <script>
+ 
+@@ -349,9 +350,22 @@ $(document).ready(function(){
+ 	$ulPop = $(".visual_img:last"),
+ 	$popupPoint = $(".num.popup");
+ 	
+-	var touch = new CaroucelTouch($ul,$point);
+-	CarocelDetail.init(touch);
+-	
++/* 	var touch = new CaroucelTouch($ul,$point);
++	CarocelDetail.init(touch); */
++	var setting = {
++			root: $(".section_visual"),
++			visualImgSize: 414,
++			visualImgNum: $ul.children().length - 1,
++			isAutoRoll: true,
++			isScrollEnd: false,
++			btnPreElement: null,
++			btnNxtElement: null,
++			printPositionElement:$(".num:first")
++	}
++	console.log(VisualModule);
++	var visualModule = VisualModule.makeModule(setting);
++	console.log(visualModule);
++	visualModule.init();
+ 	
+ 	// layer popup
+ 	
+diff --git a/reservation-service/src/test/java/kr/or/reservation/jdbc/CommentForDetailTest.java b/reservation-service/src/test/java/kr/or/reservation/jdbc/CommentTest.java
+similarity index 78%
+rename from reservation-service/src/test/java/kr/or/reservation/jdbc/CommentForDetailTest.java
+rename to reservation-service/src/test/java/kr/or/reservation/jdbc/CommentTest.java
+index 95388f5..0fcc2d0 100644
+--- a/reservation-service/src/test/java/kr/or/reservation/jdbc/CommentForDetailTest.java
++++ b/reservation-service/src/test/java/kr/or/reservation/jdbc/CommentTest.java
+@@ -11,13 +11,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+ import org.springframework.transaction.annotation.Transactional;
+ 
+ import kr.or.reservation.config.RootApplicationContextConfig;
+-import kr.or.reservation.dao.CommentDao;
++import kr.or.reservation.domain.Comment;
+ import kr.or.reservation.service.CommentService;
+ 
+ @RunWith(SpringJUnit4ClassRunner.class)
+ @ContextConfiguration(classes = RootApplicationContextConfig.class)
+ @Transactional
+-public class CommentForDetailTest {
++public class CommentTest {
+ 
+ 	@Autowired
+ 	CommentService service;
+@@ -38,4 +38,13 @@ public class CommentForDetailTest {
+ 		// 가져 오는지 테스트 
+ 		log.info(list.toString());
+ 	}
++	
++	@Test
++	public void shouldSelectByProductId() {
++		List<Comment> list= service.selectByProductId(2, 0, 10);
++		log.info(list.toString());
++		
++		list= service.selectByProductId(2, 5, 10);
++		log.info(list.toString());
++	}
  }
 -- 
 2.11.0.windows.1

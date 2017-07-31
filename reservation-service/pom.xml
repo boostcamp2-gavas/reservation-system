@@ -227,6 +227,22 @@
 			<version>1.1</version>
 		</dependency>
 
+
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-simple</artifactId>
+		    <version>1.6.1</version>
+		</dependency>
+		
+		<!--  로그 관련 설정? -->
+		<dependency>
+			<groupId>org.bgee.log4jdbc-log4j2</groupId>
+			<artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+			<version>1.16</version>
+		</dependency>
+
+
+
 	</dependencies>
 
 	<build>
