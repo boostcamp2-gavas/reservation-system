@@ -50,7 +50,7 @@
                             		<em class="green">${reviewList.commentCount }건</em> 등록
                             	</span>
                             </div>
-                            <ul class="list_short_review">
+                            <ul class="list_short_review" data-comment-count="${reviewList.commentCount }" data-product-id="">
 								<c:forEach var="ri" items="${reviewList.commentList }">
                             	<li class="list_item">
                                     <div>
@@ -90,9 +90,37 @@
             </div>
         </div>
         <hr> </div>
+		<c:import url="/WEB-INF/views/footer.jsp" />
         <div id="photoviewer">
             <div class="layer" id="layer"></div>
         </div>
+    <script id="comment_list_template" type="text/x-handlebars-template">
+        {{#item}}
+        <li class="list_item">
+            <div>
+                <div class="review_area">
+                    {{#if fileId}}
+                    <div class="thumb_area">
+                        <a href="#" class="thumb" title="이미지 크게 보기"> 
+                            <img width="90" height="90" class="img_vertical_top" src="/files/{{fileId }}" alt="리뷰이미지"> 
+                        </a> 
+                        <span class="img_count">{{imgCount}}</span>
+                    </div>
+                    {{/if}}
+                    <h4 class="resoc_name">{{productName}}</h4>
+                    <p class="review">{{comment }}</p>
+                </div>
+                <div class="info_area">
+                    <div class="review_info"> 
+                        <span class="grade">{{score }}</span> 
+                        <span class="name">{{nickname }}</span> 
+                        <span class="date">{{reservationDate}} 방문</span> 
+                    </div>
+                </div>
+            </div>
+        </li> 
+        {{/item}}
+    </script>
 	<script id="popup_layer_template" type="text/x-handlebars-template">
 		{{#items}}
 		<div class="sub_layer" style="transform: translateX({{tranx}}%)">
@@ -110,11 +138,12 @@
 	<script src="/resources/js/node_modules/handlebars/dist/handlebars.min.js"></script>
 	<script src="/resources/js/node_modules/@egjs/component/dist/component.min.js"></script>
 	<script src="/resources/js/messenger.js"></script>    
+	<script src="/resources/js/callAjax.js"></script>    
+	<script src="/resources/js/review/commentList.js"></script>    
 	<script src="/resources/js/review/thumbNail.js"></script>    
     <script>
         $(function() {
-            
+            CommentList.init($('ul.list_short_review'));
         });
     </script>
-		<c:import url="/WEB-INF/views/footer.jsp" />
 </body>
