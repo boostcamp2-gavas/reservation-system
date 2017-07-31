@@ -257,6 +257,7 @@ FormModule.prototype.postFile = function(prevOnloadEvent) {
 	
 	if(this.commentComponent.fileListlengh <= 0) {
 		console.log("there is no file.");
+		location.href = "/review/"+getReservationInfo().productId;
 		return;
 	}
 	
@@ -294,9 +295,10 @@ FormModule.prototype.postFile = function(prevOnloadEvent) {
         cache: false,
         contentType: false,
         processData: false
+    }).always(function(){
+    	location.href = "/review/"+getReservationInfo().productId;
     });
 }
-
 
 
 
