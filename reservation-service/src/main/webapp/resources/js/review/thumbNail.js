@@ -10,7 +10,7 @@ var ThumbApp = (function() {
 		bindEvents();
 	}
 	function bindEvents() {
-		$('.thumb').on('click', popupViewer);
+		$('ul.list_short_review').on('click', '.thumb', popupViewer);
 		$('#layer')
 			.on('click', '.com_img_btn.close', hideViewer)
 			.on('click', '.com_img_btn.nxt', clickNext)

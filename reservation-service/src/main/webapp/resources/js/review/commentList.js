@@ -24,13 +24,11 @@ var CommentList = (function() {
                 var url = '/api/comments/' + productId + '?start=' + page;
                 callAjax(url).then(display, function(request, status, error) {
                     isChecking = false;
-                    console.log(error);
                 });
             }
         }
     }
     function display(res) {
-        console.log(res);
         isChecking = false;
         page++;
         var obj = {
