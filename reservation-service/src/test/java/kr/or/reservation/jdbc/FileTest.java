@@ -14,14 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.reservation.config.RootApplicationContextConfig;
 import kr.or.reservation.domain.FileDomain;
-import kr.or.reservation.service.ImgService;
+import kr.or.reservation.service.ImgFileService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = RootApplicationContextConfig.class)
 public class FileTest {
 	
 	@Autowired
-	ImgService service;
+	ImgFileService service;
 	
 	// array 를 DB에 insert
 	@Test

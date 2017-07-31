@@ -11,4 +11,6 @@ public interface CommentService {
 	public AVGForComment selectAvgScoreByProductId(int producId);
 	public List<?> getFileIdByCommentId(int commentId);
 	public Long insert(Comment comment);
+	
+	public boolean updateFileName(int commentId, int fileId);
 }

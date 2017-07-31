@@ -33,9 +33,9 @@ public class CommentImageDao {
 				.usingGeneratedKeyColumns("id"); 
 	}
 
-	public int[] insertArray(CommentImage[] commentImage) {
+	public boolean insertArray(CommentImage[] commentImage) {
 		SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(commentImage);
-		return insertAction.executeBatch(batch);
+		return insertAction.executeBatch(batch) !=null;
 	}
 
 

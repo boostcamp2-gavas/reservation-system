@@ -5,16 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.reservation.dao.CommentDao;
 import kr.or.reservation.dao.CommentImageDao;
 import kr.or.reservation.dao.FileDao;
 import kr.or.reservation.dao.ImgDao;
 import kr.or.reservation.domain.CommentImage;
 import kr.or.reservation.domain.FileDomain;
 import kr.or.reservation.dto.ImgDTO;
-import kr.or.reservation.service.ImgService;
+import kr.or.reservation.service.ImgFileService;
 
 @Service
-public class ImgServiceImpl implements ImgService {
+public class ImgFileServiceImpl implements ImgFileService {
 
 	ImgDao imgDao;
 	FileDao fileDao;
@@ -30,6 +31,7 @@ public class ImgServiceImpl implements ImgService {
 		this.fileDao = fileDao;
 	}
 	
+
 	@Autowired
 	public void setCommentImageDao(CommentImageDao commentImageDao) {
 		this.commentImageDao = commentImageDao;
@@ -52,12 +54,14 @@ public class ImgServiceImpl implements ImgService {
 		return null;
 	}
 
+	// comment update
 	@Override
 	public int[] insertFileArray(FileDomain[] files) {
 		if (files == null) {
 			return null;
 		}
-		return fileDao.insertArray(files);
+		int[] fileId = fileDao.insertArray(files);
+		return fileId;
 	}
 
 	@Override
@@ -68,7 +72,7 @@ public class ImgServiceImpl implements ImgService {
 		for(int i=0; i<length; ++i) {
 			commentImage[i] = new CommentImage(reservationUserCommentId,fileId[i]);
 		}
-		return commentImageDao.insertArray(commentImage)!=null;
+		return commentImageDao.insertArray(commentImage);
 		
 	}
 

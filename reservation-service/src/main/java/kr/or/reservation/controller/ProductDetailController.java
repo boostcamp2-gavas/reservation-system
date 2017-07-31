@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.or.reservation.service.CommentService;
-import kr.or.reservation.service.ImgService;
+import kr.or.reservation.service.ImgFileService;
 import kr.or.reservation.service.ProductService;
 
 @Controller
@@ -17,7 +17,7 @@ import kr.or.reservation.service.ProductService;
 public class ProductDetailController {
 
 	ProductService productService;
-	ImgService imgService;
+	ImgFileService imgService;
 	CommentService commentService;
 
 	@Autowired
@@ -26,7 +26,7 @@ public class ProductDetailController {
 	}
 
 	@Autowired
-	public void setImgService(ImgService imgService) {
+	public void setImgService(ImgFileService imgService) {
 		this.imgService = imgService;
 	}
 

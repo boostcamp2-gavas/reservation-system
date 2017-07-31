@@ -26,7 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.reservation.common.FileRead;
 import kr.or.reservation.domain.FileDomain;
-import kr.or.reservation.service.ImgService;
+import kr.or.reservation.service.CommentService;
+import kr.or.reservation.service.ImgFileService;
 
 
 @Controller
@@ -34,22 +35,28 @@ import kr.or.reservation.service.ImgService;
 public class ImgFileController {
 
 	
-	ImgService imgService;
+	ImgFileService imgService;
+	CommentService commentService;
 	Logger log = Logger.getLogger(this.getClass());
 	
 	@Autowired
-	public void setImgService(ImgService imgService) {
+	public void setImgService(ImgFileService imgService) {
 		this.imgService = imgService;
+	}
+	
+	@Autowired
+    public void setCommentService(CommentService commentService) {
+		this.commentService = commentService;
 	}
 
 
-    @GetMapping(path="/{id}")
+
+
+	@GetMapping(path="/{id}")
     public void downloadReservationUserCommentImage(
             @PathVariable(name="id") long id,
             HttpServletResponse response
     ){
-    	
-    	
     	String fileName = imgService.selectOne(id).getSaveFileName();
         String contentType = "image/jpeg";
         //int fileSize = 271621;
@@ -84,15 +91,20 @@ public class ImgFileController {
  
 
     @PostMapping
-    public String create(
+    public String insertFileImageAndUpdate(
             @RequestParam("files") MultipartFile[] files,
             @RequestParam("commentId") int commentId,
             HttpSession session){
     	
     	FileDomain[] fileArray= FileRead.FileReader((Integer)session.getAttribute("id"), files);
         int[] fileId = imgService.insertFileArray(fileArray);
-        imgService.insertImageArray(commentId, fileId);
-        return "redirect:/img";
+        boolean insertImage = imgService.insertImageArray(commentId, fileId);
+        boolean updateFile =  commentService.updateFileName(commentId, fileId[0]);
+        if(insertImage && updateFile) {
+        	  return "redirect:/img";
+        }
+        // 실패시 main으로
+        return "redirect:/";
     }
     
 }

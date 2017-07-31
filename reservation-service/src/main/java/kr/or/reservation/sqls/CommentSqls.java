@@ -20,4 +20,10 @@ public class CommentSqls {
 			" where product_id = :id;";
 
 	public final static String SELECT_FILEID_BY_COMMENTID = "SELECT file_id FROM reservation_user_comment_image where reservation_user_comment_id =:id";
+
+	public final static String UPDATE_FIRST_FILE = "UPDATE reservation_user_comment " + 
+			"SET " + 
+			"first_image_save_file_name = :imageName " + 
+			"WHERE id = :id ";
+
 }

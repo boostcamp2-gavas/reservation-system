@@ -1,6 +1,7 @@
 package kr.or.reservation.dao;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +46,6 @@ public class CommentDao {
 		return jdbc.query(CommentSqls.SELCET_ALL,map,rowMapper);
 	}
 	
-	// 이름이 너무긴데? 
 	public List<Map<String,Object>> selectAvgScoreByProductId(int productId) {
 		Map<String , ?> map = Collections.singletonMap("id",productId);
 		List<Map<String,Object>> list = jdbc.queryForList(CommentSqls.SELECT_COUNT_AND_AVGSCORE,map);
@@ -56,5 +56,13 @@ public class CommentDao {
 		Map<String , ?> map = Collections.singletonMap("id",commnetId);
 		return jdbc.queryForList(CommentSqls.SELECT_FILEID_BY_COMMENTID,map);
 	}
+	
+	public int updateFileName(int commnetId,int fileId){
+		Map<String , Integer> map = new HashMap<>();
+		map.put("id", commnetId);
+		map.put("imageName", fileId);
+		return jdbc.update(CommentSqls.UPDATE_FIRST_FILE,map);
+	}
+	
 	
 }

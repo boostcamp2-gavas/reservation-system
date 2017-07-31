@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.or.reservation.service.CommentService;
-import kr.or.reservation.service.ImgService;
+import kr.or.reservation.service.ImgFileService;
 import kr.or.reservation.service.ProductService;
 import kr.or.reservation.service.ReservationService;
 

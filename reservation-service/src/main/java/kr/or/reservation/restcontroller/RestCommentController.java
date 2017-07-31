@@ -38,7 +38,6 @@ public class RestCommentController {
 	@PostMapping("/comment")
 	@ResponseBody
 	public long insert(@ModelAttribute Comment comment ){
-		
 		return commentService.insert(comment);
 	}
 
