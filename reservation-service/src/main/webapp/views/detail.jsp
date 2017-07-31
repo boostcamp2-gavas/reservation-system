@@ -372,7 +372,6 @@ $(document).ready(function(){
 	console.log(getProductId());
 	
 	var commentModule = CommentModule;
-	
 	commentModule.init(getProductId());
 	
 	
