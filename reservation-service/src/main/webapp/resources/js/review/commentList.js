@@ -4,6 +4,7 @@ var CommentList = (function() {
     var commentCount;
     var page = 1;
     var template;
+    var isChecking = false;
     function init(pRoot) {
         root = pRoot;
         productId = pRoot.data('product-id');
@@ -18,16 +19,24 @@ var CommentList = (function() {
         if(commentCount > page * 10) {
             var maxHeight = $(document).height();
             var currentScroll = $(window).scrollTop() + $(window).height();
-            if(maxHeight - currentScroll < 30) {
+            if(maxHeight - currentScroll < 30 && !isChecking) {
+                isChecking = true;
                 var url = '/api/comments/' + productId + '?start=' + page;
-                callAjax(url).then(display)
+                callAjax(url).then(display, function(request, status, error) {
+                    isChecking = false;
+                    console.log(error);
+                });
             }
         }
     }
     function display(res) {
-        page++;
         console.log(res);
-        root.append(template(res));
+        isChecking = false;
+        page++;
+        var obj = {
+            items : res
+        }
+        root.append(template(obj));
     }
     return {
         init: init

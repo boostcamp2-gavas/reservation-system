@@ -10,6 +10,68 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
     <link href="/resources/css/style.css" rel="stylesheet">
+    <style>
+    #photoviewer {  
+			position: fixed; 
+			left:0;
+			top:0;
+			width: 100%;
+			height: 100%;
+			z-index:9000;  
+			background-color:#000;  
+			word-wrap: normal;
+			display: none
+		}
+   		#layer{
+   			position: fixed;
+		    z-index: 8000;
+			display: flex;
+			width: 100%;
+			height: 100%;
+	    }
+	    .sub_layer{
+	   		position: fixed;
+	   		width: 100%;
+			height: 100%;
+			z-index:6500;
+			-ms-transform: translate(0px, 0px); /* IE 9 */
+		    -webkit-transform: translate(0px, 0px); /* Safari */
+		    transform: translate(0px, 0px);
+	    }
+	    .sub_layer.touch{
+			-moz-transition: all 500ms ease;
+		    -o-transition: all 500ms ease;
+		    -webkit-transition: all 500ms ease;
+		    transition: all 500ms ease
+	    }
+		div.wrapper{
+			position: fixed;
+			left: 50%;
+			top: 50%;
+			-ms-transform: translate(0px, 0px); /* IE 9 */
+		    -webkit-transform: translate(0px, 0px); /* Safari */
+		    transform: translate(0px, 0px);
+		}
+		.com_img_btn {
+			position: fixed;
+			width: 50px;
+			height: 50px;
+			top: 50%;
+			margin-top: -25px;
+			z-index: 6000;
+			display : block
+		}
+		.btn_wrapper.invisible{
+			display : none
+		}
+		.com_img_btn.nxt {
+			right: 0
+		}
+		.com_img_btn.close {
+			top: 0;
+			margin-top: 0
+		}
+	</style>
 </head>
 
 <body>
@@ -63,7 +125,7 @@
                                     	<c:if test="${ri.fileId ne null }">
                                     	<div class="review_area">
                                             <div class="thumb_area">
-                                                <a href="#" class="thumb" title="이미지 크게 보기"> 
+                                                <a href="#" class="thumb" title="이미지 크게 보기" data-comment-id="${ri.rucId}"> 
                                                 	<img width="90" height="90" class="img_vertical_top" src="/files/${ri.fileId }" alt="리뷰이미지"> 
                                                 </a> 
                                                 <span class="img_count">${ri.imgCount}</span>
@@ -95,7 +157,7 @@
             <div class="layer" id="layer"></div>
         </div>
     <script id="comment_list_template" type="text/x-handlebars-template">
-        {{#commentList}}
+        {{#items}}
         <li class="list_item">
             <div>
                 <div class="review_area">
@@ -119,10 +181,10 @@
                 </div>
             </div>
         </li> 
-        {{/commentList}}
+        {{/items}}
     </script>
 	<script id="popup_layer_template" type="text/x-handlebars-template">
-		{{#item}}
+		{{#items}}
 		<div class="sub_layer" style="transform: translateX({{tranx}}%)">
     		<div class="wrapper">
 				<img src="/files/{{fileId}}">
@@ -132,7 +194,7 @@
     			<button class="com_img_btn prev"><</button><button class="com_img_btn nxt">></button>
 			</div>
     	</div>
-		{{/item}}
+		{{/items}}
 	</script>
     <script src="/resources/js/node_modules/jquery/dist/jquery.min.js"></script>
 	<script src="/resources/js/node_modules/handlebars/dist/handlebars.min.js"></script>
@@ -144,6 +206,7 @@
     <script>
         $(function() {
             CommentList.init($('ul.list_short_review'));
+            ThumbApp.init();
         });
     </script>
 </body>
