@@ -166,6 +166,32 @@
 	            <span class="copyright">© NAVER Corp.</span>
 	        </div>
 	    </footer>
+        <div id="photoviewer">
+            <div class="layer" id="layer"></div>
+        </div>
+	<script id="popup_layer_template" type="text/x-handlebars-template">
+		{{#items}}
+		<div class="sub_layer" style="transform: translateX({{tranx}}%)">
+    		<div class="wrapper">
+				<img src="/files/{{fileId}}">
+    		</div>
+			<div class="btn_wrapper">
+	    		<button class="com_img_btn close">X</button>
+    			<button class="com_img_btn prev"><</button><button class="com_img_btn nxt">></button>
+			</div>
+    	</div>
+		{{/items}}
+	</script>
+    <script src="/resources/js/node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="/resources/js/node_modules/handlebars/dist/handlebars.min.js"></script>
+	<script src="/resources/js/node_modules/@egjs/component/dist/component.min.js"></script>
+	<script src="/resources/js/messenger.js"></script>    
+	<script src="/resources/js/review/thumbNail.js"></script>    
+    <script>
+        $(function() {
+            
+        });
+    </script>
 </body>
 
 </html>
