@@ -329,8 +329,11 @@
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=w0YSpFZqo6SXUXy5itSy&submodules=geocoder"></script>
 <script src="/resources/js/naverMap.js"></script>
 <script src="/resources/js/modules/visualModule.js"></script>
- 
+<script src="/resources/js/modules/commentModule.js"></script>
 <script>
+function getProductId() {
+	return ${detail.id};
+}
 
 $(document).ready(function(){
 	// 평점 view
@@ -352,23 +355,29 @@ $(document).ready(function(){
 	
 /* 	var touch = new CaroucelTouch($ul,$point);
 	CarocelDetail.init(touch); */
+	
 	var setting = {
 			root: $(".section_visual"),
 			visualImgSize: 414,
-			visualImgNum: $ul.children().length - 1,
-			isAutoRoll: true,
-			isScrollEnd: false,
-			btnPreElement: null,
-			btnNxtElement: null,
+			visualImgNum: $ul.children().length,
+			isAutoRoll: false,
+			isScrollEnd: true,
+			btnPreElement: $(".btn_prev"),
+			btnNxtElement: $(".btn_nxt"),
 			printPositionElement:$(".num:first")
 	}
-	console.log(VisualModule);
+	
 	var visualModule = VisualModule(setting);
-	console.log(visualModule);
 	visualModule.init();
+	console.log(getProductId());
+	
+	var commentModule = CommentModule;
+	
+	commentModule.init(getProductId());
+	
 	
 	// layer popup
-	
+/* 	
 	$(".thumb").on("click",function(){
 		var comment = $(this).data("id"),
 		caroucelPopup = {};
@@ -398,7 +407,7 @@ $(document).ready(function(){
 	});
 	
 	$(".graph_value").css("width",('${avg.avgScore}' * 20)+"%");
-	
+	 */
 	(function bkBtnCheck(){
 		
 		var $btn =$(".bk_btn"), 

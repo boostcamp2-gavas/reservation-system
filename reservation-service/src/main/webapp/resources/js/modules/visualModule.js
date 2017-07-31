@@ -2,115 +2,6 @@
 //const VISUAL_IMG_NUM = 2;
 
 
-/*
-function VisualModule(setting) {
-	
-	//initiallize
-	this.root = setting.root;
-	this.setVisualImgSize = setting.setVisualImgSize;
-	this.setVisualImgNum = setting.setVisualImgNum;
-	this.isAutoRoll = setting.isAutoRoll;
-	this.isScrollEnd = setting.isScrollEnd;
-	this.btnPreElement = setting.btnPreElement;
-	this.btnNxtElement = setting.btnNxtElement;
-	this.printPositionElement = setting.printPositionElement;
-	
-	
-	this. position_num = 0;
-	this. autoRollId = null;
-	this. stopRollId = null;
-	
-	//default setting
-	
-	if(this.isAutoRoll == null) { this.isAutoRoll = false; }
-	if(this.isScrollEnd == null) { this.isScrollEnd = 1; }
-	if(this.btnPreElement == null) { this.btnPreElement = $( root + " .btn_pre_e"); }
-	if(this.btnPreElement == null) { this.btnPreElement = $( root + " .btn_nxt_e"); }
-	
-}
-VisualModule.prototype.constructor = VisualModule;
-VisualModule.prototype.init = function() {
-	this.root.find(".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 0);
-	this.btnSetting();
-	this.position_num = 0;
-	if(this.isAutoRoll) { this.autoRolling(); }
-	touchHandler = touchHandle();
-}
-
-
-VisualModule.prototype.btnSetting = function() {
-	this.btnPreElement.off("click");
-	this.btnNxtElement.off("click");
-	this.btnPreElement.on("click", this.btnPreClick);
-	this.btnNxtElement.on("click", this.btnNxtClick);
-}
-
-
-VisualModule.prototype.btnPreClick = function(event) {
-	this.goPrev();
-	this.stopRoll();
-	this.event.preventDefault();
-	this.event.stopPropagation();
-	//console.log(position_num);
-}
-
-VisualModule.prototype.btnNxtClick = function(event) {
-	goNext();
-	stopRoll();
-	event.preventDefault();
-	event.stopPropagation();
-	//console.log(position_num);
-}
-
-VisualModule.prototype.goPrev = function() {
-	if(position_num == 0 && isScrollEnd != 0 ) {
-		position_num = visualImgNum - 1 ;
-		$( root + ".visual_img").animate({left: -visualImgNum* visualImgSize  + "px" }, 0);
-		$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
-
-	} else if (position_num > 0) {
-		position_num = position_num - 1;
-		$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
-
-	} else {
-		$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
-	}
-}
-
-VisualModule.prototype.goNext = function() {
-	if(position_num == visualImgNum -1 && isScrollEnd != 0) {
-		position_num = 0;
-		$( root + ".visual_img").animate( { left: "-=" + visualImgSize + "px" }, 'slow');
-		$( root + ".visual_img").animate({left: "0px" }, 0);
-		////console.log(position_num);
-	} else if(position_num < visualImgNum -1) {
-		position_num = position_num + 1;
-		$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
-		////console.log(position_num);
-	} else{
-		$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
-	}
-}
-
-VisualModule.prototype.autoRoll = function() {
-	autoRollId = setInterval(goNext, 2000);
-}
-
-VisualModule.prototype.stopRoll = function() {
-	clearTimeout(stopRollId);
-	clearInterval(autoRollId);
-	stopRollId = setTimeout(autoRolling, 4000);
-}
-
-VisualModule.prototype.printPositionNum = function (printObject) {
-	printObject.html(position_num+1);
-}
-*/
-
-
-
-
-
 
 /*setting = {
 root:
@@ -129,7 +20,7 @@ function VisualModule(setting) {
 
 
 	function makeModule(setting) {
-
+		
 		//initiallize
 		var root = setting.root;
 		var visualImgSize = setting.visualImgSize;
@@ -150,8 +41,8 @@ function VisualModule(setting) {
 		if(visualImgNum == null) { visualImgNum = 2; }
 		if(isAutoRoll == null) { isAutoRoll = false; }
 		if(isScrollEnd == null) { isScrollEnd = 1; }
-		if(btnPreElement == null) { btnPreElement = $( root + " .btn_pre_e"); }
-		if(btnPreElement == null) { btnPreElement = $( root + " .btn_nxt_e"); }
+		if(btnPreElement == null) { btnPreElement = root.find(".btn_pre_e"); }
+		if(btnPreElement == null) { btnPreElement = root.find(".btn_nxt_e"); }
 
 
 		// module
@@ -162,7 +53,8 @@ function VisualModule(setting) {
 			root.find(".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 0);
 			btnSetting();
 			position_num = 0;
-			if(isAutoRoll) { autoRolling(); }
+			if(!isAutoRoll) { autoRoll = function(){}; }
+			autoRoll();
 			touchHandler = touchHandle();
 			printPositionNum(printPositionElement);
 			btnPreElement.on("click", printPositionNum.bind(this, printPositionElement));
@@ -198,30 +90,30 @@ function VisualModule(setting) {
 		function goPrev() {
 			if(position_num == 0 && !isScrollEnd ) {
 				position_num = visualImgNum - 1 ;
-				$( root + ".visual_img").animate({left: -visualImgNum* visualImgSize  + "px" }, 0);
-				$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
+				root.find(".visual_img").animate({left: -visualImgNum* visualImgSize  + "px" }, 0);
+				root.find(".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
 
 			} else if (position_num > 0) {
 				position_num = position_num - 1;
-				$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
+				root.find(".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
 
 			} else {
-				$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
+				root.find(".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
 			}
 		}
 
 		function goNext() {
 			if(position_num == visualImgNum -1 && !isScrollEnd) {
 				position_num = 0;
-				$( root + ".visual_img").animate( { left: "-=" + visualImgSize + "px" }, 'slow');
-				$( root + ".visual_img").animate({left: "0px" }, 0);
+				root.find(".visual_img").animate( { left: "-=" + visualImgSize + "px" }, 'slow');
+				root.find(".visual_img").animate({left: "0px" }, 0);
 				////console.log(position_num);
 			} else if(position_num < visualImgNum -1) {
 				position_num = position_num + 1;
-				$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
+				root.find(".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
 				////console.log(position_num);
 			} else{
-				$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
+				root.find(".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
 			}
 		}
 
@@ -232,7 +124,7 @@ function VisualModule(setting) {
 		function stopRoll() {
 			clearTimeout(stopRollId);
 			clearInterval(autoRollId);
-			stopRollId = setTimeout(autoRolling, 4000);
+			stopRollId = setTimeout(autoRoll, 4000);
 		}
 
 		function printPositionNum(printObject) {
@@ -251,11 +143,11 @@ function VisualModule(setting) {
 			var touchX;
 			var moveX;
 
-			$(root+".visual_img").off("touchstart");
-			$(root+".visual_img").off("touchmove");
-			$(root+".visual_img").off("touchend");
+			root.find(".visual_img").off("touchstart");
+			root.find(".visual_img").off("touchmove");
+			root.find(".visual_img").off("touchend");
 
-			$(root+".visual_img").on("touchstart", function(event) {
+			root.find(".visual_img").on("touchstart", function(event) {
 				touchX = event.originalEvent.touches[0].pageX;
 				touchXStart = touchX;
 				touchXPrev = touchX;
@@ -267,20 +159,20 @@ function VisualModule(setting) {
 			});
 
 
-			$(root+".visual_img").on("touchmove", function(event) {
+			root.find(".visual_img").on("touchmove", function(event) {
 				touchX = event.originalEvent.touches[0].pageX;
 				moveX = touchX - touchXPrev;
 
 				touchTime = event.originalEvent.timeStamp;
 				moveTime = touchTimePrev - touchTime;
 
-				$(root+".visual_img").animate({left : "+=" + moveX + "px" }, moveTime);
+				root.find(".visual_img").animate({left : "+=" + moveX + "px" }, moveTime);
 
 				touchXPrev = touchX;
 				touchTimePrev = touchTime;
 			});
 
-			$(root+".visual_img").on("touchend", function(event) {
+			root.find(".visual_img").on("touchend", function(event) {
 				var totalmoveX = touchX - touchXStart;
 				var touchLimit = visualImgSize / 3;
 
@@ -292,7 +184,7 @@ function VisualModule(setting) {
 					btnNxtElement.trigger("click");
 				}
 				else {
-					$(root+".visual_img").animate({left : positionStart }, 'fast');
+					root.find(".visual_img").animate({left : positionStart }, 'fast');
 
 				}
 			});
@@ -356,17 +248,10 @@ function VisualModule(setting) {
 
 	}
 	
-	return makeModule(setting);
-	
-	
-	
-	
-	this.constructor = function(setting) {
-		console.log("call constructor");
-		var instance = makeModule(setting);
-		return instance;
-	}
+	console.log("call constructor");
+	var instance = makeModule(setting);
+	return instance;
+
 
 
 }
-

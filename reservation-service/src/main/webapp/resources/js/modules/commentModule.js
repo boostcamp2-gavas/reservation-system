@@ -1,18 +1,25 @@
 
 
-var CommentModule_ = (function(){
-	var HOST = "http://localhost:8080";
+var CommentModule = (function(){
+	var HOST = "";
 	var productId;
 	
+
 	
 	
 	function getComment() {
-		var url = HOST + "/api/comment/comments/" + productId;
+		var url = HOST + "/api/comment/" + productId;
+		var data = {
+				start: 0,
+				amount: 3
+		}
 		
 		getCommentAjax = $.ajax({
 			url: url,
 			type: "GET",
-			dataType: "json"
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			data: data
 		})
 		.done(
 				showComment.bind(this)
@@ -53,7 +60,7 @@ var CommentModule_ = (function(){
 	}
 	
 	function getVisual(commentId) {
-		var url = HOST + "/api/comment/images/" + commentId;
+		var url = HOST + "/commentImg/" + commentId;
 		
 		getVisualAjax = $.ajax({
 			url: url,
@@ -79,18 +86,16 @@ var CommentModule_ = (function(){
 		
 		$(".section_popup .figure_pagination .num.off span").html(response.length);	
 		
-		
-		
-		var VisualModulePopup = VisualModule_.getInstance();
-		//setting
-			VisualModulePopup.setVisualImgSize(VISUAL_IMG_SIZE);
-			VisualModulePopup.setVisualImgNum(response.length);
-			VisualModulePopup.setAutoRoll(false);
-			VisualModulePopup.setScrollEndFlag(0);
-			VisualModulePopup.setModuleClass("section_popup");
-			VisualModulePopup.setButton($('.section_popup .btn_prev'), $('.section_popup .btn_nxt'));
-			VisualModulePopup.init();
-			VisualModulePopup.initPrintPositionHandler( $(".section_popup .figure_pagination .num:first-child") );
+		var setting = {
+				root: $(".section_popup"),
+				visualImgSize: 414,
+				visualImgNum: $ul.children().length,
+				isAutoRoll: false,
+				isScrollEnd: true,
+				btnPreElement: $(".btn_prev"),
+				btnNxtElement: $(".btn_nxt"),
+				printPositionElement:$(".section_popup .figure_pagination .num:first-child")
+		}
 		
 		
 		if(response.length <= 1) {
@@ -122,12 +127,10 @@ var CommentModule_ = (function(){
 	}
 	
 	return {
-		setProductId: function(id) {
-			productId = id;
-		},
 	
-		load: function() {
-			getComment();
+		init: function(id) {
+			productId = id;
+			//getComment();
 			initButton();
 		}
 	}
