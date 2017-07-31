@@ -44,8 +44,6 @@ public class RestCommentController {
 	
 	@GetMapping("/api/comment/{productId}")
 	public List<Comment> getByProductId(@PathVariable int productId, @RequestParam int start, @RequestParam int amount ){
-		
-		
 		return commentService.selectByProductId(productId, start, amount);
 	}
 

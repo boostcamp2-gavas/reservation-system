@@ -28,7 +28,7 @@ public class ReviewController {
 		
 		model.addAttribute("avgScore", avgScore);
 		model.addAttribute("count", count);
-				
+		model.addAttribute("productId", productId);
 		return "review";
 	}
 

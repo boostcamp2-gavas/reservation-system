@@ -178,10 +178,10 @@
 	        <div>
 	            <div class="review_area no_img">
 	                <h4 class="resoc_name">{{name}}</h4>
-	                <p class="review">{{contents}}</p>
+	                <p class="review">{{comment}}</p>
 	            </div>
 	            <div class="info_area">
-	                <div class="review_info"> <span class="grade">{{score}}</span> <span class="name">{{nickname}}</span> <span class="date">{{date}} 방문</span> </div>
+	                <div class="review_info"> <span class="grade">{{score}}</span> <span class="name">{{nickname}}</span> <span class="date">{{createDate}} 방문</span> </div>
 	            </div>
 	        </div>
       	</li>
@@ -189,17 +189,30 @@
 </script>	
 
 <script>
+var amount = 10,
+start = 0;
+
 var templateSource = $("#review-content").html(),
 Template = Handlebars.compile(templateSource);
 
+$.ajax({
+	method : "get",
+	url : "/api/comment/"+'${productId}'+"?start="+start+"&amount="+amount
+}).done(function(data){
 	var item = {
-			items : [ {name : "공연",contents : "재밋엇어요",score : "3.4",nickname : "nick",date : "date"}]
+			items : []
 	};
+	console.log(data);
+	for(var i =0, max = data.length; i<max; ++i){
+		item.items.push(data[i]);
+	}
 
 	//expectationLength += max ;
 	var html = Template(item);
 	var $card = $(".list_short_review");
 	$card.append(html);
+})
+
 	</script>
 </body>
 
