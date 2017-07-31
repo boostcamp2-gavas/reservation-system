@@ -75,7 +75,7 @@ var CommentModule = (function(){
 	}
 	
 	function showVisual(response) {
-		console.log(response);
+		//console.log(response);
 		var source = $("#layer-content").html();
 		var template = Handlebars.compile(source);
 		var data = {
@@ -118,7 +118,7 @@ var CommentModule = (function(){
 			event.stopPropagation();
 			var commentId = $(event.target).data("comment");
 			getVisual(commentId);
-			console.log("hello?");
+			//console.log("hello?");
 		});
 		
 		$("#photoviewer .close").on("click", function(event){

@@ -1,7 +1,3 @@
-//const VISUAL_IMG_SIZE = 414;
-//const VISUAL_IMG_NUM = 2;
-
-
 
 /*setting = {
 root:
@@ -13,9 +9,6 @@ btnPreElement:
 btnNxtElement:
 printPositionElement:
 }*/
-
-//const VISUAL_IMG_SIZE = 414;
-//const VISUAL_IMG_NUM = 2;
 function VisualModule(setting) {
 
 
@@ -172,11 +165,13 @@ function VisualModule(setting) {
 			});
 
 			root.find(".visual_img").on("touchend", function(event) {
+				
 				var totalmoveX = touchX - touchXStart;
 				var touchLimit = visualImgSize / 3;
 
 				if( totalmoveX > touchLimit ) {
 					btnPreElement.trigger("click");
+					
 				}
 				else if ( totalmoveX < - touchLimit ) {
 
@@ -199,7 +194,7 @@ function VisualModule(setting) {
 
 	}
 	
-	console.log("call constructor");
+	
 	var instance = makeModule(setting);
 	return instance;
 

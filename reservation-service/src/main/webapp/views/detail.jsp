@@ -320,8 +320,8 @@ $(document).ready(function(){
 			visualImgNum: $ul.children().length,
 			isAutoRoll: false,
 			isScrollEnd: true,
-			btnPreElement: $(".btn_prev"),
-			btnNxtElement: $(".btn_nxt"),
+			btnPreElement: $(".section_visual .btn_prev"),
+			btnNxtElement: $(".section_visual .btn_nxt"),
 			printPositionElement:$(".num:first")
 	}
 	
