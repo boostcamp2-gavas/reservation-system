@@ -6,6 +6,7 @@ public class ReservationComment {
 	private int productId;
 	private int categoryId;
 	private int userId;
+	private String productName;
 	private String nickname;
 	private Timestamp reservationDate;
 	private String reservationName;
@@ -44,6 +45,12 @@ public class ReservationComment {
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 	public String getNickname() {
 		return nickname;

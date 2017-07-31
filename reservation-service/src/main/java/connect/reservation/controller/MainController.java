@@ -15,12 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import connect.reservation.domain.Category;
 import connect.reservation.domain.ReservationInfo;
+import connect.reservation.domain.ReservationType;
 import connect.reservation.domain.User;
 import connect.reservation.dto.Product;
-import connect.reservation.dto.ReservationCount;
 import connect.reservation.service.CategoryService;
 import connect.reservation.service.CommentService;
 import connect.reservation.service.ProductService;
@@ -130,14 +131,15 @@ public class MainController {
 	}
 	
 	@PostMapping("/reserve")
+	@ResponseBody
 	public String addReservation(HttpSession session, @RequestBody ReservationInfo reservationInfo) {
-
 		User currentUser = (User)session.getAttribute("currentUser");
 
 		// getParameter, getAttribute 차이
 		reservationInfo.setUserId(currentUser.getId());
 		reservationInfo.setReservationDate(userService.getDate());
 		reservationInfo.setCreateDate(userService.getDate());
+		reservationInfo.setReservationType(ReservationType.REQUESTING);
 		
 		reservationService.add(reservationInfo);
 		return "success";
