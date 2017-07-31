@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.reservation.dao.CommentDao;
 import kr.or.reservation.domain.AVGForComment;
-import kr.or.reservation.domain.ReservationInfo;
-import kr.or.reservation.dto.CommentDTO;
+import kr.or.reservation.domain.Comment;
 import kr.or.reservation.service.CommentService;
 
 @Service
@@ -27,7 +26,7 @@ public class CommentServiceImpl implements CommentService{
 	}
 	
 	@Override
-	public Long insert(CommentDTO comment) {
+	public Long insert(Comment comment) {
 		// TODO Auto-generated method stub
 		if(comment == null) {
 			return null;
@@ -38,7 +37,7 @@ public class CommentServiceImpl implements CommentService{
 	}
 	
 	@Override
-	public List<CommentDTO> selectByProductId(int productId) {
+	public List<Comment> selectByProductId(int productId) {
 		// TODO Auto-generated method stub
 		if(productId > 0) {
 			return commentDao.select(productId);
@@ -47,7 +46,7 @@ public class CommentServiceImpl implements CommentService{
 	}
 	
 
-	
+	@Override
 	public AVGForComment selectAvgScoreByProductId(int producId) {
 		if(producId>0) {
 			Long count =AVGForComment.getCount(producId);
@@ -72,7 +71,7 @@ public class CommentServiceImpl implements CommentService{
 	public List<?> getFileIdByCommentId(int commentId) {
 		// TODO Auto-generated method stub
 		if(commentId>0) {
-			return commentDao.getFileId(commentId);
+			return commentDao.selectFileId(commentId);
 		}
 		return null;
 	}

@@ -15,9 +15,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import kr.or.reservation.domain.AVGForComment;
-import kr.or.reservation.domain.ReservationInfo;
-import kr.or.reservation.dto.CommentDTO;
+import kr.or.reservation.domain.Comment;
 import kr.or.reservation.sqls.CommentSqls;
 
 @Repository
@@ -26,7 +24,7 @@ public class CommentDao {
 	
 	private NamedParameterJdbcTemplate jdbc;
 	private SimpleJdbcInsert insertAction;
-	private RowMapper<CommentDTO> rowMapper = BeanPropertyRowMapper.newInstance(CommentDTO.class);
+	private RowMapper<Comment> rowMapper = BeanPropertyRowMapper.newInstance(Comment.class);
 	
 	
 	public CommentDao(DataSource dataSource) {
@@ -36,13 +34,13 @@ public class CommentDao {
 				.usingGeneratedKeyColumns("id"); 
 	}	
 	
-	public Long insert(CommentDTO comment) {
+	public Long insert(Comment comment) {
 		SqlParameterSource params = new BeanPropertySqlParameterSource(comment);
 		return insertAction.executeAndReturnKey(params).longValue();
 	}
 
 	
-	public List<CommentDTO> select(int productId) {
+	public List<Comment> select(int productId) {
 		Map<String , ?> map = Collections.singletonMap("id",productId);
 		return jdbc.query(CommentSqls.SELCET_ALL,map,rowMapper);
 	}
@@ -54,7 +52,7 @@ public class CommentDao {
 		return list;
 	}
 	
-	public List<?> getFileId(int commnetId){
+	public List<?> selectFileId(int commnetId){
 		Map<String , ?> map = Collections.singletonMap("id",commnetId);
 		return jdbc.queryForList(CommentSqls.SELECT_FILEID_BY_COMMENTID,map);
 	}

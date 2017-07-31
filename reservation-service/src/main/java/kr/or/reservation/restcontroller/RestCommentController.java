@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.or.reservation.dto.CommentDTO;
+import kr.or.reservation.domain.Comment;
 import kr.or.reservation.service.CommentService;
 
 @RestController
@@ -37,7 +37,7 @@ public class RestCommentController {
 	
 	@PostMapping("/comment")
 	@ResponseBody
-	public long insert(@ModelAttribute CommentDTO comment ){
+	public long insert(@ModelAttribute Comment comment ){
 		
 		return commentService.insert(comment);
 	}

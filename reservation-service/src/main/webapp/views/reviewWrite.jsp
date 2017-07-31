@@ -121,8 +121,8 @@
 	<script>
 		function getReservationInfo() {
 			var reservationInfo = {
-					productId : ${reservationInfo.productId},
-					userId : ${reservationInfo.userId}
+					productId : "${reservationInfo.productId}",
+					userId : "${reservationInfo.userId}"
 				};
 			return reservationInfo;
 		}

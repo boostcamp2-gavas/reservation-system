@@ -1,8 +1,8 @@
-package kr.or.reservation.dto;
+package kr.or.reservation.domain;
 
 import java.sql.Timestamp;
 
-public class CommentDTO {
+public class Comment {
 	private String nickname;
 	private String id; // comment id
 	private String fileId;
@@ -14,7 +14,7 @@ public class CommentDTO {
 	private int imageCount;
 	private String firstImageSaveFileName;
 
-	public CommentDTO() {
+	public Comment() {
 		// TODO Auto-generated constructor stub
 	}
 
