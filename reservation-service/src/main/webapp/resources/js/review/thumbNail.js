@@ -74,14 +74,15 @@ var ThumbApp = (function() {
 	function popupViewer(e){
 		e.preventDefault();
 		point = 0;
-		var url = '/comments/' + $(e.target).data('comment-id') + '/images';
+		var url = '/productInfo/commentImage?commentId=' + $(e.target).data('comment-id');
 		callAjax(url).then(imgLoad);
         $('#photoviewer').fadeTo("fast",1);    
 	}
 	function imgLoad(res) {
-		var arr = res.map(function(v, i) {
+        console.log(res);
+		var arr = res.imageList.map(function(v, i) {
     		return {
-    			fileId: v,
+    			fileId: v.fileId,
     			tranx: i * 100
     		}
     	});

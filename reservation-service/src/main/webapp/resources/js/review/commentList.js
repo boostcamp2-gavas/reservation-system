@@ -33,7 +33,10 @@ var CommentList = (function() {
         console.log(res);
         isChecking = false;
         page++;
-        root.append(template(res));
+        var obj = {
+            items : res
+        }
+        root.append(template(obj));
     }
     return {
         init: init
