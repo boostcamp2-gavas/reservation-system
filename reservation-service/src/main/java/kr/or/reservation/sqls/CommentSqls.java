@@ -23,7 +23,8 @@ public class CommentSqls {
 
 	public final static String UPDATE_FIRST_FILE = "UPDATE reservation_user_comment " + 
 			"SET " + 
-			"first_image_save_file_name = :imageName " + 
+			"first_image_save_file_name = :imageName," +
+			"image_count = :length " + 
 			"WHERE id = :id ";
 	
 	public final static String SELECT_BY_PRODUCT_ID_S_A = "select t2.nickname, t1.* from reservation_user_comment as t1"

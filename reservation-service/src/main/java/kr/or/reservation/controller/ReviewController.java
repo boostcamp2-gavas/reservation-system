@@ -35,8 +35,6 @@ public class ReviewController {
 		Long count = info.getAmountOfCount();
 		ProductDetailDTO product = productService.selectOne(productId);
 		
-		
-		
 		model.addAttribute("avgScore", avgScore);
 		model.addAttribute("count", count);
 		model.addAttribute("productId", productId);

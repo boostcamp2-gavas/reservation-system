@@ -12,7 +12,7 @@ public interface CommentService {
 	public List<?> getFileIdByCommentId(int commentId);
 	public Long insert(Comment comment);
 	
-	public boolean updateFileName(int commentId, int fileId);
+	public boolean updateFileName(int commentId, int fileId,int fileLength);
 	
 	public List<Comment> selectByProductId(int productId, int start, int amount);
 }

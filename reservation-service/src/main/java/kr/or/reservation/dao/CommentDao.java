@@ -66,10 +66,11 @@ public class CommentDao {
 		return jdbc.queryForList(CommentSqls.SELECT_FILEID_BY_COMMENTID,map);
 	}
 	
-	public int updateFileName(int commnetId,int fileId){
+	public int updateFileName(int commnetId,int fileId,int fileLength){
 		Map<String , Integer> map = new HashMap<>();
 		map.put("id", commnetId);
 		map.put("imageName", fileId);
+		map.put("length", fileLength);
 		return jdbc.update(CommentSqls.UPDATE_FIRST_FILE,map);
 	}
 	

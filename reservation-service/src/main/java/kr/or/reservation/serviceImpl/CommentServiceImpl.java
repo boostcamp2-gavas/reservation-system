@@ -84,10 +84,10 @@ public class CommentServiceImpl implements CommentService{
 	}
 	
 	@Override
-	public boolean updateFileName(int commentId, int fileId) {
+	public boolean updateFileName(int commentId, int fileId,int fileLength) {
 		if(commentId <= 0 || fileId <= 0) {
 			return false;
 		}
-		return commentDao.updateFileName(commentId, fileId)==1;
+		return commentDao.updateFileName(commentId, fileId,fileLength)==1;
 	}
 }

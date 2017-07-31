@@ -99,7 +99,7 @@ public class ImgFileController {
     	FileDomain[] fileArray= FileRead.FileReader((Integer)session.getAttribute("id"), files);
         int[] fileId = imgService.insertFileArray(fileArray);
         boolean insertImage = imgService.insertImageArray(commentId, fileId);
-        boolean updateFile =  commentService.updateFileName(commentId, fileId[0]);
+        boolean updateFile =  commentService.updateFileName(commentId, fileId[0],fileId.length);
         if(insertImage && updateFile) {
         	  return "redirect:/img";
         }
