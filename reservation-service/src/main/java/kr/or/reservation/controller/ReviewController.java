@@ -2,11 +2,12 @@ package kr.or.reservation.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.reservation.domain.AVGForComment;
 import kr.or.reservation.service.CommentService;
 
 @Controller
@@ -20,9 +21,15 @@ public class ReviewController {
 	}
 	
 	@GetMapping(path="/{productId}")
-	public ModelAndView getReservation(@PathVariable int reservationId) {
-		ModelAndView model = new ModelAndView("review");
-		return model;
+	public String getReservation(Model model, @PathVariable int productId) {
+		AVGForComment info = commentService.selectAvgScoreByProductId(productId);
+		Float avgScore = info.getAvgScore();
+		Long count = info.getAmountOfCount();
+		
+		model.addAttribute("avgScore", avgScore);
+		model.addAttribute("count", count);
+				
+		return "review";
 	}
 
 }
