@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import connect.reservation.dao.CommentDao;
+import connect.reservation.dao.CommentSqls;
 import connect.reservation.domain.Product;
 import connect.reservation.domain.ReservationUserComment;
 import connect.reservation.dto.ReservationComment;
@@ -31,7 +32,7 @@ public class CommentServiceImpl implements CommentService{
 		
 		list = commentDao.getCommentList(productId, start, end);
 		list = getNickname(list);
-		
+
 		List<ReservationComment> scoreList = new ArrayList<ReservationComment>();
 		scoreList = commentDao.getScoreList(productId);
 
