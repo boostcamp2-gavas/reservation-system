@@ -13,7 +13,7 @@ drop table PRODUCT;
 drop table CATEGORY;
 drop table USERS;
 
--- naver  ¿¬µ¿ ·Î±×ÀÎÀ» À§ÇÑ USERSÅ×ÀÌºí  : https://developers.naver.com/docs/login/devguide/ ½Å±Ô½Ã½ºÅÛ ³×¾Æ(³×ÀÌ¹ö·Î±×ÀÎ)¸¦ ÀÌ¿ë ºÎºÐÀ» Âü°íÇÔ
+-- naver  ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ USERSï¿½ï¿½ï¿½Ìºï¿½  : https://developers.naver.com/docs/login/devguide/ ï¿½Å±Ô½Ã½ï¿½ï¿½ï¿½ ï¿½×¾ï¿½(ï¿½ï¿½ï¿½Ì¹ï¿½ï¿½Î±ï¿½ï¿½ï¿½)ï¿½ï¿½ ï¿½Ì¿ï¿½ ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 CREATE  TABLE `USERS` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(50) NULL ,
@@ -39,8 +39,8 @@ CREATE TABLE CATEGORY(
 );
 
 
--- »óÇ° ±âº»Á¤º¸, Àü½ÃÁ¤º¸, »ó¼¼Á¤º¸
--- »óÇ°ÆÇ¸Å¿©ºÎ : sales_flag - 0 : ÆÇ¸Å¾ÈµÊ 1: ÆÇ¸Å µÊ
+-- ï¿½ï¿½Ç° ï¿½âº»ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+-- ï¿½ï¿½Ç°ï¿½Ç¸Å¿ï¿½ï¿½ï¿½ : sales_flag - 0 : ï¿½Ç¸Å¾Èµï¿½ 1: ï¿½Ç¸ï¿½ ï¿½ï¿½
 CREATE TABLE PRODUCT (
   `id` INT NOT NULL AUTO_INCREMENT,
   `category_id` INT NOT NULL,
@@ -83,7 +83,7 @@ CREATE TABLE PRODUCT_DETAIL(
   FOREIGN KEY(`product_id`) REFERENCES PRODUCT(`id`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
--- price_type : 1, ÀÏ¹Ý  2 :Ã»¼Ò³â 3: ¾î¸°ÀÌ , CODE Å×ÀÌºíÀÌ »ç½Ç ÇÊ¿äÇÏ´Ù.
+-- price_type : 1, ï¿½Ï¹ï¿½  2 :Ã»ï¿½Ò³ï¿½ 3: ï¿½î¸°ï¿½ï¿½ , CODE ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Ï´ï¿½.
 CREATE TABLE PRODUCT_PRICE (
   `id` INT NOT NULL AUTO_INCREMENT,
   `product_id` INT NOT NULL,
@@ -110,8 +110,8 @@ CREATE TABLE FILE (
   FOREIGN KEY(`user_id`) REFERENCES USERS(`id`)
 );
 
--- type : ´ëÇ¥ÀÌ¹ÌÁö - 1 , ºÎ°¡ÀÌ¹ÌÁö - 2
--- delete_flag 0 :»èÁ¦¾ÈµÊ, 1: »èÁ¦µÈ ÀÌ¹ÌÁö
+-- type : ï¿½ï¿½Ç¥ï¿½Ì¹ï¿½ï¿½ï¿½ - 1 , ï¿½Î°ï¿½ï¿½Ì¹ï¿½ï¿½ï¿½ - 2
+-- delete_flag 0 :ï¿½ï¿½ï¿½ï¿½ï¿½Èµï¿½, 1: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
 CREATE TABLE PRODUCT_IMAGE (
   `id` INT NOT NULL AUTO_INCREMENT,
   `product_id` INT NOT NULL,
@@ -123,7 +123,7 @@ CREATE TABLE PRODUCT_IMAGE (
 );
 
 
--- ¿¹¾àÀº »óÇ°ÀÇ ½º³À¼¦À» ÀúÀåÇÏµµ·Ï ÇÒ °ÍÀÎ°¡? ¾Æ´Ï¸é ±×³É »óÇ° id¸¸À» °¡Áöµµ·Ï ÇÒ °ÍÀÎ°¡?
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Î°ï¿½? ï¿½Æ´Ï¸ï¿½ ï¿½×³ï¿½ ï¿½ï¿½Ç° idï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Î°ï¿½?
 CREATE TABLE RESERVATION_INFO(
   `id` INT NOT NULL AUTO_INCREMENT,
   `product_id` INT NOT NULL,
@@ -164,3 +164,6 @@ CREATE TABLE RESERVATION_USER_COMMENT_IMAGE (
   FOREIGN KEY(`reservation_user_comment_id`) REFERENCES RESERVATION_USER_COMMENT(`id`) ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY(`file_id`) REFERENCES FILE(`id`) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+
+ALTER TABLE reservation_info MODIFY reservation_type ENUM('REQUESTING', 'DUE', 'USED', 'REFUND_CANCEL');

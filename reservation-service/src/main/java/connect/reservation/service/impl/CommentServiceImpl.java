@@ -30,12 +30,14 @@ public class CommentServiceImpl implements CommentService{
 		List<ReservationComment> list = new ArrayList<ReservationComment>();
 		
 		list = commentDao.getCommentList(productId);
+		list = getNickname(list);
+		
 		double scoreAverage = 0;
 		
 		for(int i=0; i<list.size(); i++)
 			scoreAverage += list.get(i).getScore();
-		scoreAverage = scoreAverage/list.size();
-		
+		scoreAverage = Double.parseDouble(String.format("%.1f",scoreAverage/list.size()));
+
 		map.put("commentList", list);
 		map.put("commentCount", list.size());
 		map.put("scoreAverage", scoreAverage);
@@ -72,5 +74,23 @@ public class CommentServiceImpl implements CommentService{
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return java.sql.Timestamp.valueOf(sdf.format(timestamp));
+	}
+	
+	public List<ReservationComment> getNickname(List<ReservationComment> list) {
+		String nickname = "";
+		
+		for(int i=0; i<list.size(); i++) {
+			nickname = list.get(i).getNickname();
+			if(nickname.length() > 4){
+				nickname = nickname.substring(0, nickname.length()-4);
+			}
+			else {
+				nickname = "";
+			}
+			nickname += "****";
+			list.get(i).setNickname(nickname);
+		}
+		
+		return list;
 	}
 }

@@ -35,10 +35,18 @@ public class CommentDao {
                 .usingGeneratedKeyColumns("id"); // pk 칼럼을 지정
     }
     
-    public List<ReservationComment> getCommentList(int product_id) {
+    public List<ReservationComment> getCommentList(int product_id, int start, int end) {
     	Map<String, Object> params = new HashMap<>();
     	params.put("product_id", product_id);
+    	params.put("start", start);
+    	params.put("end", end);
     	return jdbc.query(CommentSqls.GET_COMMENT_LIST, params, rowMapper);
+    }
+    
+    public List<ReservationComment> getScoreList(int product_id) {
+    	Map<String, Object> params = new HashMap<>();
+    	params.put("product_id", product_id);
+    	return jdbc.query(CommentSqls.GET_SCORE_LIST, params, rowMapper);
     }
     
     public List<ReservationComment> getImageList(int reservation_user_comment_id) {
