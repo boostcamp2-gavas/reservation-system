@@ -224,7 +224,14 @@ FormModule.prototype.postComment = function() {
 	var score = this.ratingComponent.getScore();
 	var comment = this.commentComponent.getText();
 	
-	var data = new FormData(data);
+	var commentLength = comment.length;
+	
+	if(commentLength < 5) {
+		alert("코멘트를 5자 이상 입력해주요.");
+		return;
+	}
+	
+	var data = new FormData();
 	
 	data.append("productId", reservationInfo.productId);
 	data.append("userId", reservationInfo.userId);
@@ -248,7 +255,10 @@ FormModule.prototype.postFile = function(prevOnloadEvent) {
 	console.log("postFile:");
 	console.log(prevOnloadEvent);
 	
-	
+	if(this.commentComponent.fileListlengh <= 0) {
+		console.log("there is no file.");
+		return;
+	}
 	
 	var commentId = prevOnloadEvent.currentTarget.response;
 	if(commentId == null) {
@@ -261,7 +271,7 @@ FormModule.prototype.postFile = function(prevOnloadEvent) {
 	var formData = new FormData();
 	
 	formData.append("commentId", commentId);
-	formData.append("title", "testTitle");
+	
 	for (var i in files) {
 		console.log(files[i]);
 		formData.append("files", files[i]);
