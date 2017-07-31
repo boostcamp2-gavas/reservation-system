@@ -32,11 +32,14 @@ public class CommentServiceImpl implements CommentService{
 		list = commentDao.getCommentList(productId);
 		list = getNickname(list);
 		
+		List<ReservationComment> scoreList = new ArrayList<ReservationComment>();
+		scoreList = commentDao.getScoreList(productId);
+		
 		double scoreAverage = 0;
 		
-		for(int i=0; i<list.size(); i++)
-			scoreAverage += list.get(i).getScore();
-		scoreAverage = Double.parseDouble(String.format("%.1f",scoreAverage/list.size()));
+		for(int i=0; i<scoreList.size(); i++)
+			scoreAverage += scoreList.get(i).getScore();
+		scoreAverage = Double.parseDouble(String.format("%.1f",scoreAverage/scoreList.size()));
 
 		map.put("commentList", list);
 		map.put("commentCount", list.size());
