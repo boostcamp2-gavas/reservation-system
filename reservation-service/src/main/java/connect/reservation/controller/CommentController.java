@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +33,12 @@ public class CommentController {
 	public CommentController(CommentService commentService, FileService fileService) {
 		this.commentService = commentService;
 		this.fileService = fileService;
+	}
+	
+	@GetMapping("/{productId}")
+	public String mvReviewList(Model model, @PathVariable int productId, @RequestParam int start, @RequestParam int end) {
+		model.addAttribute("reviewList", commentService.getList(productId, start, end));
+		return "review";
 	}
 
 	@GetMapping("/write")

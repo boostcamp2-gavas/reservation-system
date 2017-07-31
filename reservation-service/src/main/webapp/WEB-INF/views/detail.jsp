@@ -138,7 +138,7 @@
                                 <li class="list_item">
                                     <div>
 	<c:choose>
-		<c:when test="${comment.fileName ne null}">
+		<c:when test="${comment.fileId ne null}">
                                         <div class="review_area">
                                             <div class="thumb_area" data-comment_id="${comment.rucId}">
                                                 <a href="#" class="thumb" title="이미지 크게 보기">
@@ -146,13 +146,13 @@
                                                 </a> 
                                                 <span class="img_count">${comment.imgCount}</span>
                                             </div>
-                                            <h4 class="resoc_name">${comment.reservationName}</h4>
+                                            <h4 class="resoc_name">${comment.productName}</h4>
                                             <p class="review">${comment.comment}</p>
                                         </div>
 		</c:when>
-		<c:when test="${comment.fileName eq null}">
+		<c:when test="${comment.fileId eq null}">
 										<div class="review_area no_img">
-											<h4 class="resoc_name">${comment.reservationName}</h4>
+											<h4 class="resoc_name">${comment.productName}</h4>
                                             <p class="review">${comment.comment}</p>
                                         </div>
 		</c:when>
@@ -160,8 +160,7 @@
                                         <div class="info_area">
                                             <div class="review_info"> 
 	                                            <span class="grade">${comment.score}</span> 
-	                                            <c:set var="nickname" value="${comment.nickname}"/>
-	                                            <span class="name">${fn:substring(nickname,0,4)}****</span> 
+	                                            <span class="name">${comment.nickname}</span> 
 	                                            <span class="date"><fmt:formatDate value="${comment.reservationDate}" pattern="yyyy.MM.dd"/> 방문</span> 
 	                                        </div>
                                         </div>
@@ -176,7 +175,7 @@
                         </p>
                     </div>
 <c:if test="${commentMap.commentCount >= 3}">
-                    <a class="btn_review_more" href="#"> 
+                    <a class="btn_review_more" href="/comments/${productId}?start=0&end=10"> 
                     	<span>예매자 한줄평 더보기</span> 
                     	<i class="fn fn-forward1"></i> 
                     </a>

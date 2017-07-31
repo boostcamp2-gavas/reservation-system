@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import connect.reservation.dao.CommentDao;
+import connect.reservation.dao.CommentSqls;
 import connect.reservation.domain.Product;
 import connect.reservation.domain.ReservationUserComment;
 import connect.reservation.dto.ReservationComment;
@@ -25,17 +26,22 @@ public class CommentServiceImpl implements CommentService{
 	CommentDao commentDao;
 	
 	@Override
-	public Map<String, Object> getList(int productId) {		
+	public Map<String, Object> getList(int productId, int start, int end) {		
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<ReservationComment> list = new ArrayList<ReservationComment>();
 		
-		list = commentDao.getCommentList(productId);
+		list = commentDao.getCommentList(productId, start, end);
+		list = getNickname(list);
+
+		List<ReservationComment> scoreList = new ArrayList<ReservationComment>();
+		scoreList = commentDao.getScoreList(productId);
+
 		double scoreAverage = 0;
-		
-		for(int i=0; i<list.size(); i++)
-			scoreAverage += list.get(i).getScore();
-		scoreAverage = scoreAverage/list.size();
-		
+
+		for (int i = 0; i < scoreList.size(); i++)
+			scoreAverage += scoreList.get(i).getScore();
+		scoreAverage = Double.parseDouble(String.format("%.1f", scoreAverage / scoreList.size()));
+
 		map.put("commentList", list);
 		map.put("commentCount", list.size());
 		map.put("scoreAverage", scoreAverage);
@@ -72,5 +78,23 @@ public class CommentServiceImpl implements CommentService{
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return java.sql.Timestamp.valueOf(sdf.format(timestamp));
+	}
+	
+	public List<ReservationComment> getNickname(List<ReservationComment> list) {
+		String nickname = "";
+		
+		for(int i=0; i<list.size(); i++) {
+			nickname = list.get(i).getNickname();
+			if(nickname.length() > 4){
+				nickname = nickname.substring(0, nickname.length()-4);
+			}
+			else {
+				nickname = "";
+			}
+			nickname += "****";
+			list.get(i).setNickname(nickname);
+		}
+		
+		return list;
 	}
 }

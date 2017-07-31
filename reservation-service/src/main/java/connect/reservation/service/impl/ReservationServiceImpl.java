@@ -29,7 +29,8 @@ public class ReservationServiceImpl implements ReservationService{
 	
 	@Override
 	@Transactional(readOnly = false)
-	public int add(ReservationInfo reservationInfo) {		
+	public int add(ReservationInfo reservationInfo) {	
+		
 		return reservationDao.insert(reservationInfo);
 	}
 
