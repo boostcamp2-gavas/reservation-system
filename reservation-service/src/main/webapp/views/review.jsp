@@ -91,7 +91,17 @@
 <script>
 
 
-Handlebars.registerHelper("timeStamp", function(timestamp) {
+
+
+var CommentListModule = (function(){
+	var amount = 10,
+	start = 0;
+	
+	var templateSource = $("#review-content").html(),
+	Template = Handlebars.compile(templateSource);	
+	
+	//handlebar 설정
+	Handlebars.registerHelper("timeStamp", function(timestamp) {
 	  if (moment) {
 	    // can use other formats like 'lll' too
 	    return  moment(timestamp).format("YYYY.DD.MM");
@@ -99,65 +109,54 @@ Handlebars.registerHelper("timeStamp", function(timestamp) {
 	  else {
 	    return datetime;
 	  }
-});
-
-
-var amount = 10,
-start = 0;
-
-var templateSource = $("#review-content").html(),
-Template = Handlebars.compile(templateSource);
-
-$(".graph_value").css("width",('${avgScore}' * 20)+"%");
-
-$.ajax({
-	method : "get",
-	url : "/api/comment/"+'${productId}'+"?start="+start+"&amount="+amount
-}).done(function(data){
-	if(data.length ===0){
-		
-	}else{
-		var item = {
-				items : []
-		};
-		console.log(data);
-		for(var i =0, max = data.length; i<max; ++i){
-			item.items.push(data[i]);
-		}
-		//expectationLength += max ;
-		var html = Template(item);
-		var $card = $(".list_short_review");
-		$card.append(html);
-		start +=10;
-	}
-});
-
-$(document).scroll(function(){
-	 if ($(window).scrollTop() >= $(document).height() - $(window).height()) {
-		 $.ajax({
-				method : "get",
-				url : "/api/comment/"+'${productId}'+"?start="+start+"&amount="+amount
-			}).done(function(data){
-				if(data.length ===0){
-					
-				}else{
-					var item = {
-							items : []
-					};
-					console.log(data);
-					for(var i =0, max = data.length; i<max; ++i){
-						item.items.push(data[i]);
-					}
-					//expectationLength += max ;
-					var html = Template(item);
-					var $card = $(".list_short_review");
-					$card.append(html);
-					start +=10;
+	});
+	
+	function getComment(){
+		$.ajax({
+			method : "get",
+			url : "/api/comment/"+'${productId}'+"?start="+start+"&amount="+amount
+		}).done(function(data){
+			if(data.length ===0){
+			}else{
+				var item = {
+						items : []
+				};
+				for(var i =0, max = data.length; i<max; ++i){
+					item.items.push(data[i]);
 				}
-				
+				//expectationLength += max ;
+				var html = Template(item);
+				var $card = $(".list_short_review");
+				$card.append(html);
+				start +=10;
+			}
+		});
+	}
+	
+	return{
+		init : function(){
+			$(".graph_value").css("width",('${avgScore}' * 20)+"%");
+			getComment();
+			$(document).on("scroll",function(){
+				 if ($(window).scrollTop() >= $(document).height() - $(window).height()) {
+					 getComment();
+				 }
 			});
-	 }
+		}
+	}
+})();
+
+$(function(){
+	CommentListModule.init();
 });
+
+
+
+
+
+
+
+
 
 </script>
 </body>
