@@ -38,19 +38,19 @@
                         <div class="short_review_area">
                             <div class="grade_area"> 
                             	<span class="graph_mask"> 
-                            		<em class="graph_value" style="width: ${reviewInfo.starPoint }%;"></em> 
+                            		<em class="graph_value" style="width: ${starPoint }%;"></em> 
                             	</span> 
                             	<strong class="text_value"> 
                             		<span>
-                            			<fmt:formatNumber value="${reviewInfo.scoreAverage }" pattern="0.0"></fmt:formatNumber>
+                            			<fmt:formatNumber value="${scoreAverage }" pattern="0.0"></fmt:formatNumber>
                             		</span> 
                             		<em class="total">5.0</em> 
                             	</strong> 
                             	<span class="join_count">
-                            		<em class="green">${reviewInfo.commentCount }건</em> 등록
+                            		<em class="green">${commentCount }건</em> 등록
                             	</span>
                             </div>
-                            <ul class="list_short_review" data-comment-count="${reviewInfo.commentCount }" data-product-id="${productId}">
+                            <ul class="list_short_review" data-comment-count="${commentCount }" data-product-id="${productId}">
 								<c:forEach var="ri" items="${reviewList }">
                             	<li class="list_item">
                                     <div>

@@ -9,7 +9,8 @@ import connect.reservation.dto.ReservationComment;
 
 public interface CommentService {
 	List<ReservationComment> getList(int productId, int start, int end);
-	public Map<String, Object> getCommentInfo(int productId);
+	public int getCount(int productId);
+	public double getScoreAverage(int productId);
 //	public List<ReservationComment> getImageList(int commentId);
 	public Map<String, Object> getImage(int commentId);
 	public Product getName(int reservationId);

@@ -92,10 +92,17 @@ public class MainController {
 		if(productId < 1)
 			return null;
 		
+		double avg = commentService.getScoreAverage(productId);
+		
 		model.addAttribute("productId", productId);
 		model.addAttribute("productImage", productService.getImage(productId));
 		model.addAttribute("detailInfo", productService.getDetail(productId));
-		model.addAttribute("commentMap", commentService.getList(productId, 0, 3));
+		
+		model.addAttribute("commentList", commentService.getList(productId, 0, 3));
+		model.addAttribute("commentCount", commentService.getCount(productId));
+		model.addAttribute("scoreAverage", avg);
+		model.addAttribute("starPoint", avg/5.0*100);
+		
 		model.addAttribute("NoticeImage", productService.getNoticeImage(productId));
 		model.addAttribute("InfoImage", productService.getInfoImage(productId));
 //		model.addAttribute("naverMap", getNaverMap());
