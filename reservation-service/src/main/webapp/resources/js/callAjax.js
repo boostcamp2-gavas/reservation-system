@@ -5,7 +5,7 @@ function callAjax(url, method, data) {
 		    url : url,
 		    data : data || null,
 		    success : resolve,
-		    error : function(request, status, error ) {  
+		    error : reject || function(request, status, error ) {  
 		    	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	    	}
 		});
