@@ -165,8 +165,6 @@ public class ReservationInfo {
 		this.totalPrice = totalPrice;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "ReservationInfo [productId=" + productId + ", userId=" + userId + ", generalTicketCount="

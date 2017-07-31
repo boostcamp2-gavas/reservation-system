@@ -85,16 +85,12 @@ public class ImgFileController {
 
     @PostMapping
     public String create(
-            @RequestParam("title") String title,
             @RequestParam("files") MultipartFile[] files,
             @RequestParam("commentId") int commentId,
             HttpSession session){
     	
     	FileDomain[] fileArray= FileRead.FileReader((Integer)session.getAttribute("id"), files);
         int[] fileId = imgService.insertFileArray(fileArray);
-        for(int id : fileId) {
-        	log.info(id);
-        }
         imgService.insertImageArray(commentId, fileId);
         return "redirect:/img";
     }
