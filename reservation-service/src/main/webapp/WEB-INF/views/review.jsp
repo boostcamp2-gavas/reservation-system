@@ -50,7 +50,7 @@
                             		<em class="green">${reviewList.commentCount }건</em> 등록
                             	</span>
                             </div>
-                            <ul class="list_short_review" data-comment-count="${reviewList.commentCount }" data-product-id="">
+                            <ul class="list_short_review" data-comment-count="${reviewList.commentCount }" data-product-id="${reviewList.commentList[0].productId}">
 								<c:forEach var="ri" items="${reviewList.commentList }">
                             	<li class="list_item">
                                     <div>
@@ -95,7 +95,7 @@
             <div class="layer" id="layer"></div>
         </div>
     <script id="comment_list_template" type="text/x-handlebars-template">
-        {{#item}}
+        {{#commentList}}
         <li class="list_item">
             <div>
                 <div class="review_area">
@@ -119,10 +119,10 @@
                 </div>
             </div>
         </li> 
-        {{/item}}
+        {{/commentList}}
     </script>
 	<script id="popup_layer_template" type="text/x-handlebars-template">
-		{{#items}}
+		{{#item}}
 		<div class="sub_layer" style="transform: translateX({{tranx}}%)">
     		<div class="wrapper">
 				<img src="/files/{{fileId}}">
@@ -132,7 +132,7 @@
     			<button class="com_img_btn prev"><</button><button class="com_img_btn nxt">></button>
 			</div>
     	</div>
-		{{/items}}
+		{{/item}}
 	</script>
     <script src="/resources/js/node_modules/jquery/dist/jquery.min.js"></script>
 	<script src="/resources/js/node_modules/handlebars/dist/handlebars.min.js"></script>

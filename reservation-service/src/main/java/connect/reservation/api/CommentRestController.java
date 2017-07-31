@@ -21,6 +21,6 @@ public class CommentRestController {
 	
 	@GetMapping("/{productId}")
 	public Map<String, Object> get(@PathVariable int productId, @RequestParam int start){
-		return commentService.getList(productId, (start-1)*10, 10);
+		return commentService.getList(productId, start*10, 10);
 	}
 }
