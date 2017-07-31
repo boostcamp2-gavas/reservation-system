@@ -3,6 +3,8 @@ package kr.or.reservation.domain;
 import java.util.HashMap;
 import java.util.Map;
 
+
+//이것도 질문합시다. 
 public class AVGForComment {
 	private Long amountOfCount;
 	private Float avgScore;
