@@ -212,8 +212,6 @@ function FormModule(ratingComponent, commentComponent)
 {
 	this.ratingComponent = ratingComponent;
 	this.commentComponent = commentComponent;
-	// 장철운 :: CommentId를 갖고있음 
-	this.commentId =0;
 }
 FormModule.prototype = new eg.Component();
 FormModule.prototype.constructer = FormModule;
@@ -244,12 +242,6 @@ FormModule.prototype.postComment = function() {
 		this.trigger("postCommentOnload", event);
 	}).bind(this);
 
-	// 장철운 :: 응답으로 넘어온 commentId를  저장해둠.
-	request.onreadystatechange = (function() {
-	    if (request.readyState == XMLHttpRequest.DONE) {
-	    	this.commentId = request.responseText;
-	    }
-	}).bind(this);
 }
 
 FormModule.prototype.postFile = function(prevOnloadEvent) {
@@ -270,7 +262,6 @@ FormModule.prototype.postFile = function(prevOnloadEvent) {
 	
 	formData.append("commentId", commentId);
 	formData.append("title", "testTitle");
-	formData.append("commentId", this.commentId);
 	for (var i in files) {
 		console.log(files[i]);
 		formData.append("files", files[i]);

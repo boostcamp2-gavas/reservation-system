@@ -31,8 +31,6 @@ public class FileDao {
 	// 때문에 batch를 이용하여 한번에 보내도록 구현. 
 	public int[] insertArray(FileDomain[] files) {
 		SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(files);
-		
 		return insertAction.executeBatch(batch);
-		
 	}
 }
