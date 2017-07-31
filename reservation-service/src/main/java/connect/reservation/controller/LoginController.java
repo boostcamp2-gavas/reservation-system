@@ -47,8 +47,6 @@ public class LoginController {
 	private String code = "";
 	private String type = "";
 	
-
-	
 	
 	@Autowired
 	public LoginController(UserService userService) {
@@ -178,9 +176,6 @@ public class LoginController {
 		if(currentUser == null) {
 			// 가입 기록이 없으면 user 추가
 			userService.addSnsUser(snsUser);
-			
-			
-			
 			currentUser = userService.getSnsUser(snsId);
 		}
 		else {
