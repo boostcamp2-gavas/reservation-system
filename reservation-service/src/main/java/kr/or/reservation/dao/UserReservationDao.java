@@ -10,17 +10,11 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import kr.or.reservation.dto.CommentDTO;
-import kr.or.reservation.dto.ReservationDTO;
 import kr.or.reservation.dto.ReservationTypeCountDTO;
 import kr.or.reservation.dto.UserReservationDTO;
-import kr.or.reservation.sqls.CommentSqls;
-import kr.or.reservation.sqls.ReservationSqls;
 import kr.or.reservation.sqls.UserReservationSqls;
 
 @Repository
