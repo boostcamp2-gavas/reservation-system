@@ -22,7 +22,6 @@ public class ReviewController {
 	@GetMapping(path="/{productId}")
 	public ModelAndView getReservation(@PathVariable int reservationId) {
 		ModelAndView model = new ModelAndView("review");
-
 		return model;
 	}
 

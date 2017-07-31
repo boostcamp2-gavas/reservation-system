@@ -84,7 +84,7 @@ ReviewContents.prototype.constructer = ReviewContents;
 
 ReviewContents.prototype.init = function() {
 	
-	this.root.on("click", ".review_write_info", this.textareaFocusOn.bind(this));
+	this.root.on("click", ".review_contents", this.textareaFocusOn.bind(this));
 	this.root.on("focusout", ".review_textarea", this.textareaFocusOut.bind(this));
 	this.root.on("keyup", this.lengthUpdate.bind(this));
 	this.fileUpload();
