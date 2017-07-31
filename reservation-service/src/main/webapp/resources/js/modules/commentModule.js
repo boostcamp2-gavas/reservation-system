@@ -96,7 +96,8 @@ var CommentModule = (function(){
 				btnNxtElement: $(".btn_nxt"),
 				printPositionElement:$(".section_popup .figure_pagination .num:first-child")
 		}
-		
+		var visualModule = VisualModule(setting);
+		visualModule.init();
 		
 		if(response.length <= 1) {
 			$(".section_popup .prev").css("visibility", "hidden");
