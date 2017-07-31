@@ -125,7 +125,7 @@ printPositionElement:
 
 //const VISUAL_IMG_SIZE = 414;
 //const VISUAL_IMG_NUM = 2;
-function VisualModule() {
+function VisualModule(setting) {
 
 
 	function makeModule(setting) {
@@ -356,19 +356,16 @@ function VisualModule() {
 
 	}
 	
-	return{
-		makeModule : function(setting) {
-			return makeModule(setting);
-		}
+	return makeModule(setting);
+	
+	
+	
+	
+	this.constructor = function(setting) {
+		console.log("call constructor");
+		var instance = makeModule(setting);
+		return instance;
 	}
-	
-	
-//	
-//	this.constructor = function(setting) {
-//		console.log("call constructor");
-//		var instance = makeModule(setting);
-//		return instance;
-//	}
 
 
 }

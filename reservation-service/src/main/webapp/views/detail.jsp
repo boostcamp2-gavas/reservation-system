@@ -363,7 +363,7 @@ $(document).ready(function(){
 			printPositionElement:$(".num:first")
 	}
 	console.log(VisualModule);
-	var visualModule = VisualModule.makeModule(setting);
+	var visualModule = VisualModule(setting);
 	console.log(visualModule);
 	visualModule.init();
 	
