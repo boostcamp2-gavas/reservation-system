@@ -37,9 +37,14 @@ public class CommentController {
 	
 	@GetMapping("/{productId}")
 	public String mvReviewList(Model model, @PathVariable int productId, @RequestParam int start) {
+		double avg = commentService.getScoreAverage(productId);
+		
 		model.addAttribute("productId", productId);
 		model.addAttribute("reviewList", commentService.getList(productId, start*10, 10));
-		model.addAttribute("reviewInfo", commentService.getCommentInfo(productId));
+		model.addAttribute("commentCount", commentService.getCount(productId));
+		model.addAttribute("scoreAverage", avg);
+		model.addAttribute("starPoint", avg/5.0*100);
+		
 		return "review";
 	}
 

@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,9 @@ import connect.reservation.service.UserService;
 @Controller
 @RequestMapping("/")
 public class MainController {
+	
+	@Value("${spring.naverlogin.clientId}")
+	private String naverMap;
 	
 	private final CategoryService categoryService;
 	private final ProductService productService;
@@ -88,15 +92,57 @@ public class MainController {
 		if(productId < 1)
 			return null;
 		
+		double avg = commentService.getScoreAverage(productId);
+		
 		model.addAttribute("productId", productId);
 		model.addAttribute("productImage", productService.getImage(productId));
 		model.addAttribute("detailInfo", productService.getDetail(productId));
-		model.addAttribute("commentMap", commentService.getList(productId, 0, 3));
+		
+		model.addAttribute("commentList", commentService.getList(productId, 0, 3));
+		model.addAttribute("commentCount", commentService.getCount(productId));
+		model.addAttribute("scoreAverage", avg);
+		model.addAttribute("starPoint", avg/5.0*100);
+		
 		model.addAttribute("NoticeImage", productService.getNoticeImage(productId));
 		model.addAttribute("InfoImage", productService.getInfoImage(productId));
-		
+//		model.addAttribute("naverMap", getNaverMap());
+//		System.out.println(getNaverMap());
 		return "detail";
 	}
+	
+//	public String getNaverMap(){
+//		String clientId = "eGDuy2NMeDv1C1QCsPGF";//애플리케이션 클라이언트 아이디값";
+//        String clientSecret = "hw2sty6mby";//애플리케이션 클라이언트 시크릿값";
+//        
+//        String result = "";
+//        try {
+//            String addr = URLEncoder.encode("불정로 6", "UTF-8");
+//            String apiURL = "https://openapi.naver.com/v1/map/geocode?query=" + addr; //json
+//            //String apiURL = "https://openapi.naver.com/v1/map/geocode.xml?query=" + addr; // xml
+//            URL url = new URL(apiURL);
+//            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+//            con.setRequestMethod("GET");
+//            con.setRequestProperty("X-Naver-Client-Id", clientId);
+//            con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+//            int responseCode = con.getResponseCode();
+//            BufferedReader br;
+//            if(responseCode==200) { // 정상 호출
+//                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+//            } else {  // 에러 발생
+//                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+//            }
+//            String inputLine;
+//            StringBuffer response = new StringBuffer();
+//            while ((inputLine = br.readLine()) != null) {
+//                response.append(inputLine);
+//            }
+//            br.close();
+//            result = response.toString();
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//        return result;
+//	}
 	
 	@GetMapping("/reserve")
 	public String mvReserve(HttpSession session, Model model, @RequestParam("productId") Integer productId) {

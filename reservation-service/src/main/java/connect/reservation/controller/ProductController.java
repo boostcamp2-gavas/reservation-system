@@ -43,4 +43,6 @@ public class ProductController {
 	public Map<String, Object> getCommentImage(@RequestParam("commentId") Integer commentId) {
 		return reservationCommentService.getImage(commentId);
 	}
+	
+	
 }

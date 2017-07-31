@@ -129,12 +129,12 @@
                         <div class="short_review_area">
                             <div class="grade_area">
                                 <!-- [D] 별점 graph_value는 퍼센트 환산하여 width 값을 넣어줌 -->
-                                <span class="graph_mask"> <em class="graph_value" style="width:${commentMap.starPoint}% ;"></em> </span>
-                                <strong class="text_value"> <span class="comment_score">${commentMap.scoreAverage}</span> <em class="total">5.0</em> </strong>
-                                <span class="join_count"><em class="green">${commentMap.commentCount}건</em> 등록</span>
+                                <span class="graph_mask"> <em class="graph_value" style="width:${starPoint}% ;"></em> </span>
+                                <strong class="text_value"> <span class="comment_score">${scoreAverage}</span> <em class="total">5.0</em> </strong>
+                                <span class="join_count"><em class="green">${commentCount}건</em> 등록</span>
                             </div>
                             <ul class="list_short_review">
-<c:forEach var="comment" items="${commentMap.commentList}" begin="0" end="2">
+<c:forEach var="comment" items="${commentList}" begin="0" end="2">
                                 <li class="list_item">
                                     <div>
 	<c:choose>
@@ -174,7 +174,7 @@
                         	<span>네이버 예약을 통해 실제 방문한 이용자가 남긴 평가입니다.</span> 
                         </p>
                     </div>
-<c:if test="${commentMap.commentCount >= 3}">
+<c:if test="${commentCount >= 3}">
                     <a class="btn_review_more" href="/comments/${productId}?start=0&end=10"> 
                     	<span>예매자 한줄평 더보기</span> 
                     	<i class="fn fn-forward1"></i> 

@@ -28,28 +28,28 @@ public class CommentServiceImpl implements CommentService{
 	public List<ReservationComment> getList(int productId, int start, int end) {		
 		List<ReservationComment> list = new ArrayList<ReservationComment>();
 		
-		list = commentDao.getCommentList(productId, start, end);
-		list = getNickname(list);
+		list = getNickname(commentDao.getCommentList(productId, start, end));
 
 		return list;
 	}
 	
 	@Override
-	public Map<String, Object> getCommentInfo(int productId){
-		Map<String, Object> map = new HashMap<String, Object>();
-		
+	public int getCount(int productId){
+		return commentDao.getScoreList(productId).size();
+	}
+	
+	@Override
+	public double getScoreAverage(int productId) {
 		List<ReservationComment> scoreList = new ArrayList<ReservationComment>();
 		scoreList = commentDao.getScoreList(productId);
-
+		
 		double scoreAverage = 0;
 
 		for (int i = 0; i < scoreList.size(); i++)
 			scoreAverage += scoreList.get(i).getScore();
 		scoreAverage = Double.parseDouble(String.format("%.1f", scoreAverage / scoreList.size()));
-		map.put("commentCount", scoreList.size());
-		map.put("scoreAverage", scoreAverage);
-		map.put("starPoint", scoreAverage/5.0*100);
-		return map;
+		
+		return scoreAverage;
 	}
 	
 	@Override
