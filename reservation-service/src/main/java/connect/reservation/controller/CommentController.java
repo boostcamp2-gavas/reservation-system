@@ -41,9 +41,8 @@ public class CommentController {
 	
 	@GetMapping("/{productId}")
 	public String mvReviewList(HttpSession session, Model model, @PathVariable int productId, @RequestParam int start, @RequestParam int end) {
-		User currentUser = (User) session.getAttribute("currentUser");
-		model.addAttribute("reviewList", commentService.getList(productId));
-		System.out.println(ReservationType.valueOf("REFUND_CANCEL"));
+		//User currentUser = (User) session.getAttribute("currentUser");
+		model.addAttribute("reviewList", commentService.getList(productId, start, end));
 		return "review";
 	}
 

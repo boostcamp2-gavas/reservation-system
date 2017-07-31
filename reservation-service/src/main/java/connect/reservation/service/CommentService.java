@@ -6,7 +6,7 @@ import connect.reservation.domain.Product;
 import connect.reservation.domain.ReservationUserComment;
 
 public interface CommentService {
-	public Map<String, Object> getList(int productId);
+	public Map<String, Object> getList(int productId, int start, int end);
 //	public List<ReservationComment> getImageList(int commentId);
 	public Map<String, Object> getImage(int commentId);
 	public Product getName(int reservationId);

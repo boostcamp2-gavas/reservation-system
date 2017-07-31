@@ -91,7 +91,7 @@ public class MainController {
 		model.addAttribute("productId", productId);
 		model.addAttribute("productImage", productService.getImage(productId));
 		model.addAttribute("detailInfo", productService.getDetail(productId));
-		model.addAttribute("commentMap", commentService.getList(productId));
+		model.addAttribute("commentMap", commentService.getList(productId, 0, 3));
 		model.addAttribute("NoticeImage", productService.getNoticeImage(productId));
 		model.addAttribute("InfoImage", productService.getInfoImage(productId));
 		

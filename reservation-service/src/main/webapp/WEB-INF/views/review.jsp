@@ -71,6 +71,8 @@
         <hr> </div>
 		<c:import url="/WEB-INF/views/footer.jsp" />
 </body>
+<!-- 
+<script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
 <script id="comment_template" type="text/x-handlebars-template">
 <li class="list_item">
 	<div>
@@ -99,3 +101,4 @@
 	</div>                     
 </li>
 </script>
+ -->
