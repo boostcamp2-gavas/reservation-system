@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,6 +40,13 @@ public class RestCommentController {
 	@ResponseBody
 	public long insert(@ModelAttribute Comment comment ){
 		return commentService.insert(comment);
+	}
+	
+	@GetMapping("/api/comment/{productId}")
+	public List<Comment> getByProductId(@PathVariable int productId, @RequestParam int start, @RequestParam int amount ){
+		
+		
+		return commentService.selectByProductId(productId, start, amount);
 	}
 
 }

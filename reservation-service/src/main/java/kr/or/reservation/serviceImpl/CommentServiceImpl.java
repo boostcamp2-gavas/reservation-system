@@ -44,6 +44,15 @@ public class CommentServiceImpl implements CommentService{
 		return null;
 	}
 	
+	@Override
+	public List<Comment> selectByProductId(int productId, int start, int amount) {
+		// TODO Auto-generated method stub
+		if(productId > 0 && start >= 0 && amount >= 0) {
+			return commentDao.selectByProductId(productId, start, amount);
+		}
+		return null;
+	}
+	
 
 	@Override
 	public AVGForComment selectAvgScoreByProductId(int producId) {

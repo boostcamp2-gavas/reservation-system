@@ -1,24 +1,157 @@
-const VISUAL_IMG_SIZE = 414;
-const VISUAL_IMG_NUM = 2;
+//const VISUAL_IMG_SIZE = 414;
+//const VISUAL_IMG_NUM = 2;
 
-var VisualModule_ = (function(){
 
-	var instance;
+/*
+function VisualModule(setting) {
+	
+	//initiallize
+	this.root = setting.root;
+	this.setVisualImgSize = setting.setVisualImgSize;
+	this.setVisualImgNum = setting.setVisualImgNum;
+	this.isAutoRoll = setting.isAutoRoll;
+	this.isScrollEnd = setting.isScrollEnd;
+	this.btnPreElement = setting.btnPreElement;
+	this.btnNxtElement = setting.btnNxtElement;
+	this.printPositionElement = setting.printPositionElement;
+	
+	
+	this. position_num = 0;
+	this. autoRollId = null;
+	this. stopRollId = null;
+	
+	//default setting
+	
+	if(this.isAutoRoll == null) { this.isAutoRoll = false; }
+	if(this.isScrollEnd == null) { this.isScrollEnd = 1; }
+	if(this.btnPreElement == null) { this.btnPreElement = $( root + " .btn_pre_e"); }
+	if(this.btnPreElement == null) { this.btnPreElement = $( root + " .btn_nxt_e"); }
+	
+}
+VisualModule.prototype.constructor = VisualModule;
+VisualModule.prototype.init = function() {
+	this.root.find(".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 0);
+	this.btnSetting();
+	this.position_num = 0;
+	if(this.isAutoRoll) { this.autoRolling(); }
+	touchHandler = touchHandle();
+}
 
-	function makeModule() {
 
-		var root = ""; // moduleClass : the ancestor class of this module
+VisualModule.prototype.btnSetting = function() {
+	this.btnPreElement.off("click");
+	this.btnNxtElement.off("click");
+	this.btnPreElement.on("click", this.btnPreClick);
+	this.btnNxtElement.on("click", this.btnNxtClick);
+}
 
-		// private variables
-		var position_num = 0;
-		var autoRollId;
-		var stopRollId;
-		var visualImgNum;
-		var visualImgSize;
-		var autoRolling = autoRoll;
-		var endFlag = 1;
-		var btnPreElement= $( root + " .btn_pre_e");
-		var btnNxtElement= $( root + " .btn_nxt_e");
+
+VisualModule.prototype.btnPreClick = function(event) {
+	this.goPrev();
+	this.stopRoll();
+	this.event.preventDefault();
+	this.event.stopPropagation();
+	//console.log(position_num);
+}
+
+VisualModule.prototype.btnNxtClick = function(event) {
+	goNext();
+	stopRoll();
+	event.preventDefault();
+	event.stopPropagation();
+	//console.log(position_num);
+}
+
+VisualModule.prototype.goPrev = function() {
+	if(position_num == 0 && isScrollEnd != 0 ) {
+		position_num = visualImgNum - 1 ;
+		$( root + ".visual_img").animate({left: -visualImgNum* visualImgSize  + "px" }, 0);
+		$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
+
+	} else if (position_num > 0) {
+		position_num = position_num - 1;
+		$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
+
+	} else {
+		$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
+	}
+}
+
+VisualModule.prototype.goNext = function() {
+	if(position_num == visualImgNum -1 && isScrollEnd != 0) {
+		position_num = 0;
+		$( root + ".visual_img").animate( { left: "-=" + visualImgSize + "px" }, 'slow');
+		$( root + ".visual_img").animate({left: "0px" }, 0);
+		////console.log(position_num);
+	} else if(position_num < visualImgNum -1) {
+		position_num = position_num + 1;
+		$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
+		////console.log(position_num);
+	} else{
+		$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
+	}
+}
+
+VisualModule.prototype.autoRoll = function() {
+	autoRollId = setInterval(goNext, 2000);
+}
+
+VisualModule.prototype.stopRoll = function() {
+	clearTimeout(stopRollId);
+	clearInterval(autoRollId);
+	stopRollId = setTimeout(autoRolling, 4000);
+}
+
+VisualModule.prototype.printPositionNum = function (printObject) {
+	printObject.html(position_num+1);
+}
+*/
+
+
+
+
+
+
+/*setting = {
+root:
+visualImgSize:
+visualImgNum:
+isAutoRoll:
+isScrollEnd:
+btnPreElement:
+btnNxtElement:
+printPositionElement:
+}*/
+
+//const VISUAL_IMG_SIZE = 414;
+//const VISUAL_IMG_NUM = 2;
+function VisualModule() {
+
+
+	function makeModule(setting) {
+
+		//initiallize
+		var root = setting.root;
+		var visualImgSize = setting.visualImgSize;
+		var visualImgNum = setting.visualImgNum;
+		var isAutoRoll = setting.isAutoRoll;
+		var isScrollEnd = setting.isScrollEnd;
+		var btnPreElement = setting.btnPreElement;
+		var btnNxtElement = setting.btnNxtElement;
+		var printPositionElement = setting.printPositionElement;
+		
+		
+		var  position_num = 0;
+		var  autoRollId = null;
+		var  stopRollId = null;
+		
+		//default setting
+		if(visualImgSize == null) { visualImgSize = 414; }
+		if(visualImgNum == null) { visualImgNum = 2; }
+		if(isAutoRoll == null) { isAutoRoll = false; }
+		if(isScrollEnd == null) { isScrollEnd = 1; }
+		if(btnPreElement == null) { btnPreElement = $( root + " .btn_pre_e"); }
+		if(btnPreElement == null) { btnPreElement = $( root + " .btn_nxt_e"); }
 
 
 		// module
@@ -26,11 +159,14 @@ var VisualModule_ = (function(){
 
 		// init
 		function init(){
-			$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 0);
+			root.find(".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 0);
 			btnSetting();
 			position_num = 0;
-			if(autoRolling != null) { autoRolling(); }
+			if(isAutoRoll) { autoRolling(); }
 			touchHandler = touchHandle();
+			printPositionNum(printPositionElement);
+			btnPreElement.on("click", printPositionNum.bind(this, printPositionElement));
+			btnNxtElement.on("click", printPositionNum.bind(this, printPositionElement));
 		}
 
 
@@ -60,7 +196,7 @@ var VisualModule_ = (function(){
 		}
 
 		function goPrev() {
-			if(position_num == 0 && endFlag != 0 ) {
+			if(position_num == 0 && !isScrollEnd ) {
 				position_num = visualImgNum - 1 ;
 				$( root + ".visual_img").animate({left: -visualImgNum* visualImgSize  + "px" }, 0);
 				$( root + ".visual_img").animate( { left: - position_num * visualImgSize + "px" }, 'slow');
@@ -75,7 +211,7 @@ var VisualModule_ = (function(){
 		}
 
 		function goNext() {
-			if(position_num == visualImgNum -1 && endFlag != 0) {
+			if(position_num == visualImgNum -1 && !isScrollEnd) {
 				position_num = 0;
 				$( root + ".visual_img").animate( { left: "-=" + visualImgSize + "px" }, 'slow');
 				$( root + ".visual_img").animate({left: "0px" }, 0);
@@ -201,7 +337,7 @@ var VisualModule_ = (function(){
 			},
 
 			setScrollEndFlag: function (flag) {
-				endFlag = flag;
+				isScrollEnd = flag;
 			},
 
 			getPosition: function() {
@@ -218,20 +354,22 @@ var VisualModule_ = (function(){
 		};
 
 
-	};
+	}
+	
+	return{
+		makeModule : function(setting) {
+			return makeModule(setting);
+		}
+	}
+	
+	
+//	
+//	this.constructor = function(setting) {
+//		console.log("call constructor");
+//		var instance = makeModule(setting);
+//		return instance;
+//	}
 
-	return {
 
-	    getInstance: function () {
-
-
-	        instance = makeModule();
-
-
-	      return instance;
-	    }
-
-	};
-
-})();
+}
 

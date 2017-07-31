@@ -46,6 +46,15 @@ public class CommentDao {
 		return jdbc.query(CommentSqls.SELCET_ALL,map,rowMapper);
 	}
 	
+	public List<Comment> selectByProductId(int productId, int start, int amount) {
+		Map<String , Integer> map = new HashMap<>();
+		map.put("productId", productId );
+		map.put("start", start );
+		map.put("amount", amount );
+		
+		return jdbc.query(CommentSqls.SELECT_BY_PRODUCT_ID_S_A, map, rowMapper);
+	}
+	
 	public List<Map<String,Object>> selectAvgScoreByProductId(int productId) {
 		Map<String , ?> map = Collections.singletonMap("id",productId);
 		List<Map<String,Object>> list = jdbc.queryForList(CommentSqls.SELECT_COUNT_AND_AVGSCORE,map);

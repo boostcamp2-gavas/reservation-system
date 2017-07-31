@@ -11,13 +11,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.reservation.config.RootApplicationContextConfig;
-import kr.or.reservation.dao.CommentDao;
+import kr.or.reservation.domain.Comment;
 import kr.or.reservation.service.CommentService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = RootApplicationContextConfig.class)
 @Transactional
-public class CommentForDetailTest {
+public class CommentTest {
 
 	@Autowired
 	CommentService service;
@@ -36,6 +36,15 @@ public class CommentForDetailTest {
 		
 		List<?> list= service.getFileIdByCommentId(1);
 		// 가져 오는지 테스트 
+		log.info(list.toString());
+	}
+	
+	@Test
+	public void shouldSelectByProductId() {
+		List<Comment> list= service.selectByProductId(2, 0, 10);
+		log.info(list.toString());
+		
+		list= service.selectByProductId(2, 5, 10);
 		log.info(list.toString());
 	}
 }

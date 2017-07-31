@@ -25,5 +25,9 @@ public class CommentSqls {
 			"SET " + 
 			"first_image_save_file_name = :imageName " + 
 			"WHERE id = :id ";
+	
+	public final static String SELECT_BY_PRODUCT_ID_S_A = "select t2.nickname, t1.* from reservation_user_comment as t1"
+			+ " inner join users as t2 on t1.user_id = t2.id"
+			+ " where t1.product_id = :productId limit :start ,:amount";
 
 }

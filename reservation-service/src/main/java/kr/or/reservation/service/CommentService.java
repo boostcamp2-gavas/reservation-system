@@ -13,4 +13,6 @@ public interface CommentService {
 	public Long insert(Comment comment);
 	
 	public boolean updateFileName(int commentId, int fileId);
+	
+	public List<Comment> selectByProductId(int productId, int start, int amount);
 }

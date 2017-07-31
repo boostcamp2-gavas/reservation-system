@@ -315,9 +315,9 @@
 <!--  get JQuery   -->
 <script src="//code.jquery.com/jquery.min.js"></script>
 
-<!--  img Slide  -->
+<!--  img Slide  
 <script src="/resources/js/slide/caroucel.js"></script>
-
+-->
 
 <!--  Handlebar -->
 <script src="//cdn.jsdelivr.net/handlebarsjs/4.0.8/handlebars.min.js"></script>
@@ -328,6 +328,7 @@
 
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=w0YSpFZqo6SXUXy5itSy&submodules=geocoder"></script>
 <script src="/resources/js/naverMap.js"></script>
+<script src="/resources/js/modules/visualModule.js"></script>
  
 <script>
 
@@ -349,9 +350,22 @@ $(document).ready(function(){
 	$ulPop = $(".visual_img:last"),
 	$popupPoint = $(".num.popup");
 	
-	var touch = new CaroucelTouch($ul,$point);
-	CarocelDetail.init(touch);
-	
+/* 	var touch = new CaroucelTouch($ul,$point);
+	CarocelDetail.init(touch); */
+	var setting = {
+			root: $(".section_visual"),
+			visualImgSize: 414,
+			visualImgNum: $ul.children().length - 1,
+			isAutoRoll: true,
+			isScrollEnd: false,
+			btnPreElement: null,
+			btnNxtElement: null,
+			printPositionElement:$(".num:first")
+	}
+	console.log(VisualModule);
+	var visualModule = VisualModule.makeModule(setting);
+	console.log(visualModule);
+	visualModule.init();
 	
 	// layer popup
 	
