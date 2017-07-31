@@ -29,7 +29,7 @@
                 <div class="review_header">
                     <div class="top_title gr">
                         <a href="history.back()" class="btn_back" title="이전 화면으로 이동"> <i class="fn fn-backward1"></i> </a>
-                        <h2><a class="title" href="#">${reviewList.commentList[0].productName}</a></h2>
+                        <h2><a class="title" href="#">${reviewList[0].productName}</a></h2>
                     </div>
                 </div>
                 <div class="section_review_list">
@@ -38,25 +38,25 @@
                         <div class="short_review_area">
                             <div class="grade_area"> 
                             	<span class="graph_mask"> 
-                            		<em class="graph_value" style="width: ${reviewList.starPoint }%;"></em> 
+                            		<em class="graph_value" style="width: ${reviewInfo.starPoint }%;"></em> 
                             	</span> 
                             	<strong class="text_value"> 
                             		<span>
-                            			<fmt:formatNumber value="${reviewList.scoreAverage }" pattern="0.0"></fmt:formatNumber>
+                            			<fmt:formatNumber value="${reviewInfo.scoreAverage }" pattern="0.0"></fmt:formatNumber>
                             		</span> 
                             		<em class="total">5.0</em> 
                             	</strong> 
                             	<span class="join_count">
-                            		<em class="green">${reviewList.commentCount }건</em> 등록
+                            		<em class="green">${reviewInfo.commentCount }건</em> 등록
                             	</span>
                             </div>
-                            <ul class="list_short_review" data-comment-count="${reviewList.commentCount }" data-product-id="${reviewList.commentList[0].productId}">
-								<c:forEach var="ri" items="${reviewList.commentList }">
+                            <ul class="list_short_review" data-comment-count="${reviewInfo.commentCount }" data-product-id="${productId}">
+								<c:forEach var="ri" items="${reviewList }">
                             	<li class="list_item">
                                     <div>
                                     	<c:if test="${ri.fileId eq null }">
                                         <div class="review_area no_img">
-                                            <h4 class="resoc_name">${reviewList.productName}</h4>
+                                            <h4 class="resoc_name">${reviewList[0].productName}</h4>
                                             <p class="review">${ri.comment }</p>
                                         </div>
                                     	</c:if>
