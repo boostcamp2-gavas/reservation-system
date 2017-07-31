@@ -93,8 +93,8 @@ var CommentModule = (function(){
 				visualImgNum: response.length,
 				isAutoRoll: false,
 				isScrollEnd: true,
-				btnPreElement: $(".btn_prev"),
-				btnNxtElement: $(".btn_nxt"),
+				btnPreElement: $("#photoviewer .btn_prev"),
+				btnNxtElement: $("#photoviewer .btn_nxt"),
 				printPositionElement:$("#photoviewer .figure_pagination .num:first-child")
 		}
 		var visualModule = VisualModule(setting);

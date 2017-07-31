@@ -122,7 +122,7 @@
                                     <div class="review_area">
                                     <c:if test="${list.imageCount != 0}">
                                         <div class="thumb_area" >
-                                            <a  class="thumb" title="이미지 크게 보기" data-id="${list.id}"> 
+                                            <a  class="thumb" title="이미지 크게 보기" data-comment="${list.id}"> 
                                             	<img width="90" height="90" class="img_vertical_top" src='/img/${list.firstImageSaveFileName}' alt="리뷰이미지"> 
                                             </a> 
                                             <span class="img_count">${list.imageCount}
@@ -227,7 +227,7 @@
         <span class="copyright">© NAVER Corp.</span>
     </div>
 </footer>
-<div id="photoviwer" class="layer _none">
+<div id="photoviewer" class="layer _none">
 	<div class = "group_visual ">
 		<div class = "align-right">
         	<a class ="close" >X</a>

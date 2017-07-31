@@ -56,9 +56,7 @@ function VisualModule(setting) {
 			if(!isAutoRoll) { autoRoll = function(){}; }
 			autoRoll();
 			touchHandler = touchHandle();
-			printPositionNum(printPositionElement);
-			btnPreElement.on("click", printPositionNum.bind(this, printPositionElement));
-			btnNxtElement.on("click", printPositionNum.bind(this, printPositionElement));
+			printPositionElement.html(position_num+1);
 		}
 
 
@@ -72,18 +70,20 @@ function VisualModule(setting) {
 		}
 
 		function btn_pre_eClick(event) {
-			goPrev();
-			stopRoll();
 			event.preventDefault();
 			event.stopPropagation();
+			goPrev();
+			stopRoll();
+			printPositionElement.html(position_num+1);
 			//console.log(position_num);
 		}
 
 		function btn_nxt_eClick(event) {
-			goNext();
-			stopRoll();
 			event.preventDefault();
 			event.stopPropagation();
+			goNext();
+			stopRoll();
+			printPositionElement.html(position_num+1);
 			//console.log(position_num);
 		}
 
@@ -103,6 +103,7 @@ function VisualModule(setting) {
 		}
 
 		function goNext() {
+			
 			if(position_num == visualImgNum -1 && !isScrollEnd) {
 				position_num = 0;
 				root.find(".visual_img").animate( { left: "-=" + visualImgSize + "px" }, 'slow');
@@ -127,9 +128,7 @@ function VisualModule(setting) {
 			stopRollId = setTimeout(autoRoll, 4000);
 		}
 
-		function printPositionNum(printObject) {
-			printObject.html(position_num+1);
-		}
+
 
 
 		function touchHandle() {
@@ -193,55 +192,7 @@ function VisualModule(setting) {
 
 
 		return {
-			init: init,
-
-			setVisualImgNum: function(num) {
-				visualImgNum = num;
-			},
-
-			setVisualImgSize: function(num) {
-				visualImgSize = num;
-			},
-
-			setModuleClass: function(moduleClass) {
-				if(moduleClass == null || moduleClass == "") {
-					root = "";
-				} else {
-					root = "." + moduleClass + " ";
-				}
-
-			},
-
-			setAutoRoll: function(isAutoRoll) {
-				if(isAutoRoll) {
-					autoRolling = autoRoll;
-				} else {
-					clearTimeout(stopRollId);
-					clearInterval(autoRollId);
-					autoRolling = null;
-				}
-			},
-
-			setButton: function (btnPreElementIn, btnNxtElementIn) {
-				btnPreElement = btnPreElementIn;
-				btnNxtElement = btnNxtElementIn;
-				btnSetting();
-			},
-
-			setScrollEndFlag: function (flag) {
-				isScrollEnd = flag;
-			},
-
-			getPosition: function() {
-				return position_num;
-			},
-
-			initPrintPositionHandler: function(printObject) {
-				printPositionNum(printObject);
-				btnPreElement.on("click", printPositionNum.bind(this, printObject));
-				btnNxtElement.on("click", printPositionNum.bind(this, printObject));
-			}
-
+			init: init
 
 		};
 
