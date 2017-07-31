@@ -327,7 +327,6 @@ $(document).ready(function(){
 	
 	var visualModule = VisualModule(setting);
 	visualModule.init();
-	console.log(getProductId());
 	
 	var commentModule = CommentModule;
 	commentModule.init(getProductId());
