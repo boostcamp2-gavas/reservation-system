@@ -79,7 +79,7 @@ var ThumbApp = (function() {
         $('#photoviewer').fadeTo("fast",1);    
 	}
 	function imgLoad(res) {
-		var arr = res.imageList.map(function(v, i) {
+		var arr = res.map(function(v, i) {
     		return {
     			fileId: v.fileId,
     			tranx: i * 100
