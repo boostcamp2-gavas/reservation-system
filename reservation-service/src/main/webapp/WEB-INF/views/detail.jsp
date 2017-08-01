@@ -209,7 +209,7 @@
 		<c:when test="${comment.fileId ne null}">
                                         <div class="review_area">
                                             <div class="thumb_area">
-                                                <a class="thumb" title="이미지 크게 보기" data-comment_id="${comment.rucId}">
+                                                <a class="thumb" title="이미지 크게 보기" data-comment-id="${comment.rucId}">
                                                 	<img width="90" height="90" class="img_vertical_top" src="/api/files/${comment.fileId }" alt="${coment.fileName}">
                                                 </a> 
                                                 <span class="img_count">${comment.imgCount}</span>

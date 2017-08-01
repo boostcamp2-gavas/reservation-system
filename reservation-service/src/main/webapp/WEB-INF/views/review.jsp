@@ -130,7 +130,7 @@
                                     	<div class="review_area">
                                             <div class="thumb_area">
                                                 <a class="thumb" title="이미지 크게 보기" data-comment-id="${ri.rucId}"> 
-                                                	<img width="90" height="90" class="img_vertical_top" src="/files/${ri.fileId }" alt="리뷰이미지"> 
+                                                	<img width="90" height="90" class="img_vertical_top" src="/api/files/${ri.fileId }" alt="리뷰이미지"> 
                                                 </a> 
                                                 <span class="img_count">${ri.imgCount}</span>
                                             </div>
@@ -168,7 +168,7 @@
                     {{#if fileId}}
                     <div class="thumb_area">
                         <a class="thumb" title="이미지 크게 보기" data-comment-id="{{rucId}}"> 
-                            <img width="90" height="90" class="img_vertical_top" src="/files/{{fileId }}" alt="리뷰이미지"> 
+                            <img width="90" height="90" class="img_vertical_top" src="/api/files/{{fileId }}" alt="리뷰이미지"> 
                         </a> 
                         <span class="img_count">{{imgCount}}</span>
                     </div>
