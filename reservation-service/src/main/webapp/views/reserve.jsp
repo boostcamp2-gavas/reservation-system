@@ -229,9 +229,6 @@
 
 <script>
 
-		// qty 선언 후 개수 만큼 ticket 생성. 그후 이벤트 등록
-	
-
 	
 		$(".btn_agreement").on("click",function(event){
 			var detail =$(this).parents(".agreement");

@@ -2,35 +2,41 @@
  * 
  */
 $(function(){
+	
 	var $qty = $(".qty");
 	
-	var ticketArray = $qty.map(function(v,i){
-		return new Ticket($(i));
+	var ticketArray = $qty.map(function(i,v){
+		return new Ticket($(v));
 	});
 	
-	ticketArray[0].on("plus",ticketArray[0].plus);
-	ticketArray[0].on("minus",ticketArray[0].minus);
+	ticketArray[0].on("change",function(){
+		var totalCount = 0;
+		ticketArray.each(function(i,v){
+			totalCount += v.getCount();
+		});
+		$(".tickat_count").text(totalCount);
+	});
 	
-	TicketModule.init(ticketArray);
+
+	
 });
 
 	function Ticket($qty){
+		// 여기에 on을 등록하는 방향으로 해도 됨 
 		this.$qty = $qty;
 		this.$text = $qty.find(".count_control_input[type = tel]");
 		this.$total_price = $qty.find(".total_price");
 		this.total_price =parseInt(this.$total_price.text());
 		this.price = parseInt($qty.find(".price").text().replace(/[^\d]+/g,''));
 		this.count = 0;
+		
+		this.$qty.on("click",".ico_plus3",this.plus.bind(this));
+		this.$qty.on("click",".ico_minus3",this.minus.bind(this));
+		
 	}		
 	
 	Ticket.prototype = new	eg.Component();		
 	Ticket.prototype.constructor =	Ticket;	
-	
-	Ticket.prototype.totalCount = 0;
-	
-	Ticket.prototype.changeCount = function(){
-		this.changeTotal();
-	}
 	
 	Ticket.prototype.changeText = function(){
 		this.$text.val(this.count);
@@ -47,34 +53,19 @@ $(function(){
 		--this.count;
 		this.$total_price.text(this.total_price-=this.price);
 		this.changeText();
+		this.trigger("change");
 	};	
 	
 	Ticket.prototype.plus = function(){	
 		++Ticket.prototype.totalCount;
-		++this.count
+		++this.count;
 		this.$total_price.text(this.total_price+=this.price);
 		this.changeText();
+		this.trigger("change");
 	};	
 	
-	var TicketModule = (function(){
-		var ticket = [];
-		return {
-			minus : function(){
-				if($(this).hasClass("disabled")){
-					return;
-				}
-				var index = $(".qty .ico_minus3").index($(this));
-				ticket[index].trigger("minus");
-			},
-			plus : function(){
-				var index = $(".qty .ico_plus3").index($(this));
-				ticket[index].trigger("plus");
-			},
-			init: function(ticketArray){
-				ticket = ticketArray;
-				$(".ico_plus3").on("click",this.plus);
-				$(".ico_minus3").on("click",this.minus);
-				
-			}
-		}
-	})();
+	Ticket.prototype.getCount = function(){
+		return this.count;
+	}
+	
+
