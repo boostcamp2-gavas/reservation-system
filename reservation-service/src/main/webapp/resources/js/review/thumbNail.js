@@ -74,7 +74,7 @@ var ThumbApp = (function() {
 	function popupViewer(e){
 		e.preventDefault();
 		point = 0;
-		var url = '/productInfo/commentImage?commentId=' + $(e.target).data('comment-id');
+		var url = '/api/comments/image?commentId=' + $(e.target).data('comment-id');
 		callAjax(url).then(imgLoad);
         $('#photoviewer').fadeTo("fast",1);    
 	}

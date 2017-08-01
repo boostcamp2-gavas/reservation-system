@@ -27,4 +27,9 @@ public class CommentRestController {
 	public List<ReservationComment> get(@PathVariable int productId, @RequestParam int start){
 		return commentService.getList(productId, start*10, 10);
 	}
+	
+	@GetMapping("/image")
+	public List<ReservationComment> getCommentImage(@RequestParam("commentId") Integer commentId) {
+		return commentService.getImage(commentId);
+	}
 }

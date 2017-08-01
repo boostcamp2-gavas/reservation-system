@@ -124,7 +124,7 @@ $('.thumb_area').click(function() {
 	var commentId = $(this).data('comment_id');
 	
 	$.ajax({
-		url : "/productInfo/commentImage?commentId="+commentId,
+		url : "/api/comments/image?commentId="+commentId,
 		data : "commentId="+commentId,
 		type : "GET",
 		success : function(data){
@@ -144,7 +144,7 @@ function viewCommentImage(data) {
 	var source = $('#comment_image_template').html();
 	var template = Handlebars.compile(source);
 	
-	$.each(data.imageList, function(index, image){
+	$.each(data, function(index, image){
 		var data = {commentImageList : image};
 		var html = template(data);
 		

@@ -30,6 +30,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
+	public Product getRolling() {
+		return productDao.getRolling();
+	}
+	
+	@Override
 	public int getProductCount() {
 		return productDao.getProductCount();
 	}

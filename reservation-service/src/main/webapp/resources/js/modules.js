@@ -104,7 +104,7 @@ var ProductList = (function(countArea, ul) {
 			else
 				start++;
 
-			var urlInfo = "/productInfo";
+			var urlInfo = "/api/productInfo";
 			var dataInfo = "";
 
 			if(categoryId == 0 || categoryId == undefined) {	// 전체보기 상품
@@ -124,9 +124,14 @@ var ProductList = (function(countArea, ul) {
 			    	ProductList.countProduct(data.productCount);
 			    	
 			    	if(data.productList.length == 0)
-			    		alert("더이상 상품이 없습니다!");
-			    	else 
+			    		ul.last().next().css('display','none');
+			    	else { 
+			    		if(data.productList.length < 10)
+			    			ul.last().next().css('display','none');
+			    		else
+			    			ul.last().next().css('display','block');
 			    		ProductList.productAppend(flag, data.productList);
+			    	}
 			    },
 			    error:function(request,status,error){
 			        alert("code:"+request.status+"\n"+"error:"+error);

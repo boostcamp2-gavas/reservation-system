@@ -95,6 +95,7 @@ public class MainController {
 		double avg = commentService.getScoreAverage(productId);
 		
 		model.addAttribute("productId", productId);
+		model.addAttribute("rolling", productService.getRolling());
 		model.addAttribute("productImage", productService.getImage(productId));
 		model.addAttribute("detailInfo", productService.getDetail(productId));
 		

@@ -3,6 +3,12 @@ package connect.reservation.dao;
 public class ProductSqls {
 	final static String endNum = "10";
 	
+	final static String GET_ROLLING = "SELECT p.id product_id, p.name product_name, p.event, di.place_name, f.id file_id"
+			+ " FROM product p INNER JOIN product_image pi ON p.id = pi.product_id"
+			+ " INNER JOIN file f ON pi.file_id = f.id"
+			+ " INNER JOIN display_info di ON p.id = di.product_id"
+			+ " WHERE f.content_type like '%프로모션%'";
+	
 	final static String COUNT_PRODUCT = "SELECT count(*) FROM product";
 	final static String COUNT_CATEGORY_PRODUCT = "SELECT count(*) FROM product WHERE category_id = :category_id";
 	final static String GET_MAIN_INFO = "SELECT p.id product_id, p.category_id category_id, p.name product_name, p.description description, di.place_name, f.id file_id, f.file_name, f.save_file_name"

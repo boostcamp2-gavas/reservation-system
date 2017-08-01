@@ -12,7 +12,7 @@ public interface CommentService {
 	public int getCount(int productId);
 	public double getScoreAverage(int productId);
 //	public List<ReservationComment> getImageList(int commentId);
-	public Map<String, Object> getImage(int commentId);
+	public List<ReservationComment> getImage(int commentId);
 	public Product getName(int reservationId);
 	public int add(ReservationUserComment reservationUserComment);
 }

@@ -28,6 +28,11 @@ public class ProductDao {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource); // Datasource를 주입
     }
     
+    public Product getRolling() {
+    	Map<String, Object> params = Collections.emptyMap();
+    	return jdbc.queryForObject(ProductSqls.GET_ROLLING, params, rowMapper);
+    }
+    
     public int getProductCount() {
     	Map<String, Object> params = Collections.emptyMap();
     	return jdbc.queryForObject(ProductSqls.COUNT_PRODUCT, params, Integer.class);

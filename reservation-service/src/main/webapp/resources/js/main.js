@@ -27,6 +27,7 @@ $(function() {
 		$('#currentCategory').val($(this).data('category'));
 		$('#moreCnt').val(0);
 		
+		$('#btnMore').css('display', 'block');
 		category.addActiveClass($(this));
 		ProductList.getProducInfo(false, $('#currentCategory').val(), 0);
 	});
@@ -50,3 +51,4 @@ $(function() {
 	});
 	
 });
+
