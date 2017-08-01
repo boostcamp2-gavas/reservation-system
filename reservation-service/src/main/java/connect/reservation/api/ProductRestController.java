@@ -14,7 +14,7 @@ import connect.reservation.dto.ReservationComment;
 import connect.reservation.service.CommentService;
 
 @RestController
-@RequestMapping("/productInfo")
+@RequestMapping("/api/productInfo")
 public class ProductRestController {
 	private final ProductService productService;
 	private final CommentService commentService;

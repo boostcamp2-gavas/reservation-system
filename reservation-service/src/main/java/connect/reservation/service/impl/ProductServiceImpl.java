@@ -30,7 +30,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public Product getRolling() {
+	public List<Product> getRolling() {
 		return productDao.getRolling();
 	}
 	

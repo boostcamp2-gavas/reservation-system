@@ -40,13 +40,13 @@
                                 <!-- [D] 이전,다음 버튼을 클릭할때마다 캐러셀 형태로 순환 됨 --->
                                 <ul class="visual_img">
 <c:forEach var="rolling" items="${rolling}">
-                                    <li class="banner_list item" style="background-image: url(/files/${rolling.fileId}); width: 338px;">
+                                    <li class="banner_list item" style="background-image: url(/api/files/${rolling.fileId}); width: 338px;">
                                         <a href="/mvDetail?productId=${rolling.productId}"> 
                                         	<span class="img_btm_border"></span> 
                                         	<span class="img_right_border"></span> 
                                         	<span class="img_bg_gra"></span>
                                             <div class="event_txt">
-                                                <h4 class="event_txt_tit">${rolling.productName} 네이버 예약</h4>
+                                                <h4 class="event_txt_tit">${rolling.productName}</h4>
                                                 <p class="event_txt_adr">${rolling.placeName}</p>
                                                 <p class="event_txt_dsc">${rolling.event}</p>
                                             </div>

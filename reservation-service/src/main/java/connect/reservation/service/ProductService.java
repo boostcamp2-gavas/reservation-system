@@ -6,7 +6,7 @@ import java.util.Map;
 import connect.reservation.dto.Product;
 
 public interface ProductService {
-	public Product getRolling();
+	public List<Product> getRolling();
 	
 	public int getProductCount();
 	public int getCategoryProductCount(int categoryId);
