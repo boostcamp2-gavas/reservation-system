@@ -187,7 +187,7 @@
 		{{#items}}
 		<div class="sub_layer" style="transform: translateX({{tranx}}%)">
     		<div class="wrapper">
-				<img src="/files/{{fileId}}">
+				<img src="/api/files/{{fileId}}">
     		</div>
 			<div class="btn_wrapper">
 	    		<button class="com_img_btn close">X</button>

@@ -43,7 +43,7 @@
                                 <ul class="visual_img product_banner_image">
 <c:forEach var="image" items="${productImage}" varStatus="status">
                                			<li class="imgList item" style="width: 414px;"> 
-                               			<img alt="${image.fileName}" class="img_thumb" src="/files/${image.fileId}">
+                               			<img alt="${image.fileName}" class="img_thumb" src="/api/files/${image.fileId}">
                                			 <span class="img_bg"></span>
                                    		 <div class="visual_txt">
 	<c:if test="${status.index eq 0}">
@@ -142,7 +142,7 @@
                                         <div class="review_area">
                                             <div class="thumb_area" data-comment_id="${comment.rucId}">
                                                 <a href="#" class="thumb" title="이미지 크게 보기">
-                                                	<img width="90" height="90" class="img_vertical_top" src="/files/${comment.fileId }" alt="${coment.fileName}">
+                                                	<img width="90" height="90" class="img_vertical_top" src="/api/files/${comment.fileId }" alt="${coment.fileName}">
                                                 </a> 
                                                 <span class="img_count">${comment.imgCount}</span>
                                             </div>
@@ -213,7 +213,7 @@
                                     	<strong class="in_tit">[공지사항]</strong>
                                         <ul class="in_img_group">
                                             <li class="in_img_lst"> 
-                                            	<img alt="${notice.fileName}" class="img_thumb lazy" src="/files/${notice.fileId }" data-original="${notice.saveFileName}"> 
+                                            	<img alt="${notice.fileName}" class="img_thumb lazy" src="/api/files/${notice.fileId }" data-original="${notice.saveFileName}"> 
                                             </li>
                                         </ul>
                                     </li>
@@ -225,7 +225,7 @@
                                     	<strong class="in_tit">[공연정보]</strong>
                                         <ul class="in_img_group">
                                             <li class="in_img_lst"> 
-                                            	<img alt="123${info.fileName}" class="img_thumb lazy" src="/files/${info.fileId }" data-original="${info.saveFileName}"> 
+                                            	<img alt="123${info.fileName}" class="img_thumb lazy" src="/api/files/${info.fileId }" data-original="${info.saveFileName}"> 
                                             </li>
                                         </ul>
                                     </li>
@@ -301,7 +301,7 @@
 						<script id="comment_image_template" type="text/x-handlebars-template">
 							{{#commentImageList}} 
                 				<li class="popImgList item"> 
-                					<img alt="{{fileName}}" class="img_thumb" src="/files/{{fileId}}">
+                					<img alt="{{fileName}}" class="img_thumb" src="/api/files/{{fileId}}">
                 				 	<span class="img_bg"></span>
                     			 	<div class="visual_txt">
                     				</div>
