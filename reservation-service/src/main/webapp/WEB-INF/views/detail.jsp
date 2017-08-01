@@ -105,7 +105,7 @@
                                 <ul class="visual_img product_banner_image">
 <c:forEach var="image" items="${productImage}" varStatus="status">
                                			<li class="imgList item" style="width: 414px;"> 
-                               			<img alt="${image.fileName}" class="img_thumb" src="/files/${image.fileId}">
+                               			<img alt="${image.fileName}" class="img_thumb" src="/api/files/${image.fileId}">
                                			 <span class="img_bg"></span>
                                    		 <div class="visual_txt">
 	<c:if test="${status.index eq 0}">
@@ -121,6 +121,7 @@
 </c:forEach>
                                 </ul>
                             </div>
+<c:if test="${fn:length(productImage) > 1}">
                             <div class="imgBtn prev">
                                 <div class="prev_inn">
                                     <a class="btn_prev" title="이전">
@@ -136,6 +137,7 @@
                                     </a>
                                 </div>
                             </div>
+</c:if>
                         </div>
                     </div>
                     <div class="group_btn_goto">
@@ -190,6 +192,10 @@
                         <h3 class="title_h3">예매자 한줄평</h3>
                         <div class="short_review_area">
                             <div class="grade_area">
+                            	<c:if test="${commentCount eq 0 }">
+                            		<c:set var="starPoint" value="0"></c:set>
+                            		<c:set var="scoreAverage" value="0.0"></c:set>
+                            	</c:if>
                                 <!-- [D] 별점 graph_value는 퍼센트 환산하여 width 값을 넣어줌 -->
                                 <span class="graph_mask"> <em class="graph_value" style="width:${starPoint}% ;"></em> </span>
                                 <strong class="text_value"> <span class="comment_score">${scoreAverage}</span> <em class="total">5.0</em> </strong>
@@ -203,8 +209,8 @@
 		<c:when test="${comment.fileId ne null}">
                                         <div class="review_area">
                                             <div class="thumb_area">
-                                                <a class="thumb" title="이미지 크게 보기" data-comment-id="${comment.rucId}">
-                                                	<img width="90" height="90" class="img_vertical_top" src="/files/${comment.fileId }" alt="${coment.fileName}">
+                                                <a class="thumb" title="이미지 크게 보기" data-comment_id="${comment.rucId}">
+                                                	<img width="90" height="90" class="img_vertical_top" src="/api/files/${comment.fileId }" alt="${coment.fileName}">
                                                 </a> 
                                                 <span class="img_count">${comment.imgCount}</span>
                                             </div>
@@ -275,7 +281,7 @@
                                     	<strong class="in_tit">[공지사항]</strong>
                                         <ul class="in_img_group">
                                             <li class="in_img_lst"> 
-                                            	<img alt="${notice.fileName}" class="img_thumb lazy" src="/files/${notice.fileId }" data-original="${notice.saveFileName}"> 
+                                            	<img alt="${notice.fileName}" class="img_thumb lazy" src="/api/files/${notice.fileId }" data-original="${notice.saveFileName}"> 
                                             </li>
                                         </ul>
                                     </li>
@@ -287,7 +293,7 @@
                                     	<strong class="in_tit">[공연정보]</strong>
                                         <ul class="in_img_group">
                                             <li class="in_img_lst"> 
-                                            	<img alt="123${info.fileName}" class="img_thumb lazy" src="/files/${info.fileId }" data-original="${info.saveFileName}"> 
+                                            	<img alt="123${info.fileName}" class="img_thumb lazy" src="/api/files/${info.fileId }" data-original="${info.saveFileName}"> 
                                             </li>
                                         </ul>
                                     </li>
@@ -338,7 +344,7 @@
                                 	<i class="fn fn-path-find2"></i> 
                                 	<span>길찾기</span> 
                                 </a>
-								<a hewf="#" class="btn_navigation before"> 
+								<a href="#" class="btn_navigation before"> 
 									<i class="fn fn-navigation2"></i> 
 									<span>내비게이션</span> 
 								</a>
@@ -356,7 +362,7 @@
                 {{#items}}
                 <div class="sub_layer" style="transform: translateX({{tranx}}%)">
                     <div class="wrapper">
-                        <img src="/files/{{fileId}}">
+                        <img src="api/files/{{fileId}}">
                     </div>
                     <div class="btn_wrapper">
                         <button class="com_img_btn close">X</button>
