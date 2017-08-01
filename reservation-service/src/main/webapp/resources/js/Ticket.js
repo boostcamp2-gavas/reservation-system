@@ -8,10 +8,6 @@ $(function(){
 		return new Ticket($(i));
 	});
 	
-
-	
-	// 이거 생각해볼것 ~~  
-	// 물어봅시다 
 	ticketArray[0].on("plus",ticketArray[0].plus);
 	ticketArray[0].on("minus",ticketArray[0].minus);
 	
@@ -29,9 +25,10 @@ $(function(){
 	
 	Ticket.prototype = new	eg.Component();		
 	Ticket.prototype.constructor =	Ticket;	
+	
 	Ticket.prototype.totalCount = 0;
+	
 	Ticket.prototype.changeCount = function(){
-		
 		this.changeTotal();
 	}
 	

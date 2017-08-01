@@ -128,9 +128,7 @@ var ReservationState = (function(){
 			method : "GET",
 			url : "/reservation/type/"+type
 		}).done(function(data) {
-			if (data.length === 0) {
-				// 데이터가 없음. 
-			}else{
+			if (data.length !== 0) {
 				var item = {
 						reservation : [],
 						menubar : [{ menubar : _menubar, icon : _icon}]
