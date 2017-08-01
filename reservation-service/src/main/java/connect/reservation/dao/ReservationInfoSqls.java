@@ -16,7 +16,7 @@ public class ReservationInfoSqls {
 			" ON r.product_id = p.id and p.id = d.product_id AND r.user_id = :user_id" +
 			" ORDER BY reservation_type";
 	
-	final static String SELECT_COUNT = "SELECT reservation_type, COALESCE(COUNT(*), 0) cnt" + 
+	final static String SELECT_COUNT = "SELECT reservation_type, COUNT(*) cnt" + 
 			" FROM reservation_info" + 
 			" WHERE user_id = :user_id" + 
 			" GROUP BY reservation_type";
