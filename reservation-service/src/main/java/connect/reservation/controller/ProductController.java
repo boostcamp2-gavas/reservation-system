@@ -17,7 +17,7 @@ public class ProductController {
 	private final ProductService productService;
 	private final CommentService reservationCommentService;
 
-	final static int productNum = 10;
+	final static int PRODUCT_NUM = 10;
 	
 	@Autowired
 	public ProductController(
@@ -29,14 +29,14 @@ public class ProductController {
 	
 	@GetMapping("/all")
 	public Map<String, Object> getAll(@RequestParam("start") Integer start) {
-		return productService.getMainInfo(start*productNum);
+		return productService.getMainInfo(start*PRODUCT_NUM);
 	}
 	
 	@GetMapping("/category")
 	public Map<String, Object> getCategory(
 			@RequestParam("categoryId") Integer categoryId, 
 			@RequestParam("start") Integer start) {
-		return productService.getCategoryInfo(categoryId, start*productNum);
+		return productService.getCategoryInfo(categoryId, start*PRODUCT_NUM);
 	}
 	
 	@GetMapping("/commentImage")

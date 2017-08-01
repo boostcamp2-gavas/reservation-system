@@ -378,7 +378,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.js"></script>
 <script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
 <script src="/resources/js/modules.js"></script>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=eGDuy2NMeDv1C1QCsPGF&submodules=geocoder"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=DnKZdo7puIZaftEgVyjF&submodules=geocoder"></script>
 <script src="/resources/js/callAjax.js"></script>
 <script src="/resources/js/review/thumbNail.js"></script>
 <script src="/resources/js/detail.js"></script>
