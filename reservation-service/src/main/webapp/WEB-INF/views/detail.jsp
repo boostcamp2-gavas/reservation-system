@@ -192,7 +192,7 @@
                         <h3 class="title_h3">예매자 한줄평</h3>
                         <div class="short_review_area">
                             <div class="grade_area">
-                            	<c:if test="${starPoint ne null}">
+                            	<c:if test="${commentCount eq 0 }">
                             		<c:set var="starPoint" value="0"></c:set>
                             		<c:set var="scoreAverage" value="0.0"></c:set>
                             	</c:if>
