@@ -8,8 +8,7 @@ $(function() {
 	
 	ProductList.setting();
 	ProductList.getProducInfo(false, 0, 0);
-	
-	
+    
 	$('.imgBtn ').click(function() {
 		var element = $(this).children();
 
@@ -44,9 +43,14 @@ $(function() {
 	})
 	
 	$(window).scroll(function() {
-	    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-	    	getMoreInfo();
-	    }
+        if(ProductList.getGettingSatus()) {
+            return;
+        }
+		var maxHeight = $(document).height();
+		var currentScroll = $(window).scrollTop() + $(window).height();
+		if(maxHeight - currentScroll < 30) {
+			if(!$('.btnMore').hasClass('invisible')) {getMoreInfo();}
+		}
 	});
 	
 });
