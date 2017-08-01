@@ -6,19 +6,17 @@ $(function(){
 	var $qty = $(".qty");
 	
 	var ticketArray = $qty.map(function(i,v){
-		return new Ticket($(v));
-	});
-	
-	ticketArray[0].on("change",function(){
-		var totalCount = 0;
-		ticketArray.each(function(i,v){
-			totalCount += v.getCount();
+		var ticket = new Ticket($(v));
+		ticket.on("change",function(){
+			var totalCount = 0;
+			ticketArray.each(function(i,v){
+				totalCount += v.getCount();
+			});
+			console.log(totalCount);
+			$(".tickat_count").text(totalCount);
 		});
-		$(".tickat_count").text(totalCount);
+		return ticket;
 	});
-	
-
-	
 });
 
 	function Ticket($qty){
@@ -30,17 +28,29 @@ $(function(){
 		this.price = parseInt($qty.find(".price").text().replace(/[^\d]+/g,''));
 		this.count = 0;
 		
+		// function 을 재정의 하여 구현하는 방법이 존재.
+		// 이렇게 구현할 경우, 생성될때마다 eg를 받아야하는 단점이 존재한다. 
+		var component = new eg.Component();
+		this.on = function(name,fp){
+			component.on(name,fp);
+		}
+		this.off = function(name,fp){
+			component.off(name,fp);
+		}
+		this.trigger = function(name,option){
+			component.trigger(name,option);
+		}
+		
 		this.$qty.on("click",".ico_plus3",this.plus.bind(this));
 		this.$qty.on("click",".ico_minus3",this.minus.bind(this));
 		
 	}		
 	
-	Ticket.prototype = new	eg.Component();		
+		
 	Ticket.prototype.constructor =	Ticket;	
 	
 	Ticket.prototype.changeText = function(){
 		this.$text.val(this.count);
-		$(".tickat_count").text(this.totalCount);
 		if(this.count !== 0){
 			this.$qty.find(".ico_minus3").removeClass("disabled");
 		}else{
@@ -49,10 +59,15 @@ $(function(){
 	};
 	
 	Ticket.prototype.minus = function(){
-		--Ticket.prototype.totalCount;
 		--this.count;
+		if(this.count ===-1){
+			++this.count;
+			return;
+		}
+		--Ticket.prototype.totalCount;
 		this.$total_price.text(this.total_price-=this.price);
 		this.changeText();
+		
 		this.trigger("change");
 	};	
 	
