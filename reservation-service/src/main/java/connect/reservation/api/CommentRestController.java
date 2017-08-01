@@ -25,6 +25,9 @@ public class CommentRestController {
 	
 	@GetMapping("/{productId}")
 	public List<ReservationComment> get(@PathVariable int productId, @RequestParam int start){
+		if(productId < 1){
+			return null;
+		}
 		return commentService.getList(productId, start*10, 10);
 	}
 	

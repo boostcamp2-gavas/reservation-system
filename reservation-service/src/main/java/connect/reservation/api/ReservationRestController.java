@@ -20,11 +20,10 @@ public class ReservationRestController {
 	public ReservationRestController(ReservationService reservationService) {
 		this.reservationService = reservationService;
 	}
-	
-	
+		
 	@PutMapping("/{id}")
 	public int modify(@PathVariable int id, @RequestParam("type") ReservationType reservationType) {
-		if(id < 0){
+		if(id < 1){
 			return 0;
 		}
 		return reservationService.modify(id, reservationType.ordinal());

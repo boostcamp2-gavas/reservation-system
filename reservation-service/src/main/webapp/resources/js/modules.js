@@ -89,7 +89,8 @@ var ProductList = (function(countArea, ul) {
 	var start,
 		categoryFlag,
 		countData,
-		handlebarTemplate;
+		handlebarTemplate,
+        gettingInfo;
 	
 	return {
 		setting : function() {
@@ -97,6 +98,7 @@ var ProductList = (function(countArea, ul) {
 			categoryFlag = false;
 			countData= countArea;
 			handlebarTemplate = ul.find('script');
+            gettingInfo = false;
 		},
 		getProducInfo : function(flag, categoryId, start) {
 			if(flag == false)	// '더보기'가 아닐 경우 0번째부터 가져옴
@@ -115,7 +117,7 @@ var ProductList = (function(countArea, ul) {
 				urlInfo += "/category?categoryId="+categoryId+"&start="+start;
 				dataInfo = "categoryId="+categoryId+"&start="+start;
 			}
-			
+            gettingInfo = true;
 			$.ajax({
 			    url : urlInfo,
 			    type : "GET",
@@ -123,18 +125,23 @@ var ProductList = (function(countArea, ul) {
 			    success: function(data) {
 			    	ProductList.countProduct(data.productCount);
 			    	
-			    	if(data.productList.length == 0)
-			    		ul.last().next().css('display','none');
-			    	else { 
-			    		if(data.productList.length < 10)
-			    			ul.last().next().css('display','none');
-			    		else
-			    			ul.last().next().css('display','block');
+			    	if(data.productList.length != 0) { 
 			    		ProductList.productAppend(flag, data.productList);
 			    	}
+
+			    	var str = $('.event_lst_txt .pink').text();
+                    var val = parseInt(str.replace('개',''));
+                    var moreCnt = parseInt($('#moreCnt').val());
+                    if(parseInt(val / 10) <= moreCnt) {
+                        $('.btnMore').addClass('invisible');
+                    } else {
+                        $('.btnMore').removeClass('invisible');
+                    }
+                    gettingInfo = false;
 			    },
 			    error:function(request,status,error){
 			        alert("code:"+request.status+"\n"+"error:"+error);
+                    gettingInfo = false;
 				}
 			 
 			}); 	
@@ -158,7 +165,10 @@ var ProductList = (function(countArea, ul) {
 				else // 짝수
 					ul.last().append(html);
 			});	
-		}
+		},
+        getGettingSatus : function() {
+            return gettingInfo;
+        }
 	};
 })($('.event_lst_txt .pink'), $('.lst_event_box'));
 

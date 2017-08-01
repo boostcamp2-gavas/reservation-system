@@ -80,17 +80,17 @@
 		<div class="header fade">
 			<header class="header_tit">
 				<h1 class="logo">
-					<a href="#" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
-					<a href="#" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
+					<a class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
+					<a class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
 				</h1>
-				<a href="#" class="btn_my"> <span title="내 예약">MY</span> </a>
+				<a class="btn_my"> <span title="내 예약">MY</span> </a>
 			</header>
 		</div>
         <div class="ct">
             <div class="wrap_review_list">
                 <div class="review_header">
                     <div class="top_title gr">
-                        <a href="history.back()" class="btn_back" title="이전 화면으로 이동"> <i class="fn fn-backward1"></i> </a>
+                        <a class="btn_back" title="이전 화면으로 이동"> <i class="fn fn-backward1"></i> </a>
                         <h2><a class="title" href="#">${reviewList[0].productName}</a></h2>
                     </div>
                 </div>
@@ -99,6 +99,10 @@
                         <h3 class="title_h3">예매자 한줄평</h3>
                         <div class="short_review_area">
                             <div class="grade_area"> 
+                         	<c:if test="${commentCount eq 0 }">
+                         		<c:set var="starPoint" value="0"></c:set>
+                         		<c:set var="scoreAverage" value="0.0"></c:set>
+                         	</c:if>
                             	<span class="graph_mask"> 
                             		<em class="graph_value" style="width: ${starPoint }%;"></em> 
                             	</span> 
@@ -125,7 +129,7 @@
                                     	<c:if test="${ri.fileId ne null }">
                                     	<div class="review_area">
                                             <div class="thumb_area">
-                                                <a href="#" class="thumb" title="이미지 크게 보기" data-comment-id="${ri.rucId}"> 
+                                                <a class="thumb" title="이미지 크게 보기" data-comment-id="${ri.rucId}"> 
                                                 	<img width="90" height="90" class="img_vertical_top" src="/files/${ri.fileId }" alt="리뷰이미지"> 
                                                 </a> 
                                                 <span class="img_count">${ri.imgCount}</span>
@@ -163,7 +167,7 @@
                 <div class="review_area">
                     {{#if fileId}}
                     <div class="thumb_area">
-                        <a href="#" class="thumb" title="이미지 크게 보기"> 
+                        <a class="thumb" title="이미지 크게 보기" data-comment-id="{{rucId}}"> 
                             <img width="90" height="90" class="img_vertical_top" src="/files/{{fileId }}" alt="리뷰이미지"> 
                         </a> 
                         <span class="img_count">{{imgCount}}</span>
@@ -187,7 +191,7 @@
 		{{#items}}
 		<div class="sub_layer" style="transform: translateX({{tranx}}%)">
     		<div class="wrapper">
-				<img src="/files/{{fileId}}">
+				<img src="/api/files/{{fileId}}">
     		</div>
 			<div class="btn_wrapper">
 	    		<button class="com_img_btn close">X</button>
@@ -207,6 +211,9 @@
         $(function() {
             CommentList.init($('ul.list_short_review'));
             ThumbApp.init();
+            $('a.btn_back').on('click', function() {
+            	window.history.back();
+            });
         });
     </script>
 </body>

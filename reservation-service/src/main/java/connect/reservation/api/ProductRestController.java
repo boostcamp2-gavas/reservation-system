@@ -14,29 +14,36 @@ import connect.reservation.dto.ReservationComment;
 import connect.reservation.service.CommentService;
 
 @RestController
-@RequestMapping("/api/productInfo")
+@RequestMapping("/productInfo")
 public class ProductRestController {
 	private final ProductService productService;
+	private final CommentService commentService;
 
-	final static int productNum = 10;
+	final static int PRODUCT_NUM = 10;
 	
 	@Autowired
 	public ProductRestController(
-			ProductService productService) {
+			ProductService productService, 
+			CommentService commentService) {
 		this.productService = productService;
+		this.commentService = commentService;
 	}
 	
 	@GetMapping("/all")
 	public Map<String, Object> getAll(@RequestParam("start") Integer start) {
-		return productService.getMainInfo(start*productNum);
+		return productService.getMainInfo(start*PRODUCT_NUM);
 	}
 	
 	@GetMapping("/category")
 	public Map<String, Object> getCategory(
 			@RequestParam("categoryId") Integer categoryId, 
 			@RequestParam("start") Integer start) {
-		return productService.getCategoryInfo(categoryId, start*productNum);
+		return productService.getCategoryInfo(categoryId, start*PRODUCT_NUM);
 	}
 	
-
+	@GetMapping("/commentImage")
+	public List<ReservationComment> getCommentImage(@RequestParam("commentId") Integer commentId) {
+		return commentService.getImage(commentId);
+	}
+	
 }

@@ -4,6 +4,7 @@ $(document).ready(function() {
 	
 	$('.lazy').lazyload();
 	getMap();
+    ThumbApp.init();
 });
 
 var startTouchX = null; 
@@ -191,7 +192,6 @@ function popimgBtnPre() {
 	Rolling.rollingPre();
 }
 
-
 $('.teb_info').click(function() {
 	$(this).find('a').addClass('active');
 	$(this).siblings().find('a').removeClass('active');
@@ -218,7 +218,6 @@ function getMap() {
         // 첫번째 결과 결과 주소: result.items[0].address
         // 첫번째 검색 결과 좌표: result.items[0].point.y, result.items[0].point.x
         var myaddr = new naver.maps.Point(result.items[0].point.x, result.items[0].point.y);
-        
         var mapSrc = "https://openapi.naver.com/v1/map/staticmap.bin?clientId=DnKZdo7puIZaftEgVyjF&url=http://220.230.112.131&crs=EPSG:4326&center="+result.items[0].point.x+","+result.items[0].point.y+"&level=11&w=300&h=300&baselayer=default&markers="+result.items[0].point.x+","+result.items[0].point.y;
         $('.store_map').attr('src', mapSrc);
         var mapUrl = "http://map.naver.com/?lng="+result.items[0].point.x+"&pinTitle="+$('.addr_detail').text()+"&level=2&pinType=SITE&lat="+result.items[0].point.y+"&enc=utf8";

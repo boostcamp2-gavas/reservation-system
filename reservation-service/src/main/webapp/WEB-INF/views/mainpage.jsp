@@ -8,6 +8,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
     <link href="/resources/css/style.css" rel="stylesheet">
+    <style>
+        .invisible {
+            display: none
+        }
+    </style>
 </head>
 
 <body>
@@ -22,12 +27,12 @@
                     <div class="container_visual">
                         <div class="imgBtn prev_e">
                             <div class="prev_inn">
-                                <a href="#" class="btn_pre_e" title="이전"> <i class="spr_book_event spr_event_pre">이전</i> </a>
+                                <a class="btn_pre_e" title="이전"> <i class="spr_book_event spr_event_pre">이전</i> </a>
                             </div>
                         </div>
                         <div class="imgBtn nxt_e">
                             <div class="nxt_inn">
-                                <a href="#" class="btn_nxt_e" title="다음"> <i class="spr_book_event spr_event_nxt">다음</i> </a>
+                                <a class="btn_nxt_e" title="다음"> <i class="spr_book_event spr_event_nxt">다음</i> </a>
                             </div>
                         </div>
                         <div>
@@ -77,7 +82,7 @@
 								<li class="product_list item">
                     	        <a href="/mvDetail?productId={{productId}}" class="item_book">
                         	        <div class="item_preview"> 
-                            	    	<img alt="{{fileName}}" class="img_thumb" src="/files/{{fileId}}">
+                            	    	<img alt="{{fileName}}" class="img_thumb" src="/api/files/{{fileId}}">
                                 		<span class="img_border"></span> 
                               	  </div>
                      	           <div class="event_txt">

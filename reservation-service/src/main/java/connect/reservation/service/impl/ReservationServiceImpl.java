@@ -15,8 +15,7 @@ import connect.reservation.service.ProductService;
 import connect.reservation.service.ReservationService;
 
 @Service
-public class ReservationServiceImpl implements ReservationService{
-	final static int General = 0;
+public class ReservationServiceImpl implements ReservationService {
 	
 	private ReservationDao reservationDao;
 	private ProductService productService;
@@ -29,8 +28,7 @@ public class ReservationServiceImpl implements ReservationService{
 	
 	@Override
 	@Transactional(readOnly = false)
-	public int add(ReservationInfo reservationInfo) {	
-		
+	public int add(ReservationInfo reservationInfo) {		
 		return reservationDao.insert(reservationInfo);
 	}
 
