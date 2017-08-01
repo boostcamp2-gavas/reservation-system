@@ -67,7 +67,7 @@ var CommentModule = (function(){
 			dataType: "json"
 		})
 		.done(
-				showVisual.bind(this)
+				showVisual
 		)
 		.fail(function() {
 			//console.log("error");

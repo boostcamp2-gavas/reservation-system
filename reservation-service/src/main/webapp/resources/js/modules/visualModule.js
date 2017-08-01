@@ -139,50 +139,52 @@ function VisualModule(setting) {
 			root.find(".visual_img").off("touchmove");
 			root.find(".visual_img").off("touchend");
 
-			root.find(".visual_img").on("touchstart", function(event) {
-				touchX = event.originalEvent.touches[0].pageX;
-				touchXStart = touchX;
-				touchXPrev = touchX;
+			root.find(".visual_img").on("touchstart", touchStartHandle );
+			root.find(".visual_img").on("touchmove", touchMoveHandle );
+			root.find(".visual_img").on("touchend", touchEndHandle );
 
-				touchTime = event.originalEvent.timeStamp;
-				touchTimePrev = touchTime;
+		}
+		
+		function touchStartHandle(event) {
+			touchX = event.originalEvent.touches[0].pageX;
+			touchXStart = touchX;
+			touchXPrev = touchX;
 
-				positionStart = - position_num * visualImgSize + "px";
-			});
+			touchTime = event.originalEvent.timeStamp;
+			touchTimePrev = touchTime;
 
+			positionStart = - position_num * visualImgSize + "px";
+		}
+		
+		function touchMoveHandle(event) {
+			touchX = event.originalEvent.touches[0].pageX;
+			moveX = touchX - touchXPrev;
 
-			root.find(".visual_img").on("touchmove", function(event) {
-				touchX = event.originalEvent.touches[0].pageX;
-				moveX = touchX - touchXPrev;
+			touchTime = event.originalEvent.timeStamp;
+			moveTime = touchTimePrev - touchTime;
 
-				touchTime = event.originalEvent.timeStamp;
-				moveTime = touchTimePrev - touchTime;
+			root.find(".visual_img").animate({left : "+=" + moveX + "px" }, moveTime);
 
-				root.find(".visual_img").animate({left : "+=" + moveX + "px" }, moveTime);
+			touchXPrev = touchX;
+			touchTimePrev = touchTime;
+		}
+		
+		function touchEndHandle(event) {
+			var totalmoveX = touchX - touchXStart;
+			var touchLimit = visualImgSize / 3;
 
-				touchXPrev = touchX;
-				touchTimePrev = touchTime;
-			});
-
-			root.find(".visual_img").on("touchend", function(event) {
+			if( totalmoveX > touchLimit ) {
+				btnPreElement.trigger("click");
 				
-				var totalmoveX = touchX - touchXStart;
-				var touchLimit = visualImgSize / 3;
+			}
+			else if ( totalmoveX < - touchLimit ) {
 
-				if( totalmoveX > touchLimit ) {
-					btnPreElement.trigger("click");
-					
-				}
-				else if ( totalmoveX < - touchLimit ) {
+				btnNxtElement.trigger("click");
+			}
+			else {
+				root.find(".visual_img").animate({left : positionStart }, 'fast');
 
-					btnNxtElement.trigger("click");
-				}
-				else {
-					root.find(".visual_img").animate({left : positionStart }, 'fast');
-
-				}
-			});
-
+			}
 		}
 
 

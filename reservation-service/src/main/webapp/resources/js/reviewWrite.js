@@ -273,7 +273,7 @@ FormModule.prototype.postFile = function(prevOnloadEvent) {
 	
 	formData.append("commentId", commentId);
 	
-	for (var i in files) {
+	for (var i=0; i < files.length ; i++) {
 		console.log(files[i]);
 		formData.append("files", files[i]);
 	}
