@@ -59,6 +59,7 @@
 </c:forEach>
                                 </ul>
                             </div>
+<c:if test="${fn:length(productImage) > 1}">
                             <div class="imgBtn prev">
                                 <div class="prev_inn">
                                     <a href="#" class="btn_prev" title="이전">
@@ -74,6 +75,7 @@
                                     </a>
                                 </div>
                             </div>
+</c:if>
                         </div>
                     </div>
                     <div class="group_btn_goto">
@@ -128,6 +130,10 @@
                         <h3 class="title_h3">예매자 한줄평</h3>
                         <div class="short_review_area">
                             <div class="grade_area">
+                            	<c:if test="${starPoint ne null}">
+                            		<c:set var="starPoint" value="0"></c:set>
+                            		<c:set var="scoreAverage" value="0.0"></c:set>
+                            	</c:if>
                                 <!-- [D] 별점 graph_value는 퍼센트 환산하여 width 값을 넣어줌 -->
                                 <span class="graph_mask"> <em class="graph_value" style="width:${starPoint}% ;"></em> </span>
                                 <strong class="text_value"> <span class="comment_score">${scoreAverage}</span> <em class="total">5.0</em> </strong>
