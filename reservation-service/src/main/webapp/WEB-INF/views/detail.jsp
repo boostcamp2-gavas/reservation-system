@@ -12,6 +12,68 @@
     <title>네이버 예약</title>
     <link href="/resources/css/style.css" rel="stylesheet">
     <link href="/resources/css/detail.css" rel="stylesheet">
+    <style>
+    #photoviewer {  
+			position: fixed; 
+			left:0;
+			top:0;
+			width: 100%;
+			height: 100%;
+			z-index:9000;  
+			background-color:#000;  
+			word-wrap: normal;
+			display: none
+		}
+   		#layer{
+   			position: fixed;
+		    z-index: 8000;
+			display: flex;
+			width: 100%;
+			height: 100%;
+	    }
+	    .sub_layer{
+	   		position: fixed;
+	   		width: 100%;
+			height: 100%;
+			z-index:6500;
+			-ms-transform: translate(0px, 0px); /* IE 9 */
+		    -webkit-transform: translate(0px, 0px); /* Safari */
+		    transform: translate(0px, 0px);
+	    }
+	    .sub_layer.touch{
+			-moz-transition: all 500ms ease;
+		    -o-transition: all 500ms ease;
+		    -webkit-transition: all 500ms ease;
+		    transition: all 500ms ease
+	    }
+		div.wrapper{
+			position: fixed;
+			left: 50%;
+			top: 50%;
+			-ms-transform: translate(0px, 0px); /* IE 9 */
+		    -webkit-transform: translate(0px, 0px); /* Safari */
+		    transform: translate(0px, 0px);
+		}
+		.com_img_btn {
+			position: fixed;
+			width: 50px;
+			height: 50px;
+			top: 50%;
+			margin-top: -25px;
+			z-index: 6000;
+			display : block
+		}
+		.btn_wrapper.invisible{
+			display : none
+		}
+		.com_img_btn.nxt {
+			right: 0
+		}
+		.com_img_btn.close {
+			top: 0;
+			margin-top: 0
+		}
+	</style>
 </head>
 
 <body>
@@ -61,7 +123,7 @@
                             </div>
                             <div class="imgBtn prev">
                                 <div class="prev_inn">
-                                    <a href="#" class="btn_prev" title="이전">
+                                    <a class="btn_prev" title="이전">
                                         <!-- [D] 첫 이미지 이면 off 클래스 추가 -->
                                         <i class="spr_book2 ico_arr6_lt off"></i>
                                     </a>
@@ -69,7 +131,7 @@
                             </div>
                             <div class="imgBtn nxt">
                                 <div class="nxt_inn">
-                                    <a href="#" class="btn_nxt" title="다음">
+                                    <a class="btn_nxt" title="다음">
                                         <i class="spr_book2 ico_arr6_rt"></i>
                                     </a>
                                 </div>
@@ -80,8 +142,8 @@
                         <a class="btn_goto_home" title="홈페이지" href="${detailInfo.homepage}" target="siteUrl"> <i class="fn fn-home1"></i> </a>
                         <a class="btn_goto_tel" title="전화" href="tel:${detailInfo.tel}"> <i class="fn fn-call1"></i> </a>
 						<a class="btn_goto_mail" title="이메일" href="mailto:${detailInfo.email}"> <i class="fn fn-mail1"></i> </a>
-                        <a href="#" class="btn_goto_path" title="길찾기"> <i class="fn fn-path-find1"></i> </a>
-                        <a href="#" class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
+                        <a class="btn_goto_path" title="길찾기"> <i class="fn fn-path-find1"></i> </a>
+                        <a class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
                     </div>
                 </div>
                 <div class="section_store_details">
@@ -94,11 +156,11 @@
                         </p>
                     </div>
                     <!-- [D] 토글 상황에 따라 bk_more에 display:none 추가 -->
-                    <a href="#" class="bk_more _open"> 
+                    <a class="bk_more _open"> 
                     	<span class="bk_more_txt">펼쳐보기</span> 
                     	<i class="fn fn-down2"></i> 
                     </a>
-                    <a href="#" class="bk_more _close" style="display: none;"> 
+                    <a class="bk_more _close" style="display: none;"> 
                     	<span class="bk_more_txt">접기</span> 
                     	<i class="fn fn-up2"></i> 
                     </a>
@@ -116,7 +178,7 @@
                 </div>
 </c:if>
                 <div class="section_btn"> 
-                	<a href="#" class="bk_btn_reserve">
+                	<a class="bk_btn_reserve">
 		                <button type="button" class="bk_btn">
 			                <i class="fn fn-nbooking-calender2"></i> 
 			                <span>예매하기</span> 
@@ -140,8 +202,8 @@
 	<c:choose>
 		<c:when test="${comment.fileId ne null}">
                                         <div class="review_area">
-                                            <div class="thumb_area" data-comment_id="${comment.rucId}">
-                                                <a href="#" class="thumb" title="이미지 크게 보기">
+                                            <div class="thumb_area">
+                                                <a class="thumb" title="이미지 크게 보기" data-comment-id="${comment.rucId}">
                                                 	<img width="90" height="90" class="img_vertical_top" src="/files/${comment.fileId }" alt="${coment.fileName}">
                                                 </a> 
                                                 <span class="img_count">${comment.imgCount}</span>
@@ -185,12 +247,12 @@
                     <!-- [D] tab 선택 시 anchor에 active 추가 -->
                     <ul class="info_tab_lst">
                         <li class="item _detail teb_info">
-                            <a href="#" class="anchor active"> 
+                            <a class="anchor active"> 
                             	<span>상세정보</span> 
                             </a>
                         </li>
                         <li class="item _path teb_info">
-                            <a href="#" class="anchor"> 
+                            <a class="anchor"> 
                             	<span>오시는길</span> 
                             </a>
                         </li>
@@ -238,7 +300,7 @@
                     <!-- [D] 오시는길 외 다른 탭 선택 시 detail_location에 hide 추가 -->
                     <div class="detail_location hide">
                         <div class="box_store_info no_topline">
-                            <a href="#" class="store_location" title="지도웹으로 연결">
+                            <a class="store_location" title="지도웹으로 연결">
                                 <img class="store_map img_thumb" alt="map" src="">
                                 <span class="img_border"></span>
                                 <span class="btn_map">
@@ -272,7 +334,7 @@
                             </div>
 							<!-- [D] 모바일 브라우저에서 접근 시 column2 추가와 btn_navigation 요소 추가 -->
                             <div class="bottom_common_path column2">
-                                <a href="#" class="btn_path"> 
+                                <a class="btn_path"> 
                                 	<i class="fn fn-path-find2"></i> 
                                 	<span>길찾기</span> 
                                 </a>
@@ -288,45 +350,22 @@
         </div>
     </div>
     <c:import url="/WEB-INF/views/footer.jsp" />
-    <div id="photoviwer" class="hidden">
-    	<div class="group_visual group_frame">
-    		<div>
-    			<div id="btnClose" align="left">
-    				<img src="/resources/img/close.png">
-    			</div>
-			</div>
-			<div>
-				<div class="container_visual image-popup-ab">
-					<ul class="visual_img comment_popup_img">
-						<script id="comment_image_template" type="text/x-handlebars-template">
-							{{#commentImageList}} 
-                				<li class="popImgList item"> 
-                					<img alt="{{fileName}}" class="img_thumb" src="/files/{{fileId}}">
-                				 	<span class="img_bg"></span>
-                    			 	<div class="visual_txt">
-                    				</div>
-                				</li>
-							{{/commentImageList}}
-						</script> 
-					</ul>
-				</div>
-				<div class="popImgBtn prev">
-					<div class="prev_inn">
-						<a href="#" class="btn_prev" title="이전">
-							<!-- [D] 첫 이미지 이면 off 클래스 추가 -->
-							<i class="spr_book2 ico_arr6_lt off"></i>
-						</a>
-					</div>
-				</div>
-				<div class="popImgBtn nxt">
-					<div class="nxt_inn">
-						<a href="#" class="btn_nxt" title="다음">
-							<i class="spr_book2 ico_arr6_rt"></i>
-						</a>
-					</div>
- 				</div>
-			</div>
-		</div>
+    <div id="photoviewer">
+        <div class="layer" id="layer">
+            <script id="popup_layer_template" type="text/x-handlebars-template">
+                {{#items}}
+                <div class="sub_layer" style="transform: translateX({{tranx}}%)">
+                    <div class="wrapper">
+                        <img src="/files/{{fileId}}">
+                    </div>
+                    <div class="btn_wrapper">
+                        <button class="com_img_btn close">X</button>
+                        <button class="com_img_btn prev"><</button><button class="com_img_btn nxt">></button>
+                    </div>
+                </div>
+                {{/items}}
+            </script>
+        </div>
     </div>
 </body>
 <script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
@@ -334,5 +373,7 @@
 <script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
 <script src="/resources/js/modules.js"></script>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=eGDuy2NMeDv1C1QCsPGF&submodules=geocoder"></script>
+<script src="/resources/js/callAjax.js"></script>
+<script src="/resources/js/review/thumbNail.js"></script>
 <script src="/resources/js/detail.js"></script>
 </html>

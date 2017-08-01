@@ -4,6 +4,7 @@ $(document).ready(function() {
 	
 	$('.lazy').lazyload();
 	getMap();
+    ThumbApp.init();
 });
 
 var startTouchX = null; 
@@ -118,79 +119,6 @@ function getToday() {
 	var today = year + "-" + month + "-" + day;
 	return today;
 }
-
-$('.thumb_area').click(function() {
-	event.preventDefault();
-	var commentId = $(this).data('comment_id');
-	
-	$.ajax({
-		url : "/productInfo/commentImage?commentId="+commentId,
-		data : "commentId="+commentId,
-		type : "GET",
-		success : function(data){
-			viewCommentImage(data);
-		},
-		error : function(request,status,error){
-			alert("code:"+request.status+"\n"+"error:"+error);
-		}
-	});
-})
-
-function viewCommentImage(data) {
-	$('#photoviwer').removeClass('hidden');
-	
-	$('.comment_popup_img').find('li').remove();
-	
-	var source = $('#comment_image_template').html();
-	var template = Handlebars.compile(source);
-	
-	$.each(data.imageList, function(index, image){
-		var data = {commentImageList : image};
-		var html = template(data);
-		
-		$('.comment_popup_img').append(html);
-	});
-}
-
-$('#btnClose').click(function() {
-    $('#photoviwer').addClass('hidden');
-});
-
-
-var popImgCount = 1;
-
-$('.popImgBtn ').click(function() {
-	event.preventDefault();
-	Rolling.init($('.comment_popup_img'));
-	
-	var element = $(this).children();
-	var btn = element.attr('class');
-
-	if(btn == 'nxt_inn') {
-		popimgBtnNxt();
-	}
-	else {
-		popimgBtnPre();
-	}
-});
-
-function popimgBtnNxt() {
-	if(popImgCount == 2)
-		return;
-	
-	popImgCount++;
-	Rolling.rollingNxt();
-}
-
-function popimgBtnPre() {
-	if(popImgCount == 1)
-		return;
-	
-	popImgCount--;
-	// 수정하기
-	Rolling.rollingPre();
-}
-
 
 $('.teb_info').click(function() {
 	$(this).find('a').addClass('active');
