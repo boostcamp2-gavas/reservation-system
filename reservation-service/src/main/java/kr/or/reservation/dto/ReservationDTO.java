@@ -5,6 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class ReservationDTO {
 	private static SimpleDateFormat mmddFormat = new SimpleDateFormat("YYYY년 MM월 dd일");
 	
@@ -83,9 +86,7 @@ public class ReservationDTO {
 
 	@Override
 	public String toString() {
-		return "id : \"" + id + "\", name : \"" + name + "\", salesStart : \"" + salesStart + "\", salesEnd : \""
-				+ salesEnd + "\", observationTime : \"" + observationTime + "\", placeLot : \"" + placeLot
-				+ "\", fileId : \"" + fileId + "\", priceList : \"" + priceList;
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE).toString();
 	}
 
 

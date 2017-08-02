@@ -30,13 +30,17 @@ $(function(){
 		
 		// function 을 재정의 하여 구현하는 방법이 존재.
 		// 이렇게 구현할 경우, 생성될때마다 eg를 받아야하는 단점이 존재한다. 
+		// 이렇게 사용하는 것보단 extends를 사용하는게 좋음 
+		
 		var component = new eg.Component();
 		this.on = function(name,fp){
 			component.on(name,fp);
 		}
+		
 		this.off = function(name,fp){
 			component.off(name,fp);
 		}
+		
 		this.trigger = function(name,option){
 			component.trigger(name,option);
 		}

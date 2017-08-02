@@ -2,6 +2,9 @@ package kr.or.reservation.domain;
 
 import java.sql.Timestamp;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class FileDomain {
 	private long id; // imageId
 	private long userId;
@@ -104,10 +107,7 @@ public class FileDomain {
 
 	@Override
 	public String toString() {
-		return "id : \"" + id + "\", userId : \"" + userId + "\", fileName : \"" + fileName + "\", saveFileName : \""
-				+ saveFileName + "\", fileLength : \"" + fileLength + "\", deleteFlag : \"" + deleteFlag
-				+ "\", contentType : \"" + contentType + "\", createDate : \"" + createDate + "\", modifyDate : \""
-				+ modifyDate;
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE).toString();
 	}
 
 }

@@ -1,5 +1,8 @@
 package kr.or.reservation.dto;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class ReservationTypeCountDTO {
 	
 	private int reservationType;
@@ -23,7 +26,7 @@ public class ReservationTypeCountDTO {
 
 	@Override
 	public String toString() {
-		return "reservationType : \"" + reservationType + "\", count : \"" + count;
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE).toString();
 	}
 	
 	

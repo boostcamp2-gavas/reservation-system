@@ -123,7 +123,7 @@ var ReservationState = (function(){
 	
 	
 	function loading(type,$card,_menubar,_icon,_btns){
-		// 받아온 data의 길이로 max를 설정하고, return 받기 위해  비동기를 막아 두었습니다. 
+		
 		$.ajax({
 			method : "GET",
 			url : "/reservation/type/"+type

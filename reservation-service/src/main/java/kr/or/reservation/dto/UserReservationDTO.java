@@ -2,6 +2,9 @@ package kr.or.reservation.dto;
 
 import java.sql.Timestamp;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class UserReservationDTO {
 	private Long id; // reservation_info id
 	private String name; // product name
@@ -13,7 +16,6 @@ public class UserReservationDTO {
 	private int reservationType;
 	private int totalPrice;
 
-	
 	public UserReservationDTO() {
 	}
 
@@ -91,10 +93,7 @@ public class UserReservationDTO {
 
 	@Override
 	public String toString() {
-		return "id : \"" + id + "\", name : \"" + name + "\", displayStart : \"" + displayStart + "\", displayEnd : \""
-				+ displayEnd + "\", generalTicketCount : \"" + generalTicketCount + "\", youthTicketCount : \""
-				+ youthTicketCount + "\", childTicketCount : \"" + childTicketCount + "\", reservationType : \""
-				+ reservationType + "}";
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE).toString();
 	}
 
 }

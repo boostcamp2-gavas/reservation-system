@@ -2,6 +2,9 @@ package kr.or.reservation.dto;
 
 import java.sql.Timestamp;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class NaverUserDTO {
 	private String email;
 	private String nickname;
@@ -114,10 +117,7 @@ public class NaverUserDTO {
 
 	@Override
 	public String toString() {
-		return "email : \"" + email + "\", nickname : \"" + nickname + "\", snsProfile : \"" + snsProfile
-				+ "\", id : \"" + id + "\", username : \"" + username + "\", adminFlag : \"" + adminFlag
-				+ "\", snsType : \"" + snsType + "\", snsId : \"" + snsId + "\", createDate : \"" + createDate
-				+ "\", modifyDate : \"" + modifyDate;
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE).toString();
 	}
 
 

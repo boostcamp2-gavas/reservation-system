@@ -14,27 +14,28 @@ import kr.or.reservation.dto.ReservationTypeCountDTO;
 import kr.or.reservation.dto.UserReservationDTO;
 import kr.or.reservation.service.UserReservationService;
 
-
 @Service
 public class UserReservationImpl implements UserReservationService {
 
 	Logger log = Logger.getLogger(this.getClass());
-	
+
 	UserReservationDao userReservationDao;
 	UserDao userDao;
-	
+
 	// DB에서 가져올떄 ENUM으로 수정해 볼것.
 	protected enum Type {
-		EXPECTATION(0), CONFIRMED(1)  , USED(2), CANCELLATION(3);
+		EXPECTATION(0), CONFIRMED(1), USED(2), CANCELLATION(3);
 		protected int type;
+
 		Type(int type) {
 			this.type = type;
 		}
-		int getType(){
+
+		int getType() {
 			return type;
-		}	
+		}
 	}
-	
+
 	@Autowired
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
@@ -46,27 +47,26 @@ public class UserReservationImpl implements UserReservationService {
 	}
 
 	@Override
-	public List<UserReservationDTO> selectReservationByType(int userId,int type) {
+	public List<UserReservationDTO> selectReservationByType(int userId, int type) {
 		// TODO Auto-generated method stub
-		if(userId <= 0 || type<0 ) {
+		if (userId <= 0 || type < 0) {
 			return null;
 		}
-		return userReservationDao.selectReservationByType(userId,type);
-		
+		return userReservationDao.selectReservationByType(userId, type);
+
 	}
-	
 
 	@Override
-	public boolean cancelReservation(int userId,int reservationId) {
-		if(userId<=0 || reservationId<=0) {
+	public boolean cancelReservation(int userId, int reservationId) {
+		if (userId <= 0 || reservationId <= 0) {
 			return false;
 		}
-		log.info(" userID ::  "+userId + "  reservationId :: " +reservationId );
-		return userReservationDao.cancelReservation(userId,reservationId);
+		log.info(" userID ::  " + userId + "  reservationId :: " + reservationId);
+		return userReservationDao.cancelReservation(userId, reservationId);
 	}
-	
-	public Map<String,Integer> selectTypeCount(int userId){
-		if(userId<= 0) {
+
+	public Map<String, Integer> selectTypeCount(int userId) {
+		if (userId <= 0) {
 			return null;
 		}
 		List<ReservationTypeCountDTO> list = userReservationDao.selectTypeCount(userId);
@@ -75,34 +75,34 @@ public class UserReservationImpl implements UserReservationService {
 	}
 
 	// 넘겨 받은 List로 알맞게 변환
-	private Map<String,Integer> convertToMap(List<ReservationTypeCountDTO> list ) {
-		int type,count;
-		int all =0, expectataion=0 , used =0, cancellation=0;
-		
-		Map<String , Integer> map = new HashMap<>();
-		for(ReservationTypeCountDTO dto : list) {
-			type =dto.getReservationType();
+	private Map<String, Integer> convertToMap(List<ReservationTypeCountDTO> list) {
+		int type, count;
+		int all = 0, expectataion = 0, used = 0, cancellation = 0;
+
+		Map<String, Integer> map = new HashMap<>();
+		for (ReservationTypeCountDTO dto : list) {
+			type = dto.getReservationType();
 			count = dto.getCount();
 			all += count;
 			log.info(Type.EXPECTATION.equals(type));
-			log.info("신청 code "+Type.EXPECTATION.getType());
-			log.info("type code "+type);
-			
-			//Type.EXPECTATION.ordinal()
-			if(Type.EXPECTATION.getType() == type || Type.CONFIRMED.getType()==type) {
+			log.info("신청 code " + Type.EXPECTATION.getType());
+			log.info("type code " + type);
+
+			// Type.EXPECTATION.ordinal()
+			if (Type.EXPECTATION.getType() == type || Type.CONFIRMED.getType() == type) {
 				expectataion += count;
-			}else if(Type.USED.getType()== type) {
+			} else if (Type.USED.getType() == type) {
 				used += count;
-			}else {
+			} else {
 				cancellation += count;
 			}
 		}
 		map.put("All", all);
-		map.put("EXPECTATION",expectataion);
-		map.put("USED",used);
+		map.put("EXPECTATION", expectataion);
+		map.put("USED", used);
 		map.put("CANCELLATION", cancellation);
 		return map;
-		
+
 	}
 
 }

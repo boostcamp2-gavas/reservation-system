@@ -45,6 +45,7 @@ public class RestReservationInfoController {
 		this.userReservationService = userReservationService;
 	}
 
+	//Rest는 보통 server to server -> but 괜찮다. 
 	// RestController에 Session 을 사용해도 되나요 ? 
 	@GetMapping("/type/{type}")
 	public List<UserReservationDTO> getReservationByType(@PathVariable int type,HttpSession session) {

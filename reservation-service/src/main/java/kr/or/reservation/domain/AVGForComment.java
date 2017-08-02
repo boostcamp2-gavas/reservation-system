@@ -3,6 +3,9 @@ package kr.or.reservation.domain;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 
 //이것도 질문합시다. 
 public class AVGForComment {
@@ -40,7 +43,7 @@ public class AVGForComment {
 
 	@Override
 	public String toString() {
-		return "amountOfCount : \"" + amountOfCount + "\", avgScore : \"" + avgScore +"\"";
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE).toString();
 	}
 	
 	public static Long getCount(int index) {

@@ -3,6 +3,9 @@ package kr.or.reservation.domain;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class Category {
 	private long id;
 	private String name;
@@ -42,6 +45,12 @@ public class Category {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE).toString();
 	}
 	
 	

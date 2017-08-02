@@ -1,5 +1,8 @@
 package kr.or.reservation.dto;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class ImgDTO {
 	private int productId;
 	private int fileId;
@@ -52,8 +55,8 @@ public class ImgDTO {
 
 	@Override
 	public String toString() {
-		return "productId : \"" + productId + "\", fileId : \"" + fileId + "\", saveFileName : \"" + saveFileName
-				+ "\", type : \"" + type;
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE).toString();
 	}
+	
 
 }

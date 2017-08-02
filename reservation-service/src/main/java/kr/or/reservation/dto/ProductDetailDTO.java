@@ -3,6 +3,9 @@ package kr.or.reservation.dto;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class ProductDetailDTO {
 	private int id;
 	private String name;
@@ -164,11 +167,7 @@ public class ProductDetailDTO {
 
 	@Override
 	public String toString() {
-		return "id : \"" + id + "\", name : \"" + name + "\", description : \"" + description + "\", event : \"" + event
-				+ "\", content : \"" + content + "\", homepage : \"" + homepage + "\", email : \"" + email
-				+ "\", placeName : \"" + placeName + "\", tel : \"" + tel + "\", placeLot : \"" + placeLot
-				+ "\", placeStreet : \"" + placeStreet + "\", salesFlag : \"" + salesFlag + "\", salesEnd : \""
-				+ salesEnd;
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE).toString();
 	}
 
 

@@ -2,6 +2,9 @@ package kr.or.reservation.domain;
 
 import java.sql.Timestamp;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class ReservationInfo {
 	private int id;
 	private int productId;
@@ -167,12 +170,7 @@ public class ReservationInfo {
 
 	@Override
 	public String toString() {
-		return "ReservationInfo [productId=" + productId + ", userId=" + userId + ", generalTicketCount="
-				+ generalTicketCount + ", youthTicketCount=" + youthTicketCount + ", childTicketCount="
-				+ childTicketCount + ", reservationName=" + reservationName + ", reservationTel=" + reservationTel
-				+ ", reservationEmail=" + reservationEmail + ", reservationDate=" + reservationDate
-				+ ", reservationType=" + reservationType + ", createDate=" + createDate + ", modifyDate=" + modifyDate
-				+ ", totalPrice=" + totalPrice + "]";
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE).toString();
 	}
 
 

@@ -2,6 +2,9 @@ package kr.or.reservation.domain;
 
 import java.sql.Timestamp;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class Comment {
 	private String nickname;
 	private String id; // comment id
@@ -100,10 +103,7 @@ public class Comment {
 
 	@Override
 	public String toString() {
-		return "nickname : \"" + nickname + "\", id : \"" + id + "\", fileId : \"" + fileId + "\", productId : \""
-				+ productId + "\", userId : \"" + userId + "\", score : \"" + score + "\", comment : \"" + comment
-				+ "\", createDate : \"" + createDate + "\", imageCount : \"" + imageCount
-				+ "\", firstImageSaveFileName : \"" + firstImageSaveFileName;
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE).toString();
 	}
 
 }

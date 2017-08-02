@@ -1,5 +1,8 @@
 package kr.or.reservation.domain;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class CommentImage {
 	private long id;
 	private long reservationUserCommentId;
@@ -35,7 +38,7 @@ public class CommentImage {
 
 	@Override
 	public String toString() {
-		return "reservationUserCommentId : \"" + reservationUserCommentId + "\", fileId : \"" + fileId;
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE).toString();
 	}
 
 	
