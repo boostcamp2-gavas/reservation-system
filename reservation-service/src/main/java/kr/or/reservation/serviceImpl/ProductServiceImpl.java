@@ -3,6 +3,7 @@ package kr.or.reservation.serviceImpl;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,8 @@ import kr.or.reservation.service.ProductService;
 public class ProductServiceImpl implements ProductService {
 
 	ProductDao productDao;
-
+	Logger log = Logger.getLogger(this.getClass());
+	
 	@Autowired
 	public void setProductDao(ProductDao productDao) {
 		this.productDao = productDao;

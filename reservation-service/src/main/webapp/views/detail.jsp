@@ -298,6 +298,10 @@ $(document).ready(function(){
 		}
 	})();
 	
+	$(".btn_review_more").on("click",function(){
+		location.href = "/product/"+${id}+"/review"
+	});
+	
 	
 	naverMap('${detail.placeLot}');
 	
@@ -357,9 +361,9 @@ $(document).ready(function(){
 		$ul.children(".item").remove();	
 		CarocelDetail.destroy($ul);
 	});
-	
+	*/
 	$(".graph_value").css("width",('${avg.avgScore}' * 20)+"%");
-	 */
+	 
 	(function bkBtnCheck(){
 		
 		var $btn =$(".bk_btn"), 
