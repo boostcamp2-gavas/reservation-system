@@ -300,17 +300,13 @@ function getScore(){
 
 $(document).ready(function(){
 	
-	
 	DetailModule.init(getReviewCount(),getProductId(),getScore());
-	
 	naverMap('${detail.placeLot}');
-	
 	var $ul = $(".visual_img:first"),
 	$point = $(".num:first"),
 	templateSource = $("#layer-content").html(),
 	$ulPop = $(".visual_img:last"),
 	$popupPoint = $(".num.popup");
-	
 	
 	var setting = {
 			root: $(".section_visual"),
@@ -322,19 +318,11 @@ $(document).ready(function(){
 			btnNxtElement: $(".section_visual .btn_nxt"),
 			printPositionElement:$(".num:first")
 	}
-	
 	var visualModule = VisualModule(setting);
 	visualModule.init();
 	
 	var commentModule = CommentModule;
 	commentModule.init(getProductId());
-	
-
-	
-
-	
-	//scroll
-	// lazy 부분 
 });
 	
 	

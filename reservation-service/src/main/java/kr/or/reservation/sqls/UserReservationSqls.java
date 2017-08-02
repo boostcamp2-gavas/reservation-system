@@ -10,6 +10,14 @@ public class UserReservationSqls {
 			"on display.product_id = product.id " + 
 			"where info.user_id = :id and info.reservation_type = :type;";
 
+	public static final String SELET_RESERVATION_ALL = "SELECT info.id,product.name,display.display_start,display.display_end, info.general_ticket_count,info.youth_ticket_count,info.child_ticket_count,info.reservation_type,info.total_price " + 
+			"FROM reservation_info as info inner join product  " + 
+			"on info.product_id = product.id " + 
+			"inner join display_info as display " + 
+			"on display.product_id = product.id " + 
+			"where info.user_id = :id; ";
+
+	
 	public static final String CANCEL_RESERVATION_ONE = 
 			"UPDATE reservation_info " + 
 			"SET " + 

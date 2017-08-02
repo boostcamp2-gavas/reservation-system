@@ -104,5 +104,12 @@ public class UserReservationImpl implements UserReservationService {
 		return map;
 
 	}
+	@Override
+	public List<UserReservationDTO> selectReservationAll(int userId){
+		if (userId <= 0 ) {
+			return null;
+		}
+		return userReservationDao.selectReservationAll(userId);
+	}
 
 }

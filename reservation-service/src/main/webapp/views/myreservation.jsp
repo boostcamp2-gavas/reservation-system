@@ -54,20 +54,20 @@
 	                </div>
 		                <!--// 예약 리스트 없음 -->
 				    <ul class="list_cards">
-					    <li class ="card expectation">
+					    <li class ="card expectation" data-type = "1">
 							
 					    </li>
                         <!--[D] 예약확정: .confirmed, 취소된 예약&이용완료: .used 추가 card -->
                         
-                        <li class="card confirmed">
+                        <li class="card confirmed" data-type = "2">
 							
                         </li>
                         
-                        <li class="card used">
+                        <li class="card used" data-type = "3">
                            
                         </li>
                         
-                        <li class="card used cancellation">
+                        <li class="card cancellation used" data-type = "4">
                            
                         </li>
                 	</ul>
@@ -199,17 +199,70 @@
 <script src="/resources/js/node_modules/handlebars/dist/handlebars.min.js"></script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-
+<script src = "/resources/js/node_modules/@egjs/component/dist/component.min.js"></script>
 
 <script src="/resources/js/reservationState.js"></script>
 
 <script>
-	
-	var module = ReservationState;
+
+// hㅁndlebars 설정 
+moment.locale('ko', {
+    weekdays: ["일요일","월요일","화요일","수요일","목요일","금요일","토요일"],
+    weekdaysShort: ["일","월","화","수","목","금","토"],
+});
+
+
+
+// 핸들바 helper 설정
+Handlebars.registerHelper('exit', function (string,value) {
+	if(value){
+		 return string +' ('+ value+')';
+	}
+	return '';
+});
+
+Handlebars.registerHelper('plus', function (first,second,third) {
+	  return first+ second + third;
+});
+
+Handlebars.registerHelper("timeStamp", function(timestamp) {
+	  if (moment) {
+	    // can use other formats like 'lll' too
+	    return  moment(timestamp).format("YYYY.DD.MM (ddd)");
+	  }
+	  else {
+	    return datetime;
+	  }
+});
+
+Handlebars.registerHelper("btnText", function(btn) {
+	 return btn;
+});
+
+var reservationTypeEnum = {
+	    ALL_RESERVATION : 0,
+	    EXPECTATION : 1,
+	    END : 2,
+	    CENCELLATION : 3
+}
+
+
+/* 	var module = ReservationState;
 	module.init();
-	module.isEmpty();
+	module.isEmpty(); */
 	
-	
+	$(function(){
+		var $item = $(".link_summary_board");
+		var $card = $(".card");
+		$item.each(function(i,v){
+			new MenuBar($(v));
+		});
+		
+		$card .each(function(i,v){
+			new MainContents($(v).attr("class").split(' ')[1]);
+		});
+		
+	});
 	
 </script>
 

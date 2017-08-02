@@ -1,43 +1,66 @@
-moment.locale('ko', {
-    weekdays: ["일요일","월요일","화요일","수요일","목요일","금요일","토요일"],
-    weekdaysShort: ["일","월","화","수","목","금","토"],
-});
+
+function MenuBar($item){
+	this.$item = $item;
+	this.$item.on("click",this.menuClickEvent.bind(this));
+}
+
+MenuBar.prototype = new eg.Component;
+MenuBar.prototype.constructor = MenuBar;
+
+MenuBar.prototype.menuClickEvent = 	function menuClickEvent(event){
+	event.preventDefault();
+	$(".link_summary_board ").not(this.$item).removeClass("on");
+	this.$item.addClass("on");
+	// trigger을 써야되나 ?
+};
+
+var templateSource = $("#reservation-content").html(),
+Template = Handlebars.compile(templateSource);
+
+function MainContents($card){
+	this.$card = $("."+$card);
+	this.type = this.$card.data("type");
+	this.loadContents.call(this);
+}
+
+MainContents.prototype = new eg.Component;
+MainContents.prototype.contructor = MainContents;
+
+MainContents.prototype.loadContents = function(){
+	var $card = this.$card;
+	$.ajax({
+		method : "GET",
+		url : "/api/reservation/type/"+this.type
+	}).done(function(data) {
+		
+		if (data.length !== 0) {
+			var item = {
+					reservation : []
+			};
+			for (var i = 0, max = data.length; i < max; ++i) {
+				item.reservation.push(data[i]);
+			}
+			//expectationLength += max ;
+			var html = Template(item);
+			console.log(this);
+			console.log(this.$card);
+			$card.append(html);
+		}
+	});
+
+}
 
 
 
-// 핸들바 helper 설정
-Handlebars.registerHelper('exit', function (string,value) {
-	if(value){
-		 return string +' ('+ value+')';
-	}
-	return '';
-});
 
-Handlebars.registerHelper('plus', function (first,second,third) {
-	  return first+ second + third;
-});
 
-Handlebars.registerHelper("timeStamp", function(timestamp) {
-	  if (moment) {
-	    // can use other formats like 'lll' too
-	    return  moment(timestamp).format("YYYY.DD.MM (ddd)");
-	  }
-	  else {
-	    return datetime;
-	  }
-});
-
-Handlebars.registerHelper("btnText", function(btn) {
-	 return btn;
-});
-
-var ReservationState = (function(){
+/*var ReservationState = (function(){
 	// 이 부분은 Hendlebar 설정 부분 
 	var templateSource = $("#reservation-content").html(),
 	Template = Handlebars.compile(templateSource);
 	
 	// 상단 bar의 contents들을 저장하고 있음. 
-	var $all = $(".link_summary_board ").eq(0),
+	var $all = $(".link_summary_board").eq(0),
 	$expectation =$(".link_summary_board ").eq(1),
 	$usedLength = $(".link_summary_board ").eq(2),
 	$cancellation = $(".link_summary_board").eq(3);
@@ -54,12 +77,7 @@ var ReservationState = (function(){
 
 	// enum 같은 느낌으로 사용.
 	// ENUM 을 이렇게 사용하는게 맞는지 의문이 생김.
-	var reservationTypeEnum = {
-		    ALL_RESERVATION : 0,
-		    EXPECTATION : 1,
-		    END : 2,
-		    CENCELLATION : 3
-		}
+
 	
 	// 취소하겠냐는 확인을 보여주는 event 
 	function confirmCancellationBtn(event){
@@ -146,44 +164,7 @@ var ReservationState = (function(){
 	
 	
 	
-	// 함수가 조금 길지 않나 ... 
-	function menuClickEvent(event){
-		// 선택된 인자외에 다 none 처리 
-		event.preventDefault();
-		var index = $(".link_summary_board").index(this);
-		$dumyCard = null;
-		
-		if(index === reservationTypeEnum.ALL_RESERVATION){
-			// 0
-			$allCards.removeClass("none");
-			$dumy = $allCards;
-			
-		}else if(index === reservationTypeEnum.EXPECTATION){
-			// 1
-			$expectationCard.removeClass("none");
-			$(".card:eq(2), .card:eq(3)").addClass("none");
-			
-			$dumy = $expectationCard;
-		}else if(index === reservationTypeEnum.END){
-			// 2
-			$usedCard.removeClass("none");
-			$(".card").not($usedCard).addClass("none");
-			$dumy = $usedCard;
-		}else if(index === reservationTypeEnum.CENCELLATION){
-			// 3
-			$allCards.not($cancellationCard).addClass("none");
-			$cancellationCard.removeClass("none");
-			$dumy = $cancellationCard;
-		}
-		
-		$(".on").removeClass("on");
-		$(".link_summary_board").eq(index).addClass("on");
-		if($dumy.children("article").length){
-			$(".err").addClass("none");
-		}else{
-			$(".err").removeClass("none");
-		}
-	}
+
 	
 	return{
 		
@@ -228,4 +209,4 @@ var ReservationState = (function(){
 		}
 		
 	}
-})();
+})();*/

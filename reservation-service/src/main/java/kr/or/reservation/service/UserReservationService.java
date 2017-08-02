@@ -11,4 +11,5 @@ public interface UserReservationService {
 	public List<UserReservationDTO> selectReservationByType(int userId,int type);
 	public boolean cancelReservation(int userId,int reservationId);
 	public Map<String,Integer> selectTypeCount(int userId);
+	public List<UserReservationDTO> selectReservationAll(int userId);
 }
