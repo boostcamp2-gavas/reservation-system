@@ -17,6 +17,7 @@ import kr.or.reservation.domain.Comment;
 import kr.or.reservation.service.CommentService;
 
 @RestController
+@RequestMapping("/api")
 public class RestCommentController {
 
 	CommentService commentService;
@@ -42,7 +43,7 @@ public class RestCommentController {
 		return commentService.insert(comment);
 	}
 	
-	@GetMapping("/api/comment/{productId}")
+	@GetMapping("/comment/{productId}")
 	public List<Comment> getByProductId(@PathVariable int productId, @RequestParam int start, @RequestParam int amount ){
 		return commentService.selectByProductId(productId, start, amount);
 	}

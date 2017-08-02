@@ -13,6 +13,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import kr.or.reservation.common.LoggerInterceptor;
+import kr.or.reservation.common.LoginInterceptor;
 
 // config 설정들을 얘들이 갖고 있음. 
 @Configuration
@@ -46,6 +47,7 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
       registry.addInterceptor(new LoggerInterceptor()).addPathPatterns("/**");
+      registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/myPage").addPathPatterns("/product/**").excludePathPatterns("/product/detail/**");
     }
     
 }

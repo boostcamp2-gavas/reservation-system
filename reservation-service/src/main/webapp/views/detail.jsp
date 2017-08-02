@@ -38,7 +38,7 @@
                         <div class="container_visual" style="width: 414px;">
                             <ul class="visual_img">
                             <c:forEach items="${img}" var="list" varStatus="status">
-                                <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="/img/${list.fileId}"> <span class="img_bg"></span>
+                                <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="/api/img/${list.fileId}"> <span class="img_bg"></span>
                                     <!-- if 문을 추가. 이렇게 하면 매번 if문 체크를 해야되는데 ...   -->
                                     <c:if test="${status.index == 0}">
 					    			<div class="visual_txt">
@@ -123,7 +123,7 @@
                                     <c:if test="${list.imageCount != 0}">
                                         <div class="thumb_area" >
                                             <a  class="thumb" title="이미지 크게 보기" data-comment="${list.id}"> 
-                                            	<img width="90" height="90" class="img_vertical_top" src='/img/${list.firstImageSaveFileName}' alt="리뷰이미지"> 
+                                            	<img width="90" height="90" class="img_vertical_top" src='/api/img/${list.firstImageSaveFileName}' alt="리뷰이미지"> 
                                             </a> 
                                             <span class="img_count">${list.imageCount}
                                             </span>                                                
@@ -265,7 +265,7 @@
 	<script id="layer-content" type="text/x-handlebars-template">
                     {{#items}}
 					<li class="item" style="width: 414px;"> 
-                		<img alt="" class="img_thumb" src="/img/{{file_id}}">
+                		<img alt="" class="img_thumb" src="/api/img/{{file_id}}">
                	 	</li>
 					{{/items}}
  	</script>	
@@ -279,10 +279,6 @@
 
 <!--  Handlebar -->
 <script src="//cdn.jsdelivr.net/handlebarsjs/4.0.8/handlebars.min.js"></script>
-
-<script src="/resources/js/loginCheck.js"></script>
-
-
 
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=w0YSpFZqo6SXUXy5itSy&submodules=geocoder"></script>
 <script src="/resources/js/naverMap.js"></script>

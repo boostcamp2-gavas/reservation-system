@@ -126,7 +126,7 @@ var ReservationState = (function(){
 		
 		$.ajax({
 			method : "GET",
-			url : "/reservation/type/"+type
+			url : "/api/reservation/type/"+type
 		}).done(function(data) {
 			if (data.length !== 0) {
 				var item = {
@@ -217,7 +217,7 @@ var ReservationState = (function(){
 				var reservation_info =0;
 				$cardDetail = $(this).parents(".card_detail");
 				reservation_info = $cardDetail.data("id");
-				location.href = "/review-write/"+reservation_info;
+				location.href = "/product/"+reservation_info+"/review-write";
 			});
 		},
 		isEmpty : function(){

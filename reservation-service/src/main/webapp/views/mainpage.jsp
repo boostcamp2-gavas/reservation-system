@@ -88,7 +88,7 @@
                         	{{#items}}
 							<li class="item">
 								<a href="/product/detail/{{id}}" class="item_book">
-									<div class="item_preview"> <img alt="{{name}}" class="img_thumb" src="/img/{{fileId}}"> <span class="img_border"></span> </div>
+									<div class="item_preview"> <img alt="{{name}}" class="img_thumb" src="/api/img/{{fileId}}"> <span class="img_border"></span> </div>
 										<div class="event_txt">
 											<h4 class="event_txt_tit"> <span>{{name}}</span> <small class="sm">{{placeName}}</small> </h4>
 											<p class="event_txt_dsc">{{content}}</p>

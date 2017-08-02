@@ -13,7 +13,6 @@ import kr.or.reservation.service.CommentService;
 import kr.or.reservation.service.ProductService;
 
 @Controller
-@RequestMapping("/review")
 public class ReviewController {
 	private CommentService commentService;
 	private ProductService productService;
@@ -28,7 +27,7 @@ public class ReviewController {
 		this.productService = productService;
 	}
 	
-	@GetMapping(path="/{productId}")
+	@GetMapping(path="/product/{productId}/review")
 	public String getReservation(Model model, @PathVariable int productId) {
 		AVGForComment info = commentService.selectAvgScoreByProductId(productId);
 		Float avgScore = info.getAvgScore();

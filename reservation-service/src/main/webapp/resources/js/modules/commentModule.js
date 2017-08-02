@@ -60,7 +60,7 @@ var CommentModule = (function(){
 	}
 	
 	function getVisual(commentId) {
-		var url = HOST + "/commentImg/" + commentId;
+		var url = HOST + "/api/commentImg/" + commentId;
 		getVisualAjax = $.ajax({
 			url: url,
 			type: "GET",

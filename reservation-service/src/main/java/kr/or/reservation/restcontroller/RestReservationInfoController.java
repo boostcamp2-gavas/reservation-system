@@ -28,7 +28,7 @@ import kr.or.reservation.service.ReservationInfoService;
 import kr.or.reservation.service.UserReservationService;
 
 @RestController
-@RequestMapping(path = "/reservation")
+@RequestMapping(path = "/api/reservation")
 public class RestReservationInfoController {
 
 	ReservationInfoService reservationInfoService;

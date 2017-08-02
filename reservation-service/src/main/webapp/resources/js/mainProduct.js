@@ -22,7 +22,7 @@ $(document).ready(function() {
 				id = $(this).data("category") || 0;
 				$.ajax({
 					method : "GET",
-					url : "/product/counter/" + id,
+					url : "/api/product/counter/" + id,
 					contentType : "application/json; charset=utf-8",
 					dataType : "json",
 				}).done(function(data) {
@@ -42,7 +42,7 @@ $(document).ready(function() {
 				};
 				$.ajax({
 					method : "GET",
-					url : "/product/category/" + id + "/start/" + start,
+					url : "/api/product/category/" + id + "/start/" + start,
 					contentType : "application/json; charset=utf-8",
 					dataType : "json"
 				}).done(function(data) {

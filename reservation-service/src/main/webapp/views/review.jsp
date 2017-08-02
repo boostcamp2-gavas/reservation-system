@@ -97,7 +97,7 @@
 	<script id="layer-content" type="text/x-handlebars-template">
                     {{#items}}
 					<li class="item" style="width: 414px;"> 
-                		<img alt="" class="img_thumb" src="/img/{{file_id}}">
+                		<img alt="" class="img_thumb" src="/api/img/{{file_id}}">
                	 	</li>
 					{{/items}}
  	</script>	
@@ -125,7 +125,7 @@
 					{{#if firstImageSaveFileName}}
 					<div class="thumb_area">
                     	<a href="#" class="thumb" title="이미지 크게 보기" data-comment = "{{id}}"> 
-							<img width="90" height="90" class="img_vertical_top" src="/img/{{firstImageSaveFileName}}" alt="리뷰이미지"> 
+							<img width="90" height="90" class="img_vertical_top" src="/api/img/{{firstImageSaveFileName}}" alt="리뷰이미지"> 
 						</a> 
 						<span class="img_count">{{imageCount}}</span>
                      </div>
@@ -174,7 +174,6 @@ var CommentListModule = (function(){
 				var item = {
 						items : []
 				};
-				console.log(data);
 				for(var i =0, max = data.length; i<max; ++i){
 					item.items.push(data[i]);
 				}

@@ -13,7 +13,7 @@ import kr.or.reservation.domain.Category;
 import kr.or.reservation.service.CategoryService;
 
 @RestController
-@RequestMapping(path = "/categorys")
+@RequestMapping(path = "/api/categorys")
 public class RestCategoryController {
 
 	@Autowired
