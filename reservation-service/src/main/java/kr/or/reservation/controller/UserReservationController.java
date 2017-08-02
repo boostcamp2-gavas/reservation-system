@@ -27,18 +27,6 @@ public class UserReservationController {
 		this.userReservationService = userReservationService;
 	}
 
-	@GetMapping(path = "/my")
-    public String selectAll(Model model,HttpSession session){
-		if(session.getAttribute("id") !=null) {
-    		return "redirect:/myPage";
-    	}else {
-    		NaverLogin login = new NaverLogin();
-    		String url = login.getLoginURL(session);
-    		return "redirect:"+url;
-        	//model.addAttribute("loginURL", url);
-    	}
-    }
-	
 	
 	@GetMapping(path = "/myPage")
     public String viewMyPage(Model model,HttpSession session){

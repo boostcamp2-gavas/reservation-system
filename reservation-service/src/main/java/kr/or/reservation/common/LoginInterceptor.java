@@ -21,7 +21,9 @@ public class LoginInterceptor implements HandlerInterceptor  {
 		if(session.getAttribute("id")!=null) {
 			return true;	
 		}
-		response.sendRedirect("/");  
+		String url = request.getRequestURI();
+		session.setAttribute("originUrl", url);
+		response.sendRedirect("/my");
 		return false;
 		
 	}
