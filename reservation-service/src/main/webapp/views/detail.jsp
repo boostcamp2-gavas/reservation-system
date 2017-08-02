@@ -284,24 +284,24 @@
 <script src="/resources/js/naverMap.js"></script>
 <script src="/resources/js/modules/visualModule.js"></script>
 <script src="/resources/js/modules/commentModule.js"></script>
+<script src="/resources/js/modules/detailModule.js"></script>
 <script>
 function getProductId() {
 	return ${detail.id};
 }
 
+function getReviewCount() {
+	return ${fn:length(comment)};
+}
+
+function getScore(){
+	return ${avg.avgScore};
+}
+
 $(document).ready(function(){
-	// 평점 view
-	(function(){
-		var reviewCount = '${avg.amountOfCount}';
-		if(reviewCount<3){
-			$(".btn_review_more").addClass('hide');
-		}
-	})();
 	
-	$(".btn_review_more").on("click",function(){
-		location.href = "/product/"+${id}+"/review"
-	});
 	
+	DetailModule.init(getReviewCount(),getProductId(),getScore());
 	
 	naverMap('${detail.placeLot}');
 	
@@ -311,8 +311,6 @@ $(document).ready(function(){
 	$ulPop = $(".visual_img:last"),
 	$popupPoint = $(".num.popup");
 	
-/* 	var touch = new CaroucelTouch($ul,$point);
-	CarocelDetail.init(touch); */
 	
 	var setting = {
 			root: $(".section_visual"),
@@ -331,99 +329,12 @@ $(document).ready(function(){
 	var commentModule = CommentModule;
 	commentModule.init(getProductId());
 	
-	
-	// layer popup
-/* 	
-	$(".thumb").on("click",function(){
-		var comment = $(this).data("id"),
-		caroucelPopup = {};
-		caroucelPopup = new CaroucelPopup($ulPop,$popupPoint);
-			
-		$(".layer").removeClass("_none");
-		$.ajax({
-			method : "GET",
-			url : "/commentImg/"+comment,
-			contentType : "application/json; charset=utf-8",
-			dataType : "json"
-		}).done(caroucelPopup.getLayerImg.bind(caroucelPopup))
-		.always(function(){
-			// count 초기화 및 module로 이벤트 등록
-			$popupPoint.text("1");
-			$(".num.off:last > span").text($ulPop.children().length);
-			CarocelDetail.init(caroucelPopup);
-		});
-	});	
-	
-	
-	$(".close").on("click",function(){
-		var $ul = $(".visual_img:last");
-		$(".layer").addClass("_none");
-		$ul.children(".item").remove();	
-		CarocelDetail.destroy($ul);
-	});
-	*/
-	$(".graph_value").css("width",('${avg.avgScore}' * 20)+"%");
-	 
-	(function bkBtnCheck(){
-		
-		var $btn =$(".bk_btn"), 
-		config = $btn.data("config"),
-		$span = $(".bk_btn > span");
-		
-		if(!config){
-			$span.text("예매하기");
-			$btn.on("click",function(){
-				location.href='/product/reservation/'+${detail.id};
-			});
-		}else if(config === 1){
-			$span.text("매진");
-		}else{
-			$span.text("판매기간 종료");
-		}
-	})();
-	
-	
-	//store_details
-	// 재사용하지 않을거라 판단하여 모듈화를 진행하지 않았습니다. 
-	
-	$("._open").on("click", function(){
-		$(".store_details").removeClass("close3");
-		$("._open").addClass("_none");
-		$("._close").removeClass("_none");
-	});
-	
-	$("._close").on("click",function(){
-		$(".store_details").addClass("close3");
-		$("._close").addClass("_none");
-		$("._open").removeClass("_none");
-	});
+
 	
 
 	
-	$("._detail").on("click",function(){
-		$("._path>  a").removeClass("active");
-		$("._detail> a").addClass("active");
-		$(".detail_location").addClass("hide");
-		$(".detail_area_wrap").removeClass("hide");
-	});
-	
-	$("._path").on("click",function(){
-		$("._detail> a").removeClass("active");
-		$(".detail_location").removeClass("hide");
-		$(".detail_area_wrap").addClass("hide");
-		$("._path>  a").addClass("active");
-	});
-	
-	
 	//scroll
 	// lazy 부분 
-	 $(document).scroll(function(){
-		 if ($(window).scrollTop() >= $(document).height() - $(window).height()) {
-			 var $img = $(".in_img_lst:last > .img_thumb");
-			 var data =  $img.data("lazy-image");
-			 $img.attr("src",data);
-		 }
-	 });
 });
 	
 	

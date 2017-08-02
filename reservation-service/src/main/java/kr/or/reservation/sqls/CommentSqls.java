@@ -13,7 +13,8 @@ public class CommentSqls {
 	public final static String SELCET_ALL = "select users.nickname,comment.* " + 
 			"from reservation_user_comment as comment inner join users " + 
 			"on comment.user_id = users.id " + 
-			"where product_id = :id; ";
+			"where product_id = :id " +
+			"limit 0,3;";
 	
 	public final static String SELECT_COUNT_AND_AVGSCORE = "SELECT  count(*) as amount_of_count,ROUND(AVG(score),1) as avg_score " + 
 			"FROM reservation_user_comment " + 
