@@ -11,36 +11,47 @@
 		</layout>
 	</appender>
 
-
+  <!--  날짜별 로그 -->  
+    <appender name="database" class="org.apache.log4j.DailyRollingFileAppender">  
+        <!-- 이것은 날짜별로  로그를 남김. 파일명.확장자.DatePattern으로 정의 함-->  
+        <param name="file" value="database.log"/>  
+        <param name="Append" value="true"/>  
+        <param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="ImmediateFlush" value="true" />
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern" value="[%-5p] %d (%F:%L) \n %m%n"/>  
+        </layout>  
+    </appender>  
+    
 	<logger name="jdbc.sqlonly" additivity="false">
 		<level value="info" />
-		<appender-ref ref="console" />
+		<appender-ref ref="database" />
 	</logger>
 
 	<logger name="jdbc.sqltiming" additivity="false">
 		<level value="info" />
-		<appender-ref ref="console" />
+		<appender-ref ref="database" />
 	</logger>
 
 	<logger name="jdbc.audit" additivity="false">
 		<level value="fatal" />
-		<appender-ref ref="console" />
+		<appender-ref ref="database" />
 	</logger>
 
 	<logger name="jdbc.resultset" additivity="false">
 		<level value="fatal" />
-		<appender-ref ref="console" />
+		<appender-ref ref="database" />
 	</logger>
 
 	<logger name="jdbc.connection" additivity="false">
 		<level value="fatal" />
-		<appender-ref ref="console" />
+		<appender-ref ref="database" />
 	</logger>
 
 	<!-- additivity 는 중복로깅 과 관련된 설정 -->
 	<logger name="log4jdbc.debug" additivity="false">
 		<level value="fatal" />
-		<appender-ref ref="console" />
+		<appender-ref ref="database" />
 	</logger>
 
 	<!-- Root Logger -->

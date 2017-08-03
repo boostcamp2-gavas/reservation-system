@@ -18,17 +18,41 @@ var templateSource = $("#reservation-content").html(),
 Template = Handlebars.compile(templateSource);
 
 function MainContents($card){
-	this.$card = $("."+$card);
+	this.$card = $("."+$card).eq(0);
 	this.type = this.$card.data("type");
 	this.loadContents.call(this);
+	this.$card.on("click", ".booking_cancel",this.btnClick.bind(this));
 }
 
 MainContents.prototype = new eg.Component;
 MainContents.prototype.contructor = MainContents;
 
+MainContents.prototype.confirmType = function(className){
+	var menubar = [];
+	console.log(className);
+	if(className === "expectation"){
+		menubar[0] = "예약 신청중";
+		menubar[1] = "ico_clock";
+		menubar[2] = "취소";
+	}else if(className === "confirmed"){
+		menubar[0] = "예약 확정";
+		menubar[1] = "ico_check2";
+		menubar[2] = "취소";
+	}else if(className === "used"){
+		menubar[0] = "이용 완료";
+		menubar[1] = "ico_check2";
+		menubar[2] = "예매자 리뷰 남기기";
+	}else{
+		menubar[0] = "취소된 예약";
+		menubar[1] = "ico_cancel";
+		menubar[2] = "";
+	}
+	return menubar;
+}
+
 MainContents.prototype.loadContents = function(){
 	var $card = this.$card;
-	console.log($card);
+	var menubar = this.confirmType($card.attr("class").split(' ')[1]);
 	$.ajax({
 		method : "GET",
 		url : "/api/reservation/type/"+this.type
@@ -37,21 +61,44 @@ MainContents.prototype.loadContents = function(){
 		if (data.length !== 0) {
 			var item = {
 					reservation : [],
-					menubar : [{ menubar : _menubar, icon : _icon}]
+					menubar : [{ menubar : menubar[0], icon : menubar[1]}]
 			};
 			for (var i = 0, max = data.length; i < max; ++i) {
 				item.reservation.push(data[i]);
+				data[i].btns = menubar[2];
 			}
 			//expectationLength += max ;
 			var html = Template(item);
 			$card.append(html);
 		}
 	});
+}
 
+MainContents.prototype.btnClick = function(){
+	console.log("내가 왔다 ~~ ");
+	// 타입 체크 후 알맞는 이벤트  ~ 
 }
 
 
+/*
 
+$(".btn_gray, .popup_btn_close").on("click",function(event){
+	event.preventDefault();
+	$(".popup_booking_wrapper").addClass("none");
+});
+$(".btn_green").on("click",cancellationBtn);
+$(".expectation, .confirmed").on("click",".booking_cancel .btn",confirmCancellationBtn);
+
+$(".used:first").on("click",".booking_cancel .btn",function(event){
+	// 이동하기 
+	event.preventDefault();
+	var reservation_info =0;
+	$cardDetail = $(this).parents(".card_detail");
+	reservation_info = $cardDetail.data("id");
+	location.href = "/product/"+reservation_info+"/review-write";
+});
+
+*/
 
 
 /*var ReservationState = (function(){
@@ -185,21 +232,7 @@ MainContents.prototype.loadContents = function(){
 			
 			// 버튼 취소 이벤트 
 			// 취소 버튼과 x 버튼 누르면 안보이게 진행
-			$(".btn_gray, .popup_btn_close").on("click",function(event){
-				event.preventDefault();
-				$(".popup_booking_wrapper").addClass("none");
-			});
-			$(".btn_green").on("click",cancellationBtn);
-			$(".expectation, .confirmed").on("click",".booking_cancel .btn",confirmCancellationBtn);
 			
-			$(".used:first").on("click",".booking_cancel .btn",function(event){
-				// 이동하기 
-				event.preventDefault();
-				var reservation_info =0;
-				$cardDetail = $(this).parents(".card_detail");
-				reservation_info = $cardDetail.data("id");
-				location.href = "/product/"+reservation_info+"/review-write";
-			});
 		},
 		isEmpty : function(){
 			var txt = $all.find(".figure:first").text();
