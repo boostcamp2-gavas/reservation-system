@@ -28,6 +28,7 @@ MainContents.prototype.contructor = MainContents;
 
 MainContents.prototype.loadContents = function(){
 	var $card = this.$card;
+	console.log($card);
 	$.ajax({
 		method : "GET",
 		url : "/api/reservation/type/"+this.type
@@ -35,15 +36,14 @@ MainContents.prototype.loadContents = function(){
 		
 		if (data.length !== 0) {
 			var item = {
-					reservation : []
+					reservation : [],
+					menubar : [{ menubar : _menubar, icon : _icon}]
 			};
 			for (var i = 0, max = data.length; i < max; ++i) {
 				item.reservation.push(data[i]);
 			}
 			//expectationLength += max ;
 			var html = Template(item);
-			console.log(this);
-			console.log(this.$card);
 			$card.append(html);
 		}
 	});

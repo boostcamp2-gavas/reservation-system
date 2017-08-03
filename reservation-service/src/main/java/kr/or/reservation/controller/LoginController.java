@@ -42,7 +42,7 @@ public class LoginController {
 					session.setAttribute("id", loginService.selectId(dto.getSnsId()));
 					session.setAttribute("name", dto.getUsername());
 					session.setAttribute("email", dto.getEmail());
-					url = (url == null)?"/mypage":url;
+					url = (url == null)?"/myPage":url;
 				}
 			}
 		}
