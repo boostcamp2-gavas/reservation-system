@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.or.reservation.domain.Comment;
 import kr.or.reservation.service.CommentService;
 
+
 @RestController
 @RequestMapping("/api")
 public class RestCommentController {
