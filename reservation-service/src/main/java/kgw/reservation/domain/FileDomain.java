@@ -2,7 +2,7 @@ package kgw.reservation.domain;
 
 import java.util.Date;
 
-public class File {
+public class FileDomain {
 	private Integer id;
 	private Integer userId;
 	private String fileName;

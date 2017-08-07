@@ -14,7 +14,8 @@ local.properties
 .recommenders
 .DS_Store
 application.properties
-
+# ImageFile
+temp/
 # Eclipse Core
 .project
 

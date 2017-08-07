@@ -1,16 +1,20 @@
 package kgw.reservation.dto;
 
-import java.util.Collection;
+import java.util.List;
 
 public class UserCommentWrapper {
-	private Collection<UserComment> userCommentCollection;
+	private List<UserComment> userCommentList;
 	private CommentStats commentStats;
 	
-	public Collection<UserComment> getUserCommentCollection() {
-		return userCommentCollection;
+	public List<UserComment> getUserCommentList() {
+		return userCommentList;
 	}
-	public void setUserCommentCollection(Collection<UserComment> userCommentCollection) {
-		this.userCommentCollection = userCommentCollection;
+	public void setUserCommentList(List<UserComment> userCommentList) {
+		this.userCommentList = userCommentList;
+	}
+	@Override
+	public String toString() {
+		return "UserCommentWrapper [userCommentList=" + userCommentList + ", commentStats=" + commentStats + "]";
 	}
 	public CommentStats getCommentStats() {
 		return commentStats;

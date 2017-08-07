@@ -6,5 +6,6 @@ public class ProductPriceSqls {
 			+ "											   price,"
 			+ "											   discount_rate"
 			+ "											   from product_price"
-			+ "											   where product_id = :productId";
+			+ "											   where product_id = :productId"
+			+ "											   order by id";
 }
