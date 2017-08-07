@@ -3,6 +3,7 @@ package kr.or.reservation.serviceImpl;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,23 +18,36 @@ import kr.or.reservation.service.ProductService;
 public class ProductServiceImpl implements ProductService {
 
 	ProductDao productDao;
+	Logger log = Logger.getLogger(this.getClass());
 	
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 	@Autowired
 	public void setProductDao(ProductDao productDao) {
 		this.productDao = productDao;
 	}
 
+<<<<<<< HEAD
 	// 얘는 2가지 기능을 하고있음 
+=======
+	// 얘는 2가지 기능을 하고있음
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 	@Override
 	@Transactional(readOnly = true)
 	public List<Product> getProductByCategory(int start, int categoryId) {
 		// TODO Auto-generated method stub
-		if(categoryId ==0) {
+		if (categoryId == 0) {
 			return productDao.selectAll(start);
 		}
+<<<<<<< HEAD
 		if(start >=0 && categoryId >=0) {
 			return productDao.selectByCategory(start,categoryId);
+=======
+		if (start >= 0 && categoryId >= 0) {
+			return productDao.selectByCategory(start, categoryId);
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 		}
 		return null;
 	}
@@ -41,6 +55,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional(readOnly = true)
 	public int countProduct(int categoryId) {
+<<<<<<< HEAD
 		if(categoryId >=0) {
 			if(categoryId == 0) {
 				return productDao.countCategoryAll();
@@ -50,6 +65,33 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return 0;
 		
+=======
+		if (categoryId >= 0) {
+			if (categoryId == 0) {
+				return productDao.countCategoryAll();
+			} else {
+				return productDao.countCategory(categoryId);
+			}
+		}
+		return 0;
+
+	}
+
+	@Override
+	public ProductDetailDTO selectOne(int id) {
+		// TODO Auto-generated method stub
+		// 시간이 지낫을 경우, saleFlage를 3으로 두어, 판매 종료를 설정함.
+		if (id > 0) {
+			ProductDetailDTO detail = productDao.selectOne(id);
+			Timestamp t1 = new Timestamp(System.currentTimeMillis());
+			// 이 부분은 DTO 내부에 넣어도 될것같음. -> 풍성한 자바 객체 
+			if (detail.getSalesEnd().getTime() - t1.getTime() < 0) {
+				detail.setSalesFlag("3");
+			}
+			return detail;
+		}
+		return null;
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 	}
 	
 	@Override

@@ -13,6 +13,11 @@ import kr.or.reservation.service.LoginService;
 public class LoginServiceImpl implements LoginService {
 
 	private UserDao loginDao;
+<<<<<<< HEAD
+=======
+	UserDao userDao;
+	
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 	Logger log = Logger.getLogger(this.getClass());
 	
 	@Override
@@ -27,6 +32,14 @@ public class LoginServiceImpl implements LoginService {
 		}
 		return false;
 	}
+<<<<<<< HEAD
+=======
+	
+	@Override
+	public int selectId(int snsId) {
+		return  userDao.selectId(snsId);
+	}
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 
 	
 	@Autowired
@@ -34,6 +47,14 @@ public class LoginServiceImpl implements LoginService {
 		this.loginDao = loginDao;
 	}
 	
+<<<<<<< HEAD
+=======
+	@Autowired
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
+
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 	
 
 }

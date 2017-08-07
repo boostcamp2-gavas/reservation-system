@@ -1,4 +1,4 @@
-package kr.or.reservation.restController;
+package kr.or.reservation.restcontroller;
 
 import java.util.List;
 
@@ -13,26 +13,12 @@ import kr.or.reservation.domain.Category;
 import kr.or.reservation.service.CategoryService;
 
 @RestController
-@RequestMapping(path = "/categorys")
+@RequestMapping(path = "/api/categorys")
 public class RestCategoryController {
 
-	// 차이점 ?
 	@Autowired
 	CategoryService catergoryservice;
-/*	
-	@Autowired
-	public RestCategoryController(CategoryService catergoryservice) {
-		this.catergoryservice = catergoryservice;
-	}
-	
-	@Autowired
-	public void setCategoryService(CategoryService catergoryservice) {
-		this.catergoryservice = catergoryservice;
-	}
-	*/
-	
-	
-	
+
 	@GetMapping
 	public List<Category> selectAll(Model model){
     	List<Category> list = catergoryservice.selectforList();

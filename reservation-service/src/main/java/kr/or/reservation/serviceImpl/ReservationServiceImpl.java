@@ -18,6 +18,7 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public ReservationDTO selectOne(int productId) {
 		if(productId <=0) {
 			return null;
@@ -26,5 +27,18 @@ public class ReservationServiceImpl implements ReservationService {
 		dto.setPriceList(reservationDao.selectPrice(productId));
 		return dto;
 	}
+=======
+	public ReservationDTO selectByProductId(int productId) {
+		if(productId <=0) {
+			return null;
+		}
+		
+		ReservationDTO dto = reservationDao.selectByProductId(productId);
+		dto.setPriceList(reservationDao.selectPrice(productId));
+		return dto;
+	}
+	
+	
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 
 }

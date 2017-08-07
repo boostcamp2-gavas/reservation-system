@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
     <link href="/resources/css/style.css" rel="stylesheet">
+<<<<<<< HEAD
     <style>
 		
 		._none{
@@ -53,6 +54,9 @@
 		}
 		
 	</style>
+=======
+ 	<link href="/resources/css/layer.css" rel="stylesheet">
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 	
 </head>
 
@@ -61,12 +65,20 @@
     <div class="ct main">
         <div>
             <div class="section_visual">
+<<<<<<< HEAD
                 <header>
+=======
+                <header style = "z-index: 10;position: relative;">
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
                     <h1 class="logo">
                         <a href="/" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
                         <a href="/" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
                     </h1>
+<<<<<<< HEAD
                     <a class="btn_my"> <span title="내 예약">MY</span> </a>
+=======
+                    <a class="btn_my" href = "/my"> <span title="내 예약">MY</span> </a>
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
                 </header>
                 <div class="pagination">
                     <div class="bg_pagination"></div>
@@ -80,7 +92,11 @@
                         <div class="container_visual" style="width: 414px;">
                             <ul class="visual_img">
                             <c:forEach items="${img}" var="list" varStatus="status">
+<<<<<<< HEAD
                                 <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="/${list.fileId}"> <span class="img_bg"></span>
+=======
+                                <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="/api/img/${list.fileId}"> <span class="img_bg"></span>
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
                                     <!-- if 문을 추가. 이렇게 하면 매번 if문 체크를 해야되는데 ...   -->
                                     <c:if test="${status.index == 0}">
 					    			<div class="visual_txt">
@@ -162,10 +178,26 @@
                           <li class="list_item">
                                 <div>
                                     <div class="review_area">
+<<<<<<< HEAD
                                         <div class="thumb_area" >
                                             <a  class="thumb" title="이미지 크게 보기" data-id="${list.id}"> <img width="90" height="90" class="img_vertical_top" src='/${list.fileId }' alt="리뷰이미지"> </a> <span class="img_count">${list.count}</span>                                                </div>
                                         <h4 class="resoc_name">${detail.name}</h4>
                                         <p class="review">${list.comment }</p>
+=======
+                                    <c:if test="${list.imageCount != 0}">
+                                        <div class="thumb_area" >
+                                            <a  class="thumb" title="이미지 크게 보기" data-comment="${list.id}"> 
+                                            	<img width="90" height="90" class="img_vertical_top" src='/api/img/${list.firstImageSaveFileName}' alt="리뷰이미지"> 
+                                            </a> 
+                                            <span class="img_count">${list.imageCount}
+                                            </span>                                                
+                                        </div>
+                                     </c:if>
+                                        
+                                        <h4 class="resoc_name">${detail.name}</h4>
+                                        <p class="review">${list.comment }</p>
+                                        
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
                                     </div>
                                     <div class="info_area">
                                         <div class="review_info"> <span class="grade">${list.score }</span> <span class="name">${list.nickname }</span> <span class="date">${list.createDate } 방문</span> </div>
@@ -251,7 +283,11 @@
         </div>
     </div>
 </div>
+<<<<<<< HEAD
 <footer>
+=======
+<footer style = "z-index: 10;position: relative;">
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
     <div class="gototop">
         <a href="#" class="lnk_top"> <span class="lnk_top_text">TOP</span> </a>
     </div>
@@ -260,7 +296,11 @@
         <span class="copyright">© NAVER Corp.</span>
     </div>
 </footer>
+<<<<<<< HEAD
 <div id="photoviwer" class="layer _none">
+=======
+<div id="photoviewer" class="layer _none">
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 	<div class = "group_visual ">
 		<div class = "align-right">
         	<a class ="close" >X</a>
@@ -298,7 +338,11 @@
 	<script id="layer-content" type="text/x-handlebars-template">
                     {{#items}}
 					<li class="item" style="width: 414px;"> 
+<<<<<<< HEAD
                 		<img alt="" class="img_thumb" src="/{{file_id}}">
+=======
+                		<img alt="" class="img_thumb" src="/api/img/{{file_id}}">
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
                	 	</li>
 					{{/items}}
  	</script>	
@@ -306,6 +350,7 @@
 <!--  get JQuery   -->
 <script src="//code.jquery.com/jquery.min.js"></script>
 
+<<<<<<< HEAD
 <!--  img Slide  -->
 <script src="/resources/js/slide/caroucel.js"></script>
 
@@ -425,8 +470,44 @@ $(document).ready(function(){
 		$(".detail_area_wrap").addClass("hide");
 		$("._path>  a").addClass("active");
 	});
+=======
+<!--  img Slide  
+<script src="/resources/js/slide/caroucel.js"></script>
+-->
+
+<!--  Handlebar -->
+<script src="//cdn.jsdelivr.net/handlebarsjs/4.0.8/handlebars.min.js"></script>
+
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=w0YSpFZqo6SXUXy5itSy&submodules=geocoder"></script>
+<script src="/resources/js/naverMap.js"></script>
+<script src="/resources/js/modules/visualModule.js"></script>
+<script src="/resources/js/modules/commentModule.js"></script>
+<script src="/resources/js/modules/detailModule.js"></script>
+<script>
+function getProductId() {
+	return ${detail.id};
+}
+
+function getReviewCount() {
+	return ${fn:length(comment)};
+}
+
+function getScore(){
+	return ${avg.avgScore};
+}
+
+$(document).ready(function(){
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 	
+	DetailModule.init(getReviewCount(),getProductId(),getScore());
+	naverMap('${detail.placeLot}');
+	var $ul = $(".visual_img:first"),
+	$point = $(".num:first"),
+	templateSource = $("#layer-content").html(),
+	$ulPop = $(".visual_img:last"),
+	$popupPoint = $(".num.popup");
 	
+<<<<<<< HEAD
 	//scroll
 	// lazy 부분 
 	 $(document).scroll(function(){
@@ -436,6 +517,23 @@ $(document).ready(function(){
 			 $img.attr("src",data);
 		 }
 	 });
+=======
+	var setting = {
+			root: $(".section_visual"),
+			visualImgSize: 414,
+			visualImgNum: $ul.children().length,
+			isAutoRoll: false,
+			isScrollEnd: true,
+			btnPreElement: $(".section_visual .btn_prev"),
+			btnNxtElement: $(".section_visual .btn_nxt"),
+			printPositionElement:$(".num:first")
+	}
+	var visualModule = VisualModule(setting);
+	visualModule.init();
+	
+	var commentModule = CommentModule;
+	commentModule.init(getProductId());
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 });
 	
 	

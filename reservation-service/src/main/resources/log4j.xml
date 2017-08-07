@@ -1,24 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-    <appender name="A1" class="org.apache.log4j.FileAppender">
-        <param name="File"   value="A1.log" />
-        <param name="Append" value="false" />
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%t %-5p %c{2} - %m%n"/>
-        </layout>
-    </appender>
-    <appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
-        </layout>
-    </appender>
-    <category name="org.apache.log4j.xml">
-        <priority value="debug" />
-        <appender-ref ref="A1" />
-    </category>
-    <root>
-        <priority value ="debug" />
-        <appender-ref ref="STDOUT" />
-    </root>
+
+
+	<!-- Appenders -->
+	<!-- appender 가 먼저 선언 되어 있어야 함.-->
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%-5p] %d (%F:%L) \n %m%n" />
+		</layout>
+	</appender>
+
+  <!--  날짜별 로그 -->  
+    <appender name="database" class="org.apache.log4j.DailyRollingFileAppender">  
+        <!-- 이것은 날짜별로  로그를 남김. 파일명.확장자.DatePattern으로 정의 함-->  
+        <param name="file" value="database.log"/>  
+        <param name="Append" value="true"/>  
+        <param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="ImmediateFlush" value="true" />
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern" value="[%-5p] %d (%F:%L) \n %m%n"/>  
+        </layout>  
+    </appender>  
+    
+	<logger name="jdbc.sqlonly" additivity="false">
+		<level value="info" />
+		<appender-ref ref="database" />
+	</logger>
+
+	<logger name="jdbc.sqltiming" additivity="false">
+		<level value="info" />
+		<appender-ref ref="database" />
+	</logger>
+
+	<logger name="jdbc.audit" additivity="false">
+		<level value="fatal" />
+		<appender-ref ref="database" />
+	</logger>
+
+	<logger name="jdbc.resultset" additivity="false">
+		<level value="fatal" />
+		<appender-ref ref="database" />
+	</logger>
+
+	<logger name="jdbc.connection" additivity="false">
+		<level value="fatal" />
+		<appender-ref ref="database" />
+	</logger>
+
+	<!-- additivity 는 중복로깅 과 관련된 설정 -->
+	<logger name="log4jdbc.debug" additivity="false">
+		<level value="fatal" />
+		<appender-ref ref="database" />
+	</logger>
+
+	<!-- Root Logger -->
+	<!-- 별도의 설정이 없으면 얘를 읽음 -->
+	<!-- ex LogManage.getLogger("name"); 으로  가져올 수 있는데 name 이 없으면 root 값을 읽음 -->
+	<root>
+		<priority value="info" />
+		<appender-ref ref="console" />
+	</root>
+
 </log4j:configuration>
+
+

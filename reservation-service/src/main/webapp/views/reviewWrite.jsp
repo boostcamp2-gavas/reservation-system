@@ -18,7 +18,7 @@
 			<div class="ct_wrap">
 				<div class="top_title review_header">
 					<a href="#" class="btn_back" title="이전 화면으로 이동"> <i class="fn fn-backward1"></i> </a>
-					<h2><span class="title">클림트 인사이드</span></h2>
+					<h2><span class="title">${reservation.reservationName}</span></h2>
 				</div>
 				<!-- 리뷰 별점 -->
 				<div class="write_act">
@@ -79,41 +79,15 @@
 					<div class="review_photos review_photos_write">
 						<div class="item_preview_thumbs">
 							<ul class="lst_thumb">
-								<li class="item">
-									<a href="#" class="anchor">
-										<span class="spr_book ico_del">삭제</span>
-									</a>
-									<img src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300" width="130" alt="" class="item_thumb">
-									<span class="img_border"></span>
-								</li>
-								<li class="item">
-									<a href="#" class="anchor">
-										<span class="spr_book ico_del">삭제</span>
-									</a>
-									<img src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300" width="130" alt="" class="item_thumb">
-									<span class="img_border"></span>
-								</li>
-								<li class="item">
-									<a href="#" class="anchor">
-										<span class="spr_book ico_del">삭제</span>
-									</a>
-									<img src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300" width="130" alt="" class="item_thumb">
-									<span class="img_border"></span>
-								</li>
-								<li class="item">
-									<a href="#" class="anchor">
-										<span class="spr_book ico_del">삭제</span>
-									</a>
-									<img src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300" width="130" alt="" class="item_thumb">
-									<span class="img_border"></span>
-								</li>
-								<li class="item">
-									<a href="#" class="anchor">
-										<span class="spr_book ico_del">삭제</span>
-									</a>
-									<img src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300" width="130" alt="" class="item_thumb">
-									<span class="img_border"></span>
-								</li>
+								<script id="review_photos_template" type="text/x-handlebars-template">
+									<li class="item" data-index="{{index}}">
+										<a href="#" class="anchor">
+											<span class="spr_book ico_del">삭제</span>
+										</a>
+										<img src="{{imgSrc}}" width="130" alt="{{imgAlt}}" class="item_thumb">
+										<span class="img_border"></span>
+									</li>
+								</script>
 							</ul>
 						</div>
 					</div>
@@ -139,6 +113,21 @@
 			<span class="copyright">© NAVER Corp.</span>
 		</div>
 	</footer>
+	
+	<script src="/resources/js/node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="/resources/js/node_modules/handlebars/dist/handlebars.min.js"></script>
+	<script src="/resources/js/node_modules/@egjs/component/dist/component.min.js"></script>
+	
+	<script>
+		function getReservationInfo() {
+			var reservationInfo = {
+					productId : "${reservationInfo.productId}",
+					userId : "${reservationInfo.userId}"
+				};
+			return reservationInfo;
+		}
+	</script>
+	<script src="/resources/js/reviewWrite.js"></script>
 </body>
 
 </html>
