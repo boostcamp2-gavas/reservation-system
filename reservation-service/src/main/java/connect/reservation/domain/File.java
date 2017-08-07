@@ -4,81 +4,116 @@ import java.sql.Timestamp;
 
 public class File {
 	private int id;
-	private int user_id;
-	private String file_name;
-	private String save_file_name;
-	private int file_length;
-	private String content_type;
-	private int delete_flag;
-	private Timestamp create_date;
-	private Timestamp modify_date;
-	
+	private int userId;
+	private String fileName;
+	private String saveFileName;
+	private long fileLength;
+	private String contentType;
+	private int deleteFlag;
+	private Timestamp createDate;
+	private Timestamp modifyDate;
+
 	
 	public File() {
 		
 	}
-	
+
 	public int getId() {
 		return id;
 	}
+
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getUser_id() {
-		return user_id;
+
+
+	public int getUserId() {
+		return userId;
 	}
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
-	public String getFile_name() {
-		return file_name;
+
+
+	public String getFileName() {
+		return fileName;
 	}
-	public void setFile_name(String file_name) {
-		this.file_name = file_name;
+
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
-	public String getSave_file_name() {
-		return save_file_name;
+
+
+	public String getSaveFileName() {
+		return saveFileName;
 	}
-	public void setSave_file_name(String save_file_name) {
-		this.save_file_name = save_file_name;
+
+
+	public void setSaveFileName(String saveFileName) {
+		this.saveFileName = saveFileName;
 	}
-	public int getFile_length() {
-		return file_length;
+
+
+	public long getFileLength() {
+		return fileLength;
 	}
-	public void setFile_length(int file_length) {
-		this.file_length = file_length;
+
+
+	public void setFileLength(long fileLength) {
+		this.fileLength = fileLength;
 	}
-	public String getContent_type() {
-		return content_type;
+
+
+	public String getContentType() {
+		return contentType;
 	}
-	public void setContent_type(String content_type) {
-		this.content_type = content_type;
+
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
-	public int getDelete_flag() {
-		return delete_flag;
+
+
+	public int getDeleteFlag() {
+		return deleteFlag;
 	}
-	public void setDelete_flag(int delete_flag) {
-		this.delete_flag = delete_flag;
+
+
+	public void setDeleteFlag(int deleteFlag) {
+		this.deleteFlag = deleteFlag;
 	}
-	public Timestamp getCreate_date() {
-		return create_date;
+
+
+	public Timestamp getCreateDate() {
+		return createDate;
 	}
-	public void setCreate_date(Timestamp create_date) {
-		this.create_date = create_date;
+
+
+	public void setCreateDate(Timestamp createDate) {
+		this.createDate = createDate;
 	}
-	public Timestamp getModify_date() {
-		return modify_date;
+
+
+	public Timestamp getModifyDate() {
+		return modifyDate;
 	}
-	public void setModify_date(Timestamp modify_date) {
-		this.modify_date = modify_date;
+
+
+	public void setModifyDate(Timestamp modifyDate) {
+		this.modifyDate = modifyDate;
 	}
-	
-	
+
+
 	@Override
 	public String toString() {
-		return "File [id=" + id + ", user_id=" + user_id + ", file_name=" + file_name + ", save_file_name="
-				+ save_file_name + ", file_length=" + file_length + ", content_type=" + content_type + ", delete_flag="
-				+ delete_flag + ", create_date=" + create_date + ", modify_date=" + modify_date + "]";
+		return "File [id=" + id + ", userId=" + userId + ", fileName=" + fileName + ", saveFileName=" + saveFileName
+				+ ", fileLength=" + fileLength + ", contentType=" + contentType + ", deleteFlag=" + deleteFlag
+				+ ", createDate=" + createDate + ", modifyDate=" + modifyDate + "]";
 	}
+	
 	
 }

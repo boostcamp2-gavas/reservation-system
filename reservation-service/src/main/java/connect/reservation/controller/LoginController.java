@@ -9,6 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
+=======
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+<<<<<<< HEAD
 import connect.reservation.domain.Users;
 import connect.reservation.dto.NaverLoginUser;
 import connect.reservation.dto.NaverLoginUserResult;
@@ -34,15 +40,45 @@ public class LoginController {
 	private String clientId = "eGDuy2NMeDv1C1QCsPGF";
 	private String clientSecret = "hw2sty6mby";
 	private String callbackUrl = "http://localhost:8080/login/checkState";
+=======
+import connect.reservation.domain.User;
+import connect.reservation.dto.NaverLoginUser;
+import connect.reservation.dto.NaverLoginUserResult;
+import connect.reservation.service.UserService;
+import net.minidev.json.JSONObject;
+
+@PropertySource("classpath:/application.properties")
+@Controller
+@RequestMapping("/login")
+public class LoginController {
+	private final UserService userService;
+	
+	@Value("${spring.naverlogin.clientId}")
+	private String clientId;
+	
+	@Value("${spring.naverlogin.clientSecret}")
+	private String clientSecret;
+	
+	@Value("${spring.naverlogin.callbackUrl}")
+	private String callbackUrl;
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
 	private String state = "";
 	private String code = "";
 	private String type = "";
 	
+<<<<<<< HEAD
 
 	@Autowired
 	UsersService usersService;
 	
 
+=======
+	
+	@Autowired
+	public LoginController(UserService userService) {
+		this.userService = userService;
+	}
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
 
 	@GetMapping("")
 	public String mvLogin(HttpServletRequest request, @RequestParam("type") String type) {
@@ -157,6 +193,7 @@ public class LoginController {
 		ResponseEntity<NaverLoginUserResult> responseEntity = profileRest.exchange(profileUrl, HttpMethod.GET, httpEntity, new ParameterizedTypeReference<NaverLoginUserResult>(){});	
 		
 		if(responseEntity.getBody().getMessage() != "success"){
+<<<<<<< HEAD
 			session.setAttribute("loginOk", "false");
 			// 에러발생
 		}
@@ -169,12 +206,26 @@ public class LoginController {
 			// 가입 기록이 없으면 user 추가
 			usersService.addSnsUser(snsUser);
 			user = usersService.getSnsUser(snsId);
+=======
+			session.setAttribute("loginOk", false);
+			// 에러발생
+		}
+		NaverLoginUser snsUser = responseEntity.getBody().getResponse();
+		String snsId = snsUser.getId();
+		User currentUser = userService.getSnsUser(snsId);
+		
+		if(currentUser == null) {
+			// 가입 기록이 없으면 user 추가
+			userService.addSnsUser(snsUser);
+			currentUser = userService.getSnsUser(snsId);
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
 		}
 		else {
 			// 정보업데이트 있을 경우 DB 업데이트
 			String nickname = snsUser.getNickname();
 			String profile = snsUser.getProfileImage();
 			
+<<<<<<< HEAD
 			if(!nickname.equals(user.getNickname()) || !profile.equals(user.getSnsProfile())) {
 				usersService.updateSnsUser(snsId, nickname, profile);
 			}
@@ -183,5 +234,15 @@ public class LoginController {
 		session.setAttribute("loginOk", "true");
 		session.setAttribute("userId", user.getId());
 		session.setAttribute("userName", user.getUsername());
+=======
+			if(!nickname.equals(currentUser.getNickname()) || !profile.equals(currentUser.getSnsProfile())) {
+				userService.updateSnsUser(snsId, nickname, profile);
+			}
+		}
+		// 가입된 user면 session 설정
+		// user객체 만들어서 로그인 확인 메소드 추가
+		session.setAttribute("loginOk", true);
+		session.setAttribute("currentUser", currentUser);
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
 	}
 }

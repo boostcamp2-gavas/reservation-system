@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/q941110/reservation-system#readme",
   "dependencies": {
+<<<<<<< HEAD
+=======
+    "@egjs/component": "^2.0.0-rc",
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
     "handlebars": "^4.0.10",
     "jquery": "^3.2.1"
   }

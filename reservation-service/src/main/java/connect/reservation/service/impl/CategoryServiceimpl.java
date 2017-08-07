@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import connect.reservation.dao.CategoryDao;
-import connect.reservation.dao.ProductInfoDao;
+import connect.reservation.dao.ProductDao;
 import connect.reservation.domain.Category;
 import connect.reservation.service.CategoryService;
 
@@ -18,7 +18,7 @@ public class CategoryServiceimpl implements CategoryService {
 	CategoryDao categoryDao;
 	
 	@Autowired
-	ProductInfoDao productInfoDao;
+	ProductDao productDao;
 	
 	@Override
 	@Transactional(readOnly = true)
