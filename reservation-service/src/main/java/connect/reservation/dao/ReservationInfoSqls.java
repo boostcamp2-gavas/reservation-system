@@ -8,4 +8,25 @@ public class ReservationInfoSqls {
 	final static String GET_USER_INFO = "SELECT username, tel, email"
 			+ " FROM users "
 			+ " WHERE id = :user_id;";
+<<<<<<< HEAD
+=======
+	
+	final static String SELECT_BY_USER_ID = "SELECT r.id, r.reservation_type, r.general_ticket_count, r.youth_ticket_count, r.child_ticket_count, p.id  product_id, p.name product_name, d.display_start, d.display_end, d.place_name" + 
+			" FROM reservation_info r" + 
+			" INNER JOIN product p" + 
+			" INNER JOIN display_info d" + 
+			" ON r.product_id = p.id and p.id = d.product_id AND r.user_id = :user_id" +
+			" ORDER BY reservation_type";
+	
+	final static String SELECT_COUNT = "SELECT reservation_type, COUNT(*) cnt" + 
+			" FROM reservation_info" + 
+			" WHERE user_id = :user_id" + 
+			" GROUP BY reservation_type";
+	
+	final static String UPDATE_RESERVATION_TYPE_BY_ID = "UPDATE reservation_info" + 
+			" SET" + 
+			" reservation_type = :reservation_type," +
+			" modify_date = now()" +
+			" WHERE id = :id";
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
 }

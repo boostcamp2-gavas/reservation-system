@@ -1,5 +1,6 @@
 package connect.reservation.domain;
 
+<<<<<<< HEAD
 public class ReservationInfo {
 	private int productId;
 	private int userId;
@@ -13,6 +14,24 @@ public class ReservationInfo {
 	private int reservationType;
 	private String createDate;
 	private String modifyDate;
+=======
+import java.sql.Timestamp;
+
+
+public class ReservationInfo {
+	private Integer productId;
+	private Integer userId;
+	private Integer generalTicketCount;
+	private Integer youthTicketCount;
+	private Integer childTicketCount;
+	private String reservationName;
+	private String reservationTel;
+	private String reservationEmail;
+	private Timestamp reservationDate;
+	private ReservationType reservationType;
+	private Timestamp createDate;
+	private Timestamp modifyDate;
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
 	
 	
 	public int getProductId() {
@@ -63,6 +82,7 @@ public class ReservationInfo {
 	public void setReservationEmail(String reservationEmail) {
 		this.reservationEmail = reservationEmail;
 	}
+<<<<<<< HEAD
 	public String getReservationDate() {
 		return reservationDate;
 	}
@@ -85,6 +105,30 @@ public class ReservationInfo {
 		return modifyDate;
 	}
 	public void setModifyDate(String modifyDate) {
+=======
+	public Timestamp getReservationDate() {
+		return reservationDate;
+	}
+	public void setReservationDate(Timestamp reservationDate) {
+		this.reservationDate = reservationDate;
+	}
+	public ReservationType getReservationType() {
+		return reservationType;
+	}
+	public void setReservationType(ReservationType reservationType) {
+		this.reservationType = reservationType;
+	}
+	public Timestamp getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Timestamp createDate) {
+		this.createDate = createDate;
+	}
+	public Timestamp getModifyDate() {
+		return modifyDate;
+	}
+	public void setModifyDate(Timestamp modifyDate) {
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
 		this.modifyDate = modifyDate;
 	}
 	

@@ -8,6 +8,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
     <link href="/resources/css/style.css" rel="stylesheet">
+    <style>
+        .invisible {
+            display: none
+        }
+    </style>
 </head>
 
 <body>
@@ -22,45 +27,32 @@
                     <div class="container_visual">
                         <div class="imgBtn prev_e">
                             <div class="prev_inn">
-                                <a href="#" class="btn_pre_e" title="이전"> <i class="spr_book_event spr_event_pre">이전</i> </a>
+                                <a class="btn_pre_e" title="이전"> <i class="spr_book_event spr_event_pre">이전</i> </a>
                             </div>
                         </div>
                         <div class="imgBtn nxt_e">
                             <div class="nxt_inn">
-                                <a href="#" class="btn_nxt_e" title="다음"> <i class="spr_book_event spr_event_nxt">다음</i> </a>
+                                <a class="btn_nxt_e" title="다음"> <i class="spr_book_event spr_event_nxt">다음</i> </a>
                             </div>
                         </div>
                         <div>
                             <div class="container_visual">
                                 <!-- [D] 이전,다음 버튼을 클릭할때마다 캐러셀 형태로 순환 됨 --->
                                 <ul class="visual_img">
-                                    <li class="banner_list item" style="background-image: url(http://naverbooking.phinf.naver.net/20170209_66/1486628146913la6nC_JPEG/image.jpg); width: 338px;">
-                                        <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
+<c:forEach var="rolling" items="${rolling}">
+                                    <li class="banner_list item" style="background-image: url(/api/files/${rolling.fileId}); width: 338px;">
+                                        <a href="/mvDetail?productId=${rolling.productId}"> 
+                                        	<span class="img_btm_border"></span> 
+                                        	<span class="img_right_border"></span> 
+                                        	<span class="img_bg_gra"></span>
                                             <div class="event_txt">
-                                                <h4 class="event_txt_tit"></h4>
-                                                <p class="event_txt_adr"></p>
-                                                <p class="event_txt_dsc"></p>
+                                                <h4 class="event_txt_tit">${rolling.productName}</h4>
+                                                <p class="event_txt_adr">${rolling.placeName}</p>
+                                                <p class="event_txt_dsc">${rolling.event}</p>
                                             </div>
                                         </a>
                                     </li>
-                                    <li class="banner_list item" style="background-image: url(http://naverbooking.phinf.naver.net/20170119_48/1484802596907hmVDm_JPEG/image.jpg); width: 338px;">
-                                        <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
-                                            <div class="event_txt">
-                                                <h4 class="event_txt_tit">뮤지컬-김종욱찾기 네이버 예약</h4>
-                                                <p class="event_txt_adr">대학로 쁘띠첼씨어터</p>
-                                                <p class="event_txt_dsc">네이버 예매시, 손크림/발크림(중 래덤)을 드립니다</p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="banner_list item" style="background-image: url(http://naverbooking.phinf.naver.net/20170209_66/1486628146913la6nC_JPEG/image.jpg); width: 338px;">
-                                        <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
-                                            <div class="event_txt">
-                                                <h4 class="event_txt_tit"></h4>
-                                                <p class="event_txt_adr"></p>
-                                                <p class="event_txt_dsc"></p>
-                                            </div>
-                                        </a>
-                                    </li>
+</c:forEach>
                                 </ul>
                             </div>
                             <span class="nxt_fix"></span>
@@ -88,9 +80,13 @@
                     	<script id="product_template" type="text/x-handlebars-template">
 							{{#productList}}
 								<li class="product_list item">
+<<<<<<< HEAD
                     	        <a href="/mvDetail/{{productId}}" class="item_book">
+=======
+                    	        <a href="/mvDetail?productId={{productId}}" class="item_book">
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
                         	        <div class="item_preview"> 
-                            	    	<img alt="{{fileName}}" class="img_thumb" src="{{saveFileName}}">
+                            	    	<img alt="{{fileName}}" class="img_thumb" src="/api/files/{{fileId}}">
                                 		<span class="img_border"></span> 
                               	  </div>
                      	           <div class="event_txt">
@@ -118,7 +114,10 @@
     <c:import url="/WEB-INF/views/footer.jsp" />
 </body>
 <script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
+<<<<<<< HEAD
 <!-- <script src="/resources/js/handlebars-v4.0.5.js"></script> -->
+=======
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
 <script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
 <script src="/resources/js/modules.js"></script>
 <script src="/resources/js/main.js"></script>

@@ -13,13 +13,20 @@
 </head>
 
 <body>
+<<<<<<< HEAD
 <input type="hidden" id="productId" name="productId" value="${reserveInfo.productId}">
+=======
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
     <div id="container">
         <c:import url="/WEB-INF/views/header.jsp" />
         <div class="ct">
             <div class="ct_wrap">
                 <div class="top_title">
+<<<<<<< HEAD
                     <a href="#" class="btn_back" title="이전 화면으로 이동"> 
+=======
+                    <a href="javascript:history.back()" class="btn_back" title="이전 화면으로 이동"> 
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
                     	<i class="fn fn-backward1"></i> 
                     </a>
                     <h2>
@@ -30,6 +37,7 @@
                     <div class="container_visual" style="width: 414px;">
                         <ul class="visual_img">
                             <li class="item" style="width: 414px;"> 
+<<<<<<< HEAD
                             	<img alt="${reserveInfo.fileName}" class="img_thumb" src="${reserveInfo.saveFileName}"> 
                             	<span class="img_bg"></span>
                                 <div class="preview_txt">
@@ -38,6 +46,17 @@
                                     <!-- 2017.2.17.(금)~2017.4.18.(화), 잔여티켓 2769매 -->
                                     <em class="preview_txt_dsc">
                                     	${reserveInfo.displayStart}(${startDay}) ~ ${reserveInfo.displayEnd}(${endDay})
+=======
+                            	<img alt="${reserveInfo.fileName}" class="img_thumb" src="/api/files/${reserveInfo.fileId}"> 
+                            	<span class="img_bg"></span>
+                                <div class="preview_txt">
+                                    <h2 class="preview_txt_tit">${reserveInfo.productName}</h2> 
+                                    <em class="preview_txt_dsc">₩<fmt:formatNumber value="${minPrice}" pattern="#,###" /> ~ </em>
+                                    <!-- 2017.2.17.(금)~2017.4.18.(화), 잔여티켓 2769매 -->
+                                    <em class="preview_txt_dsc">
+                                    	<fmt:formatDate value="${reserveInfo.displayStart}" pattern="yyyy.MM.dd"/>(${startDay})
+                                    	 ~ <fmt:formatDate value="${reserveInfo.displayStart}" pattern="yyyy.MM.dd"/>(${endDay})
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
                                     </em>  
                                 </div>
                             </li>
@@ -49,7 +68,12 @@
                         <h3 class="in_tit">${reserveInfo.productName}</h3>
                         <p class="dsc">
                             장소 : ${reserveInfo.placeStreet}(${reserveInfo.placeLot})<br> 
+<<<<<<< HEAD
                             기간 : ${reserveInfo.displayStart}(${startDay}) ~ ${reserveInfo.displayEnd}(${endDay})
+=======
+                            기간 : <fmt:formatDate value="${reserveInfo.displayStart}" pattern="yyyy.MM.dd"/>(${startDay})
+                             ~ <fmt:formatDate value="${reserveInfo.displayStart}" pattern="yyyy.MM.dd"/>(${endDay})
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
                         </p>
                         <h3 class="in_tit">관람시간</h3>
                         <p class="dsc">
@@ -133,16 +157,28 @@
                             	<span class="spr_book ico_nessasary"></span> 
                             	<span>필수입력</span> 
                             </div>
+<<<<<<< HEAD
                             <form class="form_horizontal" action="" method="POST">
 <input type="hidden" id="count_info" name="count_info" value="">
 <inpur type="hidden" id="reserve_date" name="reserve_date" value="${reserveInfo.displayStart}(${startDay}) ~ ${reserveInfo.displayEnd}(${endDay})">
+=======
+                            <form class="form_horizontal" action="/reserve" method="POST">
+<input type="hidden" id="productId" name="productId" value="${reserveInfo.productId}">
+<input type="hidden" id="ticket_count_0" name="generalTicketCount" value="0">
+<input type="hidden" id="ticket_count_1" name="youthTicketCount" value="0">
+<input type="hidden" id="ticket_count_2" name="childTicketCount" value="0">
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
                                 <div class="inline_form"> 
                                 	<label class="label" for="name"> 
                                 		<span class="spr_book ico_nessasary">필수</span> 
                                 		<span>예매자</span> 
                                 	</label>
                                     <div class="inline_control"> 
+<<<<<<< HEAD
                                     	<input type="text" name="name" id="name" class="text" value="${user.username}" maxlength="17"> 
+=======
+                                    	<input type="text" name="reservationName" id="name" class="text" value="${user.username}" maxlength="17"> 
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
                                     </div>
                                 </div>
                                 <div class="inline_form"> 
@@ -151,7 +187,11 @@
                                 		<span>연락처</span> 
                                 	</label>
                                     <div class="inline_control"> 
+<<<<<<< HEAD
                                     	<input type="tel" name="tel" id="tel" class="tel" value="${user.tel}" placeholder="휴대폰 입력 시 예매내역 문자발송"> 
+=======
+                                    	<input type="tel" name="reservationTel" id="tel" class="tel" value="${user.tel}" placeholder="휴대폰 입력 시 예매내역 문자발송"> 
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
                                     </div>
                                 </div>
                                 <div class="inline_form"> 
@@ -159,14 +199,24 @@
                                 		<span>이메일</span> 
                                 	</label>
                                     <div class="inline_control"> 
+<<<<<<< HEAD
                                     	<input type="email" name="email" id="email" class="email" value="${user.email}" maxlength="50"> 
+=======
+                                    	<input type="email" name="reservationEmail" id="email" class="email" value="${user.email}" maxlength="50"> 
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
                                     </div>
                                 </div>
                                 <div class="inline_form last"> 
                                 	<label class="label" for="message">예매내용</label>
                                     <div class="inline_control">
+<<<<<<< HEAD
                                         <p class="inline_txt selected" style="fint-size:16px;">
                                         	${reserveInfo.displayStart}(${startDay})~${reserveInfo.displayEnd}(${endDay}), 총 <span id="qty_count">0</span>매
+=======
+                                        <p class="inline_txt selected" style="fint-size:16px;" name="dd">
+                                        	<fmt:formatDate value="${reserveInfo.displayStart}" pattern="yyyy.MM.dd"/>(${startDay})
+                                        	~<fmt:formatDate value="${reserveInfo.displayEnd}" pattern="yyyy.MM.dd"/>(${endDay}), 총 <span id="qty_count">0</span>매
+>>>>>>> 675e75dfc3b5ee0e722079d046479cafa81aa8d7
                                         </p>
                                     </div>
                                 </div>
