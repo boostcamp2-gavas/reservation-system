@@ -10,16 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "@egjs/component": "^2.0.0-rc",
-    "@egjs/flicking": "2.0.0-rc.2",
     "egjs": "^1.5.0",
     "handlebars": "^4.0.10",
     "jquery": "1.12.4",
     "requirejs": "^2.3.3"
-  },
-  "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-eslint": "^4.0.0",
-    "gulp-uglify": "^3.0.0"
   }
 }

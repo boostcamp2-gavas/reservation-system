@@ -19,7 +19,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import kgw.reservation.domain.FileDomain;
+import kgw.reservation.domain.File;
 import kgw.reservation.dto.FileImage;
 import kgw.reservation.sql.FileSqls;
 
@@ -28,7 +28,7 @@ public class FileDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private SimpleJdbcInsert insertAction;
     private RowMapper<FileImage> fileImageRowMapper = BeanPropertyRowMapper.newInstance(FileImage.class);
-    private RowMapper<FileDomain> fileRowMapper = BeanPropertyRowMapper.newInstance(FileDomain.class);
+    private RowMapper<File> fileRowMapper = BeanPropertyRowMapper.newInstance(File.class);
     @Autowired
     public FileDao(DataSource dataSource) {
     		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -59,7 +59,7 @@ public class FileDao {
 			return null;
 		}
 	}
-    public FileDomain selectById(Integer id) {
+    public File selectById(Integer id) {
     		Map<String, Object> params = Collections.singletonMap("id", id);
     		try {
     			return jdbc.queryForObject(FileSqls.SELECT_BY_ID, params, fileRowMapper);
@@ -67,22 +67,9 @@ public class FileDao {
 			return null;
 		}
     }
-
-	public FileDomain insert(FileDomain file) {
+    @Transactional(readOnly=false)
+    public Integer insert(File file) {
 		SqlParameterSource params = new BeanPropertySqlParameterSource(file);
-		Integer fileId = insertAction.executeAndReturnKey(params).intValue();
-		file.setId(fileId);
-		return file;
-	}
-	
-	public Integer delete(Integer id) {
-		Map<String, Object> params = Collections.singletonMap("id", id);
-		return jdbc.update(FileSqls.DELETE_BY_ID, params);
-	}
-	
-	public Integer update(List<Integer> ids) {
-		Map<String, Object> params =  Collections.singletonMap("ids", ids);
-		return jdbc.update(FileSqls.UPDATE_BY_IDS, params);
-		
-	}
+    		return insertAction.executeAndReturnKey(params).intValue();
+    }
 }

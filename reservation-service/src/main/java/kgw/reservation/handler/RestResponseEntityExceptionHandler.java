@@ -3,7 +3,6 @@ package kgw.reservation.handler;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
@@ -16,37 +15,16 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import kgw.reservation.dto.RestError;
-import kgw.reservation.exception.MismatchJpegPngFormatException;
-
 
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler  extends ResponseEntityExceptionHandler {
-	@ExceptionHandler(MaxUploadSizeExceededException.class)	
-	@ResponseBody
-    ResponseEntity<?> maxUploadSizeExceededControllerException(HttpServletRequest request, Throwable ex) {
-        RestError restError = 
-  			  new RestError(HttpStatus.BAD_REQUEST, "파일 용량이 초과하였습니다.",null);
-        	return new ResponseEntity<Object>(restError, new HttpHeaders(), restError.getStatus());
-    }
-	
-    @ExceptionHandler(MismatchJpegPngFormatException.class)
-    @ResponseBody
-    ResponseEntity<?> mismatchJpegPngControllerException(HttpServletRequest request, Throwable ex) {
-        RestError restError = 
-  			  new RestError(HttpStatus.BAD_REQUEST, ex.getMessage(),null);
-        	return new ResponseEntity<Object>(restError, new HttpHeaders(), restError.getStatus());
-    }
-    
-    
 	// MethodArgumentNotValidException - @Valid failed validation
 		@Override
 		protected ResponseEntity<Object> handleMethodArgumentNotValid (

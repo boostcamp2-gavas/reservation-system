@@ -27,7 +27,7 @@
                 <div class="group_visual">
                     <div class="container_visual" style="width: 414px;">
                         <ul class="visual_img">
-                            <li class="item" style="width: 414px;"> <img alt="업로드 이미지" class="img_thumb" src="/imgresources${productReservation.saveFileName }"> <span class="img_bg"></span>
+                            <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170217_264/1487312141947lTddT_JPEG/%B3%D7%C0%CC%B9%F6.jpg?type=ff1242_816"> <span class="img_bg"></span>
                                 <div class="preview_txt">
                                     <h2 class="preview_txt_tit">${productReservation.name }</h2>
                                     <em class="preview_txt_dsc">
@@ -236,8 +236,7 @@
                                         <div class="inline_control">
                                             <p class="inline_txt selected">
                                               <fmt:formatDate pattern = "yyyy.M.d.(E)" value = "${start }" /> ~ <fmt:formatDate pattern = "yyyy.M.d.(E)" value = "${end }" />,
-                                              총 <em class="_sum">0</em>매,
-                                              총 <em class="_sumPrice">0</em>원
+                                              총 <em class="_sum">0</em>매
                                               <span class="_countTemplateTarget"></span>
                                             </p>
                                         </div>
@@ -268,7 +267,7 @@
                   </div>
                   <div class="box_bk_btn">
                       <!-- [D] 약관 전체 동의가 되면 disable 제거 -->
-                      <div class="bk_btn_wrap disable _bookingBtn"> <button type="submit" class="bk_btn"> <i class="spr_book ico_naver_s" style="margin-top:12px"></i>  <span>예약하기</span> </button> </div>
+                      <div class="bk_btn_wrap disable _bookingBtn"> <button type="submit" class="bk_btn"> <i class="spr_book ico_naver_s"></i>  <span>예약하기</span> </button> </div>
                   </div>
                 </form>
             </div>
@@ -296,9 +295,9 @@
     {{/if}}
 </script>
 <script>
-    require(['reserve'], function(reserve) {
-        "use strict";
-        reserve.init();
-    });
+  (function($, reserve){
+      "use strict";
+      reserve.init();
+  })(jQuery, window.reservation.reserve)
 </script>
 </html>

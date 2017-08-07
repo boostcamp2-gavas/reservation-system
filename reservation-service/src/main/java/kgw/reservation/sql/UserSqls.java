@@ -12,6 +12,5 @@ public class UserSqls {
 			+ "									  sns_profile,"
 			+ "									  admin_flag"
 			+ "									  from users"
-			+ "									  where sns_id = :snsId"
-			+ "									  order by id"; 
+			+ "									  where sns_id = :snsId"; 
 }

@@ -27,7 +27,7 @@ public class User {
 		this.snsId = naverLoginProfile.getId().toString();
 		this.snsType = "Naver";
 		this.snsProfile = naverLoginProfile.getProfileImage();
-		
+		//사용자 
 		this.adminFlag = 0;
 		this.createDate = new Date();
 	}

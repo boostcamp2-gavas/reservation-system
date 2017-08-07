@@ -10,8 +10,6 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -24,14 +22,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import kgw.reservation.domain.FileDomain;
 import kgw.reservation.service.FileService;
 
 @Controller
 @RequestMapping("/files")
 public class FileController {
 	private static final String DIRNAME ="/admin/files";
-	private final Logger log = LoggerFactory.getLogger(FileController.class);
 	@Value("${kgw.imageupload.path}")
     private String baseDir; // 이미지파일 다운로드할 기본 경로 
 	private FileService fileService;
@@ -80,7 +76,7 @@ public class FileController {
                     ex.printStackTrace();
                 }
                 //File
-                kgw.reservation.domain.FileDomain fileDomain = new kgw.reservation.domain.FileDomain();
+                kgw.reservation.domain.File fileDomain = new kgw.reservation.domain.File();
                 fileDomain.setContentType(contentType);
                 fileDomain.setCreateDate(new Date());
                 fileDomain.setDeleteFlag(0);
@@ -89,7 +85,7 @@ public class FileController {
                 fileDomain.setSaveFileName(File.separator+currentDate+File.separator+uuid);
                 // 해당부분은 로그인기능 구현후 추가 처리
                 fileDomain.setUserId(5);
-                log.debug("{}",fileDomain);
+                
                 fileService.create(fileDomain);
                 
             } // for
@@ -102,7 +98,9 @@ public class FileController {
             @PathVariable(name="id") Integer id,
             HttpServletResponse response
     ){
-    		FileDomain fileDomain = fileService.find(id);
+        // id를 이용하여 파일의 정보를 읽어온다.
+        // 이 부분은 원래 db에서 읽어오는 것인데 db부분은 생략했다.
+    		kgw.reservation.domain.File fileDomain = fileService.find(id);
         String originalFilename = fileDomain.getFileName();
         String contentType = fileDomain.getContentType();
         int fileSize = fileDomain.getFileLength();

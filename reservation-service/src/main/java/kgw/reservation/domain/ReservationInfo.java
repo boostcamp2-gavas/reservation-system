@@ -12,7 +12,7 @@ public class ReservationInfo {
 	private String reservationName;
 	private String reservationTel;
 	private String reservationEmail;
-	private Integer reservationType;
+	private String reservationType;
 	private Date reservationDate;
 	private Date createDate;
 	private Date modifyDate;
@@ -71,11 +71,10 @@ public class ReservationInfo {
 	public void setReservationEmail(String reservationEmail) {
 		this.reservationEmail = reservationEmail;
 	}
-	
-	public Integer getReservationType() {
+	public String getReservationType() {
 		return reservationType;
 	}
-	public void setReservationType(Integer reservationType) {
+	public void setReservationType(String reservationType) {
 		this.reservationType = reservationType;
 	}
 	public Date getReservationDate() {

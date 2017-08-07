@@ -25,7 +25,7 @@ public class ProductService {
 	private UserCommentService userCommentService;
 	private FileDao fileDao;
 	private ProductPriceDao productPriceDao;
-
+	
 	@Autowired
 	public ProductService(ProductDao productDao, UserCommentService userCommentService, FileDao fileDao,
 							ProductPriceDao productPriceDao) {

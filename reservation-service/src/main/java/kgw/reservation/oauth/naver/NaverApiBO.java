@@ -2,7 +2,6 @@ package kgw.reservation.oauth.naver;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -24,23 +23,13 @@ public class NaverApiBO {
 	//response_type: 인증 과정에 대한 구분값. code로 값이 고정돼 있습니다.
 	//redirect_uri: 네이버 로그인 인증의 결과를 전달받을 콜백 URL(URL 인코딩). 애플리케이션을 등록할 때 Callback URL에 설정한 정보입니다.
 	//state: 애플리케이션이 생성한 상태 토큰
-
-	
-	
-	@Value ("${naverest.naverlogin.client.id}")
-	private String CLIENT_ID;
-	@Value("${naverest.naverlogin.client.secret}")
-	private String CLIENT_SECRET;
-	
-	@Value("${naverest.naverlogin.redirectUri}")
-	private String REDIRECT_URI;
-	
+	private final static String CLIENT_ID = "9xywjQhEim1nZVIa1xZc";
+	private final static String CLIENT_SECRET = "K5uiklulf0";
+	private final static String REDIRECT_URI = "http://127.0.0.1:8080/login/callback";
 	// 프로필 조회 API URL
-	@Value("${naverest.naverlogin.profileApiUrl}")
-	private String PROFILE_API_URL;
+	private final static String PROFILE_API_URL = "https://openapi.naver.com/v1/nid/me";
 	// 블로그 글쓰기 API URL 	
-	@Value("${naverest.naverlogin.blogPostUrl}")
-	private String BLOG_POST_URL;
+	private final static String BLOG_POST_URL ="https://openapi.naver.com/blog/writePost.json";
 	
 	private OAuth20Service oauthService; 
 	// 네이버 아이디로 인증  URL 생성  Method 

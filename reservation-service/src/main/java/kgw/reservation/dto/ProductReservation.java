@@ -12,7 +12,6 @@ public class ProductReservation {
 	private Date displayEnd;
 	private String observationTime;
 	private String saveFileName;
-	private Integer fileId;
 	private List<ProductPrice> productPriceList;
 	public String getName() {
 		return name;
@@ -56,13 +55,6 @@ public class ProductReservation {
 	public void setProductPriceList(List<ProductPrice> productPriceList) {
 		this.productPriceList = productPriceList;
 	}
-	public Integer getFileId() {
-		return fileId;
-	}
-	public void setFileId(Integer fileId) {
-		this.fileId = fileId;
-	}
-	
 	
 	
 }

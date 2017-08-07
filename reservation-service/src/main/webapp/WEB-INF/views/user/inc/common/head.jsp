@@ -7,7 +7,13 @@
     <title>${param.title }</title>
     <link href="/resources/css/style.css" rel="stylesheet">
     <script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
+    <script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
     <script src="/resources/js/node_modules/egjs/dist/pkgd/eg.pkgd.min.js"></script>
-    <script src="/resources/js/node_modules/requirejs/require.js"></script>
-    <script src="/resources/js/dist/reservation.min.js"></script>
+    <script src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=9xywjQhEim1nZVIa1xZc&submodules=geocoder"></script>
+    <script src="/resources/js/category.js"></script>
+    <script src="/resources/js/rolling.js"></script>
+    <script src="/resources/js/booking.js"></script>
+    <script src="/resources/js/reserve.js"></script>
+    <script src="/resources/js/product.js"></script>
+    <script src="/resources/js/detail.js"></script>
 </head>

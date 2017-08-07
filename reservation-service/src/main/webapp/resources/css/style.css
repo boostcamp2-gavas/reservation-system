@@ -719,7 +719,6 @@ button {
     cursor: pointer;
     font-size: 17px;
     color: #fff;
-    line-height: 47px;
     box-sizing: border-box
 }
 
@@ -3305,16 +3304,6 @@ button {
 	border: 1px solid #ccc;
 	background-color: #f4f4f4;
 }
-.booking_cancel .link {
-  display: block;
-	width: 100%;
-	height: 36px;
-  margin: 20px 0 10px;
-	border: 1px solid #ccc;
-	background-color: #f4f4f4;
-  text-align: center;
-  line-height: 36px;
-}
 
 
 /* Page - Confirm */
@@ -3828,7 +3817,7 @@ button {
 	background-color: rgba(0,0,0,0.6);
 
 }
-#photoviwerInner {
+#photo {
 	position: absolute;
 	left: 100px;
 	right: 100px;

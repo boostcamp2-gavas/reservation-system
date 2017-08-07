@@ -11,9 +11,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
-import kgw.reservation.domain.User;
 import kgw.reservation.oauth.naver.NaverApiBO;
-import kgw.reservation.security.SecurityContext;
 
 public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 	private NaverApiBO naverApiBO;
@@ -26,19 +24,16 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("loginInfo");
-		
-		if(  user == null ) {
-			response.sendRedirect("/login");
-			return false;
-		} else {
-			SecurityContext.loginUser.set(user);
-		}	
+		if( session.getAttribute("loginInfo") == null ) {
+				response.sendRedirect("/login");
+				return false;
+		}
 		
 		Date current = new Date();
 		// access_token 만기 시, refresh함. 
 		if ( current.compareTo( (Date) session.getAttribute("oauthTokenExpires")) > 0 ) {
 			session.setAttribute("oauthToken", naverApiBO.reqRefreshAccessTocken((OAuth2AccessToken)session.getAttribute("oauthToken")));
+			return true;
 		}
 		return true;
 	}

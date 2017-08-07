@@ -86,14 +86,14 @@
 <li class="item" data-id="{{id}}">
     <a href="/products/{{id}}" class="item_book">
         <div class="item_preview">
-			{{#if saveFileName}}
-				<img alt="{{name}}" class="img_thumb" src="/imgresources{{saveFileName}}">
+			{{#if fileId}}
+				<img alt="{{name}}" class="img_thumb" src="${initParam.UPLOAD_IMG_URL}/{{fileId}}">                                    
 			{{else}}
-				<img alt="{{name}}" class="img_thumb" src="/imgresources/no_img.png">
+				<img alt="{{name}}" class="img_thumb" src="${initParam.STATIC_IMG_URL}/no_img.png">	
 			{{/if}}
 			<span class="img_border"></span>
 		</div>
-
+			
         <div class="event_txt">
             <h4 class="event_txt_tit"> <span>{{name}}</span> <small class="sm">{{placeName}}</small> </h4>
             <p class="event_txt_dsc">
@@ -104,19 +104,20 @@
 </li>
 </script>
 <script>
-    require(['product', 'rolling'], function(Product, Rolling) {
-        "use strict";
-        new Rolling(".visual_img", ".item",{
-            "prevBtn" :".btn_pre_e", "nextBtn" : ".btn_nxt_e", "isTouch" : true});
-        Product.init();
-
-        if (!$("body").height() < $(window).height()) {
-          $(window).scroll(function() {
-              if ($(window).scrollTop() === $(document).height() - $(window).height()) {
-                  Product.getMoreList();
-              }
-          });
-        }
-    });
+(function (product, Rolling, $) {
+	 	    "use strict";
+	 	    $(function() {
+	 	    		new Rolling(".visual_img", ".item", { "prevBtn" :".btn_pre_e", "nextBtn" : ".btn_nxt_e"});
+	 	        product.init();
+	 	       //무한 스크롤링
+	 	       if (!$("body").height() < $(window).height()) {
+	 	         $(window).scroll(function() {
+	 	             if ($(window).scrollTop() === $(document).height() - $(window).height()) {
+	 	                 product.getMoreList();
+	 	             }
+	 	         });
+	 	       }
+	 	    });
+})(window.reservation.product, window.reservation.Rolling, jQuery);
 </script>
 </html>

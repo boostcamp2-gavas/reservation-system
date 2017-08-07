@@ -27,7 +27,6 @@ public class LoginController {
 	private NaverApiBO naverLoginBO;
 	private UserService userService;
 	private final static String SESSION_STATE ="oauthState";
-	
 	@Autowired
 	public LoginController(NaverApiBO naverLoginBO, UserService userService) {
 		this.naverLoginBO = naverLoginBO;
@@ -36,6 +35,7 @@ public class LoginController {
 	
 	@GetMapping
 	public String login(HttpSession session) {
+		
 		//네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출
 		String oauthState = generateRandomString();
 		session.setAttribute(SESSION_STATE, oauthState);
