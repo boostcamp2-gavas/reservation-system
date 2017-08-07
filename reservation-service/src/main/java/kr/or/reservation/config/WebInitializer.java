@@ -60,4 +60,7 @@ public class WebInitializer implements WebApplicationInitializer {
         context.setConfigLocation(CONFIG_LOCATION);
         return context;
     }
+    
+    
+  
 }

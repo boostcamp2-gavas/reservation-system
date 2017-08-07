@@ -1,4 +1,4 @@
-package kr.or.reservation.restController;
+package kr.or.reservation.restcontroller;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +16,7 @@ import kr.or.reservation.domain.Product;
 import kr.or.reservation.service.ProductService;
 
 @RestController
-@RequestMapping(path = "/product")
+@RequestMapping(path = "/api/product")
 public class RestProductController {
 
 	@Autowired

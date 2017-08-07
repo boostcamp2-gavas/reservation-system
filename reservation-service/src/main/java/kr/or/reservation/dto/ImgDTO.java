@@ -1,5 +1,11 @@
 package kr.or.reservation.dto;
 
+<<<<<<< HEAD:reservation-service/src/main/java/kr/or/reservation/dto/ImgDTO.java
+=======
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a:reservation-service/src/main/java/kr/or/reservation/dto/ImgDTO.java
 public class ImgDTO {
 	private int productId;
 	private int fileId;
@@ -52,8 +58,8 @@ public class ImgDTO {
 
 	@Override
 	public String toString() {
-		return "productId : \"" + productId + "\", fileId : \"" + fileId + "\", saveFileName : \"" + saveFileName
-				+ "\", type : \"" + type;
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE).toString();
 	}
+	
 
 }

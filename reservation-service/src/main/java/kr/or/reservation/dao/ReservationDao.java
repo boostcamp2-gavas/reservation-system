@@ -24,9 +24,15 @@ public class ReservationDao {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 
+<<<<<<< HEAD
 	public ReservationDTO selectOne(int id) {
 		Map<String , ?> params = Collections.singletonMap("id", id);
 		return jdbc.queryForObject(ReservationSqls.SELECT_ONE,params, reservationMapper);
+=======
+	public ReservationDTO selectByProductId(int productId) {
+		Map<String , ?> params = Collections.singletonMap("productId", productId);
+		return jdbc.queryForObject(ReservationSqls.SELECT_BY_PRODUCT_ID,params, reservationMapper);
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 	}
 	
 	public List<Map<String,Object>> selectPrice(int id) {

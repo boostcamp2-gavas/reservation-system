@@ -25,7 +25,11 @@
                 <div class="group_visual">
                     <div class="container_visual" style="width: 414px;">
                         <ul class="visual_img">
+<<<<<<< HEAD
                             <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="/${reservation.fileId}"> <span class="img_bg"></span>
+=======
+                            <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="/api/img/${reservation.fileId}"> <span class="img_bg"></span>
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
                                 <div class="preview_txt">
                                     <h2 class="preview_txt_tit">${reservation.name}</h2> <em class="preview_txt_dsc">₩ ${reservation.priceList[0].price} ~ </em>
                                     <em class="preview_txt_dsc">${reservation.salesStart}~${reservation.salesEnd}, 잔여티켓 ?? </em> </div>
@@ -223,14 +227,20 @@
     </footer>
 </body>
 
+<<<<<<< HEAD
 
 
 <script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
 <script src = "/resources/js/node_modules/@egjs/component/dist/component.js"></script>
+=======
+<script src="/resources/js/node_modules/jquery/dist/jquery.min.js"></script>
+<script src = "/resources/js/node_modules/@egjs/component/dist/component.min.js"></script>
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 <script src = "/resources/js/Ticket.js"></script>
 
 <script>
 
+<<<<<<< HEAD
 		// qty 선언 후 개수 만큼 ticket 생성. 그후 이벤트 등록
 		var $qty = $(".qty");
 		var ticket = $qty.map(function(v,i){
@@ -239,6 +249,8 @@
 		TicketModule.init(ticket);
 		
 
+=======
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 	
 		$(".btn_agreement").on("click",function(event){
 			var detail =$(this).parents(".agreement");
@@ -290,6 +302,18 @@
 			}
 		});
 	
+<<<<<<< HEAD
+=======
+		function getTotalPrice(){
+			var $total = $(".total_price"),
+			amount =0;
+			$total.map(function(i,v){
+				amount += parseInt($(v).text());
+			});
+			return amount;
+		}
+		
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 		$(".bk_btn").on("click",function(){
 			if($("#chk3").is(":checked") && Number($(".tickat_count").text())!==0){
 				
@@ -309,6 +333,10 @@
 				data.reservationName = $("#name").val();
 				data.reservationTel = $("#tel").val();
 				data.reservationEmail = $("#email").val();
+<<<<<<< HEAD
+=======
+				data.totalPrice = getTotalPrice();
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 				
 				$.ajax({  method: "post",
 						  url: "/reservation",
@@ -316,12 +344,25 @@
 				}).done(function(){
 					console.log("성공");
 				});
+<<<<<<< HEAD
 				
 				alert("작성완료");
+=======
+			
+				alert("작성완료");
+				location.href = "/myPage";
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 			}else{
 				alert("약관 동의 및 티켓을 입력해주세요.");
 			}
 		});
+<<<<<<< HEAD
 </script>
+=======
+		
+
+	
+		</script>
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 
 </html>

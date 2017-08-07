@@ -134,8 +134,27 @@ target
 .idea
 *.iml
 
+# for api 
+
+kr/or/reservation/api/.java
+
 # for js
-node_modules/
 
-
-
+reservation-service/src/main/webapp/resources/js/node_modules/*
+!reservation-service/src/main/webapp/resources/js/node_modules/@egjs/
+reservation-service/src/main/webapp/resources/js/node_modules/@egjs/*
+!reservation-service/src/main/webapp/resources/js/node_modules/@egjs/component/
+reservation-service/src/main/webapp/resources/js/node_modules/@egjs/component/*
+!reservation-service/src/main/webapp/resources/js/node_modules/@egjs/component/dist/
+reservation-service/src/main/webapp/resources/js/node_modules/@egjs/component/dist/*
+!reservation-service/src/main/webapp/resources/js/node_modules/@egjs/component/dist/component.min.js
+!reservation-service/src/main/webapp/resources/js/node_modules/jquery/
+reservation-service/src/main/webapp/resources/js/node_modules/jquery/*
+!reservation-service/src/main/webapp/resources/js/node_modules/jquery/dist/
+reservation-service/src/main/webapp/resources/js/node_modules/jquery/dist/*
+!reservation-service/src/main/webapp/resources/js/node_modules/jquery/dist/jquery.min.js
+!reservation-service/src/main/webapp/resources/js/node_modules/handlebars/
+reservation-service/src/main/webapp/resources/js/node_modules/handlebars/*
+!reservation-service/src/main/webapp/resources/js/node_modules/handlebars/dist/
+reservation-service/src/main/webapp/resources/js/node_modules/handlebars/dist/*
+!reservation-service/src/main/webapp/resources/js/node_modules/handlebars/dist/handlebars.min.js

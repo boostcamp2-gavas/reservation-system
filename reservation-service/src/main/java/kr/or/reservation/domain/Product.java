@@ -1,5 +1,8 @@
 package kr.or.reservation.domain;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class Product {
 	private int id;
 	private int categoryId;
@@ -74,8 +77,7 @@ public class Product {
 	
 	@Override
 	public String toString() {
-		return "id : \"" + id + "\", categoryId : \"" + categoryId + "\", name : \"" + name + "\", content : \""
-				+ content + "\", placeName : \"" + placeName;
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE).toString();
 	}
 
 }

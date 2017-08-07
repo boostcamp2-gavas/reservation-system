@@ -2,7 +2,15 @@ package kr.or.reservation.domain;
 
 import java.sql.Timestamp;
 
+<<<<<<< HEAD
 public class ReservationInfo {
+=======
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+public class ReservationInfo {
+	private int id;
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 	private int productId;
 	private int userId;
 	private int generalTicketCount;
@@ -15,6 +23,10 @@ public class ReservationInfo {
 	private int reservationType;
 	private Timestamp createDate;
 	private Timestamp modifyDate;
+<<<<<<< HEAD
+=======
+	private int totalPrice;
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 
 
 
@@ -24,10 +36,19 @@ public class ReservationInfo {
 	
 	
 
+<<<<<<< HEAD
 	public ReservationInfo(int productId, int userId, int generalTicketCount, int youthTicketCount,
 			int childTicketCount, String reservationName, String reservationTel, String reservationEmail,
 			Timestamp reservationDate, int reservationType, Timestamp createDate, Timestamp modifyDate) {
 		super();
+=======
+	public ReservationInfo(int id, int productId, int userId, int generalTicketCount, int youthTicketCount,
+			int childTicketCount, String reservationName, String reservationTel, String reservationEmail,
+			Timestamp reservationDate, int reservationType, Timestamp createDate, Timestamp modifyDate,
+			int totalPrice) {
+		super();
+		this.id = id;
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 		this.productId = productId;
 		this.userId = userId;
 		this.generalTicketCount = generalTicketCount;
@@ -40,10 +61,25 @@ public class ReservationInfo {
 		this.reservationType = reservationType;
 		this.createDate = createDate;
 		this.modifyDate = modifyDate;
+<<<<<<< HEAD
+=======
+		this.totalPrice = totalPrice;
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 	}
 
 
 
+<<<<<<< HEAD
+=======
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 	public int getProductId() {
 		return productId;
 	}
@@ -139,6 +175,7 @@ public class ReservationInfo {
 	public void setModifyDate(Timestamp modifyDate) {
 		this.modifyDate = modifyDate;
 	}
+<<<<<<< HEAD
 
 	@Override
 	public String toString() {
@@ -150,4 +187,25 @@ public class ReservationInfo {
 				+ "\", modifyDate : \"" + modifyDate;
 	}
 
+=======
+	
+	
+
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+
+
+
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE).toString();
+	}
+
+
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 }

@@ -8,7 +8,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.or.reservation.service.CommentService;
+<<<<<<< HEAD
 import kr.or.reservation.service.ImgService;
+=======
+import kr.or.reservation.service.ImgFileService;
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 import kr.or.reservation.service.ProductService;
 import kr.or.reservation.service.ReservationService;
 
@@ -23,10 +27,16 @@ public class ReservationController {
 		this.reservationService = reservationService;
 	}
 
+<<<<<<< HEAD
 	@GetMapping
 	@RequestMapping("/reservation/{id}")
 	public String getProductDetail(Model model, @PathVariable(name = "id") int productId) {
 		model.addAttribute("reservation",reservationService.selectOne(productId));
+=======
+	@GetMapping("/reservation/{id}")
+	public String getProductDetail(Model model, @PathVariable(name = "id") int productId) {
+		model.addAttribute("reservation",reservationService.selectByProductId(productId));
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 		return "reserve";
 	}
 	

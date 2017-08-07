@@ -15,12 +15,15 @@ import kr.or.reservation.service.ReservationInfoService;
 public class ReservationInfoServiceImpl implements ReservationInfoService {
 
 	ReservationInfoDao reservationInfoDao;
+<<<<<<< HEAD
 	UserDao userDao;
 	
 	@Autowired
 	protected void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
+=======
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 
 	@Autowired
 	public void setReservationDao(ReservationInfoDao reservationInfoDao) {
@@ -33,15 +36,30 @@ public class ReservationInfoServiceImpl implements ReservationInfoService {
 		if(reservationInfo == null) {
 			return null;
 		}
+<<<<<<< HEAD
 		int id = userDao.selectId(reservationInfo.getUserId());
 		if(id <0) {
 			return null;
 		}
 		reservationInfo.setUserId(id);
+=======
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 		reservationInfo.setCreateDate(new Timestamp(System.currentTimeMillis()));
 		reservationInfo.setReservationDate(new Timestamp(System.currentTimeMillis()));
 		return reservationInfoDao.insert(reservationInfo);
 	}
+<<<<<<< HEAD
+=======
+	@Override
+	public ReservationInfo selectById(int id) {
+		if(id < 0) {
+			return null;
+		}
+		return reservationInfoDao.selectById(id);
+	}
+	
+
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 
 
 

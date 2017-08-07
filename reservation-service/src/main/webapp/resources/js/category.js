@@ -17,7 +17,7 @@ $('document').ready(function(){
 			getCategory  : function getCategoryAjax(){
 				$.ajax({
 					  method: "GET",
-					  url: "/categorys",
+					  url: "/api/categorys",
 					  contentType: "application/json; charset=utf-8",
 			          dataType: "json",
 				}).then(categoryEvent.success , categoryEvent.fail);

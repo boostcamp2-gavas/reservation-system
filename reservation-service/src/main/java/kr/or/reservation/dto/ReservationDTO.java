@@ -5,6 +5,12 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
+<<<<<<< HEAD
+=======
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 public class ReservationDTO {
 	private static SimpleDateFormat mmddFormat = new SimpleDateFormat("YYYY년 MM월 dd일");
 	
@@ -21,6 +27,10 @@ public class ReservationDTO {
 		// TODO Auto-generated constructor stub
 	}
 	
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 	public int getId() {
 		return id;
 	}
@@ -82,9 +92,13 @@ public class ReservationDTO {
 
 	@Override
 	public String toString() {
+<<<<<<< HEAD
 		return "id : \"" + id + "\", name : \"" + name + "\", salesStart : \"" + salesStart + "\", salesEnd : \""
 				+ salesEnd + "\", observationTime : \"" + observationTime + "\", placeLot : \"" + placeLot
 				+ "\", fileId : \"" + fileId + "\", priceList : \"" + priceList;
+=======
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE).toString();
+>>>>>>> 0d95395487ea32084ee49af481f7933ef7c9a78a
 	}
 
 
