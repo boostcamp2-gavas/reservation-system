@@ -1,4 +1,4 @@
-package com.gavas.controller;
+package com.gavas.controller.view;
 
 
 import org.springframework.stereotype.Controller;

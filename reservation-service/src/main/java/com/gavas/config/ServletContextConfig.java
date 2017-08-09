@@ -41,10 +41,10 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
 //    @Bean
 //    public LoggingHandlerInterceptor loggingHandlerInterceptor() {return new LoggingHandlerInterceptor(); }
 
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-//        argumentResolvers.add(new AuthUserWebArgumentResolver());
-    }
+//    @Override
+//    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+////        argumentResolvers.add(new AuthUserWebArgumentResolver());
+//    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
