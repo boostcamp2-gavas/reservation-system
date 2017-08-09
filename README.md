@@ -1,29 +1,125 @@
-# 예약 서비스 만들기
-이 프로젝트는 기본적인 웹프로그래밍 지식으로 Front-End에서 Back-End까지 전문화된 개발을 한다.
+## Gavas Reservation-System
 
-## 목표
--  Back-End/Front-End 지식을 기반으로 예약 서비스를 구현할 수 있다.
--  Back-End : Spring을 활용하여 API을 추축하여 개발할 수 있다.
--  Front-End : jQuery을 기반으로 요구 사항을 개발할 수 있다.
 
-## Task
-### [학습 스케쥴 시간표](https://docs.google.com/spreadsheets/d/1Lrs7SXr0j2byBHOml5ljEpT2dmEkN6o17ZdtOpurp9E/edit#gid=0)
-- [1.프로젝트 시작전 준비단계](/task/01_프로젝트_시작전_준비단계.md)
-- [2.관리자 : 카테고리 등록/수정/삭제](/task/카테고리등록수정삭제.md)
-- [3.예약 메인페이지](/task/예약메인페이지.md)
-  - [3-1.상단 프로모션 영역](/task/상단_프로모션_영역.md)
-  - [3-2.하단 리스트 영역](/task/하단_리스트_영역.md)
-- [4.개선하기1-FE](/task/개선하기_FE.md)
-- [5.예약 상품 상세 페이지](/task/예약상세페이지.md)
-  - [5-1.상품 타이틀 영역](/task/상품_타이틀_영역.md)
-  - [5-2.예매자 한줄평](/task/예매자_한줄평.md)
-  - [5-3.하단 상세 설명](/task/하단_상세_설명.md)
-- [6.로그인 하기 (네이버 로그인)](/task/네이버로그인.md)
-- [7.사용자 로그인 check](/task/사용자로그인check.md)
-- [8.사용자 예약 등록하기](/task/상품_예약하기.md)
-- [9.나의 예약 메인화면](/task/나의_예약_메인.md)
-- [10.한줄평등록](/task/한줄평_등록.md)
-- [11.전체 리뷰 보기](/task/전체_리뷰_보기.md)
-- 12.개선하기
-  - [12-1.FE](/task/개선하기_FE2.md)
-  - [12-2.BE](/task/개선하기_BE.md)
+#### MainController
+- 1.1 Main Page
+	- API[GET] : "/"
+	- ModelAndView
+		- View : mainpage.jsp
+	- return ModelAndView
+
+#### CategoryController
+- 1.2 Category 목록 (REST API)
+	- API[GET] : "/api/categories"
+	- return Category(Domain)
+
+- 1.3 Category 갯수
+	- API[GET] : "/api/categories/{categoryId}/productscount"
+	- SELECT count(*) FROM category;
+	- return Integer(Category count)
+
+- 1.4 Product 목록
+	- API[GET] : "/api/categories/{categoryId}/product"
+	- return DTO : product, 에 대한 DTO
+
+- 특이사항
+	- Category 갯수를 최초 ajax로 가져온 후 local cache에 저장(javascript)
+	- Proudct 정보를 카테고리별로 10개(처음)를 최초 ajax로 가져온 후 local cache에 저장(javascript)
+
+#### DetailController
+- 2.1 Detail Page
+		- API[GET] : "/details/{productId}"
+		- ModelAndView
+			- Model : productId(Server) -> data-productid="3"(Front)
+			- View : detail.jsp
+		- return ModelAndView
+
+#### ProductController
+- 2.2 Product 정보
+	- API[GET] : "/api/products/{productId}/details"
+	- return DTO : product, 에 대한 DTO
+
+- 2.3 Comment 종합 건수 & 별점
+	- API[GET] : "/api/products/{productId}/---"
+
+- 2.4-1 Comment 정보 (review 페이지와 동일)
+	- API[GET] : "/api/products/{productId}/usercomments?commentid=:commentid&limit=:limit"
+		- usercommentid는 offset을 대신한다.
+		- limit = 3
+	- return DTO : review text + Image 1장 DTO
+
+- 3.2 reserve product 정보
+	- API[GET] : "/api/products/{id}/reservation"
+	- return DTO = {
+		productInfoDto,
+		productPriceDto
+		} 합친 하나의 DTO
+
+- 특이사항
+	- 지도 -> javascript naver map V3 사용
+
+#### UserCommentController
+- 2.4-2 Comment 이미지 정보
+	- API[GET] : "/api/usercomments/{userCommentId}/images"
+
+#### ReserveController
+- 3.1 reserve Page
+	- API[GET] : "/reserve/{productId}"
+	- ModelAndView
+		- Data
+			- productId(Server) -> data-productid="3"(Front)
+			- user 정보 from argumentResolver
+		- View : reserve.jsp
+	- return ModelAndView
+
+#### ReservationController
+- 4.1 myreservation Page
+	- API[GET] : "/reservations"
+	- ModelAndView
+		- Data
+			- userCommentId(Server) -> data-userCommentid="3"(Front)
+		- view : myreservation.jsp
+	- return ModelAndView
+
+
+- 3.3 예매하기
+	- API[POST] : "/api/reservations"
+	- 예매한 후 myreservation 페이지로 이동
+
+- 4.2 나의 예매 내역
+	- API[GET] : "/api/reservations/{userid}"
+	- return Domain : reservation_info
+
+- 4.3 예매 내역 변경
+	- API[PUT] : "/api/reservations"
+	- RequestBody = {
+		reservationId,
+		reservationType
+	}
+
+#### ReviewController
+- 5.1 reviewWrite Page
+	- API[GET] : "/reviewWrite"
+	- ModelAndView
+		- Data : product Name
+		- View : reviewWrite.jsp
+	- return ModelAndView
+
+- 6.1 review Page
+	- API[GET] : "/review"
+	- ModelAndView
+		- Data : productId
+		- view : review.jsp
+	- return ModelAndView
+
+- 5.2 Product Name
+	- No API
+	- Service내에서 Product Name을 ModelAndView로 넣어준다.
+
+- 5.3 review write
+	- API[POST] : "/api/review"
+	- 리뷰작성 후 review 페이지로 이동
+
+- 6.2 리뷰 받아오기
+	- 2.4-1과 2.4-2와 동일한 로직 수행
+		- 2.4-1의 limit값은 10이 된다.
