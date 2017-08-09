@@ -11,10 +11,8 @@
     <title>네이버 예약</title>
     <link href="resources/css/style.css" rel="stylesheet">
 
-  <%--<script type="text/javascript" src="/resources/lib/handlebars.min.js"></script>--%>
-  <%--<script type="text/javascript" src="/resources/lib/jquery.min.js"></script>--%>
-  <%--<script type="text/javascript" src="/resources/lib/require.js"></script>--%>
-  <%--<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>--%>
+    <script type="text/javascript" src="/resources/node_modules/requirejs/require.js"></script>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 
   <script id="entry-template" type="text/x-handlebars-template">
     <li class="item" data-product={{id}}>
@@ -186,8 +184,9 @@
         </div>
     </footer>
 
-    <%--<script type="text/javascript" src = "/resources/js/mainpage.js">--%>
-    <%--</script>--%>
+    <%--<script type="text/javascript" src="/node_modules/requirejs/require.js"></script>--%>
+    <script type="text/javascript" src = "/resources/js/mainpage.js">
+    </script>
 </body>
 
 </html>

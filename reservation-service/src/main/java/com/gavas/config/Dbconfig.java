@@ -15,30 +15,30 @@ import javax.sql.DataSource;
 @PropertySource("classpath:/application.properties")
 @EnableTransactionManagement
 public class Dbconfig {
-//    @Value("${spring.datasource.driver-class-name}")
-//    private String driverClassName;
-//
-//    @Value("${spring.datasource.url}")
-//    private String url;
-//
-//    @Value("${spring.datasource.username}")
-//    private String username;
-//
-//    @Value("${spring.datasource.password}")
-//    private String password;
+    @Value("${spring.datasource.driver-class-name}")
+    private String driverClassName;
 
-//    @Bean
-//    public DataSource dataSource() {
-//        BasicDataSource dataSource = new BasicDataSource();
-//        dataSource.setDriverClassName(driverClassName);
-//        dataSource.setUrl(url);
-//        dataSource.setUsername(username);
-//        dataSource.setPassword(password);
-//        return dataSource;
-//    }
+    @Value("${spring.datasource.url}")
+    private String url;
 
-//    @Bean
-//    public PlatformTransactionManager transactionManger() {
-//        return new DataSourceTransactionManager(dataSource());
-//    }
+    @Value("${spring.datasource.username}")
+    private String username;
+
+    @Value("${spring.datasource.password}")
+    private String password;
+
+    @Bean
+    public DataSource dataSource() {
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName(driverClassName);
+        dataSource.setUrl(url);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
+        return dataSource;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManger() {
+        return new DataSourceTransactionManager(dataSource());
+    }
 }

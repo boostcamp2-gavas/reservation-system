@@ -1,37 +1,38 @@
-/**
- * Created by ODOL on 2017. 7. 10..
- */
-(function (window) {
-	var taet = "teasdasd";
-})(window);
+requirejs.config({
+    baseUrl: '/resources'
+});
 
-var commonFunctions = {
+requirejs.config({
 
-    bindEventOnClick: function ($wrapperDom, $targetDom, func) {
-        $($wrapperDom).on('click', $target, func);
-    },
-    ajaxReturn: function (uri, method, data) {
-        return $.ajax({
-            url: uri,
-            method: method,
-            data: data
-        })
+    paths: {
+        jquery: '/resources/node_modules/jquery/dist/jquery',
+        handlebars: '/resources/node_modules/handlebars/dist/handlebars.amd',
+        component: '/resources/node_modules/@egjs/component/dist/component'
     }
+});
 
-}
+requirejs(['jquery','js/list','js/slider'], function( $, List, Slider) {
+
+	var slider;
+
+	function init(){
+		List.init();
+		slider = new Slider(".group_visual",{
+			max : 3
+		});
+		eventBind();
+	}
+
+	function eventBind(){
+		slider.on("change",change);
+	};
+
+	function change(e){
+		var categoryID = e.index;
+		List.active($("[data-category='"+categoryID+"'] a"));
+	}
 
 
-var headDivFunctions = {
+	init();
 
-    init: function() {
-        var $logo = $(".logo");
-        var $event = $(".event");
-    }
-}
-
-var sectionEvent = {
-    init: function() {
-        var $event = $(".event");
-
-    }
-}
+});

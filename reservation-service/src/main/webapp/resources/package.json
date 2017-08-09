@@ -1,0 +1,21 @@
+{
+  "name": "reservation-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@egjs/component": "^2.0.0",
+    "gulp": "^3.9.1",
+    "gulp-if": "^2.0.2",
+    "handlebars": "^4.0.10",
+    "jquery": "^3.2.1",
+    "moment": "^2.18.1",
+    "require": "^2.4.20",
+    "requirejs": "^2.3.4"
+  }
+}
