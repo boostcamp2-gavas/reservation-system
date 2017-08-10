@@ -4,6 +4,7 @@ import com.gavas.dao.FileDao;
 import com.gavas.dao.ProductDao;
 import com.gavas.domain.dto.ProductDetailsDto;
 import com.gavas.domain.dto.ProductDto;
+import com.gavas.service.CategoryService;
 import com.gavas.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
+    private CategoryService categoryService;
+    @Autowired
     private ProductDao productDao;
     @Autowired
     private FileDao fileDao;
@@ -21,7 +24,10 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     @Override
     public Long getProductCountByCategoryId(Long categoryId) {
-        return productDao.selectProductCountByCategoryId(categoryId);
+        if (categoryService.findCategoryById(categoryId) != null) {
+            return productDao.selectProductCountByCategoryId(categoryId);
+        }
+        return 0L;
     }
 
     @Transactional(readOnly = true)

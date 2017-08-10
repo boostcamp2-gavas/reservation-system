@@ -7,6 +7,8 @@ import com.gavas.domain.dto.TotalCommentStatusDto;
 import com.gavas.domain.dto.UserCommentDto;
 import com.gavas.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +24,17 @@ public class ProductRestController {
     private ProductService productService;
 
     @GetMapping("/{productId}/details")
-    public ProductDetailsDto getDetailsByProductId(@PathVariable Long productId) {
-        return productService.getProductDetailsByProductId(productId);
+    public ResponseEntity<ProductDetailsDto> getDetailsByProductId(@PathVariable Long productId) {
+        ProductDetailsDto productDetailsByProductId = productService.getProductDetailsByProductId(productId);
+        return new ResponseEntity<>(productDetailsByProductId, HttpStatus.OK);
     }
+
+
+
+//    @GetMapping("/{productId}/details")
+//    public ProductDetailsDto getDetailsByProductId(@PathVariable Long productId) {
+//        return productService.getProductDetailsByProductId(productId);
+//    }
 
     @GetMapping("/{productId}/commentsstatus")
     public TotalCommentStatusDto getTotalCommentStatus(@PathVariable Long productId) {

@@ -31,7 +31,9 @@ public class ProductDao {
     public Long selectProductCountByCategoryId(Long categoryId){
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("categoryId",categoryId);
-        return jdbc.queryForObject(ProductSqls.SELECT_PRODUCT_COUNT,paramMap,Long.class);
+
+        Long l = jdbc.queryForObject(ProductSqls.SELECT_PRODUCT_COUNT, paramMap, Long.class);
+        return l;
     }
 
     public List<ProductDto> selectProductListByCategoryId(Long categoryId){

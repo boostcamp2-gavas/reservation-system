@@ -1,14 +1,15 @@
 package com.gavas.controller.rest;
 
 import com.gavas.domain.Category;
+import com.gavas.domain.dto.ErrorResponseDto;
 import com.gavas.domain.dto.ProductDto;
+import com.gavas.exception.InvalidCategoryIdException;
 import com.gavas.service.CategoryService;
 import com.gavas.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,7 +29,6 @@ public class CategoryRestController {
 
     @GetMapping("/{categoryId}/productscount")
     public Long getCategoryCount(@PathVariable Long categoryId){
-
         return productService.getProductCountByCategoryId(categoryId);
     }
 
@@ -36,5 +36,11 @@ public class CategoryRestController {
     public List<ProductDto> getProductListByCategoryId(@PathVariable Long categoryId){
 
         return productService.getProductListByCategoryId(categoryId);
+    }
+
+    @ExceptionHandler(InvalidCategoryIdException.class)
+    public ResponseEntity<ErrorResponseDto> handleInvalidCategoryIdException(InvalidCategoryIdException exception) {
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto("test", exception.getMessage());
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
     }
 }
