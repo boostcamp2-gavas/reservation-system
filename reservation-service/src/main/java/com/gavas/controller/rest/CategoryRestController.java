@@ -3,7 +3,7 @@ package com.gavas.controller.rest;
 import com.gavas.domain.Category;
 import com.gavas.domain.dto.ErrorResponseDto;
 import com.gavas.domain.dto.ProductDto;
-import com.gavas.exception.InvalidCategoryIdException;
+import com.gavas.exception.EmptyQueryResultException;
 import com.gavas.service.CategoryService;
 import com.gavas.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +38,9 @@ public class CategoryRestController {
         return productService.getProductListByCategoryId(categoryId);
     }
 
-    @ExceptionHandler(InvalidCategoryIdException.class)
-    public ResponseEntity<ErrorResponseDto> handleInvalidCategoryIdException(InvalidCategoryIdException exception) {
-        ErrorResponseDto errorResponseDto = new ErrorResponseDto("test", exception.getMessage());
+    @ExceptionHandler(EmptyQueryResultException.class)
+    public ResponseEntity<ErrorResponseDto> handleInvalidCategoryIdException(EmptyQueryResultException exception) {
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto("400", exception.getMessage());
         return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
     }
 }

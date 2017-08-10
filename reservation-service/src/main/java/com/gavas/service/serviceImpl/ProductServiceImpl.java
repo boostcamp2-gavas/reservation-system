@@ -23,6 +23,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional(readOnly = true)
     @Override
+    public Long findProductById(Long productId) {
+        return productDao.findProudctId(productId);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
     public Long getProductCountByCategoryId(Long categoryId) {
         if (categoryService.findCategoryById(categoryId) != null) {
             return productDao.selectProductCountByCategoryId(categoryId);
@@ -33,13 +39,19 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     @Override
     public List<ProductDto> getProductListByCategoryId(Long categoryId) {
-        return productDao.selectProductListByCategoryId(categoryId);
+        if (categoryService.findCategoryById(categoryId) != null) {
+            return productDao.selectProductListByCategoryId(categoryId);
+        }
+        return null;
     }
 
     @Override
     public ProductDetailsDto getProductDetailsByProductId(Long productId) {
-        ProductDetailsDto productDetailsDto = productDao.selectProductDetailsByProductId(productId);
-        productDetailsDto.setFileIdList(fileDao.selectFileIdsByProductId(productId));
-        return productDetailsDto;
+        if (findProductById(productId) != null) {
+            ProductDetailsDto productDetailsDto = productDao.selectProductDetailsByProductId(productId);
+            productDetailsDto.setFileIdList(fileDao.selectFileIdsByProductId(productId));
+            return productDetailsDto;
+        }
+        return null;
     }
 }

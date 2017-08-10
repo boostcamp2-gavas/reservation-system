@@ -1,5 +1,7 @@
 package com.gavas.dao;
 
+import com.gavas.exception.EmptyQueryResultException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -21,6 +23,10 @@ public class FileDao {
     public List<Long> selectFileIdsByProductId(Long productId) {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("productId", productId);
-        return jdbc.queryForList(SELECT_FILE_ID_BY_PRODUCT_ID, paramMap, Long.class);
+        try {
+            return jdbc.queryForList(SELECT_FILE_ID_BY_PRODUCT_ID, paramMap, Long.class);
+        } catch (EmptyResultDataAccessException exception){
+            throw new EmptyQueryResultException("File Id");
+        }
     }
 }

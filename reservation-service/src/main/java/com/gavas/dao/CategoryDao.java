@@ -1,9 +1,7 @@
 package com.gavas.dao;
 
-import com.gavas.dao.sqls.CategorySqls;
 import com.gavas.domain.Category;
-import com.gavas.domain.dto.ProductDto;
-import com.gavas.exception.InvalidCategoryIdException;
+import com.gavas.exception.EmptyQueryResultException;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -39,7 +37,7 @@ public class CategoryDao {
         try {
             return jdbc.queryForObject(SELECT_CATEGORY_BY_ID, paramMap, Category.class);
         } catch (EmptyResultDataAccessException exception) {
-            throw new InvalidCategoryIdException("해당 categoryId는 존재하지 않습니다.");
+            throw new EmptyQueryResultException("Category Id");
         }
     }
 }

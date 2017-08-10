@@ -15,6 +15,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryDao categoryDao;
 
+    @Transactional(readOnly = true)
     @Override
     public Category findCategoryById(Long categoryId) {
         return categoryDao.findCategoryById(categoryId);
