@@ -1,9 +1,12 @@
 package com.gavas.controller.view;
 
 
+import com.gavas.arguementresolver.AuthUser;
 import com.gavas.domain.User;
 import com.gavas.service.LoginService;
 import com.gavas.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -21,6 +24,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/")
 public class MainController {
+    private static Logger logger = LoggerFactory.getLogger(MainController.class);
     @Autowired
     private LoginService loginService;
     @Autowired
@@ -32,7 +36,8 @@ public class MainController {
     private String callbackUrl;
 
     @GetMapping("reservations")
-    public ModelAndView temp() {
+    public ModelAndView temp(@AuthUser User user) {
+        logger.info(user.toString());
         return new ModelAndView("mainpage");
     }
 

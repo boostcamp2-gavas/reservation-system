@@ -1,5 +1,6 @@
 package com.gavas.config;
 
+import com.gavas.arguementresolver.AuthUserWebArgumentResolver;
 import com.gavas.interceptor.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,10 +38,10 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
         return viewResolver;
     }
 
-//    @Override
-//    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-////        argumentResolvers.add(new AuthUserWebArgumentResolver());
-//    }
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(new AuthUserWebArgumentResolver());
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
