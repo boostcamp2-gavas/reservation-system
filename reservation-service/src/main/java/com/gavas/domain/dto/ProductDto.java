@@ -15,11 +15,5 @@ public class ProductDto {
     private String name;
     private String description;
     private String placeName;
-    private String salesStart;
-    private String salesEnd;
-    private Long salesFlag;
-    private String event;
-    private Date createDate;
-    private Date modifyDate;
     private Long fileId;
 }

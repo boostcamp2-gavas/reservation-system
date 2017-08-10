@@ -1,9 +1,5 @@
 requirejs.config({
-    baseUrl: '/resources'
-});
-
-requirejs.config({
-
+    baseUrl: '/resources',
     paths: {
         jquery: '/resources/node_modules/jquery/dist/jquery',
         handlebars: '/resources/node_modules/handlebars/dist/handlebars.amd',
