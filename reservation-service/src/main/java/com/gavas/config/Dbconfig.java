@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 @Configuration
 @PropertySource("classpath:/application.properties")
 @EnableTransactionManagement
-public class Dbconfig {
+public class DbConfig {
     @Value("${spring.datasource.driver-class-name}")
     private String driverClassName;
 

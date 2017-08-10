@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Import;
         "com.gavas.interceptor"
 })
 
-@Import({Dbconfig.class})
+@Import({DbConfig.class})
 public class RootApplicationContextConfig {
 
 }
