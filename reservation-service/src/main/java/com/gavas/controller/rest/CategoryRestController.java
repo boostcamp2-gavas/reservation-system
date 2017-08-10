@@ -22,20 +22,19 @@ public class CategoryRestController {
     private ProductService productService;
 
     @GetMapping
-    public List<Category> getCategoryList(){
+    public ResponseEntity<List<Category>> getCategoryList() {
 
-        return categoryService.getCategoryList();
+        return new ResponseEntity<>(categoryService.getCategoryList(), HttpStatus.OK);
     }
 
     @GetMapping("/{categoryId}/productscount")
-    public Long getCategoryCount(@PathVariable Long categoryId){
-        return productService.getProductCountByCategoryId(categoryId);
+    public ResponseEntity<Long> getCategoryCount(@PathVariable Long categoryId) {
+        return new ResponseEntity<>(productService.getProductCountByCategoryId(categoryId), HttpStatus.OK);
     }
 
     @GetMapping("/{categoryId}/product")
-    public List<ProductDto> getProductListByCategoryId(@PathVariable Long categoryId){
-
-        return productService.getProductListByCategoryId(categoryId);
+    public ResponseEntity<List<ProductDto>> getProductListByCategoryId(@PathVariable Long categoryId) {
+        return new ResponseEntity<>(productService.getProductListByCategoryId(categoryId), HttpStatus.OK);
     }
 
     @ExceptionHandler(EmptyQueryResultException.class)

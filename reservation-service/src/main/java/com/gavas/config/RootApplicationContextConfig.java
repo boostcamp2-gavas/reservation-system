@@ -9,11 +9,10 @@ import org.springframework.context.annotation.Import;
 @ComponentScan(basePackages = {
         "com.gavas.dao",
         "com.gavas.service",
-        "com.gavas.domain",
-        "com.gavas.interceptor"
+        "com.gavas.domain"
 })
 
-@Import({Dbconfig.class})
+@Import({DbConfig.class})
 public class RootApplicationContextConfig {
 
 }

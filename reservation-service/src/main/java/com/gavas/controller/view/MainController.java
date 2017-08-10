@@ -43,13 +43,11 @@ public class MainController {
 
     @GetMapping
     public ModelAndView mainPage() {
-
         return new ModelAndView("mainpage");
     }
 
     @GetMapping("login")
-    public ModelAndView goNlogin(HttpServletRequest request) {
-
+    public ModelAndView login(HttpServletRequest request) {
         String state = loginService.generateState();
         HttpSession session = request.getSession();
         String naverLoginUrl = "https://nid.naver.com/oauth2.0/authorize?client_id=" + clientId + "&response_type=code&redirect_uri=http";
@@ -67,7 +65,7 @@ public class MainController {
     }
 
     @GetMapping("callback")
-    public ModelAndView callback(HttpServletRequest request) {
+    public ModelAndView loginCallback(HttpServletRequest request) {
 
         String state = request.getParameter("state");
         String code = request.getParameter("code");
@@ -106,7 +104,7 @@ public class MainController {
 
         HttpSession session = request.getSession();
 
-        session.removeAttribute("user");
+        session.removeAttribute("USER");
 
         return new ModelAndView("mainpage");
     }

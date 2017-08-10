@@ -1,7 +1,5 @@
 package com.gavas.dao;
 
-import com.gavas.dao.sqls.UserCommentSqls;
-import com.gavas.domain.Category;
 import com.gavas.domain.dto.TotalCommentStatusDto;
 import com.gavas.domain.dto.UserCommentDto;
 import com.gavas.exception.EmptyQueryResultException;
@@ -16,9 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.gavas.dao.sqls.UserCommentSqls.SELECT_FILE_ID_BY_USER_COMMENT_ID;
-import static com.gavas.dao.sqls.UserCommentSqls.SELECT_USER_COMMENTS_BY_PRODUCT_ID;
-import static com.gavas.dao.sqls.UserCommentSqls.SELECT_USER_COMMENT_ID_BY_ID;
+import static com.gavas.dao.sqls.UserCommentSqls.*;
 
 @Repository
 public class UserCommentDao {
@@ -44,7 +40,7 @@ public class UserCommentDao {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("productId", productId);
         try {
-            return jdbc.queryForObject(UserCommentSqls.SELECT_TOTAL_COMMENTS_STATUS_BY_PRODUCT_ID, paramMap, totalCommentStatusDtoRowMapper);
+            return jdbc.queryForObject(SELECT_TOTAL_COMMENTS_STATUS_BY_PRODUCT_ID, paramMap, totalCommentStatusDtoRowMapper);
         } catch (EmptyResultDataAccessException exception) {
             throw new EmptyQueryResultException("Product Comment Total Score");
         }
