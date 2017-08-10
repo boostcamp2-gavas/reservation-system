@@ -30,12 +30,12 @@ public class UserCommentDao {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    public Long findUserCommentId(Long userCommentId){
+    public Long findUserCommentId(Long userCommentId) {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("userCommentId", userCommentId);
-        try{
-            return jdbc.queryForObject(SELECT_USER_COMMENT_ID_BY_ID,paramMap,Long.class);
-        } catch (EmptyResultDataAccessException exception){
+        try {
+            return jdbc.queryForObject(SELECT_USER_COMMENT_ID_BY_ID, paramMap, Long.class);
+        } catch (EmptyResultDataAccessException exception) {
             throw new EmptyQueryResultException("userCommentId");
         }
     }
@@ -50,26 +50,26 @@ public class UserCommentDao {
         }
     }
 
-    public List<UserCommentDto> selectUserCommentByProductId(Long productId, Long commentId, Integer limit){
+    public List<UserCommentDto> selectUserCommentByProductId(Long productId, Long commentId, Integer limit) {
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("productId",productId);
-        paramMap.put("commentId",commentId);
-        paramMap.put("limit",limit);
-        List<UserCommentDto> userCommentDtoList = jdbc.query(SELECT_USER_COMMENTS_BY_PRODUCT_ID,paramMap,UserCommentDtoRowMapper);
-        if (userCommentDtoList.isEmpty()){
-            throw new EmptyQueryResultException(productId+"번 Product의 UserComment");
-        } else{
+        paramMap.put("productId", productId);
+        paramMap.put("commentId", commentId);
+        paramMap.put("limit", limit);
+        List<UserCommentDto> userCommentDtoList = jdbc.query(SELECT_USER_COMMENTS_BY_PRODUCT_ID, paramMap, UserCommentDtoRowMapper);
+        if (userCommentDtoList.isEmpty()) {
+            throw new EmptyQueryResultException(productId + "번 Product의 UserComment");
+        } else {
             return userCommentDtoList;
         }
     }
 
-    public List<Long> selectFileIdByUserCommentId(Long userCommentId){
+    public List<Long> selectFileIdByUserCommentId(Long userCommentId) {
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("userCommentId",userCommentId);
+        paramMap.put("userCommentId", userCommentId);
         List<Long> fileIdList = jdbc.queryForList(SELECT_FILE_ID_BY_USER_COMMENT_ID, paramMap, Long.class);
-        if (fileIdList.isEmpty()){
-            throw new EmptyQueryResultException(userCommentId+"번 Product의 UserComment");
-        } else{
+        if (fileIdList.isEmpty()) {
+            throw new EmptyQueryResultException(userCommentId + "번 Product의 UserComment");
+        } else {
             return fileIdList;
         }
     }

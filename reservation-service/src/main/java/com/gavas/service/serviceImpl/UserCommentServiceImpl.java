@@ -21,7 +21,7 @@ public class UserCommentServiceImpl implements UserCommentService {
 
     @Transactional(readOnly = true)
     @Override
-    public Long findUserCommentId(Long userCommentId){
+    public Long findUserCommentId(Long userCommentId) {
         return userCommentDao.findUserCommentId(userCommentId);
     }
 
@@ -35,29 +35,29 @@ public class UserCommentServiceImpl implements UserCommentService {
         return null;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<UserCommentDto> getUserCommentDtoByProductId(Long productId, Long commentId, Integer limit) {
-        if(productService.findProductById(productId) != null){
-            List<UserCommentDto> userCommentDtoList = userCommentDao.selectUserCommentByProductId(productId,commentId,limit);
+        if (productService.findProductById(productId) != null) {
+            List<UserCommentDto> userCommentDtoList = userCommentDao.selectUserCommentByProductId(productId, commentId, limit);
             userCommentDtoList.forEach(dto -> dto.setNickName(blockUsername(dto.getNickName())));
             return userCommentDtoList;
         }
-
         return null;
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public List<Long> getFileIdByUserCommentId(Long userCommentId){
-        if(findUserCommentId(userCommentId) != null){
+    public List<Long> getFileIdByUserCommentId(Long userCommentId) {
+        if (findUserCommentId(userCommentId) != null) {
             return userCommentDao.selectFileIdByUserCommentId(userCommentId);
         }
-
         return null;
     }
 
     private String blockUsername(String username) {
         StringBuilder stringBuilder = new StringBuilder(username);
-        stringBuilder.replace(stringBuilder.length()/2+1, stringBuilder.length(), "***");
+        stringBuilder.replace(stringBuilder.length() / 2 + 1, stringBuilder.length(), "***");
         return stringBuilder.toString();
     }
 }

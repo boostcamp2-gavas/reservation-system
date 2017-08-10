@@ -2,9 +2,13 @@ package com.gavas.dao.sqls;
 
 public class ProductSqls {
 
-    public static final String SELECT_PRODUCT_ID_BY_ID = "SELECT id FROM product WHERE id = :productId";
-    public static final String SELECT_PRODUCT_COUNT = "SELECT count(*) FROM product WHERE category_id = :categoryId";
-    public static final String SELECT_PRODUCT_LIST_BY_CATGORYID =
+    public static final String SELECT_PRODUCT_ID_BY_ID =
+            "SELECT id FROM product WHERE id = :productId";
+
+    public static final String SELECT_PRODUCT_COUNT =
+            "SELECT count(*) FROM product WHERE category_id = :categoryId";
+
+    public static final String SELECT_PRODUCT_LIST_BY_CATEGORY_ID =
             "SELECT P.id, P.category_id, P.name, P.description, DI.place_name, PI.file_id" +
             " FROM product AS P" +
             " JOIN display_info AS DI ON P.id=DI.product_id " +

@@ -45,6 +45,7 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public ProductDetailsDto getProductDetailsByProductId(Long productId) {
         if (findProductById(productId) != null) {

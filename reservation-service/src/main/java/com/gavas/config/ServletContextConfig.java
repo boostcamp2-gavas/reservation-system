@@ -1,5 +1,7 @@
 package com.gavas.config;
 
+import com.gavas.interceptor.LoginInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,6 +24,7 @@ import java.util.List;
 @ComponentScan(basePackages = {"com.gavas.controller"})
 @PropertySource("classpath:/application.properties")
 public class ServletContextConfig extends WebMvcConfigurerAdapter {
+
 //    @Value("${spring.resources.file-size}")
 //    private long fileSize;
 
@@ -34,13 +37,6 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
         return viewResolver;
     }
 
-//    @Bean
-//    public SessionInterceptor sessionInterceptor() {
-//        return new SessionInterceptor();
-//    }
-//    @Bean
-//    public LoggingHandlerInterceptor loggingHandlerInterceptor() {return new LoggingHandlerInterceptor(); }
-
 //    @Override
 //    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
 ////        argumentResolvers.add(new AuthUserWebArgumentResolver());
@@ -48,9 +44,7 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // TODO Auto-generated method stub
-//        registry.addInterceptor(sessionInterceptor()).addPathPatterns("/myreservation").addPathPatterns("/reserve/*");
-//        registry.addInterceptor(loggingHandlerInterceptor()).addPathPatterns("/*");
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/reservations").addPathPatterns("/reserve/*");
         super.addInterceptors(registry);
     }
 

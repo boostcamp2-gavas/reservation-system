@@ -25,7 +25,7 @@ public class FileDao {
         paramMap.put("productId", productId);
         try {
             return jdbc.queryForList(SELECT_FILE_ID_BY_PRODUCT_ID, paramMap, Long.class);
-        } catch (EmptyResultDataAccessException exception){
+        } catch (EmptyResultDataAccessException exception) {
             throw new EmptyQueryResultException("File Id");
         }
     }
