@@ -41,7 +41,7 @@ public class ProductRestController {
     }
 
     @GetMapping("/{productId}/reservations")
-    public List<ProductPriceInfoDto> getProductPriceInfo(@PathVariable Long productId) {
+    public ResponseEntity<List<ProductPriceInfoDto>> getProductPriceInfo(@PathVariable Long productId) {
         return null;
     }
 
