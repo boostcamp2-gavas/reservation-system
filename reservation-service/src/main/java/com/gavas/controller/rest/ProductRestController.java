@@ -35,8 +35,9 @@ public class ProductRestController {
     }
 
     @GetMapping("/{productId}/usercommnets")
-    public List<UserCommentDto> getUserCommnetList(@PathVariable Long productId) {
-        return null;
+    public ResponseEntity<List<UserCommentDto>> getUserCommnetList(@PathVariable Long productId, @RequestParam("commentid") Long commentId, @RequestParam("limit") Integer limit) {
+        List<UserCommentDto> userCommentDtoList = userCommentService.getUserCommentDtoByProductId(productId,commentId,limit);
+        return new ResponseEntity<>(userCommentDtoList,HttpStatus.OK);
     }
 
     @GetMapping("/{productId}/reservations")
@@ -45,9 +46,8 @@ public class ProductRestController {
     }
 
     @ExceptionHandler(EmptyQueryResultException.class)
-    public ResponseEntity<ErrorResponseDto> handleInvalidCategoryIdException(EmptyQueryResultException exception) {
+    public ResponseEntity<ErrorResponseDto> handleInvalidException(EmptyQueryResultException exception) {
         ErrorResponseDto errorResponseDto = new ErrorResponseDto("400", exception.getMessage());
         return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
     }
-
 }
