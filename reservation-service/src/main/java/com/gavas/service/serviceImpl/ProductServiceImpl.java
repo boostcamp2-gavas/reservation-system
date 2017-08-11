@@ -38,9 +38,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<ProductDto> getProductListByCategoryId(Long categoryId) {
-        if (categoryService.findCategoryById(categoryId) != null) {
-            return productDao.selectProductListByCategoryId(categoryId);
+    public List<ProductDto> getProductListByCategoryId(Long categoryId, Long offsetId) {
+        if(categoryId == 0){
+            return productDao.selectProductList();
+        } else if (categoryService.findCategoryById(categoryId) != null) {
+            return productDao.selectProductListByCategoryId(categoryId, offsetId);
         }
         return null;
     }

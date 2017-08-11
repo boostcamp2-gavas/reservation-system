@@ -32,9 +32,9 @@ public class CategoryRestController {
         return new ResponseEntity<>(productService.getProductCountByCategoryId(categoryId), HttpStatus.OK);
     }
 
-    @GetMapping("/{categoryId}/product")
-    public ResponseEntity<List<ProductDto>> getProductListByCategoryId(@PathVariable Long categoryId) {
-        return new ResponseEntity<>(productService.getProductListByCategoryId(categoryId), HttpStatus.OK);
+    @GetMapping("/{categoryId}/products")
+    public ResponseEntity<List<ProductDto>> getProductListByCategoryId(@PathVariable Long categoryId, @RequestParam("offsetId") Long offsetId) {
+        return new ResponseEntity<>(productService.getProductListByCategoryId(categoryId,offsetId), HttpStatus.OK);
     }
 
     @ExceptionHandler(EmptyQueryResultException.class)

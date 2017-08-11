@@ -92,6 +92,7 @@ public class MainController {
                 Long id = userService.addUser(userProfile);
                 userProfile.setId(id);
             }
+
             session.setAttribute("USER", userProfile);
 
             return new ModelAndView("redirect:" + url);

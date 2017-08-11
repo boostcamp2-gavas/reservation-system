@@ -1,6 +1,5 @@
 package com.gavas.dao;
 
-import com.gavas.dao.sqls.ProductSqls;
 import com.gavas.domain.dto.ProductDetailsDto;
 import com.gavas.domain.dto.ProductDto;
 import com.gavas.exception.EmptyQueryResultException;
@@ -41,6 +40,14 @@ public class ProductDao {
         }
     }
 
+    public List<ProductDto> selectProductList(){
+        try {
+            return jdbc.query(SELECT_PRODUCT_LIST,productDtoRowMapper);
+        } catch (EmptyResultDataAccessException exception){
+            throw new EmptyQueryResultException("전체 Product");
+        }
+    }
+
     public Long selectProductCountByCategoryId(Long categoryId) {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("categoryId", categoryId);
@@ -52,9 +59,10 @@ public class ProductDao {
         }
     }
 
-    public List<ProductDto> selectProductListByCategoryId(Long categoryId) {
+    public List<ProductDto> selectProductListByCategoryId(Long categoryId, Long offsetId) {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("categoryId", categoryId);
+        paramMap.put("offsetId", offsetId);
         try {
             return jdbc.query(SELECT_PRODUCT_LIST_BY_CATEGORY_ID, paramMap, productDtoRowMapper);
         } catch (EmptyResultDataAccessException exception) {

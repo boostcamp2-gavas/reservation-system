@@ -2,6 +2,9 @@ package com.gavas.dao;
 
 import com.gavas.domain.Category;
 import com.gavas.exception.EmptyQueryResultException;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -31,11 +34,11 @@ public class CategoryDao {
         return jdbc.query(SELECT_CATEGORY_LIST, rowMapper);
     }
 
-    public Category findCategoryById(Long id) {
+    public Category findCategoryById(Long categoryId) {
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("id", id);
+        paramMap.put("id", categoryId);
         try {
-            return jdbc.queryForObject(SELECT_CATEGORY_BY_ID, paramMap, Category.class);
+            return jdbc.queryForObject(SELECT_CATEGORY_BY_ID, paramMap, rowMapper);
         } catch (EmptyResultDataAccessException exception) {
             throw new EmptyQueryResultException("Category Id");
         }

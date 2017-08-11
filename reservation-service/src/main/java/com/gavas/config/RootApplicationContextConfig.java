@@ -11,8 +11,6 @@ import org.springframework.context.annotation.Import;
         "com.gavas.service",
         "com.gavas.domain"
 })
-
 @Import({DbConfig.class})
 public class RootApplicationContextConfig {
-
 }
