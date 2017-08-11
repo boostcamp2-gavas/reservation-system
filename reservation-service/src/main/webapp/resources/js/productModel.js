@@ -1,34 +1,42 @@
 var ProductModel = (function(){
     var productCashedData = {};
+    var offsetCashedData = {};
     var categoryId;
+    var changeEvent = 0;
     var offset;
 
-    function getProduct(flag,fp){
+    function getProduct(fp){
         var url = '/api/categories/'+categoryId+'/products?offsetId=';
-        if(productCashedData[url] != null && productCashedData[url].offset === 0){
+
+        if(productCashedData[url] != null && changeEvent ===1){
             fp(productCashedData[url]);
-            productCashedData[url].offset = data[data.length-1].id;
+            changeEvent = 0;
         } else {
-            offset = productCashedData[url].offset || 0;
+            offset = offsetCashedData[url] || 0;
+            changeEvent = 0;
 
             $.ajax(url+offset).then(function(data){
                 fp(data);
-                if(productCashedData[url].offset === 0) {
-                    productCashedData[url].data = data;
+                if(offset === 0) {
+                    productCashedData[url] = data;
                 }
-                productCashedData[url].offset = data[data.length-1].id;
+                offsetCashedData[url] = data[data.length-1].id;
             })
         }
     }
 
-    function setCategoryId(catId, offId){
+    function setCategoryId(id){
         categoryId = id;
-        offId = offId;
+    }
+
+    function setChangeEventVal(val){
+        changeEvent = val;
     }
 
     return {
         getProduct : getProduct,
-        setCategoryId : setCategoryId
+        setCategoryId : setCategoryId,
+        setChangeEventVal : setChangeEventVal
     }
 
 })();

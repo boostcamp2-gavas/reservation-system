@@ -40,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDto> getProductListByCategoryId(Long categoryId, Long offsetId) {
         if(categoryId == 0){
-            return productDao.selectProductList();
+            return productDao.selectProductList(offsetId);
         } else if (categoryService.findCategoryById(categoryId) != null) {
             return productDao.selectProductListByCategoryId(categoryId, offsetId);
         }

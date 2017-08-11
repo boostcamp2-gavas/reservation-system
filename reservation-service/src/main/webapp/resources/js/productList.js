@@ -12,11 +12,11 @@ var ProductListModule = (function (){
         getCategoryList();
 
         ProductModel.setCategoryId(activeAnchorIndex);
-        ProductModel.getProduct("init",function(data){
+        ProductModel.getProduct(function(data){
             addProductList('html',data);
         });
 
-        // bindScrollUpdateProduct();
+        bindScrollUpdateProduct();
     }
 
     function bindTabElement(ele){
@@ -25,7 +25,8 @@ var ProductListModule = (function (){
         activeAnchorIndex = $(ele.currentTarget).data("category");
 
         ProductModel.setCategoryId(activeAnchorIndex);
-        ProductModel.getProduct("change",function(data){
+        ProductModel.setChangeEventVal(1);
+        ProductModel.getProduct(function(data){
             addProductList('html',data);
         });
     }
@@ -33,7 +34,7 @@ var ProductListModule = (function (){
     function bindScrollUpdateProduct(){
         $(window).scroll(function(){
             if ($(window).scrollTop() === $(document).height() - $(window).height()) {
-                ProductModel.getProduct("update",function(data){
+                ProductModel.getProduct(function(data){
                     addProductList('append',data);
                 });
 

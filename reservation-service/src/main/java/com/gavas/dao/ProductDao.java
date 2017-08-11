@@ -40,9 +40,11 @@ public class ProductDao {
         }
     }
 
-    public List<ProductDto> selectProductList(){
+    public List<ProductDto> selectProductList(Long offsetId){
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("offsetId", offsetId);
         try {
-            return jdbc.query(SELECT_PRODUCT_LIST,productDtoRowMapper);
+            return jdbc.query(SELECT_PRODUCT_LIST,paramMap,productDtoRowMapper);
         } catch (EmptyResultDataAccessException exception){
             throw new EmptyQueryResultException("전체 Product");
         }

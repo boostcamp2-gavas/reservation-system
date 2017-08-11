@@ -5,7 +5,7 @@ public class ProductSqls {
             "SELECT P.id, P.category_id, P.name, P.description, DI.place_name, PI.file_id" +
             " FROM product AS P" +
             " JOIN display_info AS DI ON P.id=DI.product_id " +
-            " JOIN product_image AS PI ON P.id = PI.product_id AND PI.type = 2 LIMIT 10";
+            " JOIN product_image AS PI ON P.id = PI.product_id AND PI.type = 2 WHERE P.id > :offsetId LIMIT 10";
 
     public static final String SELECT_PRODUCT_ID_BY_ID =
             "SELECT id FROM product WHERE id = :productId";
