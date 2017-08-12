@@ -25,7 +25,7 @@ var ProductListModule = (function (){
         activeAnchorIndex = $(ele.currentTarget).data("category");
 
         ProductModel.setCategoryId(activeAnchorIndex);
-        ProductModel.setChangeEventVal(1);
+        ProductModel.toggleChangeEventVal();
         ProductModel.getProduct(function(data){
             addProductList('html',data);
         });
@@ -37,7 +37,6 @@ var ProductListModule = (function (){
                 ProductModel.getProduct(function(data){
                     addProductList('append',data);
                 });
-
             }
         });
     }
@@ -57,7 +56,6 @@ var ProductListModule = (function (){
     function addProductList(type,data){
         var left = [];
         var right = [];
-
         data.forEach(function (item, i) {
             if (i % 2 === 0) {
                 left.push(item);
@@ -65,7 +63,6 @@ var ProductListModule = (function (){
                 right.push(item);
             }
         })
-
         $('.lst_event_box.left_box')[type](productTemplate({'data': left}));
         $('.lst_event_box.right_box')[type](productTemplate({'data': right}));
     }

@@ -39,14 +39,14 @@ var ProductModel = (function(){
         categoryId = id;
     }
 
-    function setChangeEventVal(val){
-        changeEvent = val;
+    function toggleChangeEventVal(){
+        changeEvent === 0 ? changeEvent = 1 : changeEvent = 0;
     }
 
     return {
         getProduct : getProduct,
         setCategoryId : setCategoryId,
-        setChangeEventVal : setChangeEventVal
+        toggleChangeEventVal : toggleChangeEventVal
     }
 
 })();

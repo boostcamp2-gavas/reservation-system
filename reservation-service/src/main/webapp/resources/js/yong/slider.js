@@ -1,8 +1,6 @@
 
 
 define(['jquery','component','js/util'], function( $, Component, util) {
-
-
 	var Slider = util.extend(Component,{
 		"init" : function (id, option) {
 			this.option = option;
@@ -40,5 +38,4 @@ define(['jquery','component','js/util'], function( $, Component, util) {
 	});
 
 	return Slider;
-
 });
