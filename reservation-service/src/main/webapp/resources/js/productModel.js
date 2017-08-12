@@ -43,13 +43,15 @@ var ProductModel = (function(){
             $.ajax(url+offset).then(function(data){
                 if(data.length !== 0){
                     fp(data);
+                    var temporalCachedData = {
+                        data : data,
+                        offset : data[data.length-1].id
+                    };
                     if(offset === 0) {
-                        productCachedData[url] = {
-                            data : data,
-                            offset : data[data.length-1].id
-                        };
+                        productCachedData[url] = temporalCachedData;
+                    } else{
+                        productCachedData[url].offset = temporalCachedData.offset;
                     }
-                    productCachedData[url].offset = data[data.length-1].id;
                 }
             });
         }
