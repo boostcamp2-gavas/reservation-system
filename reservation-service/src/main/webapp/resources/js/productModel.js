@@ -1,11 +1,10 @@
 var ProductModel = (function(){
-    var productCashedData = {};
+    var productCachedData = {};
     /*
          지현  : productCashedData[url].offset 이런식으로 할 수가 없더라고요.. 생각해보면 ket : val 이런식으로 오브젝트에 저장되는데
          그렇게 저장된 오브젝트에 다시 변수를 생성한다는게 불가능한 것으로 보이는데 제 생각이 아닌거면 수정 부탁드립니다
          석호 : 어거지로 하려면 productCashedData[].data, .offset이렇게 하면 될텐데 바꾸려니까 엄청 더러워지고 가독성이 거의 지옥으로 가더라고 니가 잘 짠거 같음
     */
-    var cashedDataOffset = {};
     var categoryId;
 
     /*
@@ -34,20 +33,24 @@ var ProductModel = (function(){
     function getProduct(flag, fp){
         var url = '/api/categories/'+categoryId+'/products?offsetId=';
 
-        if(productCashedData[url] != null && flag){
-            var data = productCashedData[url];
+        if(productCachedData[url] !== undefined && flag){
+            var data = productCachedData[url].data;
             fp(data);
-            cashedDataOffset[url] = data[data.length-1].id;
+            productCachedData[url].offset = data[data.length-1].id;
         } else {
-            var offset = cashedDataOffset[url];
-            offset = offset || 0;
+            var offset = productCachedData[url] ? productCachedData[url].offset : 0;
 
             $.ajax(url+offset).then(function(data){
-                fp(data);
-                if(offset === 0) {
-                    productCashedData[url] = data;
+                if(data.length !== 0){
+                    fp(data);
+                    if(offset === 0) {
+                        productCachedData[url] = {
+                            data : data,
+                            offset : data[data.length-1].id
+                        };
+                    }
+                    productCachedData[url].offset = data[data.length-1].id;
                 }
-                cashedDataOffset[url] = data[data.length-1].id;
             });
         }
     }
@@ -58,8 +61,7 @@ var ProductModel = (function(){
 
     return {
         getProduct : getProduct,
-        setCategoryId : setCategoryId,
-        toggleChangeEventVal : toggleChangeEventVal
+        setCategoryId : setCategoryId
     }
 
 })();
