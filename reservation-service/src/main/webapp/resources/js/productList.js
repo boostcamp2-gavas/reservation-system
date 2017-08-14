@@ -1,60 +1,59 @@
-var ProductListModule = (function (){
+var ProductListModule = (function () {
 
     var activeAnchorIndex = 0;
-    var categorySoruce = $("#category-template").html();
-    var categoryTemplate = Handlebars.compile(categorySoruce);
+    var categorySource = $("#category-template").html();
+    var categoryTemplate = Handlebars.compile(categorySource);
 
-    var productSoruce = $("#product-template").html();
-    var productTemplate = Handlebars.compile(productSoruce);
+    var productSource = $("#product-template").html();
+    var productTemplate = Handlebars.compile(productSource);
 
-    function init(){
-        $('.event_tab_lst.tab_lst_min').on('click','li',bindTabElement);
+    function init() {
+        $('.event_tab_lst.tab_lst_min').on('click', 'li', bindTabElement);
         getCategoryList();
 
         ProductModel.setCategoryId(activeAnchorIndex);
-        ProductModel.getProduct(function(data){
-            addProductList('html',data);
+        ProductModel.getProduct(false, function (data) {
+            addProductList('html', data);
         });
 
         bindScrollUpdateProduct();
     }
 
-    function bindTabElement(ele){
-        $(".event_tab_lst li[data-category='"+activeAnchorIndex+"'] a").removeClass('active');
+    function bindTabElement(ele) {
+        $(".event_tab_lst li[data-category='" + activeAnchorIndex + "'] a").removeClass('active');
         $(ele.currentTarget).find('.anchor').addClass("active");
         activeAnchorIndex = $(ele.currentTarget).data("category");
 
         ProductModel.setCategoryId(activeAnchorIndex);
-        ProductModel.toggleChangeEventVal();
-        ProductModel.getProduct(function(data){
-            addProductList('html',data);
+        ProductModel.getProduct(true, function (data) {
+            addProductList('html', data);
         });
     }
 
-    function bindScrollUpdateProduct(){
-        $(window).scroll(function(){
+    function bindScrollUpdateProduct() {
+        $(window).scroll(function () {
             if ($(window).scrollTop() === $(document).height() - $(window).height()) {
-                ProductModel.getProduct(function(data){
-                    addProductList('append',data);
+                ProductModel.getProduct(false, function (data) {
+                    addProductList('append', data);
                 });
             }
         });
     }
 
-    function getCategoryList(){
-        $.ajax("/api/categories").then(function(data){
+    function getCategoryList() {
+        $.ajax("/api/categories").then(function (data) {
             addCategoryList(data)
             $(".event_tab_lst li[data-category='"+data[data.length-1].id+"'] a").addClass('last');
         });
     }
 
-    function addCategoryList(data){
+    function addCategoryList(data) {
         var context = {'data': data};
         var html = categoryTemplate(context);
         $('.event_tab_lst.tab_lst_min').append(html);
     }
 
-    function addProductList(type,data){
+    function addProductList(type, data) {
         var left = [];
         var right = [];
         data.forEach(function (item, i) {
@@ -69,6 +68,6 @@ var ProductListModule = (function (){
     }
 
     return {
-        init : init
+        init: init
     }
 })();
