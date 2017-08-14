@@ -10327,13 +10327,29 @@ return jQuery;
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
 var ProductListModule = __webpack_require__(2);
 var Carousel = __webpack_require__(5);
 var $ = __webpack_require__(0);
+var Timer = __webpack_require__(8);
 
 (function (){
     var productListModule = ProductListModule.getInstance();
     var carousel = new Carousel($('.group_visual'));
+    var timer = Timer.getInstance(carousel);
+
+    timer.init();
+
+    carousel.on("stopTimer",function(){
+        timer.stopInterval();
+        timer.setTimeOut();
+    });
+
+    carousel.on("clickBtn",function() {
+        timer.stopInterval();
+        timer.setTimeOut();
+    });
+
     productListModule.init();
 })();
 
@@ -10354,7 +10370,6 @@ var ProductListModule = (function () {
 
         var productSource = $("#product-template").html();
         var productTemplate = Handlebars.compile(productSource);
-
         var $window = $(window);
         var $document = $(document);
 
@@ -10366,6 +10381,7 @@ var ProductListModule = (function () {
             ProductModel.getProduct(false, function (data) {
                 addProductList('html', data);
             });
+
             ProductModel.getProductCount(function(data) {
                 addProductListCount(data);
             });
@@ -10382,6 +10398,7 @@ var ProductListModule = (function () {
             ProductModel.getProduct(true, function (data) {
                 addProductList('html', data);
             });
+
             ProductModel.getProductCount(function(data) {
                 addProductListCount(data);
             });
@@ -10462,6 +10479,7 @@ var ProductModel = (function(){
             $.ajax(url+offset).then(function(data){
                 if(data.length !== 0){
                     fp(data);
+
                     if(offset === 0) {
                         productCachedData[url] = {
                             data : data,
@@ -15411,11 +15429,27 @@ var Carousel = extend(egCommponent, {
     },
 
     bindOnClick: function () {
-        this.$root.find('.prev_e').on('click', '.prev_inn', this.moveToPrev.bind(this));
-        this.$root.find('.nxt_e').on('click', '.nxt_inn', this.moveToNext.bind(this));
-    }
+        this.$root.find('.prev_e').on('click', '.prev_inn', this.moveToPrevTrigger.bind(this));
+        this.$root.find('.nxt_e').on('click', '.nxt_inn', this.moveToNextTrigger.bind(this));
 
+        this.$root.find('.prev_e').on('mouseenter', '.prev_inn', function(){
+        	this.trigger("stopTimer");
+		}.bind(this));
 
+        this.$root.find('.nxt_e').on('mouseenter', '.nxt_inn', function(){
+            this.trigger("stopTimer");
+		}.bind(this));
+    },
+
+    moveToPrevTrigger : function(){
+    	this.moveToPrev();
+    	this.trigger("clickBtn");
+	},
+
+	moveToNextTrigger : function(){
+    	this.moveToNext();
+    	this.trigger("clickBtn");
+	}
 });
 
 module.exports = Carousel;
@@ -15426,6 +15460,7 @@ module.exports = Carousel;
 /***/ (function(module, exports) {
 
 var extend = function (superClass, def) {
+
     var extendClass = function extendClass() {
         // Call a parent constructor
         superClass.apply(this, arguments);
@@ -15818,6 +15853,48 @@ module.exports = exports["default"];
 /******/ ]);
 });
 //# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(0);
+
+var Timer = (function(){
+
+    function timer(carousel){
+        var timeOut;
+        var interval;
+
+        function init(){
+            interval = setInterval(carousel.moveToNext.bind(carousel), 2000);
+        }
+
+        function stopInterval(){
+            clearInterval(interval);
+            clearTimeout(timeOut);
+            interval = null;
+            timeOut = null;
+        }
+
+        function setTimeOut(){
+            timeOut = setTimeout(init,4000);
+        }
+
+        return {
+            init : init,
+            stopInterval : stopInterval,
+            setTimeOut : setTimeOut
+        }
+
+    }
+
+    return {
+        getInstance : timer
+    }
+})();
+
+module.exports = Timer;
 
 /***/ })
 /******/ ]);

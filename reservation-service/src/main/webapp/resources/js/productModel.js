@@ -17,15 +17,7 @@ var ProductModel = (function(){
             $.ajax(url+offset).then(function(data){
                 if(data.length !== 0){
                     fp(data);
-<<<<<<< HEAD
 
-                    var temporalCachedData = {
-                        data : data,
-                        offset : data[data.length-1].id
-                    };
-
-=======
->>>>>>> babded834d2e62875d2ca2a180efa0a65c1986f6
                     if(offset === 0) {
                         productCachedData[url] = {
                             data : data,
