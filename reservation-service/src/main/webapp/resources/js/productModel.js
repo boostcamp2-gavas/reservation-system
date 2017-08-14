@@ -1,3 +1,5 @@
+var $ = require('../node_modules/jquery/dist/jquery');
+
 var ProductModel = (function(){
     var productCachedData = {};
     var categoryId;
@@ -55,3 +57,5 @@ var ProductModel = (function(){
     }
 
 })();
+
+module.exports = ProductModel;

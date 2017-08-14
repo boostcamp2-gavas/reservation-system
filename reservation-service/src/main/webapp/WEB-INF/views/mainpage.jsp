@@ -200,12 +200,7 @@
         {{/each}}
     </script>
 
-    <script type="text/javascript" src="/resources/node_modules/handlebars/dist/handlebars.js"></script>
-    <script type="text/javascript" src="/resources/node_modules/jquery/dist/jquery.js"></script>
-    <script type="text/javascript" src="/resources/node_modules/requirejs/require.js"></script>
-    <script type="text/javascript" src="/resources/js/productModel.js"></script>
-    <script type="text/javascript" src="/resources/js/productList.js"></script>
-    <script type="text/javascript" src="/resources/js/mainpage.js"></script>
+    <script type="text/javascript" src="/resources/dist/mainpagebundle.js"></script>
 </body>
 
 </html>
