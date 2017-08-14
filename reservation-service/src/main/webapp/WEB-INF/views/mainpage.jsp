@@ -206,9 +206,10 @@
     <script type="text/javascript" src="/resources/node_modules/requirejs/require.js"></script>
     <script type="text/javascript" src="/resources/js/productModel.js"></script>
     <script type="text/javascript" src="/resources/js/productList.js"></script>
-    <script type="text/javascript" src="/resources/js/util.js"></script>
-    <script type="text/javascript" src="/resources/js/mainpageCarousel.js"></script>
+    <%--<script type="text/javascript" src="/resources/js/util.js"></script>--%>
+    <script type="text/javascript" src="/resources/js/carousel.js"></script>
     <script type="text/javascript" src="/resources/js/mainpage.js"></script>
+    <%--<script type="text/javascript" src="/resources/js/bundle.js"></script>--%>
 </body>
 
 </html>

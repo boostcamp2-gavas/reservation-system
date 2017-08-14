@@ -43,10 +43,12 @@ var ProductModel = (function(){
             $.ajax(url+offset).then(function(data){
                 if(data.length !== 0){
                     fp(data);
+
                     var temporalCachedData = {
                         data : data,
                         offset : data[data.length-1].id
                     };
+
                     if(offset === 0) {
                         productCachedData[url] = temporalCachedData;
                     } else{

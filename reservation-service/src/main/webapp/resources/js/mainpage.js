@@ -1,5 +1,6 @@
 (function (){
 
-    ProductListModule.init();
+    productListModule = ProductListModule();
 
+    productListModule.init();
 })();
