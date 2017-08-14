@@ -1,5 +1,5 @@
 (function (){
+    var productListModule = ProductListModule.getInstance();
 
-    ProductListModule.init();
-
+    productListModule.init();
 })();

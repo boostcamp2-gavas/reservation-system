@@ -11,6 +11,9 @@ public class ProductSqls {
             "SELECT id FROM product WHERE id = :productId";
 
     public static final String SELECT_PRODUCT_COUNT =
+            "SELECT count(*) FROM product";
+
+    public static final String SELECT_PRODUCT_COUNT_BY_CATEGORY_ID =
             "SELECT count(*) FROM product WHERE category_id = :categoryId";
 
     public static final String SELECT_PRODUCT_LIST_BY_CATEGORY_ID =
