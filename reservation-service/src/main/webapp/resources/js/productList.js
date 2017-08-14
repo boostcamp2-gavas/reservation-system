@@ -44,6 +44,7 @@ var ProductListModule = (function (){
     function getCategoryList(){
         $.ajax("/api/categories").then(function(data){
             addCategoryList(data)
+            $(".event_tab_lst li[data-category='"+data[data.length-1].id+"'] a").addClass('last');
         });
     }
 
