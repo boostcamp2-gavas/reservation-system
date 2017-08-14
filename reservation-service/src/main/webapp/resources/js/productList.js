@@ -11,7 +11,6 @@ var ProductListModule = (function () {
 
         var productSource = $("#product-template").html();
         var productTemplate = Handlebars.compile(productSource);
-
         var $window = $(window);
         var $document = $(document);
 
@@ -23,6 +22,7 @@ var ProductListModule = (function () {
             ProductModel.getProduct(false, function (data) {
                 addProductList('html', data);
             });
+
             ProductModel.getProductCount(function(data) {
                 addProductListCount(data);
             });
@@ -39,6 +39,7 @@ var ProductListModule = (function () {
             ProductModel.getProduct(true, function (data) {
                 addProductList('html', data);
             });
+
             ProductModel.getProductCount(function(data) {
                 addProductListCount(data);
             });

@@ -17,6 +17,7 @@ var ProductModel = (function(){
             $.ajax(url+offset).then(function(data){
                 if(data.length !== 0){
                     fp(data);
+
                     if(offset === 0) {
                         productCachedData[url] = {
                             data : data,

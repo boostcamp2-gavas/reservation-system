@@ -1,4 +1,5 @@
 var extend = function (superClass, def) {
+
     var extendClass = function extendClass() {
         // Call a parent constructor
         superClass.apply(this, arguments);
