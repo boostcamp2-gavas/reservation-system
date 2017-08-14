@@ -10327,7 +10327,6 @@ return jQuery;
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-
 var ProductListModule = __webpack_require__(2);
 var Carousel = __webpack_require__(5);
 var $ = __webpack_require__(0);
@@ -15856,9 +15855,7 @@ module.exports = exports["default"];
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $ = __webpack_require__(0);
+/***/ (function(module, exports) {
 
 var Timer = (function(){
 

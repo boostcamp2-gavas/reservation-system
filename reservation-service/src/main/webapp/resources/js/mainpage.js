@@ -1,4 +1,3 @@
-
 var ProductListModule = require('./productList');
 var Carousel = require('./carousel');
 var $ = require('../node_modules/jquery/dist/jquery');
