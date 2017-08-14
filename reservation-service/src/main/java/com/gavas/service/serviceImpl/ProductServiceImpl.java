@@ -30,7 +30,9 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     @Override
     public Long getProductCountByCategoryId(Long categoryId) {
-        if (categoryService.findCategoryById(categoryId) != null) {
+        if(categoryId == 0){
+            return productDao.selectProductCount();
+        } else if (categoryService.findCategoryById(categoryId) != null) {
             return productDao.selectProductCountByCategoryId(categoryId);
         }
         return 0L;

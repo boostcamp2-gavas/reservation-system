@@ -197,7 +197,7 @@
     {{/each}}
 </script>
 
-<script type="text/javascript" src = "/resources/js/yong/mainpage.js">
+<script type="text/javascript" src = "/resources/js/yong/mainpagebundle.js">
 </script>
 </body>
 
