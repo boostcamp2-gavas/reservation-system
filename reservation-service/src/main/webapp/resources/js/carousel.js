@@ -43,7 +43,7 @@ var Carousel = extend(egCommponent, {
         if (this.$carouselRoot.is(":animated")) {
             return false;
         }
-        
+
         if (this.index >= this.liCount) {
             this.$carouselRoot.css({"left": "+=" + (this.arrange * (this.liCount)) + "px"});
             this.index = 0;
