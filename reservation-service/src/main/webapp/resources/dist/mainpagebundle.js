@@ -10388,6 +10388,9 @@ var ProductListModule = (function () {
 
             bindScrollUpdateProduct();
         }
+        function test() {
+            return promise.then()
+        }
 
         function bindTabElement(ele) {
             $(".event_tab_lst li[data-category='" + activeAnchorIndex + "'] a").removeClass('active');
