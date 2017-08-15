@@ -1,34 +1,33 @@
-var Timer = (function(){
+var Timer = (function () {
 
-    function timer(carousel){
+    function timer(carousel) {
         var timeOut;
         var interval;
 
-        function init(){
+        function init() {
             interval = setInterval(carousel.moveToNext.bind(carousel), 2000);
         }
 
-        function stopInterval(){
+        function stopInterval() {
             clearInterval(interval);
             clearTimeout(timeOut);
             interval = null;
             timeOut = null;
         }
 
-        function setTimeOut(){
-            timeOut = setTimeout(init,4000);
+        function setTimeOut() {
+            timeOut = setTimeout(init, 4000);
         }
 
         return {
-            init : init,
-            stopInterval : stopInterval,
-            setTimeOut : setTimeOut
+            init: init,
+            stopInterval: stopInterval,
+            setTimeOut: setTimeOut
         }
-
     }
 
     return {
-        getInstance : timer
+        getInstance: timer
     }
 })();
 

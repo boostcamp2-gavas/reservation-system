@@ -60,24 +60,24 @@ var Carousel = extend(egCommponent, {
         this.$root.find('.prev_e').on('click', '.prev_inn', this.moveToPrevTrigger.bind(this));
         this.$root.find('.nxt_e').on('click', '.nxt_inn', this.moveToNextTrigger.bind(this));
 
-        this.$root.find('.prev_e').on('mouseenter', '.prev_inn', function(){
-        	this.trigger("stopTimer");
-		}.bind(this));
-
-        this.$root.find('.nxt_e').on('mouseenter', '.nxt_inn', function(){
+        this.$root.find('.prev_e').on('mouseenter', '.prev_inn', function () {
             this.trigger("stopTimer");
-		}.bind(this));
+        }.bind(this));
+
+        this.$root.find('.nxt_e').on('mouseenter', '.nxt_inn', function () {
+            this.trigger("stopTimer");
+        }.bind(this));
     },
 
-    moveToPrevTrigger : function(){
-    	this.moveToPrev();
-    	this.trigger("clickBtn");
-	},
+    moveToPrevTrigger: function () {
+        this.moveToPrev();
+        this.trigger("clickBtn");
+    },
 
-	moveToNextTrigger : function(){
-    	this.moveToNext();
-    	this.trigger("clickBtn");
-	}
+    moveToNextTrigger: function () {
+        this.moveToNext();
+        this.trigger("clickBtn");
+    }
 });
 
 module.exports = Carousel;

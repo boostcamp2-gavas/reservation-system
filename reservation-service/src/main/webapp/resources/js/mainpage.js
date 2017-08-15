@@ -29,7 +29,6 @@ var Timer = require('./timer');
         var url = 'details/';
 
         $('.wrap_event_box').on('click','.item',function(){
-            console.log("aa");
             productId = $(this).data('productid');
             location.href = url+productId;
         })

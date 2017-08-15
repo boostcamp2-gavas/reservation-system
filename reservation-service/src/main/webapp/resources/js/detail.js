@@ -1,6 +1,5 @@
 var ProductDetail = require('./productdetail');
 
-(function(){
-
+(function () {
     ProductDetail.showProductDetail();
 })();

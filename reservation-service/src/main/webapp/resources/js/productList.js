@@ -4,7 +4,7 @@ var $ = require('../node_modules/jquery/dist/jquery');
 
 var ProductListModule = (function () {
 
-    function showProductList(){
+    function showProductList() {
         var activeAnchorIndex = 0;
         var categorySource = $("#category-template").html();
         var categoryTemplate = Handlebars.compile(categorySource);
@@ -23,7 +23,7 @@ var ProductListModule = (function () {
                 addProductList('html', data);
             });
 
-            ProductModel.getProductCount(function(data) {
+            ProductModel.getProductCount(function (data) {
                 addProductListCount(data);
             });
 
@@ -41,7 +41,7 @@ var ProductListModule = (function () {
                 addProductList('html', data);
             });
 
-            ProductModel.getProductCount(function(data) {
+            ProductModel.getProductCount(function (data) {
                 addProductListCount(data);
             });
         }
@@ -59,7 +59,7 @@ var ProductListModule = (function () {
         function getCategoryList() {
             $.ajax("/api/categories").then(function (data) {
                 addCategoryList(data);
-                $(".event_tab_lst li[data-category='"+data[data.length-1].id+"'] a").addClass('last');
+                $(".event_tab_lst li[data-category='" + data[data.length - 1].id + "'] a").addClass('last');
             });
         }
 
@@ -83,7 +83,7 @@ var ProductListModule = (function () {
             $('.lst_event_box.right_box')[type](productTemplate({'data': right}));
         }
 
-        function addProductListCount(data){
+        function addProductListCount(data) {
             $('.event_lst_txt .pink').text(data + "개");
         }
 
@@ -91,8 +91,9 @@ var ProductListModule = (function () {
             init: init
         }
     }
+
     return {
-        getInstance : showProductList
+        getInstance: showProductList
     }
 })();
 
