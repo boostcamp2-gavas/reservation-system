@@ -199,6 +199,7 @@
         </li>
         {{/each}}
     </script>
+
     <script type="text/javascript" src="/resources/dist/mainpagebundle.js"></script>
 </body>
 

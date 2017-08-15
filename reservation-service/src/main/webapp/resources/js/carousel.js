@@ -48,9 +48,11 @@ var Carousel = extend(egCommponent, {
             this.$carouselRoot.css({"left": "+=" + (this.arrange * (this.liCount)) + "px"});
             this.index = 0;
         }
+
         this.$carouselRoot.animate({"left": "-=" + this.arrange + "px"}, {
             duration: "normal"
         });
+
         this.index++;
     },
 

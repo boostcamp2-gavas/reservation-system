@@ -1,5 +1,3 @@
-var $ = require('../node_modules/jquery/dist/jquery');
-
 var Timer = (function(){
 
     function timer(carousel){

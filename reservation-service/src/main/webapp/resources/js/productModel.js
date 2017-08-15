@@ -1,4 +1,5 @@
 var $ = require('../node_modules/jquery/dist/jquery');
+var Moment = require('../node_modules/moment/moment');
 
 var ProductModel = (function(){
     var productCachedData = {};
@@ -27,7 +28,7 @@ var ProductModel = (function(){
                         productCachedData[url].offset = data[data.length-1].id;
                     }
                 }
-            });
+            })
         }
     }
 

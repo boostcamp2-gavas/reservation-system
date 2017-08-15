@@ -15,6 +15,11 @@ public class ProductDetailsDto {
     private String name;
     private String description;
     private String placeName;
+    private String placeLot;
+    private String placeStreet;
+    private String tel;
+    private String email;
+    private String homepage;
     private Date salesStart;
     private Date salesEnd;
     private Integer salesFlag;

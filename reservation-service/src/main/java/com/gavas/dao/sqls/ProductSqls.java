@@ -24,8 +24,8 @@ public class ProductSqls {
                     " WHERE P.category_id = :categoryId AND P.id > :offsetId LIMIT 10";
 
     public static final String SELECT_PRODUCT_DETAIL_BY_PRODUCT_ID =
-            "SELECT p.id, p.name, p.description, p.sales_start, p.sales_end, p.event, di.place_name, p.sales_flag" +
+            "SELECT P.id, P.name, P.description, P.sales_start, P.sales_end, P.event, DI.place_name, DI.place_lot, DI.place_street, DI.tel, DI.email, DI.homepage, P.sales_flag" +
                     " FROM product AS P" +
-                    " JOIN display_info AS di ON p.id = di.product_id" +
-                    " WHERE di.product_id = :productId";
+                    " JOIN display_info AS DI ON P.id = DI.product_id" +
+                    " WHERE DI.product_id = :productId";
 }
