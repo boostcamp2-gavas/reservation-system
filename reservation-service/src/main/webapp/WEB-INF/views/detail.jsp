@@ -7,7 +7,7 @@
     <meta name="description" content="네이버 예약, 네이버 예약이 연동된 곳 어디서나 바로 예약하고, 네이버 예약 홈(나의예약)에서 모두 관리할 수 있습니다.">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
-    <link href="resources/css/style.css" rel="stylesheet">
+    <link href="/resources/css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -250,6 +250,21 @@
         </div>
     </footer>
     <div id="photoviwer"></div>
+
+    <script type="text/handlebars-template" id="detailImage-template">
+        <%--{{#each data}}--%>
+        <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src=""{{fileId}}> <span class="img_bg"></span>
+            <div class="visual_txt">
+                <div class="visual_txt_inn">
+                    <h2 class="visual_txt_tit"> <span>{{name}}</span> </h2>
+                    <p class="visual_txt_dsc"></p>
+                </div>
+            </div>
+        </li>
+        <%--{{/each}}--%>
+    </script>
+
+    <script type="text/javascript" src="/resources/dist/detailbundle.js"></script>
 </body>
 
 </html>

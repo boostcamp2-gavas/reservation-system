@@ -16,10 +16,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/categories")
 public class CategoryRestController {
-    @Autowired
+//    @Autowired
     private CategoryService categoryService;
-    @Autowired
+//    @Autowired
     private ProductService productService;
+
+    @Autowired
+    public CategoryRestController(CategoryService categoryService, ProductService productService){
+        this.categoryService = categoryService;
+        this.productService = productService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Category>> getCategoryList() {

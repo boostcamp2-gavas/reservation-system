@@ -21,4 +21,17 @@ var Timer = require('./timer');
     });
 
     productListModule.init();
+
+    viewProductDetail();
+
+    function viewProductDetail() {
+        var productId;
+        var url = 'details/';
+
+        $('.wrap_event_box').on('click','.item',function(){
+            console.log("aa");
+            productId = $(this).data('productid');
+            location.href = url+productId;
+        })
+    }
 })();
