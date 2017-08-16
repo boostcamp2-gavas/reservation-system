@@ -25877,11 +25877,20 @@ return zhTw;
 /* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var $ = __webpack_require__(1);
 var ProductDetail = __webpack_require__(118);
+var LazyLoad = __webpack_require__(124);
+var NaverMap = __webpack_require__(125);
 
 (function () {
     ProductDetail.init();
     ProductDetail.showProductDetail();
+
+    var lazyLoad = LazyLoad.getInstance();
+    lazyLoad.init($('.detail_info_lst.lazy_section'));
+
+    NaverMap.showMap();
+
 })();
 
 /***/ }),
@@ -25902,6 +25911,8 @@ var ProductDetail = (function () {
         bindOnClickMoreBtn();
     }
 
+
+
     function bindOnClickMoreBtn(){
         $('.bk_more').on('click',showMoreContent);
     }
@@ -25915,7 +25926,7 @@ var ProductDetail = (function () {
     function showProductDetail() {
         productDetailModel.getDetails(function (data) {
             writeProductDetail(data);
-            setProductDetailImagre(data);
+            setProductDetailImage(data);
             validateTicketing(data);
         });
     }
@@ -25926,12 +25937,13 @@ var ProductDetail = (function () {
         $('.store_addr.store_addr_bold').text(data.placeStreet);
         $('.addr_old_detail').text(data.placeLot);
         $('.store_addr.addr_detail').text(data.placeName);
+        $('.detail_info_lst .in_dsc').html(data.content.replace(/\n/g, '<br>'));
         $('.group_btn_goto .btn_goto_tel').attr('href', 'tel:' + data.tel);
         $('.group_btn_goto .btn_goto_home').attr('href', data.homepage);
         $('.group_btn_goto .btn_goto_mail').attr('href', 'mailto:' + data.email);
     }
 
-    function setProductDetailImagre(data) {
+    function setProductDetailImage(data) {
         var name = data.name;
         data.fileIdList.forEach(function (item) {
             $('.visual_img').append(template({name: name, fileId: item}));
@@ -25958,6 +25970,8 @@ var ProductDetail = (function () {
         init : init,
         showProductDetail: showProductDetail
     }
+
+
 
 })();
 
@@ -30830,6 +30844,7 @@ var ProductDetailModel = (function () {
         }
     }
 
+
     return {
         getDetail: getDetail
     }
@@ -31116,6 +31131,103 @@ webpackContext.keys = function webpackContextKeys() {
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
 webpackContext.id = 122;
+
+/***/ }),
+/* 123 */,
+/* 124 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+
+var LazyLoad = (function () {
+
+    function LazyLoad() {
+        var $srcRoot;
+        var srcImage;
+        var lazyTarget;
+
+        var init = function ($root) {
+            $srcRoot = $root.find('.in_img_group .img_thumb');
+            srcImage = $srcRoot.data('lazy-image');
+            lazyTarget = $root.get(0);
+            bindScroll();
+        };
+
+        function bindScroll() {
+            $(window).scroll(function () {
+                if (isInViewport(lazyTarget)) {
+                    $srcRoot.attr('src', srcImage);
+                }
+            });
+        }
+
+
+        function isInViewport(ele) {
+            var rect = ele.getBoundingClientRect();
+
+            return (
+                rect.bottom >= 0 &&
+                rect.right >= 0 &&
+                rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.left <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        return {
+            init: init
+        }
+
+    }
+
+    return {
+        getInstance: LazyLoad
+    }
+})();
+
+module.exports = LazyLoad;
+
+/***/ }),
+/* 125 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+
+var navermap = (function(){
+
+    function showMap(){
+        var targetAddress = $('.store_addr.store_addr_bold').text();
+        naver.maps.Service.geocode({
+            address: targetAddress
+        }, function(status, response) {
+            if (status !== naver.maps.Service.Status.OK) {
+                return alert('Something wrong!');
+            }
+
+            var result = response.result, // 검색 결과의 컨테이너
+                items = result.items; // 검색 결과의 배열s
+
+            var x = parseFloat(items[0].point['x']);
+            var y = parseFloat(items[0].point['y']);
+
+            var map = new naver.maps.Map('map', {
+                center: new naver.maps.LatLng(y, x),
+                zoom: 10
+            });
+
+            var marker = new naver.maps.Marker({
+                position: new naver.maps.LatLng(y, x),
+                map: map
+            });
+            // do Something
+        });
+    }
+
+    return {
+        showMap : showMap
+    }
+})();
+
+module.exports = navermap;
 
 /***/ })
 /******/ ]);

@@ -19,7 +19,7 @@ import java.io.FileInputStream;
 @RequestMapping("/api/file")
 @PropertySource("classpath:/application.properties")
 public class FileController {
-    FileService fileService;
+    private FileService fileService;
 
     @Value("${spring.resources.file-location}")
     private String downLoadBaseDir;

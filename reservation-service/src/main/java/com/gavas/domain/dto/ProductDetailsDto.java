@@ -24,5 +24,6 @@ public class ProductDetailsDto {
     private Date salesEnd;
     private Integer salesFlag;
     private String event;
+    private String content;
     private List<Long> fileIdList;
 }

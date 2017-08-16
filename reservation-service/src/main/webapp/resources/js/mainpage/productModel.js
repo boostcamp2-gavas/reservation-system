@@ -1,4 +1,4 @@
-var $ = require('../node_modules/jquery/dist/jquery');
+var $ = require('../../node_modules/jquery/dist/jquery');
 
 var ProductModel = (function () {
     var productCachedData = {};

@@ -1,6 +1,6 @@
 var ProductModel = require('./productModel');
-var Handlebars = require('../node_modules/handlebars/dist/handlebars');
-var $ = require('../node_modules/jquery/dist/jquery');
+var Handlebars = require('../../node_modules/handlebars/dist/handlebars');
+var $ = require('../../node_modules/jquery/dist/jquery');
 
 var ProductListModule = (function () {
 
