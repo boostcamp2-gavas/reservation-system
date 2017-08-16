@@ -35,6 +35,7 @@ var ProductDetail = (function () {
     function writeProductDetail(data) {
         $('.store_details.close3 .dsc').html(data.description.replace(/\n/g, '<br>'));
         $('.event_info .in_dsc').html(data.event.replace(/\n/g, '<br>'));
+        $('div.box_store_info h3.store_name').text(data.name);
         $('.store_addr.store_addr_bold').text(data.placeStreet);
         $('.addr_old_detail').text(data.placeLot);
         $('.store_addr.addr_detail').text(data.placeName);

@@ -25879,8 +25879,8 @@ return zhTw;
 
 var $ = __webpack_require__(1);
 var ProductDetail = __webpack_require__(118);
-var LazyLoad = __webpack_require__(124);
-var NaverMap = __webpack_require__(125);
+var LazyLoad = __webpack_require__(123);
+var NaverMap = __webpack_require__(124);
 
 (function () {
     ProductDetail.init();
@@ -25934,6 +25934,7 @@ var ProductDetail = (function () {
     function writeProductDetail(data) {
         $('.store_details.close3 .dsc').html(data.description.replace(/\n/g, '<br>'));
         $('.event_info .in_dsc').html(data.event.replace(/\n/g, '<br>'));
+        $('div.box_store_info h3.store_name').text(data.name);
         $('.store_addr.store_addr_bold').text(data.placeStreet);
         $('.addr_old_detail').text(data.placeLot);
         $('.store_addr.addr_detail').text(data.placeName);
@@ -31133,8 +31134,7 @@ module.exports = webpackContext;
 webpackContext.id = 122;
 
 /***/ }),
-/* 123 */,
-/* 124 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(1);
@@ -31187,7 +31187,7 @@ var LazyLoad = (function () {
 module.exports = LazyLoad;
 
 /***/ }),
-/* 125 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(1);
