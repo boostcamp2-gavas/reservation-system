@@ -290,16 +290,6 @@
 </footer>
 <div id="photoviwer"></div>
 
-<<<<<<< HEAD
-    <script type="text/handlebars-template" id="detailImage-template">
-        <%--{{#each data}}--%>
-        <li class="item" style="width: 414px; height:414px;"> <img alt="" class="img_thumb" src="/api/file/{{fileId}}"> <span class="img_bg"></span>
-            <div class="visual_txt">
-                <div class="visual_txt_inn">
-                    <h2 class="visual_txt_tit"> <span>{{name}}</span> </h2>
-                    <p class="visual_txt_dsc"></p>
-                </div>
-=======
 <script type="text/handlebars-template" id="detailImage-template">
     <%--{{#each data}}--%>
     <li class="item" style="width: 414px; height: 414px;"><img alt="" class="img_thumb" src="/api/file/{{fileId}}">
@@ -308,7 +298,6 @@
             <div class="visual_txt_inn">
                 <h2 class="visual_txt_tit"><span>{{name}}</span></h2>
                 <p class="visual_txt_dsc"></p>
->>>>>>> d667ef1240772e4e677058f9cea67af736600223
             </div>
         </div>
     </li>

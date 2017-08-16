@@ -12,13 +12,7 @@ var ProductDetail = (function () {
         bindOnClickMoreBtn();
     }
 
-<<<<<<< HEAD:reservation-service/src/main/webapp/resources/js/productdetail.js
-    function bindOnClickMoreBtn() {
-=======
-
-
     function bindOnClickMoreBtn(){
->>>>>>> d667ef1240772e4e677058f9cea67af736600223:reservation-service/src/main/webapp/resources/js/detailpage/productdetail.js
         $('.bk_more').on('click',showMoreContent);
     }
 
@@ -76,9 +70,6 @@ var ProductDetail = (function () {
         init : init,
         showProductDetail: showProductDetail
     }
-
-
-
 })();
 
 module.exports = ProductDetail;
