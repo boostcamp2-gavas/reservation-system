@@ -1,6 +1,6 @@
-var extend = require('./util');
-var egCommponent = require('../node_modules/@egjs/component/dist/component');
-var $ = require('../node_modules/jquery/dist/jquery');
+var extend = require('../util');
+var egCommponent = require('../../node_modules/@egjs/component/dist/component');
+var $ = require('../../node_modules/jquery/dist/jquery');
 
 var Carousel = extend(egCommponent, {
 

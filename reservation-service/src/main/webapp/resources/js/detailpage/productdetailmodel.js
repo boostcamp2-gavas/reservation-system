@@ -1,4 +1,4 @@
-var $ = require('../node_modules/jquery/dist/jquery');
+var $ = require('../../node_modules/jquery/dist/jquery');
 
 var ProductDetailModel = (function () {
 
@@ -15,6 +15,7 @@ var ProductDetailModel = (function () {
             getDetails: getDetails
         }
     }
+
 
     return {
         getDetail: getDetail

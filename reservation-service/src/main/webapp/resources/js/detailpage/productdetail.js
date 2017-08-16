@@ -1,7 +1,7 @@
-var $ = require('../node_modules/jquery/dist/jquery');
-var Handlebars = require('../node_modules/handlebars/dist/handlebars');
+var $ = require('../../node_modules/jquery/dist/jquery');
+var Handlebars = require('../../node_modules/handlebars/dist/handlebars');
 var ProductDetailModel = require('./productdetailmodel');
-var Moment = require('../node_modules/moment/moment');
+var Moment = require('../../node_modules/moment/moment');
 
 var ProductDetail = (function () {
     var productDetailModel = ProductDetailModel.getDetail();
@@ -12,7 +12,13 @@ var ProductDetail = (function () {
         bindOnClickMoreBtn();
     }
 
+<<<<<<< HEAD:reservation-service/src/main/webapp/resources/js/productdetail.js
     function bindOnClickMoreBtn() {
+=======
+
+
+    function bindOnClickMoreBtn(){
+>>>>>>> d667ef1240772e4e677058f9cea67af736600223:reservation-service/src/main/webapp/resources/js/detailpage/productdetail.js
         $('.bk_more').on('click',showMoreContent);
     }
 
@@ -25,7 +31,7 @@ var ProductDetail = (function () {
     function showProductDetail() {
         productDetailModel.getDetails(function (data) {
             writeProductDetail(data);
-            setProductDetailImagre(data);
+            setProductDetailImage(data);
             validateTicketing(data);
         });
     }
@@ -33,15 +39,17 @@ var ProductDetail = (function () {
     function writeProductDetail(data) {
         $('.store_details.close3 .dsc').html(data.description.replace(/\n/g, '<br>'));
         $('.event_info .in_dsc').html(data.event.replace(/\n/g, '<br>'));
+        $('div.box_store_info h3.store_name').text(data.name);
         $('.store_addr.store_addr_bold').text(data.placeStreet);
         $('.addr_old_detail').text(data.placeLot);
         $('.store_addr.addr_detail').text(data.placeName);
+        $('.detail_info_lst .in_dsc').html(data.content.replace(/\n/g, '<br>'));
         $('.group_btn_goto .btn_goto_tel').attr('href', 'tel:' + data.tel);
         $('.group_btn_goto .btn_goto_home').attr('href', data.homepage);
         $('.group_btn_goto .btn_goto_mail').attr('href', 'mailto:' + data.email);
     }
 
-    function setProductDetailImagre(data) {
+    function setProductDetailImage(data) {
         var name = data.name;
         data.fileIdList.forEach(function (item) {
             $('.visual_img').append(template({name: name, fileId: item}));
@@ -68,6 +76,8 @@ var ProductDetail = (function () {
         init : init,
         showProductDetail: showProductDetail
     }
+
+
 
 })();
 
