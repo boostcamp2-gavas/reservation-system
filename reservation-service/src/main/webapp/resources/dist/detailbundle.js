@@ -25907,17 +25907,31 @@ var ProductDetail = (function () {
     var source = $("#detailImage-template").html();
     var template = Handlebars.compile(source);
 
-    function init(){
+    function init() {
         bindOnClickMoreBtn();
+        bindOnClickAnchor();
     }
 
-
-
-    function bindOnClickMoreBtn(){
-        $('.bk_more').on('click',showMoreContent);
+    function bindOnClickAnchor() {
+        $('.info_tab_lst').on('click', '.anchor', toggleAnchorClass);
     }
 
-    function showMoreContent(){
+    function toggleAnchorClass(e) {
+        e.preventDefault();
+        var $target = $(this);
+        if (!$target.hasClass("active")) {
+            $target.closest("ul").find(".active").removeClass("active");
+            $target.addClass("active");
+            $('.detail_area_wrap').toggleClass("hide");
+            $('.detail_location').toggleClass("hide");
+        }
+    }
+
+    function bindOnClickMoreBtn() {
+        $('.bk_more').on('click', showMoreContent);
+    }
+
+    function showMoreContent() {
         $('.bk_more._open').toggle();
         $('.bk_more._close').toggle();
         $('.section_store_details .store_details').toggleClass('close3');
@@ -25954,24 +25968,23 @@ var ProductDetail = (function () {
     function validateTicketing(data) {
         var saleEnd = Moment(data.salesEnd).format('YYYY-MM-DD HH:mm');
         var currentTime = Moment().format('YYYY-MM-DD HH:mm');
-        if (data.salesFlag){
+        if (data.salesFlag) {
             $('.section_btn .bk_btn span').text('매진')
         } else {
             if (Moment(currentTime).isAfter(saleEnd)) {
                 $('.section_btn .bk_btn span').text('판매기간 종료')
             } else {
-                $('.section_btn').on('click','.bk_btn',function(){
-                   location.href = "";
+                $('.section_btn').on('click', '.bk_btn', function () {
+                    location.href = "";
                 });
             }
         }
     }
 
     return {
-        init : init,
+        init: init,
         showProductDetail: showProductDetail
     }
-
 
 
 })();
