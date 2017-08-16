@@ -199,8 +199,8 @@
             <div class="section_info_tab">
                 <!-- [D] tab 선택 시 anchor에 active 추가 -->
                 <ul class="info_tab_lst">
-                    <li class="item active _detail">
-                        <a href="#" class="anchor"> <span>상세정보</span> </a>
+                    <li class="item _detail">
+                        <a href="#" class="anchor active"> <span>상세정보</span> </a>
                     </li>
                     <li class="item _path">
                         <a href="#" class="anchor"> <span>오시는길</span> </a>

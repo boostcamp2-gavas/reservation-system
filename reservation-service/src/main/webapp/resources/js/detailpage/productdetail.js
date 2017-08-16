@@ -12,10 +12,26 @@ var ProductDetail = (function () {
 
     function init() {
         bindOnClickMoreBtn();
+        bindOnClickAnchor();
     }
 
-    function bindOnClickMoreBtn(){
-        $('.bk_more').on('click',showMoreContent);
+    function bindOnClickAnchor() {
+        $('.info_tab_lst').on('click', '.anchor', toggleAnchorClass);
+    }
+
+    function toggleAnchorClass(e) {
+        e.preventDefault();
+        var $target = $(this);
+        if (!$target.hasClass("active")) {
+            $target.closest("ul").find(".active").removeClass("active");
+            $target.addClass("active");
+            $('.detail_area_wrap').toggleClass("hide");
+            $('.detail_location').toggleClass("hide");
+        }
+    }
+
+    function bindOnClickMoreBtn() {
+        $('.bk_more').on('click', showMoreContent);
     }
 
     function showMoreContent() {
@@ -57,14 +73,14 @@ var ProductDetail = (function () {
     function validateTicketing(data) {
         var saleEnd = Moment(data.salesEnd).format('YYYY-MM-DD HH:mm');
         var currentTime = Moment().format('YYYY-MM-DD HH:mm');
-        if (data.salesFlag){
+        if (data.salesFlag) {
             $('.section_btn .bk_btn span').text('매진')
         } else {
             if (Moment(currentTime).isAfter(saleEnd)) {
                 $('.section_btn .bk_btn span').text('판매기간 종료')
             } else {
-                $('.section_btn').on('click','.bk_btn',function(){
-                   location.href = "";
+                $('.section_btn').on('click', '.bk_btn', function () {
+                    location.href = "";
                 });
             }
         }
@@ -77,7 +93,7 @@ var ProductDetail = (function () {
     }
 
     return {
-        init : init,
+        init: init,
         showProductDetail: showProductDetail
     }
 })();
