@@ -264,7 +264,7 @@
 
     <script type="text/handlebars-template" id="detailImage-template">
         <%--{{#each data}}--%>
-        <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="/api/file/{{fileId}}"> <span class="img_bg"></span>
+        <li class="item" style="width: 414px; height:414px;"> <img alt="" class="img_thumb" src="/api/file/{{fileId}}"> <span class="img_bg"></span>
             <div class="visual_txt">
                 <div class="visual_txt_inn">
                     <h2 class="visual_txt_tit"> <span>{{name}}</span> </h2>

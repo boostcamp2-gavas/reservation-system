@@ -8,15 +8,15 @@ var ProductDetail = (function () {
     var source = $("#detailImage-template").html();
     var template = Handlebars.compile(source);
 
-    function init(){
+    function init() {
         bindOnClickMoreBtn();
     }
 
-    function bindOnClickMoreBtn(){
+    function bindOnClickMoreBtn() {
         $('.bk_more').on('click',showMoreContent);
     }
 
-    function showMoreContent(){
+    function showMoreContent() {
         $('.bk_more._open').toggle();
         $('.bk_more._close').toggle();
         $('.section_store_details .store_details').toggleClass('close3');
