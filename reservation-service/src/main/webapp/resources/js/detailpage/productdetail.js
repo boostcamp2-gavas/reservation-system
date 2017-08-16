@@ -2,11 +2,13 @@ var $ = require('../../node_modules/jquery/dist/jquery');
 var Handlebars = require('../../node_modules/handlebars/dist/handlebars');
 var ProductDetailModel = require('./productdetailmodel');
 var Moment = require('../../node_modules/moment/moment');
+var Carousel = require('../mainpage/carousel');
 
 var ProductDetail = (function () {
     var productDetailModel = ProductDetailModel.getDetail();
     var source = $("#detailImage-template").html();
     var template = Handlebars.compile(source);
+    var carousel;
 
     function init() {
         bindOnClickMoreBtn();
@@ -27,6 +29,8 @@ var ProductDetail = (function () {
             writeProductDetail(data);
             setProductDetailImage(data);
             validateTicketing(data);
+            carousel = new Carousel($('.group_visual'));
+            bindOnCarouselAction();
         });
     }
 
@@ -64,6 +68,12 @@ var ProductDetail = (function () {
                 });
             }
         }
+    }
+
+    function bindOnCarouselAction() {
+        carousel.on("clickBtn",function(e) {
+            console.log(e.curNum);
+        });
     }
 
     return {

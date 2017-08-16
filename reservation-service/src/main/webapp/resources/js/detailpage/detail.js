@@ -11,5 +11,4 @@ var NaverMap = require('./navermap');
     lazyLoad.init($('.detail_info_lst.lazy_section'));
 
     NaverMap.showMap();
-
 })();

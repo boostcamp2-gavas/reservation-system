@@ -16,7 +16,6 @@ var ProductDetailModel = (function () {
         }
     }
 
-
     return {
         getDetail: getDetail
     }
