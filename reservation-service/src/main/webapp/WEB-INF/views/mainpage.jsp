@@ -190,7 +190,7 @@
         {{#each data}}
         <li class="item" data-productid = "{{id}}">
             <a href="#" class="item_book">
-                <div class="item_preview"> <img alt="{{name}}" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170303_271/1488514705030TuUK4_JPEG/17%B5%E5%B8%B2%B0%C9%C1%EE_%B8%DE%C0%CE%C6%F7%BD%BA%C5%CD_%C3%D6%C1%BE.jpg?type=l591_945"><span class="img_border"></span> </div>
+                <div class="item_preview"> <img alt="{{name}}" class="img_thumb" src="/api/file/{{fileId}}"><span class="img_border"></span> </div>
                 <div class="event_txt">
                     <h4 class="event_txt_tit"><span>{{name}}</span> <small class="sm">{{placeName}}</small> </h4>
                     <p class="event_txt_dsc">{{description}}</p>

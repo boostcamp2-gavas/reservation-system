@@ -102,8 +102,14 @@
                         </p>
                     </div>
                     <!-- [D] 토글 상황에 따라 bk_more에 display:none 추가 -->
-                    <a href="#" class="bk_more _open"> <span class="bk_more_txt">펼쳐보기</span> <i class="fn fn-down2"></i> </a>
-                    <a href="#" class="bk_more _close" style="display: none;"> <span class="bk_more_txt">접기</span> <i class="fn fn-up2"></i> </a>
+                    <a class="bk_more _open">
+                        <span class="bk_more_txt">펼쳐보기</span>
+                        <i class="fn fn-down2"></i>
+                    </a>
+                    <a class="bk_more _close" style="display: none;">
+                        <span class="bk_more_txt">접기</span>
+                        <i class="fn fn-up2"></i>
+                    </a>
                 </div>
                 <div class="section_event">
                     <div class="event_info_box">
@@ -115,7 +121,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="section_btn"> <button type="button" class="bk_btn"> <i class="fn fn-nbooking-calender2"></i> <span>예매하기</span> </button> </div>
+                <div class="section_btn">
+                    <button type="button" class="bk_btn">
+                        <i class="fn fn-nbooking-calender2"></i>
+                        <span>예매하기</span>
+                    </button>
+                </div>
                 <div class="section_review_list">
                     <div class="review_box">
                         <h3 class="title_h3">예매자 한줄평</h3>
@@ -253,7 +264,7 @@
 
     <script type="text/handlebars-template" id="detailImage-template">
         <%--{{#each data}}--%>
-        <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src=""{{fileId}}> <span class="img_bg"></span>
+        <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="/api/file/{{fileId}}"> <span class="img_bg"></span>
             <div class="visual_txt">
                 <div class="visual_txt_inn">
                     <h2 class="visual_txt_tit"> <span>{{name}}</span> </h2>

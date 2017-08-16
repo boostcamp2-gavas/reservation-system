@@ -8,10 +8,25 @@ var ProductDetail = (function () {
     var source = $("#detailImage-template").html();
     var template = Handlebars.compile(source);
 
+    function init(){
+        bindOnClickMoreBtn();
+    }
+
+    function bindOnClickMoreBtn(){
+        $('.bk_more').on('click',showMoreContent);
+    }
+
+    function showMoreContent(){
+        $('.bk_more._open').toggle();
+        $('.bk_more._close').toggle();
+        $('.section_store_details .store_details').toggleClass('close3');
+    }
+
     function showProductDetail() {
         productDetailModel.getDetails(function (data) {
             writeProductDetail(data);
             setProductDetailImagre(data);
+            validateTicketing(data);
         });
     }
 
@@ -24,8 +39,6 @@ var ProductDetail = (function () {
         $('.group_btn_goto .btn_goto_tel').attr('href', 'tel:' + data.tel);
         $('.group_btn_goto .btn_goto_home').attr('href', data.homepage);
         $('.group_btn_goto .btn_goto_mail').attr('href', 'mailto:' + data.email);
-        console.log(Moment(data.salesEnd).format('MM-DD-YYYY HH:mm'));
-        console.log(Moment().format('MM-DD-YYYY HH:mm'));
     }
 
     function setProductDetailImagre(data) {
@@ -35,10 +48,24 @@ var ProductDetail = (function () {
         })
     }
 
-    function currentDate() {
+    function validateTicketing(data) {
+        var saleEnd = Moment(data.salesEnd).format('YYYY-MM-DD HH:mm');
+        var currentTime = Moment().format('YYYY-MM-DD HH:mm');
+        if (data.salesFlag){
+            $('.section_btn .bk_btn span').text('매진')
+        } else {
+            if (Moment(currentTime).isAfter(saleEnd)) {
+                $('.section_btn .bk_btn span').text('판매기간 종료')
+            } else {
+                $('.section_btn').on('click','.bk_btn',function(){
+                   location.href = "";
+                });
+            }
+        }
     }
 
     return {
+        init : init,
         showProductDetail: showProductDetail
     }
 
