@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,12 +33,16 @@ public class ReservationServiceImpl implements ReservationService {
     @Transactional
     @Override
     public Integer addReservation(Reservation reservation) {
+        Date currentDate = new Date();
+        reservation.setCreateDate(currentDate);
+        reservation.setModifyDate(currentDate);
         return reservationDao.insertReservation(reservation);
     }
 
     @Transactional
     @Override
     public Integer updateReservationType(Reservation reservation) {
+        reservation.setModifyDate(new Date());
         return reservationDao.updateReservation(reservation);
     }
 

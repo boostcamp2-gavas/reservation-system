@@ -2,6 +2,8 @@ package com.gavas.dao;
 
 import com.gavas.domain.dto.ProductDetailsDto;
 import com.gavas.domain.dto.ProductDto;
+import com.gavas.domain.dto.ProductPriceInfoDto;
+import com.gavas.domain.dto.ProductReserveDto;
 import com.gavas.exception.EmptyQueryResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -25,12 +27,16 @@ public class ProductDao {
     private NamedParameterJdbcTemplate jdbc;
     private RowMapper<ProductDto> productDtoRowMapper;
     private RowMapper<ProductDetailsDto> productDetailsDtoRowMapper;
+    private RowMapper<ProductReserveDto> productReserveDtoRowMapper;
+    private RowMapper<ProductPriceInfoDto> productPriceInfoDtoRowMapper;
 
     @Autowired
     public ProductDao(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
         this.productDtoRowMapper = BeanPropertyRowMapper.newInstance(ProductDto.class);
         this.productDetailsDtoRowMapper = BeanPropertyRowMapper.newInstance(ProductDetailsDto.class);
+        this.productReserveDtoRowMapper = BeanPropertyRowMapper.newInstance(ProductReserveDto.class);
+        this.productPriceInfoDtoRowMapper = BeanPropertyRowMapper.newInstance(ProductPriceInfoDto.class);
     }
 
     public Long findProudctId(Long productId) {
@@ -93,5 +99,31 @@ public class ProductDao {
         } catch (EmptyResultDataAccessException exception) {
             throw new EmptyQueryResultException("Product Detail");
         }
+    }
+
+    public String selectProductNameByProductId(Long productId) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("productId", productId);
+        try {
+            return jdbc.queryForObject(SELECT_PRODUCT_NAME_BY_PRODUCT_ID, paramMap, String.class);
+        } catch (EmptyResultDataAccessException exception) {
+            throw new EmptyQueryResultException("Product Detail");
+        }
+    }
+
+    public ProductReserveDto selectProductReserveInfoByProductId(Long productId) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("productId", productId);
+        try {
+                return jdbc.queryForObject(SELECT_PRODUCT_RESERVE_INFO_BY_PRODUCT_ID, paramMap, productReserveDtoRowMapper);
+            } catch (EmptyResultDataAccessException exception) {
+                throw new EmptyQueryResultException("Product Reserve");
+            }
+    }
+
+    public List<ProductPriceInfoDto> selectProductPriceInfoByProductId(Long productId) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("productId", productId);
+        return jdbc.query(SELECT_PRODUCT_PRICE_INFO_BY_PRODUCT_ID, paramMap, productPriceInfoDtoRowMapper);
     }
 }

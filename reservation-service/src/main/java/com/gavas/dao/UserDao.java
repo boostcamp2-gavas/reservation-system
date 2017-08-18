@@ -1,9 +1,8 @@
 package com.gavas.dao;
 
-import com.gavas.domain.Category;
 import com.gavas.domain.User;
-import com.gavas.exception.EmptyQueryResultException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -38,7 +37,7 @@ public class UserDao {
         paramMap.put("snsId", snsId);
         try {
             return jdbc.queryForObject(SELECT_USER_BY_SNS_ID, paramMap, userRowMapper);
-        } catch (EmptyQueryResultException exception) {
+        } catch (EmptyResultDataAccessException exception) {
             return null;
         }
     }

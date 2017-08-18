@@ -38,7 +38,8 @@ public class ReservationRestContorller {
     }
 
     @PostMapping
-    public ResponseEntity<Integer> addReservation(@RequestBody Reservation reservation) {
+    public ResponseEntity<Integer> addReservation(@AuthUser User user, @RequestBody Reservation reservation) {
+        reservation.setUserId(user.getId());
         Integer reservationId = reservationService.addReservation(reservation);
         return new ResponseEntity<>(reservationId, HttpStatus.OK);
     }

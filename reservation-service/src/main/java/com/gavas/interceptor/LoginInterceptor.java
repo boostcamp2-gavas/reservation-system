@@ -20,7 +20,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             return true;
         } else {
             logger.info("redirect for login");
-            httpSession.setAttribute("URL", request.getRequestURI());
+            String url = request.getRequestURI() + "?" + request.getQueryString();
+            httpSession.setAttribute("URL", url);
             response.sendRedirect("/login");
             return false;
         }

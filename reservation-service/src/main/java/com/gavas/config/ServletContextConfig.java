@@ -2,11 +2,13 @@ package com.gavas.config;
 
 import com.gavas.arguementresolver.AuthUserWebArgumentResolver;
 import com.gavas.interceptor.LoginInterceptor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -22,6 +24,9 @@ import java.util.List;
 @ComponentScan(basePackages = {"com.gavas.controller"})
 @PropertySource("classpath:/application.properties")
 public class ServletContextConfig extends WebMvcConfigurerAdapter {
+
+    @Value("${spring.resources.file-size}")
+    private long fileSize;
 
     @Bean
     public UrlBasedViewResolver viewResolver() {
@@ -39,7 +44,7 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/reservations").addPathPatterns("/reserve/*");
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/reservations").addPathPatterns("/reserve/*").addPathPatterns("/reviewWrite").addPathPatterns("/reviewWrite/*");
         super.addInterceptors(registry);
     }
 
@@ -48,13 +53,11 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
-
-
-//    @Bean
-//    public MultipartResolver multipartResolver() {
-//        org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
-//        multipartResolver.setMaxUploadSize(fileSize); // 1024 * 1024 * 10
-//        return multipartResolver;
-//    }
+    @Bean
+    public MultipartResolver multipartResolver() {
+        org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(fileSize); // 1024 * 1024 * 10
+        return multipartResolver;
+    }
 
 }

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 117);
+/******/ 	return __webpack_require__(__webpack_require__.s = 119);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1896,7 +1896,7 @@ function loadLocale(name) {
             module && module.exports) {
         try {
             oldLocale = globalLocale._abbr;
-            __webpack_require__(122)("./" + name);
+            __webpack_require__(121)("./" + name);
             // because defineLocale currently also sets the global locale, we
             // want to undo that for lazy loaded locales
             getSetGlobalLocale(oldLocale);
@@ -4531,7 +4531,7 @@ return hooks;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(121)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(120)(module)))
 
 /***/ }),
 /* 1 */
@@ -25877,136 +25877,899 @@ return zhTw;
 /* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(1);
-var ProductDetail = __webpack_require__(118);
-var LazyLoad = __webpack_require__(127);
-var NaverMap = __webpack_require__(128);
+/*!
+ * Copyright (c) 2017 NAVER Corp.
+ * @egjs/component project is licensed under the MIT license
+ * 
+ * @egjs/component JavaScript library
+ * http://naver.github.io/egjs/component
+ * 
+ * @version 2.0.0
+ */
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["Component"] = factory();
+	else
+		root["eg"] = root["eg"] || {}, root["eg"]["Component"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
 
-(function () {
-    ProductDetail.init();
-    ProductDetail.showProductDetail();
+"use strict";
 
-    var lazyLoad = LazyLoad.getInstance();
-    lazyLoad.init($('.detail_info_lst.lazy_section'));
 
-    NaverMap.showMap();
-})();
+var _Component = __webpack_require__(1);
+
+var _Component2 = _interopRequireDefault(_Component);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+_Component2["default"].VERSION = "2.0.0";
+module.exports = _Component2["default"];
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Copyright (c) 2015 NAVER Corp.
+ * egjs projects are licensed under the MIT license
+ */
+
+/**
+ * A class used to manage events and options in a component
+ * @ko 컴포넌트의 이벤트와 옵션을 관리할 수 있게 하는 클래스
+ * @alias eg.Component
+ */
+var Component = function () {
+	/**
+  * @support {"ie": "7+", "ch" : "latest", "ff" : "latest",  "sf" : "latest", "edge" : "latest", "ios" : "7+", "an" : "2.1+ (except 3.x)"}
+  */
+	function Component() {
+		_classCallCheck(this, Component);
+
+		this._eventHandler = {};
+		this.options = {};
+	}
+	/**
+  * Triggers a custom event.
+  * @ko 커스텀 이벤트를 발생시킨다
+  * @param {String} eventName The name of the custom event to be triggered <ko>발생할 커스텀 이벤트의 이름</ko>
+  * @param {Object} customEvent Event data to be sent when triggering a custom event <ko>커스텀 이벤트가 발생할 때 전달할 데이터</ko>
+  * @return {Boolean} Indicates whether the event has occurred. If the stop() method is called by a custom event handler, it will return false and prevent the event from occurring. <ko>이벤트 발생 여부. 커스텀 이벤트 핸들러에서 stop() 메서드를 호출하면 'false'를 반환하고 이벤트 발생을 중단한다.</ko>
+  * @example
+ class Some extends eg.Component {
+  some(){
+    this.trigger("hi");// fire hi event.
+  }
+ }
+  */
+
+
+	Component.prototype.trigger = function trigger(eventName) {
+		var customEvent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+		var handlerList = this._eventHandler[eventName] || [];
+		var hasHandlerList = handlerList.length > 0;
+
+		if (!hasHandlerList) {
+			return true;
+		}
+
+		// If detach method call in handler in first time then handeler list calls.
+		handlerList = handlerList.concat();
+
+		customEvent.eventType = eventName;
+
+		var isCanceled = false;
+		var arg = [customEvent];
+		var i = 0;
+
+		customEvent.stop = function () {
+			isCanceled = true;
+		};
+
+		for (var _len = arguments.length, restParam = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+			restParam[_key - 2] = arguments[_key];
+		}
+
+		if (restParam.length >= 1) {
+			arg = arg.concat(restParam);
+		}
+
+		for (i = 0; handlerList[i]; i++) {
+			handlerList[i].apply(this, arg);
+		}
+
+		return !isCanceled;
+	};
+	/**
+  * Executed event just one time.
+  * @ko 이벤트가 한번만 실행된다.
+  * @param {eventName} eventName The name of the event to be attached <ko>등록할 이벤트의 이름</ko>
+  * @param {Function} handlerToAttach The handler function of the event to be attached <ko>등록할 이벤트의 핸들러 함수</ko>
+  * @return {eg.Component} An instance of a component itself<ko>컴포넌트 자신의 인스턴스</ko>
+  * @example
+ class Some extends eg.Component {
+  hi() {
+    alert("hi");
+  }
+  thing() {
+    this.once("hi", this.hi);
+  }
+ }
+ var some = new Some();
+ some.thing();
+ some.trigger("hi");
+ // fire alert("hi");
+ some.trigger("hi");
+ // Nothing happens
+  */
+
+
+	Component.prototype.once = function once(eventName, handlerToAttach) {
+		if ((typeof eventName === "undefined" ? "undefined" : _typeof(eventName)) === "object" && typeof handlerToAttach === "undefined") {
+			var eventHash = eventName;
+			var i = void 0;
+
+			for (i in eventHash) {
+				this.once(i, eventHash[i]);
+			}
+			return this;
+		} else if (typeof eventName === "string" && typeof handlerToAttach === "function") {
+			var self = this;
+
+			this.on(eventName, function listener() {
+				for (var _len2 = arguments.length, arg = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+					arg[_key2] = arguments[_key2];
+				}
+
+				handlerToAttach.apply(self, arg);
+				self.off(eventName, listener);
+			});
+		}
+
+		return this;
+	};
+
+	/**
+  * Checks whether an event has been attached to a component.
+  * @ko 컴포넌트에 이벤트가 등록됐는지 확인한다.
+  * @param {String} eventName The name of the event to be attached <ko>등록 여부를 확인할 이벤트의 이름</ko>
+  * @return {Boolean} Indicates whether the event is attached. <ko>이벤트 등록 여부</ko>
+  * @example
+ class Some extends eg.Component {
+  some() {
+    this.hasOn("hi");// check hi event.
+  }
+ }
+  */
+
+
+	Component.prototype.hasOn = function hasOn(eventName) {
+		return !!this._eventHandler[eventName];
+	};
+
+	/**
+  * Attaches an event to a component.
+  * @ko 컴포넌트에 이벤트를 등록한다.
+  * @param {eventName} eventName The name of the event to be attached <ko>등록할 이벤트의 이름</ko>
+  * @param {Function} handlerToAttach The handler function of the event to be attached <ko>등록할 이벤트의 핸들러 함수</ko>
+  * @return {eg.Component} An instance of a component itself<ko>컴포넌트 자신의 인스턴스</ko>
+  * @example
+ class Some extends eg.Component {
+  hi() {
+    console.log("hi");
+  }
+  some() {
+    this.on("hi",this.hi); //attach event
+  }
+ }
+ */
+
+
+	Component.prototype.on = function on(eventName, handlerToAttach) {
+		if ((typeof eventName === "undefined" ? "undefined" : _typeof(eventName)) === "object" && typeof handlerToAttach === "undefined") {
+			var eventHash = eventName;
+			var name = void 0;
+
+			for (name in eventHash) {
+				this.on(name, eventHash[name]);
+			}
+			return this;
+		} else if (typeof eventName === "string" && typeof handlerToAttach === "function") {
+			var handlerList = this._eventHandler[eventName];
+
+			if (typeof handlerList === "undefined") {
+				this._eventHandler[eventName] = [];
+				handlerList = this._eventHandler[eventName];
+			}
+
+			handlerList.push(handlerToAttach);
+		}
+
+		return this;
+	};
+	/**
+  * Detaches an event from the component.
+  * @ko 컴포넌트에 등록된 이벤트를 해제한다
+  * @param {eventName} eventName The name of the event to be detached <ko>해제할 이벤트의 이름</ko>
+  * @param {Function} handlerToDetach The handler function of the event to be detached <ko>해제할 이벤트의 핸들러 함수</ko>
+  * @return {eg.Component} An instance of a component itself <ko>컴포넌트 자신의 인스턴스</ko>
+  * @example
+ class Some extends eg.Component {
+  hi() {
+    console.log("hi");
+  }
+  some() {
+    this.off("hi",this.hi); //detach event
+  }
+ }
+  */
+
+
+	Component.prototype.off = function off(eventName, handlerToDetach) {
+		// All event detach.
+		if (typeof eventName === "undefined") {
+			this._eventHandler = {};
+			return this;
+		}
+
+		// All handler of specific event detach.
+		if (typeof handlerToDetach === "undefined") {
+			if (typeof eventName === "string") {
+				this._eventHandler[eventName] = undefined;
+				return this;
+			} else {
+				var eventHash = eventName;
+				var name = void 0;
+
+				for (name in eventHash) {
+					this.off(name, eventHash[name]);
+				}
+				return this;
+			}
+		}
+
+		// The handler of specific event detach.
+		var handlerList = this._eventHandler[eventName];
+
+		if (handlerList) {
+			var k = void 0;
+			var handlerFunction = void 0;
+
+			for (k = 0; (handlerFunction = handlerList[k]) !== undefined; k++) {
+				if (handlerFunction === handlerToDetach) {
+					handlerList = handlerList.splice(k, 1);
+					break;
+				}
+			}
+		}
+
+		return this;
+	};
+
+	return Component;
+}();
+
+exports["default"] = Component;
+module.exports = exports["default"];
+
+/***/ })
+/******/ ]);
+});
+//# sourceMappingURL=component.js.map
 
 /***/ }),
 /* 118 */
+/***/ (function(module, exports) {
+
+var extend = function (superClass, def) {
+
+    var extendClass = function extendClass() {
+        // Call a parent constructor
+        superClass.apply(this, arguments);
+
+        // Call a child constructor
+        if (typeof def.init === "function") {
+            def.init.apply(this, arguments);
+        }
+    };
+
+    var ExtProto = function () {
+    };
+    ExtProto.prototype = superClass.prototype;
+
+    var extProto = new ExtProto();
+    for (var i in def) {
+        extProto[i] = def[i];
+    }
+    extProto.constructor = extendClass;
+    extendClass.prototype = extProto;
+
+    return extendClass;
+};
+
+module.exports = extend;
+
+
+/***/ }),
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(1);
-var Handlebars = __webpack_require__(119);
-var ProductDetailModel = __webpack_require__(120);
 var Moment = __webpack_require__(0);
-var Carousel = __webpack_require__(123);
-var FlickingComponent = __webpack_require__(126);
+var ProductReserve = __webpack_require__(122);
+var TicketView = __webpack_require__(123);
+var Ticket = __webpack_require__(125);
+var ReserveUser = __webpack_require__(126);
+var ProductReserveModel = __webpack_require__(127);
 
-var ProductDetail = (function () {
-    var productDetailModel = ProductDetailModel.getDetail();
-    var source = $("#detailImage-template").html();
-    var template = Handlebars.compile(source);
-    var carousel;
-    var flicking;
+(function () {
+    var productReserveModel = ProductReserveModel.getInstance();
+    var reserveUser;
+    var tickets = [];
+    productReserveModel.setMomentConfig();
+    productReserveModel.getReserves(afterGetReserveData);
 
-    function init() {
-        bindOnClickMoreBtn();
-        bindOnClickAnchor();
+    function afterGetReserveData(data, salesDuration){
+        ProductReserve.init(data, salesDuration);
+        TicketView.setTicketInfomation(data);
+        reserveUser = new ReserveUser($('.section_booking_form'), {"salesDuration":salesDuration});
+        
+        controllTicket();
+        reserveUserController();
+        bindBookingAgreement();
+        bindReserveBtn();
+        
     }
 
-    function bindOnClickAnchor() {
-        $('.info_tab_lst').on('click', '.anchor', toggleAnchorClass);
-    }
+    function controllTicket(){
+        $('.qty').each(function(index,v){
+            var ticket = new Ticket("#ticket" + (index + 1));
+            tickets.push(ticket);
 
-    function toggleAnchorClass(e) {
-        e.preventDefault();
-        var $target = $(this);
-        if (!$target.hasClass("active")) {
-            $target.closest("ul").find(".active").removeClass("active");
-            $target.addClass("active");
-            $('.detail_area_wrap').toggleClass("hide");
-            $('.detail_location').toggleClass("hide");
-        }
-    }
-
-    function bindOnClickMoreBtn() {
-        $('.bk_more').on('click', showMoreContent);
-    }
-
-    function showMoreContent() {
-        $('.bk_more._open').toggle();
-        $('.bk_more._close').toggle();
-        $('.section_store_details .store_details').toggleClass('close3');
-    }
-
-    function showProductDetail() {
-        productDetailModel.getDetails(function (data) {
-            writeProductDetail(data);
-            setProductDetailImage(data);
-            validateTicketing(data);
-            carousel = new Carousel($('.group_visual'));
-            bindOnCarouselAction();
-            flicking = new FlickingComponent($('.visual_img'));
+            ticket.on('changeTicket', function(obj){
+                var ticketTotalCount = 0;
+                tickets.forEach(function(ticket){
+                    ticketTotalCount += ticket.getTicketAmount();
+                });
+                
+                reserveUser.setInlineText(ticketTotalCount);
+            });
         });
     }
 
-    function writeProductDetail(data) {
-        $('.store_details.close3 .dsc').html(data.description.replace(/\n/g, '<br>'));
-        $('.event_info .in_dsc').html(data.event.replace(/\n/g, '<br>'));
-        $('div.box_store_info h3.store_name').text(data.name);
-        $('.store_addr.store_addr_bold').text(data.placeStreet);
-        $('.addr_old_detail').text(data.placeLot);
-        $('.store_addr.addr_detail').text(data.placeName);
-        $('.detail_info_lst .in_dsc').html(data.content.replace(/\n/g, '<br>'));
-        $('.group_btn_goto .btn_goto_tel').attr('href', 'tel:' + data.tel);
-        $('.group_btn_goto .btn_goto_home').attr('href', data.homepage);
-        $('.group_btn_goto .btn_goto_mail').attr('href', 'mailto:' + data.email);
-    }
-
-    function setProductDetailImage(data) {
-        var name = data.name;
-        data.fileIdList.forEach(function (item) {
-            $('.visual_img').append(template({name: name, fileId: item}));
-        })
-    }
-
-    function validateTicketing(data) {
-        var saleEnd = Moment(data.salesEnd).format('YYYY-MM-DD HH:mm');
-        var currentTime = Moment().format('YYYY-MM-DD HH:mm');
-        if (data.salesFlag) {
-            $('.section_btn .bk_btn span').text('매진')
-        } else {
-            if (Moment(currentTime).isAfter(saleEnd)) {
-                $('.section_btn .bk_btn span').text('판매기간 종료')
+    function reserveUserController(){
+        reserveUser.on('changeBooking', function(reserve){
+            var inspect = reserve.state.boolean;
+            var data = reserve.state.value;
+            
+            if(inspect.name && inspect.tel && inspect.email && inspect.agreement && inspect.ticketTotalCount) {
+                $('.box_bk_btn .bk_btn_wrap').removeClass("disable");
             } else {
-                $('.section_btn').on('click', '.bk_btn', function () {
-                    location.href = "";
+                $('.box_bk_btn .bk_btn_wrap').addClass("disable");
+            }
+        });
+    }
+
+    function bindBookingAgreement(){
+        $('.section_booking_agreement').on('click', '.btn_agreement', function(e){
+            e.preventDefault();
+            $(this).closest('.agreement').toggleClass('open');
+            var $arrowBtn = $(this).find('.fn');
+
+            if($arrowBtn.hasClass('fn-down2')) {
+                $arrowBtn.removeClass('fn-down2').addClass('fn-up2');
+            } else {
+                $arrowBtn.removeClass('fn-up2').addClass('fn-down2');
+            }
+        });
+    }
+
+    function bindReserveBtn(){
+        $('.box_bk_btn .bk_btn_wrap').on('click', function(){
+            if(!$(this).hasClass("disable")){
+                var ticketsCounts = [];
+                tickets.forEach(function(value){
+                    ticketsCounts[value.priceType] = value.getTicketAmount();
+                });
+
+                var user = reserveUser.state.value;
+                var data = {
+                    "productId" : $('#gavas').data('productid'),
+                    "generalTicketCount" : ticketsCounts[3],
+                    "youthTicketCount" : ticketsCounts[2],
+                    "childTicketCount" : ticketsCounts[1],
+                    "reservationName" : $('.title').text(),
+                    "reservationTel" : user.tel,
+                    "reservationEmail" : user.email,
+                    "reservationDate" : Moment().valueOf(),
+                    "reservationType" : 1
+                };
+                productReserveModel.writeReservation(data, function(response){
+                    if(response === 200) {
+                        location.href = '/reservations';
+                    }
                 });
             }
-        }
-    }
-
-    function bindOnCarouselAction() {
-        carousel.on("clickBtn",function(e) {
-            console.log(e.curNum);
         });
     }
 
-    function bindOnFlickingComponent(){
-        var flicking = new FlickingComponent($('.visual_img'));
+})();
+
+/***/ }),
+/* 120 */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if(!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if(!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./af": 2,
+	"./af.js": 2,
+	"./ar": 3,
+	"./ar-dz": 4,
+	"./ar-dz.js": 4,
+	"./ar-kw": 5,
+	"./ar-kw.js": 5,
+	"./ar-ly": 6,
+	"./ar-ly.js": 6,
+	"./ar-ma": 7,
+	"./ar-ma.js": 7,
+	"./ar-sa": 8,
+	"./ar-sa.js": 8,
+	"./ar-tn": 9,
+	"./ar-tn.js": 9,
+	"./ar.js": 3,
+	"./az": 10,
+	"./az.js": 10,
+	"./be": 11,
+	"./be.js": 11,
+	"./bg": 12,
+	"./bg.js": 12,
+	"./bn": 13,
+	"./bn.js": 13,
+	"./bo": 14,
+	"./bo.js": 14,
+	"./br": 15,
+	"./br.js": 15,
+	"./bs": 16,
+	"./bs.js": 16,
+	"./ca": 17,
+	"./ca.js": 17,
+	"./cs": 18,
+	"./cs.js": 18,
+	"./cv": 19,
+	"./cv.js": 19,
+	"./cy": 20,
+	"./cy.js": 20,
+	"./da": 21,
+	"./da.js": 21,
+	"./de": 22,
+	"./de-at": 23,
+	"./de-at.js": 23,
+	"./de-ch": 24,
+	"./de-ch.js": 24,
+	"./de.js": 22,
+	"./dv": 25,
+	"./dv.js": 25,
+	"./el": 26,
+	"./el.js": 26,
+	"./en-au": 27,
+	"./en-au.js": 27,
+	"./en-ca": 28,
+	"./en-ca.js": 28,
+	"./en-gb": 29,
+	"./en-gb.js": 29,
+	"./en-ie": 30,
+	"./en-ie.js": 30,
+	"./en-nz": 31,
+	"./en-nz.js": 31,
+	"./eo": 32,
+	"./eo.js": 32,
+	"./es": 33,
+	"./es-do": 34,
+	"./es-do.js": 34,
+	"./es.js": 33,
+	"./et": 35,
+	"./et.js": 35,
+	"./eu": 36,
+	"./eu.js": 36,
+	"./fa": 37,
+	"./fa.js": 37,
+	"./fi": 38,
+	"./fi.js": 38,
+	"./fo": 39,
+	"./fo.js": 39,
+	"./fr": 40,
+	"./fr-ca": 41,
+	"./fr-ca.js": 41,
+	"./fr-ch": 42,
+	"./fr-ch.js": 42,
+	"./fr.js": 40,
+	"./fy": 43,
+	"./fy.js": 43,
+	"./gd": 44,
+	"./gd.js": 44,
+	"./gl": 45,
+	"./gl.js": 45,
+	"./gom-latn": 46,
+	"./gom-latn.js": 46,
+	"./he": 47,
+	"./he.js": 47,
+	"./hi": 48,
+	"./hi.js": 48,
+	"./hr": 49,
+	"./hr.js": 49,
+	"./hu": 50,
+	"./hu.js": 50,
+	"./hy-am": 51,
+	"./hy-am.js": 51,
+	"./id": 52,
+	"./id.js": 52,
+	"./is": 53,
+	"./is.js": 53,
+	"./it": 54,
+	"./it.js": 54,
+	"./ja": 55,
+	"./ja.js": 55,
+	"./jv": 56,
+	"./jv.js": 56,
+	"./ka": 57,
+	"./ka.js": 57,
+	"./kk": 58,
+	"./kk.js": 58,
+	"./km": 59,
+	"./km.js": 59,
+	"./kn": 60,
+	"./kn.js": 60,
+	"./ko": 61,
+	"./ko.js": 61,
+	"./ky": 62,
+	"./ky.js": 62,
+	"./lb": 63,
+	"./lb.js": 63,
+	"./lo": 64,
+	"./lo.js": 64,
+	"./lt": 65,
+	"./lt.js": 65,
+	"./lv": 66,
+	"./lv.js": 66,
+	"./me": 67,
+	"./me.js": 67,
+	"./mi": 68,
+	"./mi.js": 68,
+	"./mk": 69,
+	"./mk.js": 69,
+	"./ml": 70,
+	"./ml.js": 70,
+	"./mr": 71,
+	"./mr.js": 71,
+	"./ms": 72,
+	"./ms-my": 73,
+	"./ms-my.js": 73,
+	"./ms.js": 72,
+	"./my": 74,
+	"./my.js": 74,
+	"./nb": 75,
+	"./nb.js": 75,
+	"./ne": 76,
+	"./ne.js": 76,
+	"./nl": 77,
+	"./nl-be": 78,
+	"./nl-be.js": 78,
+	"./nl.js": 77,
+	"./nn": 79,
+	"./nn.js": 79,
+	"./pa-in": 80,
+	"./pa-in.js": 80,
+	"./pl": 81,
+	"./pl.js": 81,
+	"./pt": 82,
+	"./pt-br": 83,
+	"./pt-br.js": 83,
+	"./pt.js": 82,
+	"./ro": 84,
+	"./ro.js": 84,
+	"./ru": 85,
+	"./ru.js": 85,
+	"./sd": 86,
+	"./sd.js": 86,
+	"./se": 87,
+	"./se.js": 87,
+	"./si": 88,
+	"./si.js": 88,
+	"./sk": 89,
+	"./sk.js": 89,
+	"./sl": 90,
+	"./sl.js": 90,
+	"./sq": 91,
+	"./sq.js": 91,
+	"./sr": 92,
+	"./sr-cyrl": 93,
+	"./sr-cyrl.js": 93,
+	"./sr.js": 92,
+	"./ss": 94,
+	"./ss.js": 94,
+	"./sv": 95,
+	"./sv.js": 95,
+	"./sw": 96,
+	"./sw.js": 96,
+	"./ta": 97,
+	"./ta.js": 97,
+	"./te": 98,
+	"./te.js": 98,
+	"./tet": 99,
+	"./tet.js": 99,
+	"./th": 100,
+	"./th.js": 100,
+	"./tl-ph": 101,
+	"./tl-ph.js": 101,
+	"./tlh": 102,
+	"./tlh.js": 102,
+	"./tr": 103,
+	"./tr.js": 103,
+	"./tzl": 104,
+	"./tzl.js": 104,
+	"./tzm": 105,
+	"./tzm-latn": 106,
+	"./tzm-latn.js": 106,
+	"./tzm.js": 105,
+	"./uk": 107,
+	"./uk.js": 107,
+	"./ur": 108,
+	"./ur.js": 108,
+	"./uz": 109,
+	"./uz-latn": 110,
+	"./uz-latn.js": 110,
+	"./uz.js": 109,
+	"./vi": 111,
+	"./vi.js": 111,
+	"./x-pseudo": 112,
+	"./x-pseudo.js": 112,
+	"./yo": 113,
+	"./yo.js": 113,
+	"./zh-cn": 114,
+	"./zh-cn.js": 114,
+	"./zh-hk": 115,
+	"./zh-hk.js": 115,
+	"./zh-tw": 116,
+	"./zh-tw.js": 116
+};
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
+};
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 121;
+
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+
+var ProductReserve = (function () {
+    var $reserveTitle = $('.section_store_details .in_tit');
+    var $reserveDsc = $('.section_store_details .dsc');
+    
+    function init(data, salesDuration) {
+        bindHistotyBack();
+        setProductReserveInfo(data, salesDuration);
+    }
+
+    function bindHistotyBack() {
+        $('.top_title .btn_back').on('click', function () {
+            history.back();
+        });
+    }
+
+    function setProductReserveInfo(data, salesDuration) {
+        var productPriceList = data.productPriceInfoDtoList;
+        setReserveMainInfo({
+            "name": data.name,
+            "minPrice": productPriceList[0].price,
+            "salesDuration": salesDuration,
+            "fileId": data.fileId
+        });
+        var priceText = makeJoinedPriceInfo(productPriceList);
+
+        var topProductReserveInfo = [
+            {"tit": data.name, "dsc": "장소 : " + data.name + "<br>" + "기간 : " + salesDuration},
+            {"tit": "관람시간", "dsc": data.observationTime},
+            {"tit": "요금", "dsc": priceText}
+        ];
+
+        topProductReserveInfo.forEach(function (value, index) {
+            $reserveTitle.eq(index).text(value.tit);
+            $reserveDsc.eq(index).html(value.dsc);
+        });
+    }
+
+    function setReserveMainInfo(data) {
+        $('.top_title .title').text(data.name);
+        $('.preview_txt .preview_txt_tit').text(data.name);
+        $('.preview_txt .preview_txt_dsc:first').text("￦" + data.minPrice.toLocaleString() + "~");
+        $('.preview_txt .preview_txt_dsc:last').text(data.salesDuration);
+        $('.visual_img .img_thumb').prop("src", "/api/file/" + data.fileId);
+    }
+
+
+    function makeJoinedPriceInfo(productPriceList) {
+        var priceType = ["어린이(만 4~12세)", "청소년(만 13~18세)", "성인(만 19~64세)"];
+        var priceArray = [];
+        productPriceList.forEach(function (value, index) {
+            priceArray.push(priceType[index] + " " + value.price.toLocaleString() + "원");
+        });
+        var priceText = priceArray.join(" / ");
+        return priceText;
     }
 
     return {
         init: init,
-        showProductDetail: showProductDetail
+        setProductReserveInfo : setProductReserveInfo
     }
+
 })();
 
-module.exports = ProductDetail;
+module.exports = ProductReserve;
 
 /***/ }),
-/* 119 */
+/* 123 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+var Handlebars = __webpack_require__(124);
+
+var TicketView = (function(){
+    var ticketSource = $("#ticket-template").html();
+    var ticketTemplate = Handlebars.compile(ticketSource);
+
+    function setTicketInfomation(data){
+        var productPriceList = data.productPriceInfoDtoList;
+        var type = ["어린이", "청소년", "성인"];
+
+        var item = [];
+        productPriceList.forEach(function(value, index){
+            var discountPrice = value.price * (1 - value.discountRate);
+            item[index] = {
+                "ticketId" : "ticket"+(index+1),
+                "priceType" : value.priceType,
+                "type" : type[index],
+                "discountPrice" : discountPrice,
+                "pricePretty" : value.price.toLocaleString(),
+                "discountPricePretty" : discountPrice.toLocaleString(),
+                "discountRate" : value.discountRate*100
+            }
+        });
+
+        $('.ticket_body').append(ticketTemplate(item));
+    }
+
+    return {
+        setTicketInfomation : setTicketInfomation
+    }
+
+})();
+
+module.exports = TicketView;
+
+/***/ }),
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**!
@@ -30851,1066 +31614,302 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 120 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $ = __webpack_require__(1);
-
-var ProductDetailModel = (function () {
-
-    function getDetail() {
-        var url = "/api/products/" + $('#gavas').data('productid') + "/details"
-
-        function getDetails(fp) {
-            $.ajax(url).then(function (data) {
-                fp(data);
-            })
-        }
-
-        return {
-            getDetails: getDetails
-        }
-    }
-
-    return {
-        getDetail: getDetail
-    }
-})();
-
-module.exports = ProductDetailModel;
-
-/***/ }),
-/* 121 */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if(!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-/* 122 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = {
-	"./af": 2,
-	"./af.js": 2,
-	"./ar": 3,
-	"./ar-dz": 4,
-	"./ar-dz.js": 4,
-	"./ar-kw": 5,
-	"./ar-kw.js": 5,
-	"./ar-ly": 6,
-	"./ar-ly.js": 6,
-	"./ar-ma": 7,
-	"./ar-ma.js": 7,
-	"./ar-sa": 8,
-	"./ar-sa.js": 8,
-	"./ar-tn": 9,
-	"./ar-tn.js": 9,
-	"./ar.js": 3,
-	"./az": 10,
-	"./az.js": 10,
-	"./be": 11,
-	"./be.js": 11,
-	"./bg": 12,
-	"./bg.js": 12,
-	"./bn": 13,
-	"./bn.js": 13,
-	"./bo": 14,
-	"./bo.js": 14,
-	"./br": 15,
-	"./br.js": 15,
-	"./bs": 16,
-	"./bs.js": 16,
-	"./ca": 17,
-	"./ca.js": 17,
-	"./cs": 18,
-	"./cs.js": 18,
-	"./cv": 19,
-	"./cv.js": 19,
-	"./cy": 20,
-	"./cy.js": 20,
-	"./da": 21,
-	"./da.js": 21,
-	"./de": 22,
-	"./de-at": 23,
-	"./de-at.js": 23,
-	"./de-ch": 24,
-	"./de-ch.js": 24,
-	"./de.js": 22,
-	"./dv": 25,
-	"./dv.js": 25,
-	"./el": 26,
-	"./el.js": 26,
-	"./en-au": 27,
-	"./en-au.js": 27,
-	"./en-ca": 28,
-	"./en-ca.js": 28,
-	"./en-gb": 29,
-	"./en-gb.js": 29,
-	"./en-ie": 30,
-	"./en-ie.js": 30,
-	"./en-nz": 31,
-	"./en-nz.js": 31,
-	"./eo": 32,
-	"./eo.js": 32,
-	"./es": 33,
-	"./es-do": 34,
-	"./es-do.js": 34,
-	"./es.js": 33,
-	"./et": 35,
-	"./et.js": 35,
-	"./eu": 36,
-	"./eu.js": 36,
-	"./fa": 37,
-	"./fa.js": 37,
-	"./fi": 38,
-	"./fi.js": 38,
-	"./fo": 39,
-	"./fo.js": 39,
-	"./fr": 40,
-	"./fr-ca": 41,
-	"./fr-ca.js": 41,
-	"./fr-ch": 42,
-	"./fr-ch.js": 42,
-	"./fr.js": 40,
-	"./fy": 43,
-	"./fy.js": 43,
-	"./gd": 44,
-	"./gd.js": 44,
-	"./gl": 45,
-	"./gl.js": 45,
-	"./gom-latn": 46,
-	"./gom-latn.js": 46,
-	"./he": 47,
-	"./he.js": 47,
-	"./hi": 48,
-	"./hi.js": 48,
-	"./hr": 49,
-	"./hr.js": 49,
-	"./hu": 50,
-	"./hu.js": 50,
-	"./hy-am": 51,
-	"./hy-am.js": 51,
-	"./id": 52,
-	"./id.js": 52,
-	"./is": 53,
-	"./is.js": 53,
-	"./it": 54,
-	"./it.js": 54,
-	"./ja": 55,
-	"./ja.js": 55,
-	"./jv": 56,
-	"./jv.js": 56,
-	"./ka": 57,
-	"./ka.js": 57,
-	"./kk": 58,
-	"./kk.js": 58,
-	"./km": 59,
-	"./km.js": 59,
-	"./kn": 60,
-	"./kn.js": 60,
-	"./ko": 61,
-	"./ko.js": 61,
-	"./ky": 62,
-	"./ky.js": 62,
-	"./lb": 63,
-	"./lb.js": 63,
-	"./lo": 64,
-	"./lo.js": 64,
-	"./lt": 65,
-	"./lt.js": 65,
-	"./lv": 66,
-	"./lv.js": 66,
-	"./me": 67,
-	"./me.js": 67,
-	"./mi": 68,
-	"./mi.js": 68,
-	"./mk": 69,
-	"./mk.js": 69,
-	"./ml": 70,
-	"./ml.js": 70,
-	"./mr": 71,
-	"./mr.js": 71,
-	"./ms": 72,
-	"./ms-my": 73,
-	"./ms-my.js": 73,
-	"./ms.js": 72,
-	"./my": 74,
-	"./my.js": 74,
-	"./nb": 75,
-	"./nb.js": 75,
-	"./ne": 76,
-	"./ne.js": 76,
-	"./nl": 77,
-	"./nl-be": 78,
-	"./nl-be.js": 78,
-	"./nl.js": 77,
-	"./nn": 79,
-	"./nn.js": 79,
-	"./pa-in": 80,
-	"./pa-in.js": 80,
-	"./pl": 81,
-	"./pl.js": 81,
-	"./pt": 82,
-	"./pt-br": 83,
-	"./pt-br.js": 83,
-	"./pt.js": 82,
-	"./ro": 84,
-	"./ro.js": 84,
-	"./ru": 85,
-	"./ru.js": 85,
-	"./sd": 86,
-	"./sd.js": 86,
-	"./se": 87,
-	"./se.js": 87,
-	"./si": 88,
-	"./si.js": 88,
-	"./sk": 89,
-	"./sk.js": 89,
-	"./sl": 90,
-	"./sl.js": 90,
-	"./sq": 91,
-	"./sq.js": 91,
-	"./sr": 92,
-	"./sr-cyrl": 93,
-	"./sr-cyrl.js": 93,
-	"./sr.js": 92,
-	"./ss": 94,
-	"./ss.js": 94,
-	"./sv": 95,
-	"./sv.js": 95,
-	"./sw": 96,
-	"./sw.js": 96,
-	"./ta": 97,
-	"./ta.js": 97,
-	"./te": 98,
-	"./te.js": 98,
-	"./tet": 99,
-	"./tet.js": 99,
-	"./th": 100,
-	"./th.js": 100,
-	"./tl-ph": 101,
-	"./tl-ph.js": 101,
-	"./tlh": 102,
-	"./tlh.js": 102,
-	"./tr": 103,
-	"./tr.js": 103,
-	"./tzl": 104,
-	"./tzl.js": 104,
-	"./tzm": 105,
-	"./tzm-latn": 106,
-	"./tzm-latn.js": 106,
-	"./tzm.js": 105,
-	"./uk": 107,
-	"./uk.js": 107,
-	"./ur": 108,
-	"./ur.js": 108,
-	"./uz": 109,
-	"./uz-latn": 110,
-	"./uz-latn.js": 110,
-	"./uz.js": 109,
-	"./vi": 111,
-	"./vi.js": 111,
-	"./x-pseudo": 112,
-	"./x-pseudo.js": 112,
-	"./yo": 113,
-	"./yo.js": 113,
-	"./zh-cn": 114,
-	"./zh-cn.js": 114,
-	"./zh-hk": 115,
-	"./zh-hk.js": 115,
-	"./zh-tw": 116,
-	"./zh-tw.js": 116
-};
-function webpackContext(req) {
-	return __webpack_require__(webpackContextResolve(req));
-};
-function webpackContextResolve(req) {
-	var id = map[req];
-	if(!(id + 1)) // check for number or string
-		throw new Error("Cannot find module '" + req + "'.");
-	return id;
-};
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = 122;
-
-/***/ }),
-/* 123 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var extend = __webpack_require__(124);
-var egCommponent = __webpack_require__(125);
-var $ = __webpack_require__(1);
-
-var Carousel = extend(egCommponent, {
-
-    init: function (root) {
-        this.$root = root;
-        this.$carouselRoot = this.$root.find('.visual_img');
-        var $li = this.$root.find('li');
-        this.liCount = $li.length;
-        this.arrange = $li.width();
-        this.index = 1;
-
-        this.carouselReady();
-        this.bindOnClick();
-    },
-
-    carouselReady: function () {
-        var firstChild = this.$root.find('li:first').clone();
-        var lastChild = this.$root.find('li:last').clone();
-        this.$carouselRoot.prepend(lastChild);
-        this.$carouselRoot.append(firstChild);
-        this.$carouselRoot.css({"left": "-=" + this.arrange + "px"});
-    },
-
-    moveToPrev: function () {
-        if (this.$carouselRoot.is(":animated")) {
-            return false;
-        }
-
-        if (this.index <= 1) {
-            this.$carouselRoot.css({"left": "-=" + (this.arrange * (this.liCount)) + "px"});
-            this.index = this.liCount;
-        } else {
-            this.index--;
-        }
-
-        this.$carouselRoot.animate({"left": "+=" + this.arrange + "px"}, {
-            duration: "normal"
-        });
-
-        this.trigger("clickBtn",{curNum : this.index});
-    },
-
-    moveToNext: function () {
-        if (this.$carouselRoot.is(":animated")) {
-            return false;
-        }
-
-        if (this.index >= this.liCount) {
-            this.$carouselRoot.css({"left": "+=" + (this.arrange * (this.liCount)) + "px"});
-            this.index = 0;
-        }
-
-        this.$carouselRoot.animate({"left": "-=" + this.arrange + "px"}, {
-            duration: "normal"
-        });
-
-        this.index++;
-
-        this.trigger("clickBtn",{curNum : this.index});
-    },
-
-    bindOnClick: function () {
-        this.$root.find('.prev_inn').on('click', this.moveToPrevTrigger.bind(this));
-        this.$root.find('.nxt_inn').on('click', this.moveToNextTrigger.bind(this));
-
-        this.$root.find('.prev_e').on('mouseenter', '.prev_inn', function () {
-            this.trigger("stopTimer");
-        }.bind(this));
-
-        this.$root.find('.nxt_e').on('mouseenter', '.nxt_inn', function () {
-            this.trigger("stopTimer");
-        }.bind(this));
-    },
-
-    moveToPrevTrigger: function (e) {
-        e.preventDefault();
-        this.moveToPrev();
-    },
-
-    moveToNextTrigger: function (e) {
-        e.preventDefault();
-        this.moveToNext();
-    }
-});
-
-module.exports = Carousel;
-
-
-/***/ }),
-/* 124 */
-/***/ (function(module, exports) {
-
-var extend = function (superClass, def) {
-
-    var extendClass = function extendClass() {
-        // Call a parent constructor
-        superClass.apply(this, arguments);
-
-        // Call a child constructor
-        if (typeof def.init === "function") {
-            def.init.apply(this, arguments);
-        }
-    };
-
-    var ExtProto = function () {
-    };
-    ExtProto.prototype = superClass.prototype;
-
-    var extProto = new ExtProto();
-    for (var i in def) {
-        extProto[i] = def[i];
-    }
-    extProto.constructor = extendClass;
-    extendClass.prototype = extProto;
-
-    return extendClass;
-};
-
-module.exports = extend;
-
-
-/***/ }),
 /* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/*!
- * Copyright (c) 2017 NAVER Corp.
- * @egjs/component project is licensed under the MIT license
- * 
- * @egjs/component JavaScript library
- * http://naver.github.io/egjs/component
- * 
- * @version 2.0.0
- */
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(true)
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else if(typeof exports === 'object')
-		exports["Component"] = factory();
-	else
-		root["eg"] = root["eg"] || {}, root["eg"]["Component"] = factory();
-})(this, function() {
-return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+var $ = __webpack_require__(1);
+var egComponent = __webpack_require__(117);
+var util = __webpack_require__(118);
 
-"use strict";
+var Ticket = util(egComponent,{
+    init : function(id) {
+        this.ticketEle = $(id);
+        this.countEle = $(id).find(".count_control_input");
+        this.price = $(id).find(".product_price").data("price");
+        this.priceType = $(id).data("pricetype");
+        this.maxCount = 10;
+        this.bindTicketEvent();
+    },
 
+    bindTicketEvent : function(){
+        this.ticketEle.on('click', '.ico_plus3', this.plus.bind(this));
+        this.ticketEle.on('click', '.ico_minus3', this.minus.bind(this));
+    },
 
-var _Component = __webpack_require__(1);
+    plus : function(e){
+        e.preventDefault();
+        var currentCount = this.getTicketAmount();
+        
+        if(currentCount < this.maxCount){
+            var currentCount = currentCount + 1;
+            this.countEle.val(currentCount);
+            var $parentTarget = $(e.currentTarget).closest('.clearfix');
 
-var _Component2 = _interopRequireDefault(_Component);
+            if(currentCount === this.maxCount) {
+                $(e.currentTarget).addClass("disabled");
+            } else {
+                $(e.currentTarget).removeClass("disabled");
+            }
+            $parentTarget.find('.count_control_input').removeClass('disabled');
+            $parentTarget.find('.ico_minus3').removeClass('disabled');
+        }
+        this.setTicketPrice();
+        this.trigger('changeTicket', {
+            "ticketCount" : this.getTicketAmount()
+        });
+    },
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+    minus : function(e){
+        e.preventDefault();
+        var currentCount = this.getTicketAmount();
 
-_Component2["default"].VERSION = "2.0.0";
-module.exports = _Component2["default"];
+        if(currentCount > 0) {
+            var currentCount = currentCount - 1;
+            this.countEle.val(currentCount);
+            var $parentTarget = $(e.currentTarget).closest('.clearfix');
+            
+            if(currentCount === 0) {
+                $(e.currentTarget).addClass("disabled");
+                $parentTarget.find('.count_control_input').addClass("disabled");
+            } else {
+                $(e.currentTarget).removeClass("disabled");
+                $parentTarget.find('.count_control_input').removeClass('disabled');
+            }
+            $parentTarget.find('.ico_plus3').removeClass('disabled');   
+        }
+        this.setTicketPrice();
+        this.trigger('changeTicket', {
+            "ticketCount" : this.getTicketAmount()
+        });
+    },
 
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
+    getTicketAmount : function(){
+        return parseInt(this.countEle.val());
+    },
 
-"use strict";
+    getTotalPrice : function(){
+        return this.getTicketAmount() * this.price;
+    },
 
+    
 
-exports.__esModule = true;
+    setTicketPrice : function(){
+        this.ticketEle.find('.total_price').text(this.getTotalPrice().toLocaleString());
+    }
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Copyright (c) 2015 NAVER Corp.
- * egjs projects are licensed under the MIT license
- */
-
-/**
- * A class used to manage events and options in a component
- * @ko 컴포넌트의 이벤트와 옵션을 관리할 수 있게 하는 클래스
- * @alias eg.Component
- */
-var Component = function () {
-	/**
-  * @support {"ie": "7+", "ch" : "latest", "ff" : "latest",  "sf" : "latest", "edge" : "latest", "ios" : "7+", "an" : "2.1+ (except 3.x)"}
-  */
-	function Component() {
-		_classCallCheck(this, Component);
-
-		this._eventHandler = {};
-		this.options = {};
-	}
-	/**
-  * Triggers a custom event.
-  * @ko 커스텀 이벤트를 발생시킨다
-  * @param {String} eventName The name of the custom event to be triggered <ko>발생할 커스텀 이벤트의 이름</ko>
-  * @param {Object} customEvent Event data to be sent when triggering a custom event <ko>커스텀 이벤트가 발생할 때 전달할 데이터</ko>
-  * @return {Boolean} Indicates whether the event has occurred. If the stop() method is called by a custom event handler, it will return false and prevent the event from occurring. <ko>이벤트 발생 여부. 커스텀 이벤트 핸들러에서 stop() 메서드를 호출하면 'false'를 반환하고 이벤트 발생을 중단한다.</ko>
-  * @example
- class Some extends eg.Component {
-  some(){
-    this.trigger("hi");// fire hi event.
-  }
- }
-  */
-
-
-	Component.prototype.trigger = function trigger(eventName) {
-		var customEvent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-		var handlerList = this._eventHandler[eventName] || [];
-		var hasHandlerList = handlerList.length > 0;
-
-		if (!hasHandlerList) {
-			return true;
-		}
-
-		// If detach method call in handler in first time then handeler list calls.
-		handlerList = handlerList.concat();
-
-		customEvent.eventType = eventName;
-
-		var isCanceled = false;
-		var arg = [customEvent];
-		var i = 0;
-
-		customEvent.stop = function () {
-			isCanceled = true;
-		};
-
-		for (var _len = arguments.length, restParam = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-			restParam[_key - 2] = arguments[_key];
-		}
-
-		if (restParam.length >= 1) {
-			arg = arg.concat(restParam);
-		}
-
-		for (i = 0; handlerList[i]; i++) {
-			handlerList[i].apply(this, arg);
-		}
-
-		return !isCanceled;
-	};
-	/**
-  * Executed event just one time.
-  * @ko 이벤트가 한번만 실행된다.
-  * @param {eventName} eventName The name of the event to be attached <ko>등록할 이벤트의 이름</ko>
-  * @param {Function} handlerToAttach The handler function of the event to be attached <ko>등록할 이벤트의 핸들러 함수</ko>
-  * @return {eg.Component} An instance of a component itself<ko>컴포넌트 자신의 인스턴스</ko>
-  * @example
- class Some extends eg.Component {
-  hi() {
-    alert("hi");
-  }
-  thing() {
-    this.once("hi", this.hi);
-  }
- }
- var some = new Some();
- some.thing();
- some.trigger("hi");
- // fire alert("hi");
- some.trigger("hi");
- // Nothing happens
-  */
-
-
-	Component.prototype.once = function once(eventName, handlerToAttach) {
-		if ((typeof eventName === "undefined" ? "undefined" : _typeof(eventName)) === "object" && typeof handlerToAttach === "undefined") {
-			var eventHash = eventName;
-			var i = void 0;
-
-			for (i in eventHash) {
-				this.once(i, eventHash[i]);
-			}
-			return this;
-		} else if (typeof eventName === "string" && typeof handlerToAttach === "function") {
-			var self = this;
-
-			this.on(eventName, function listener() {
-				for (var _len2 = arguments.length, arg = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-					arg[_key2] = arguments[_key2];
-				}
-
-				handlerToAttach.apply(self, arg);
-				self.off(eventName, listener);
-			});
-		}
-
-		return this;
-	};
-
-	/**
-  * Checks whether an event has been attached to a component.
-  * @ko 컴포넌트에 이벤트가 등록됐는지 확인한다.
-  * @param {String} eventName The name of the event to be attached <ko>등록 여부를 확인할 이벤트의 이름</ko>
-  * @return {Boolean} Indicates whether the event is attached. <ko>이벤트 등록 여부</ko>
-  * @example
- class Some extends eg.Component {
-  some() {
-    this.hasOn("hi");// check hi event.
-  }
- }
-  */
-
-
-	Component.prototype.hasOn = function hasOn(eventName) {
-		return !!this._eventHandler[eventName];
-	};
-
-	/**
-  * Attaches an event to a component.
-  * @ko 컴포넌트에 이벤트를 등록한다.
-  * @param {eventName} eventName The name of the event to be attached <ko>등록할 이벤트의 이름</ko>
-  * @param {Function} handlerToAttach The handler function of the event to be attached <ko>등록할 이벤트의 핸들러 함수</ko>
-  * @return {eg.Component} An instance of a component itself<ko>컴포넌트 자신의 인스턴스</ko>
-  * @example
- class Some extends eg.Component {
-  hi() {
-    console.log("hi");
-  }
-  some() {
-    this.on("hi",this.hi); //attach event
-  }
- }
- */
-
-
-	Component.prototype.on = function on(eventName, handlerToAttach) {
-		if ((typeof eventName === "undefined" ? "undefined" : _typeof(eventName)) === "object" && typeof handlerToAttach === "undefined") {
-			var eventHash = eventName;
-			var name = void 0;
-
-			for (name in eventHash) {
-				this.on(name, eventHash[name]);
-			}
-			return this;
-		} else if (typeof eventName === "string" && typeof handlerToAttach === "function") {
-			var handlerList = this._eventHandler[eventName];
-
-			if (typeof handlerList === "undefined") {
-				this._eventHandler[eventName] = [];
-				handlerList = this._eventHandler[eventName];
-			}
-
-			handlerList.push(handlerToAttach);
-		}
-
-		return this;
-	};
-	/**
-  * Detaches an event from the component.
-  * @ko 컴포넌트에 등록된 이벤트를 해제한다
-  * @param {eventName} eventName The name of the event to be detached <ko>해제할 이벤트의 이름</ko>
-  * @param {Function} handlerToDetach The handler function of the event to be detached <ko>해제할 이벤트의 핸들러 함수</ko>
-  * @return {eg.Component} An instance of a component itself <ko>컴포넌트 자신의 인스턴스</ko>
-  * @example
- class Some extends eg.Component {
-  hi() {
-    console.log("hi");
-  }
-  some() {
-    this.off("hi",this.hi); //detach event
-  }
- }
-  */
-
-
-	Component.prototype.off = function off(eventName, handlerToDetach) {
-		// All event detach.
-		if (typeof eventName === "undefined") {
-			this._eventHandler = {};
-			return this;
-		}
-
-		// All handler of specific event detach.
-		if (typeof handlerToDetach === "undefined") {
-			if (typeof eventName === "string") {
-				this._eventHandler[eventName] = undefined;
-				return this;
-			} else {
-				var eventHash = eventName;
-				var name = void 0;
-
-				for (name in eventHash) {
-					this.off(name, eventHash[name]);
-				}
-				return this;
-			}
-		}
-
-		// The handler of specific event detach.
-		var handlerList = this._eventHandler[eventName];
-
-		if (handlerList) {
-			var k = void 0;
-			var handlerFunction = void 0;
-
-			for (k = 0; (handlerFunction = handlerList[k]) !== undefined; k++) {
-				if (handlerFunction === handlerToDetach) {
-					handlerList = handlerList.splice(k, 1);
-					break;
-				}
-			}
-		}
-
-		return this;
-	};
-
-	return Component;
-}();
-
-exports["default"] = Component;
-module.exports = exports["default"];
-
-/***/ })
-/******/ ]);
 });
-//# sourceMappingURL=component.js.map
+
+module.exports = Ticket;
 
 /***/ }),
 /* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(1);
-var egComponent = __webpack_require__(125);
-var extend = __webpack_require__(124);
+var egComponent = __webpack_require__(117);
+var util = __webpack_require__(118);
 
-var FlickingComponent = extend(egComponent, {
+var ReserveUser = util(egComponent, {
+    init : function($rootElement, option){
+        this.setDefaultOption(option);
+        this.$inline = $rootElement.find('.form_horizontal');
+        this.$name = this.$inline.find('#name');
+        this.$tel = this.$inline.find('#tel');
+        this.$email = this.$inline.find('#email');
+        this.$inlineTxt = this.$inline.find('.inline_txt');
+        this.$agreement = $rootElement.find('#chk3');
+        this.state = {
+            "boolean" : {
+                "name" : undefined,
+                "tel" : undefined,
+                "email" : undefined,
+                "ticketTotalCount" : undefined,
+                "agreement" : undefined
+            },
+            "value" : {}
+        };
+        this.setInlineText(this.option.ticketTotalCount);
 
-    init: function (ele) {
-        this.root = ele;
-        this.ele = ele.find('li');
-        this.num = 1;
-        this.slide_width = this.ele.outerWidth();
-        this.slide_count = this.ele.length;
-        this.touch_start_y = 0;
-        this.touch_start_x = 0;
-        this.save_x = 0;
-        this.move_dx = 0;
-        this.cur_dist = this.slide_width;
-        this.move_sum = 0;
-        this.curLiPosition;
-
-        this.bindOnFlikingBtn();
+        this.inspectName();
+        this.inspectTelNumber();
+        this.inspectEmailNumber();
+        this.bindEventList();
     },
 
-    flickingStart : function (e) {
-        if (e.type === 'touchstart' && e.touches.length === 1) {
-            this.touch_start_x = e.touches[0].pageX;
-            this.touch_start_y = e.touches[0].pageY;
+    bindEventList : function() {
+        this.$name.on('keyup', this.inspectName.bind(this));
+        this.$tel.on('keyup', this.inspectTelNumber.bind(this));
+        this.$email.on('keyup', this.inspectEmailNumber.bind(this));
+        this.$agreement.on('click', this.inspectAgreementCheckBox.bind(this));
+    },
+
+    changeState : function(prop, item) {
+        this.state.boolean[prop] = item.boolean;
+        this.state.value[prop] = item.value;
+        this.triggerChagneOfState();
+    },
+
+    triggerChagneOfState : function() {
+        this.trigger('changeBooking', {
+            "state" : this.state
+        });
+    },
+
+    inspectName : function() {
+        var name = this.$name.val();
+        var isInspected = false;
+
+        if(name !== "") {
+            isInspected = true;
         }
-        e.preventDefault();
+        this.changeState("name", {
+            "boolean" : isInspected,
+            "value" : name
+        });
     },
 
-    flickingMove : function (e) {
-        var drag_dist = 0;
-        var scroll_dist = 0;
-        this.curLiPosition = this.ele.closest("ul").position().left;
+    inspectTelNumber : function() {
+        var regExp = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
+        var tel = this.$tel.val();
+        var isInspected = false;
 
-        if (e.type === 'touchmove' && e.touches.length === 1) {
-            drag_dist = e.touches[0].pageX - this.touch_start_x;
-            scroll_dist = e.touches[0].pageY - this.touch_start_y;
-            this.move_dx = ( drag_dist / this.cur_dist ) * 100;
-            this.move_sum += this.move_dx;
-
-            if (this.ele.closest("ul").is(":animated")) {
-                this.save_x = 0;
-                this.touch_start_y = 0;
-                this.touch_start_x = 0;
-                this.move_dx = 0;
-                this.move_sum = 0;
-
-                return false;
-            }
-
-            if (Math.abs(drag_dist) > Math.abs(scroll_dist)) {
-                if (this.curLiPosition > 0) {
-                    this.save_x = 1;
-                } else {
-                    if (Math.abs(this.move_sum) < this.cur_dist) {
-                        this.ele.closest("ul").css({"left": "+=" + this.move_dx + "px"});
-                    } else {
-                        this.save_x = 1;
-                    }
-                }
-                e.preventDefault();
-            }
+        if(regExp.test(tel)) {
+            isInspected = true;
         }
+        this.changeState("tel", {
+            "boolean" : isInspected,
+            "value" : tel
+        });
     },
 
-    flickingEnd : function (e) {
-        if (e.type === 'touchend' && e.touches.length === 0) {
-            if (Math.abs(this.move_dx) > 8) {
-
-                if (this.save_x > 0) {
-                    this.curLiPosition = this.ele.closest("ul").position().left;
-                    this.ele.closest("ul").animate({"left": "-=" + (this.curLiPosition + ((this.num - 1) * this.cur_dist)) + "px"}, "fast");
-
-                    this.save_x = 0;
-                    this.touch_start_y = 0;
-                    this.touch_start_x = 0;
-                    this.move_dx = 0;
-                    this.move_sum = 0;
-
-                    return false;
-                }
-
-                if (this.move_sum > 0) {
-
-                    if (this.ele.closest("ul").is(":animated")) {
-                        return false;
-                    }
-
-                    if (this.num != 1) {
-                        //$('.figure_pagination > span:first').text(--curImgnum);
-                        this.ele.closest("ul").animate({"left": "+=" + (this.cur_dist - this.move_sum) + "px"}, "slow");
-                        this.num--;
-                    }
-                } else {
-                    if (this.ele.closest("ul").is(":animated")) {
-                        return false;
-                    }
-
-                    if (this.num != this.slide_count) {
-                        this.ele.closest("ul").animate({"left": "-=" + (this.cur_dist + this.move_sum) + "px"}, "slow");
-                        this.num++;
-                    } else {
-                        this.curLiPosition = this.ele.closest("ul").position().left;
-                        this.ele.closest("ul").animate({"left": "-=" + (this.curLiPosition + ((this.num - 1) * this.cur_dist)) + "px"}, "fast");
-                    }
-                }
-            } else {
-                if (this.ele.closest("ul").is(":animated")) {
-                    return false;
-                }
-
-                this.curLiPosition = this.ele.closest("ul").position().left;
-
-                this.ele.closest("ul").animate({"left": "-=" + (this.curLiPosition + ((this.num - 1) * this.cur_dist)) + "px"}, "fast");
-            }
-
-            this.touch_start_y = 0;
-            this.touch_start_x = 0;
-            this.move_dx = 0;
-            this.move_sum = 0;
-
-            e.preventDefault();
+    inspectEmailNumber : function() {
+        var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+        var email = this.$email.val();
+        var isInspected = false;
+        
+        if(regExp.test(email)){
+            isInspected = true;
         }
+        this.changeState("email", {
+            "boolean" : isInspected,
+            "value" : email
+        });
     },
 
-    bindOnFlikingBtn : function(){
-        this.root.bind('touchstart', function (e) {
-            e.preventDefault();
-            this.flickingStart(e);
-        }.bind(this))
+    inspectTicketTotalCount : function() {
+        var ticketTotalCount = this.option.ticketTotalCount;
+        var isInspected = false;
 
-        this.root.bind('touchmove', function (e) {
-            e.preventDefault();
-            this.flickingMove(e);
-        }.bind(this))
-
-        this.root.bind('touchend', function (e) {
-            e.preventDefault();
-            this.flickingEnd(e);
-            this.trigger("flick", {curDisplayNum: this.num});
-        }.bind(this))
+        if(this.option.ticketTotalCount > 0){
+            isInspected = true;
+        }
+        this.changeState("ticketTotalCount", {
+            "boolean" : isInspected,
+            "value" : ticketTotalCount
+        });
     },
 
-    flush : function(){
-        this.ele.closest("ul").animate({"left": "0px"}, "fast");
-        this.num = 1;
-        this.touch_start_y = 0;
-        this.touch_start_x = 0;
-        this.save_x = 0;
-        this.save_y = 0;
-        this.move_dx = 0;
-        this.move_sum = 0;
+    inspectAgreementCheckBox : function() {
+        var isInspected = false;
+        if(this.$agreement.prop("checked")){
+            isInspected = true;
+        }
+        this.changeState("agreement", {
+            "boolean" : isInspected
+        });
+    },
+    
+    setInlineText : function(ticketTotalCount){
+        this.$inlineTxt.text(this.option.salesDuration + ', 총 '+ ticketTotalCount +'매');
+        this.option.ticketTotalCount = ticketTotalCount;
+        this.inspectTicketTotalCount();
+    },
+
+    setDefaultOption : function (option){
+        option = option||{};
+
+        this.option = {
+            "salesDuration" : "2017.7.01.(토)~2017.8.01.(화)",
+            "ticketTotalCount" : "0"
+        };
+
+        if(option.salesDuration !== undefined){
+            this.option.salesDuration = option.salesDuration;
+        }
+
+        if(option.ticketTotalCount !== undefined){
+            this.option.ticketTotalCount = option.ticketTotalCount;
+        }
     }
 });
 
-module.exports = FlickingComponent;
+module.exports = ReserveUser;
 
 /***/ }),
 /* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(1);
+var Moment = __webpack_require__(0);
 
-var LazyLoad = (function () {
-
-    function LazyLoad() {
-        var $srcRoot;
-        var srcImage;
-        var lazyTarget;
-
-        var init = function ($root) {
-            $srcRoot = $root.find('.in_img_group .img_thumb');
-            srcImage = $srcRoot.data('lazy-image');
-            lazyTarget = $root.get(0);
-            bindScroll();
-        };
-
-        function bindScroll() {
-            $(window).scroll(function () {
-                if (isInViewport(lazyTarget)) {
-                    $srcRoot.attr('src', srcImage);
-                }
+var ProductReserveModel = (function () {
+    var instance;
+    
+    function getReserve() {
+        function setMomentConfig() {
+            Moment.updateLocale('ko', {
+                weekdays: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"],
+                weekdaysShort: ["일", "월", "화", "수", "목", "금", "토"],
             });
         }
 
+        function getSalesDuration(data) {
+            var startDatePretty = Moment(data.salesStart).format("YYYY.M.DD.(ddd)");
+            var endDatePretty = Moment(data.salesEnd).format("YYYY.M.DD.(ddd)");
+            salesDuration = startDatePretty + "~" + endDatePretty;
+            return salesDuration;
+        }
 
-        function isInViewport(ele) {
-            var rect = ele.getBoundingClientRect();
+        function getReserves(fp) {
+            var url = "/api/products/" + $('#gavas').data('productid') + "/reservainformation";
+            $.ajax(url).then(function(data) {
+                var salesDuration = getSalesDuration(data);
+                fp(data, salesDuration);
+            });
+        }
 
-            return (
-                rect.bottom >= 0 &&
-                rect.right >= 0 &&
-                rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
-                rect.left <= (window.innerWidth || document.documentElement.clientWidth)
-            );
+        function writeReservation(data, fp) {
+            console.log(data);
+            var url = "/api/reservations";
+            $.ajax(url,{
+                method : "POST",
+                data : JSON.stringify(data),
+                contentType : "application/json"
+            }).then(function(data,status, jqXHR) {
+                fp(jqXHR.status);
+            }, function(jqXHR){
+                fp(jqXHR.status);
+            });
         }
 
         return {
-            init: init
+            setMomentConfig : setMomentConfig,
+            getReserves: getReserves,
+            writeReservation : writeReservation
         }
-
     }
 
     return {
-        getInstance: LazyLoad
-    }
-})();
-
-module.exports = LazyLoad;
-
-/***/ }),
-/* 128 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $ = __webpack_require__(1);
-
-var navermap = (function(){
-
-    function showMap(){
-        var targetAddress = $('.store_addr.store_addr_bold').text();
-        naver.maps.Service.geocode({
-            address: targetAddress
-        }, function(status, response) {
-            if (status !== naver.maps.Service.Status.OK) {
-                return alert('Something wrong!');
+        getInstance: function(){
+            if(instance !== undefined){
+                return instance;
             }
-
-            var result = response.result, // 검색 결과의 컨테이너
-                items = result.items; // 검색 결과의 배열s
-
-            var x = parseFloat(items[0].point['x']);
-            var y = parseFloat(items[0].point['y']);
-
-            var map = new naver.maps.Map('map', {
-                center: new naver.maps.LatLng(y, x),
-                zoom: 10
-            });
-
-            var marker = new naver.maps.Marker({
-                position: new naver.maps.LatLng(y, x),
-                map: map
-            });
-            // do Something
-        });
-    }
-
-    return {
-        showMap : showMap
+            instance = getReserve();
+            return instance;
+        }
     }
 })();
 
-module.exports = navermap;
+module.exports = ProductReserveModel;
 
 /***/ })
 /******/ ]);

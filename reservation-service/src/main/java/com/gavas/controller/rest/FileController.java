@@ -31,7 +31,7 @@ public class FileController {
 
     @GetMapping("{fileId}")
     public void downloadReservationUserCommentImage(@PathVariable("fileId") Long fileId, HttpServletResponse response) {
-        FileDomain fileLocation = fileService.getFileDomaintByFileId(fileId);
+        FileDomain fileLocation = fileService.getFileDomainByFileId(fileId);
 
         String originalFilename = "원본파일명";
         String contentType = "image/jpeg";

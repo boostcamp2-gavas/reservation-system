@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -20,12 +23,16 @@ import static com.gavas.dao.sqls.FileSqls.SELECT_FILE_ID_BY_PRODUCT_ID;
 @Repository
 public class FileDao {
     private NamedParameterJdbcTemplate jdbc;
-    private RowMapper<FileDomain> rowMapper;
+    private SimpleJdbcInsert insertAction;
+    private RowMapper<FileDomain> rowMapper = BeanPropertyRowMapper.newInstance(FileDomain.class);
 
     @Autowired
     public FileDao(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
         this.rowMapper = BeanPropertyRowMapper.newInstance(FileDomain.class);
+        this.insertAction = new SimpleJdbcInsert(dataSource)
+                .withTableName("file")
+                .usingGeneratedKeyColumns("id");
     }
 
     public List<Long> selectFileIdsByProductId(Long productId) {
@@ -46,5 +53,10 @@ public class FileDao {
         } catch (EmptyResultDataAccessException exception) {
             throw new EmptyQueryResultException("FileDomain Id");
         }
+    }
+
+    public Integer addFile(FileDomain fileDomain) {
+        SqlParameterSource param = new BeanPropertySqlParameterSource(fileDomain);
+        return insertAction.executeAndReturnKey(param).intValue();
     }
 }
