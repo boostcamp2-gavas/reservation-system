@@ -3,12 +3,14 @@ var Handlebars = require('../../node_modules/handlebars/dist/handlebars');
 var ProductDetailModel = require('./productdetailmodel');
 var Moment = require('../../node_modules/moment/moment');
 var Carousel = require('../mainpage/carousel');
+var FlickingComponent = require('../flickingcomponent');
 
 var ProductDetail = (function () {
     var productDetailModel = ProductDetailModel.getDetail();
     var source = $("#detailImage-template").html();
     var template = Handlebars.compile(source);
     var carousel;
+    var flicking;
 
     function init() {
         bindOnClickMoreBtn();
@@ -47,6 +49,7 @@ var ProductDetail = (function () {
             validateTicketing(data);
             carousel = new Carousel($('.group_visual'));
             bindOnCarouselAction();
+            flicking = new FlickingComponent($('.visual_img'));
         });
     }
 
@@ -90,6 +93,10 @@ var ProductDetail = (function () {
         carousel.on("clickBtn",function(e) {
             console.log(e.curNum);
         });
+    }
+
+    function bindOnFlickingComponent(){
+        var flicking = new FlickingComponent($('.visual_img'));
     }
 
     return {

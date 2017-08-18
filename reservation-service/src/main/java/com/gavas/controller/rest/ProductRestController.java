@@ -40,9 +40,10 @@ public class ProductRestController {
         return new ResponseEntity<>(userCommentDtoList,HttpStatus.OK);
     }
 
-    @GetMapping("/{productId}/reservations")
-    public ResponseEntity<List<ProductPriceInfoDto>> getProductPriceInfo(@PathVariable Long productId) {
-        return null;
+    @GetMapping("/{productId}/reservainformation")
+    public ResponseEntity<ProductReserveDto> getProductReserveInfo(@PathVariable Long productId) {
+        ProductReserveDto productReserveDto = productService.getProductReserveInfoByProductId(productId);
+        return new ResponseEntity<>(productReserveDto, HttpStatus.OK);
     }
 
     @ExceptionHandler(EmptyQueryResultException.class)

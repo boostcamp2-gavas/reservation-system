@@ -29,14 +29,18 @@ var Carousel = extend(egCommponent, {
             return false;
         }
 
-        if (this.index <= 0) {
-            this.$carouselRoot.css({"left": "-=" + (this.arrange * (this.liCount + 1)) + "px"});
-            this.index = 4;
+        if (this.index <= 1) {
+            this.$carouselRoot.css({"left": "-=" + (this.arrange * (this.liCount)) + "px"});
+            this.index = this.liCount;
+        } else {
+            this.index--;
         }
+
         this.$carouselRoot.animate({"left": "+=" + this.arrange + "px"}, {
             duration: "normal"
         });
-        this.index--;
+
+        this.trigger("clickBtn",{curNum : this.index});
     },
 
     moveToNext: function () {
@@ -54,6 +58,8 @@ var Carousel = extend(egCommponent, {
         });
 
         this.index++;
+
+        this.trigger("clickBtn",{curNum : this.index});
     },
 
     bindOnClick: function () {
@@ -69,14 +75,14 @@ var Carousel = extend(egCommponent, {
         }.bind(this));
     },
 
-    moveToPrevTrigger: function () {
+    moveToPrevTrigger: function (e) {
+        e.preventDefault();
         this.moveToPrev();
-        this.trigger("clickBtn",{num : this.index});
     },
 
-    moveToNextTrigger: function () {
+    moveToNextTrigger: function (e) {
+        e.preventDefault();
         this.moveToNext();
-        this.trigger("clickBtn",{curNum : this.index});
     }
 });
 

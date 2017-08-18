@@ -18,6 +18,7 @@
 </head>
 
 <body>
+<div id="gavas" data-productid = ${productId} data-userid = ${userId}>
 <div id="container">
     <div class="header fade">
         <header class="header_tit">
@@ -32,7 +33,7 @@
         <div class="ct_wrap">
             <div class="top_title review_header">
                 <a href="#" class="btn_back" title="이전 화면으로 이동"> <i class="fn fn-backward1"></i> </a>
-                <h2><span class="title">클림트 인사이트${productId}</span></h2>
+                <h2><span class="title">${productName}</span></h2>
             </div>
             <!-- 리뷰 별점 -->
             <div class="write_act">

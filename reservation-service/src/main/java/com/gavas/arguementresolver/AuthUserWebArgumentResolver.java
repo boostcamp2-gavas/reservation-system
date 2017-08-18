@@ -1,6 +1,7 @@
 package com.gavas.arguementresolver;
 
 import com.gavas.domain.User;
+import com.gavas.exception.EmptyQueryResultException;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebArgumentResolver;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -24,12 +25,11 @@ public class AuthUserWebArgumentResolver implements HandlerMethodArgumentResolve
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         AuthUser loginUser = parameter.getParameterAnnotation(AuthUser.class);
-        if (loginUser == null) {
-            return WebArgumentResolver.UNRESOLVED;
-        } // 여긴 체크할 필요가 없다
+
         HttpSession session = webRequest.getNativeRequest(HttpServletRequest.class).getSession();
 
         User naverLoginUser = (User) session.getAttribute("USER");
+
         return naverLoginUser;
     }
 }

@@ -4,6 +4,7 @@ import com.gavas.dao.FileDao;
 import com.gavas.dao.ProductDao;
 import com.gavas.domain.dto.ProductDetailsDto;
 import com.gavas.domain.dto.ProductDto;
+import com.gavas.domain.dto.ProductReserveDto;
 import com.gavas.service.CategoryService;
 import com.gavas.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,23 @@ public class ProductServiceImpl implements ProductService {
             productDetailsDto.setFileIdList(fileDao.selectFileIdsByProductId(productId));
             return productDetailsDto;
         }
+        return null;
+    }
+    
+    @Transactional(readOnly = true)
+    @Override
+    public String selectProductNameByProductId(Long productId) {
+        return productDao.selectProductNameByProductId(productId);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public ProductReserveDto getProductReserveInfoByProductId(Long productId) {
+        if (findProductById(productId) != null){
+                ProductReserveDto productReserveDto = productDao.selectProductReserveInfoByProductId(productId);
+                productReserveDto.setProductPriceInfoDtoList(productDao.selectProductPriceInfoByProductId(productId));
+                return productReserveDto;
+            }
         return null;
     }
 }

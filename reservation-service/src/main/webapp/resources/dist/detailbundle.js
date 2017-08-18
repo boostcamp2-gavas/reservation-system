@@ -25879,8 +25879,8 @@ return zhTw;
 
 var $ = __webpack_require__(1);
 var ProductDetail = __webpack_require__(118);
-var LazyLoad = __webpack_require__(123);
-var NaverMap = __webpack_require__(124);
+var LazyLoad = __webpack_require__(127);
+var NaverMap = __webpack_require__(128);
 
 (function () {
     ProductDetail.init();
@@ -25900,13 +25900,15 @@ var $ = __webpack_require__(1);
 var Handlebars = __webpack_require__(119);
 var ProductDetailModel = __webpack_require__(120);
 var Moment = __webpack_require__(0);
-var Carousel = __webpack_require__(125);
+var Carousel = __webpack_require__(123);
+var FlickingComponent = __webpack_require__(126);
 
 var ProductDetail = (function () {
     var productDetailModel = ProductDetailModel.getDetail();
     var source = $("#detailImage-template").html();
     var template = Handlebars.compile(source);
     var carousel;
+    var flicking;
 
     function init() {
         bindOnClickMoreBtn();
@@ -25945,6 +25947,7 @@ var ProductDetail = (function () {
             validateTicketing(data);
             carousel = new Carousel($('.group_visual'));
             bindOnCarouselAction();
+            flicking = new FlickingComponent($('.visual_img'));
         });
     }
 
@@ -25988,6 +25991,10 @@ var ProductDetail = (function () {
         carousel.on("clickBtn",function(e) {
             console.log(e.curNum);
         });
+    }
+
+    function bindOnFlickingComponent(){
+        var flicking = new FlickingComponent($('.visual_img'));
     }
 
     return {
@@ -31156,104 +31163,8 @@ webpackContext.id = 122;
 /* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(1);
-
-var LazyLoad = (function () {
-
-    function LazyLoad() {
-        var $srcRoot;
-        var srcImage;
-        var lazyTarget;
-
-        var init = function ($root) {
-            $srcRoot = $root.find('.in_img_group .img_thumb');
-            srcImage = $srcRoot.data('lazy-image');
-            lazyTarget = $root.get(0);
-            bindScroll();
-        };
-
-        function bindScroll() {
-            $(window).scroll(function () {
-                if (isInViewport(lazyTarget)) {
-                    $srcRoot.attr('src', srcImage);
-                }
-            });
-        }
-
-
-        function isInViewport(ele) {
-            var rect = ele.getBoundingClientRect();
-
-            return (
-                rect.bottom >= 0 &&
-                rect.right >= 0 &&
-                rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
-                rect.left <= (window.innerWidth || document.documentElement.clientWidth)
-            );
-        }
-
-        return {
-            init: init
-        }
-
-    }
-
-    return {
-        getInstance: LazyLoad
-    }
-})();
-
-module.exports = LazyLoad;
-
-/***/ }),
-/* 124 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $ = __webpack_require__(1);
-
-var navermap = (function(){
-
-    function showMap(){
-        var targetAddress = $('.store_addr.store_addr_bold').text();
-        naver.maps.Service.geocode({
-            address: targetAddress
-        }, function(status, response) {
-            if (status !== naver.maps.Service.Status.OK) {
-                return alert('Something wrong!');
-            }
-
-            var result = response.result, // 검색 결과의 컨테이너
-                items = result.items; // 검색 결과의 배열s
-
-            var x = parseFloat(items[0].point['x']);
-            var y = parseFloat(items[0].point['y']);
-
-            var map = new naver.maps.Map('map', {
-                center: new naver.maps.LatLng(y, x),
-                zoom: 10
-            });
-
-            var marker = new naver.maps.Marker({
-                position: new naver.maps.LatLng(y, x),
-                map: map
-            });
-            // do Something
-        });
-    }
-
-    return {
-        showMap : showMap
-    }
-})();
-
-module.exports = navermap;
-
-/***/ }),
-/* 125 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var extend = __webpack_require__(126);
-var egCommponent = __webpack_require__(127);
+var extend = __webpack_require__(124);
+var egCommponent = __webpack_require__(125);
 var $ = __webpack_require__(1);
 
 var Carousel = extend(egCommponent, {
@@ -31283,14 +31194,18 @@ var Carousel = extend(egCommponent, {
             return false;
         }
 
-        if (this.index <= 0) {
-            this.$carouselRoot.css({"left": "-=" + (this.arrange * (this.liCount + 1)) + "px"});
-            this.index = 4;
+        if (this.index <= 1) {
+            this.$carouselRoot.css({"left": "-=" + (this.arrange * (this.liCount)) + "px"});
+            this.index = this.liCount;
+        } else {
+            this.index--;
         }
+
         this.$carouselRoot.animate({"left": "+=" + this.arrange + "px"}, {
             duration: "normal"
         });
-        this.index--;
+
+        this.trigger("clickBtn",{curNum : this.index});
     },
 
     moveToNext: function () {
@@ -31308,6 +31223,8 @@ var Carousel = extend(egCommponent, {
         });
 
         this.index++;
+
+        this.trigger("clickBtn",{curNum : this.index});
     },
 
     bindOnClick: function () {
@@ -31323,14 +31240,14 @@ var Carousel = extend(egCommponent, {
         }.bind(this));
     },
 
-    moveToPrevTrigger: function () {
+    moveToPrevTrigger: function (e) {
+        e.preventDefault();
         this.moveToPrev();
-        this.trigger("clickBtn",{num : this.index});
     },
 
-    moveToNextTrigger: function () {
+    moveToNextTrigger: function (e) {
+        e.preventDefault();
         this.moveToNext();
-        this.trigger("clickBtn",{curNum : this.index});
     }
 });
 
@@ -31338,7 +31255,7 @@ module.exports = Carousel;
 
 
 /***/ }),
-/* 126 */
+/* 124 */
 /***/ (function(module, exports) {
 
 var extend = function (superClass, def) {
@@ -31371,7 +31288,7 @@ module.exports = extend;
 
 
 /***/ }),
-/* 127 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -31735,6 +31652,265 @@ module.exports = exports["default"];
 /******/ ]);
 });
 //# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+var egComponent = __webpack_require__(125);
+var extend = __webpack_require__(124);
+
+var FlickingComponent = extend(egComponent, {
+
+    init: function (ele) {
+        this.root = ele;
+        this.ele = ele.find('li');
+        this.num = 1;
+        this.slide_width = this.ele.outerWidth();
+        this.slide_count = this.ele.length;
+        this.touch_start_y = 0;
+        this.touch_start_x = 0;
+        this.save_x = 0;
+        this.move_dx = 0;
+        this.cur_dist = this.slide_width;
+        this.move_sum = 0;
+        this.curLiPosition;
+
+        this.bindOnFlikingBtn();
+    },
+
+    flickingStart : function (e) {
+        if (e.type === 'touchstart' && e.touches.length === 1) {
+            this.touch_start_x = e.touches[0].pageX;
+            this.touch_start_y = e.touches[0].pageY;
+        }
+        e.preventDefault();
+    },
+
+    flickingMove : function (e) {
+        var drag_dist = 0;
+        var scroll_dist = 0;
+        this.curLiPosition = this.ele.closest("ul").position().left;
+
+        if (e.type === 'touchmove' && e.touches.length === 1) {
+            drag_dist = e.touches[0].pageX - this.touch_start_x;
+            scroll_dist = e.touches[0].pageY - this.touch_start_y;
+            this.move_dx = ( drag_dist / this.cur_dist ) * 100;
+            this.move_sum += this.move_dx;
+
+            if (this.ele.closest("ul").is(":animated")) {
+                this.save_x = 0;
+                this.touch_start_y = 0;
+                this.touch_start_x = 0;
+                this.move_dx = 0;
+                this.move_sum = 0;
+
+                return false;
+            }
+
+            if (Math.abs(drag_dist) > Math.abs(scroll_dist)) {
+                if (this.curLiPosition > 0) {
+                    this.save_x = 1;
+                } else {
+                    if (Math.abs(this.move_sum) < this.cur_dist) {
+                        this.ele.closest("ul").css({"left": "+=" + this.move_dx + "px"});
+                    } else {
+                        this.save_x = 1;
+                    }
+                }
+                e.preventDefault();
+            }
+        }
+    },
+
+    flickingEnd : function (e) {
+        if (e.type === 'touchend' && e.touches.length === 0) {
+            if (Math.abs(this.move_dx) > 8) {
+
+                if (this.save_x > 0) {
+                    this.curLiPosition = this.ele.closest("ul").position().left;
+                    this.ele.closest("ul").animate({"left": "-=" + (this.curLiPosition + ((this.num - 1) * this.cur_dist)) + "px"}, "fast");
+
+                    this.save_x = 0;
+                    this.touch_start_y = 0;
+                    this.touch_start_x = 0;
+                    this.move_dx = 0;
+                    this.move_sum = 0;
+
+                    return false;
+                }
+
+                if (this.move_sum > 0) {
+
+                    if (this.ele.closest("ul").is(":animated")) {
+                        return false;
+                    }
+
+                    if (this.num != 1) {
+                        //$('.figure_pagination > span:first').text(--curImgnum);
+                        this.ele.closest("ul").animate({"left": "+=" + (this.cur_dist - this.move_sum) + "px"}, "slow");
+                        this.num--;
+                    }
+                } else {
+                    if (this.ele.closest("ul").is(":animated")) {
+                        return false;
+                    }
+
+                    if (this.num != this.slide_count) {
+                        this.ele.closest("ul").animate({"left": "-=" + (this.cur_dist + this.move_sum) + "px"}, "slow");
+                        this.num++;
+                    } else {
+                        this.curLiPosition = this.ele.closest("ul").position().left;
+                        this.ele.closest("ul").animate({"left": "-=" + (this.curLiPosition + ((this.num - 1) * this.cur_dist)) + "px"}, "fast");
+                    }
+                }
+            } else {
+                if (this.ele.closest("ul").is(":animated")) {
+                    return false;
+                }
+
+                this.curLiPosition = this.ele.closest("ul").position().left;
+
+                this.ele.closest("ul").animate({"left": "-=" + (this.curLiPosition + ((this.num - 1) * this.cur_dist)) + "px"}, "fast");
+            }
+
+            this.touch_start_y = 0;
+            this.touch_start_x = 0;
+            this.move_dx = 0;
+            this.move_sum = 0;
+
+            e.preventDefault();
+        }
+    },
+
+    bindOnFlikingBtn : function(){
+        this.root.bind('touchstart', function (e) {
+            e.preventDefault();
+            this.flickingStart(e);
+        }.bind(this))
+
+        this.root.bind('touchmove', function (e) {
+            e.preventDefault();
+            this.flickingMove(e);
+        }.bind(this))
+
+        this.root.bind('touchend', function (e) {
+            e.preventDefault();
+            this.flickingEnd(e);
+            this.trigger("flick", {curDisplayNum: this.num});
+        }.bind(this))
+    },
+
+    flush : function(){
+        this.ele.closest("ul").animate({"left": "0px"}, "fast");
+        this.num = 1;
+        this.touch_start_y = 0;
+        this.touch_start_x = 0;
+        this.save_x = 0;
+        this.save_y = 0;
+        this.move_dx = 0;
+        this.move_sum = 0;
+    }
+});
+
+module.exports = FlickingComponent;
+
+/***/ }),
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+
+var LazyLoad = (function () {
+
+    function LazyLoad() {
+        var $srcRoot;
+        var srcImage;
+        var lazyTarget;
+
+        var init = function ($root) {
+            $srcRoot = $root.find('.in_img_group .img_thumb');
+            srcImage = $srcRoot.data('lazy-image');
+            lazyTarget = $root.get(0);
+            bindScroll();
+        };
+
+        function bindScroll() {
+            $(window).scroll(function () {
+                if (isInViewport(lazyTarget)) {
+                    $srcRoot.attr('src', srcImage);
+                }
+            });
+        }
+
+
+        function isInViewport(ele) {
+            var rect = ele.getBoundingClientRect();
+
+            return (
+                rect.bottom >= 0 &&
+                rect.right >= 0 &&
+                rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.left <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        return {
+            init: init
+        }
+
+    }
+
+    return {
+        getInstance: LazyLoad
+    }
+})();
+
+module.exports = LazyLoad;
+
+/***/ }),
+/* 128 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+
+var navermap = (function(){
+
+    function showMap(){
+        var targetAddress = $('.store_addr.store_addr_bold').text();
+        naver.maps.Service.geocode({
+            address: targetAddress
+        }, function(status, response) {
+            if (status !== naver.maps.Service.Status.OK) {
+                return alert('Something wrong!');
+            }
+
+            var result = response.result, // 검색 결과의 컨테이너
+                items = result.items; // 검색 결과의 배열s
+
+            var x = parseFloat(items[0].point['x']);
+            var y = parseFloat(items[0].point['y']);
+
+            var map = new naver.maps.Map('map', {
+                center: new naver.maps.LatLng(y, x),
+                zoom: 10
+            });
+
+            var marker = new naver.maps.Marker({
+                position: new naver.maps.LatLng(y, x),
+                map: map
+            });
+            // do Something
+        });
+    }
+
+    return {
+        showMap : showMap
+    }
+})();
+
+module.exports = navermap;
 
 /***/ })
 /******/ ]);
