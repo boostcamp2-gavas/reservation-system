@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FileServiceImpl implements FileService {
-    FileDao fileDao;
+    private FileDao fileDao;
 
     @Autowired
     public FileServiceImpl(FileDao fileDao){

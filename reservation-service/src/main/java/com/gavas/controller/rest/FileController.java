@@ -19,16 +19,15 @@ import java.io.FileInputStream;
 @RequestMapping("/api/file")
 @PropertySource("classpath:/application.properties")
 public class FileController {
-    private FileService fileService;
-
     @Value("${spring.resources.file-location}")
     private String downLoadBaseDir;
+
+    private FileService fileService;
 
     @Autowired
     public FileController(FileService fileService){
         this.fileService = fileService;
     }
-
 
     @GetMapping("{fileId}")
     public void downloadReservationUserCommentImage(@PathVariable("fileId") Long fileId, HttpServletResponse response) {
@@ -45,7 +44,7 @@ public class FileController {
         response.setHeader("Expires", "-1;");
 
         File readFile = new java.io.File(downLoadBaseDir + saveFileName);
-        if (!readFile.exists()) { // 파일이 존재하지 않다면
+        if (!readFile.exists()) {
             throw new RuntimeException("file not found");
         }
 

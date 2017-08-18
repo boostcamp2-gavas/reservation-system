@@ -10,8 +10,8 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 public class FileDomain {
-    //    private Integer id;
-    private Integer userId;
+    private Long id;
+    private Long userId;
     private String fileName;
     private String saveFileName;
     private Long fileLength;
@@ -19,4 +19,5 @@ public class FileDomain {
     private Integer deleteFlag;
     private Date createDate;
     private Date modifyDate;
+
 }

@@ -23,9 +23,6 @@ import java.util.List;
 @PropertySource("classpath:/application.properties")
 public class ServletContextConfig extends WebMvcConfigurerAdapter {
 
-//    @Value("${spring.resources.file-size}")
-//    private long fileSize;
-
     @Bean
     public UrlBasedViewResolver viewResolver() {
         UrlBasedViewResolver viewResolver = new UrlBasedViewResolver();

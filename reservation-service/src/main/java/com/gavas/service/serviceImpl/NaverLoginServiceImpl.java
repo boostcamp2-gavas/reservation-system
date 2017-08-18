@@ -104,14 +104,6 @@ public class NaverLoginServiceImpl implements LoginService {
         return new BigInteger(130, random).toString(32);
     }
 
-
-    private Map<String, Object> jsonToMap(String json) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(json, new TypeReference<Map<String, Object>>() {
-        });
-
-    }
-
     @Override
     public User getUserDto(Map<String, String> profile) {
         User user = new User();
@@ -125,5 +117,12 @@ public class NaverLoginServiceImpl implements LoginService {
         user.setSnsProfile(profile.get("profile_image"));
         user.setSnsType("naver");
         return user;
+    }
+
+    private Map<String, Object> jsonToMap(String json) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(json, new TypeReference<Map<String, Object>>() {
+        });
+
     }
 }

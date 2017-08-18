@@ -16,11 +16,15 @@ import java.util.List;
 @RequestMapping("api/products")
 public class ProductRestController {
 
-    @Autowired
     private ProductService productService;
 
-    @Autowired
     private UserCommentService userCommentService;
+
+    @Autowired
+    public ProductRestController(ProductService productService, UserCommentService userCommentService) {
+        this.productService = productService;
+        this.userCommentService = userCommentService;
+    }
 
     @GetMapping("/{productId}/details")
     public ResponseEntity<ProductDetailsDto> getDetailsByProductId(@PathVariable Long productId) {

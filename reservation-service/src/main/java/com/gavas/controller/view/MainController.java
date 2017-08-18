@@ -24,21 +24,20 @@ import java.util.Map;
 @RestController
 @RequestMapping("/")
 public class MainController {
-    private static Logger logger = LoggerFactory.getLogger(MainController.class);
-    @Autowired
-    private LoginService loginService;
-    @Autowired
-    private UserService userService;
 
     @Value("${open-api.naver.client-id}")
     private String clientId;
     @Value("${open-api.naver.callback-url}")
     private String callbackUrl;
 
-    @GetMapping("reservations")
-    public ModelAndView temp(@AuthUser User user) {
-        logger.info(user.toString());
-        return new ModelAndView("mainpage");
+    private static Logger logger = LoggerFactory.getLogger(MainController.class);
+    private LoginService loginService;
+    private UserService userService;
+
+    @Autowired
+    public MainController(LoginService loginService, UserService userService) {
+        this.loginService = loginService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -48,15 +47,13 @@ public class MainController {
 
     @GetMapping("login")
     public ModelAndView login(HttpServletRequest request) {
+        String naverLoginUrl = "https://nid.naver.com/oauth2.0/authorize?client_id=" + clientId + "&response_type=code&redirect_uri=http";
         String state = loginService.generateState();
         HttpSession session = request.getSession();
-        String naverLoginUrl = "https://nid.naver.com/oauth2.0/authorize?client_id=" + clientId + "&response_type=code&redirect_uri=http";
-
         session.setAttribute("state", state);
 
         try {
             String encodeURL = URLEncoder.encode(callbackUrl, "UTF-8");
-
             return new ModelAndView("redirect:" + naverLoginUrl + encodeURL + "&state=" + state + "&auth_type=reauthenticate");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -66,13 +63,11 @@ public class MainController {
 
     @GetMapping("callback")
     public ModelAndView loginCallback(HttpServletRequest request) {
-
         String state = request.getParameter("state");
         String code = request.getParameter("code");
 
         HttpSession session = request.getSession();
         String storedState = (String) session.getAttribute("state");
-
         String url = (String) session.getAttribute("URL");
 
         if (!state.equals(storedState)) {
@@ -102,9 +97,7 @@ public class MainController {
 
     @GetMapping("logout")
     public ModelAndView logout(HttpServletRequest request) {
-
         HttpSession session = request.getSession();
-
         session.removeAttribute("USER");
 
         return new ModelAndView("mainpage");

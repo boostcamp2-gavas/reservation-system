@@ -3,6 +3,7 @@ package com.gavas.dao;
 import com.gavas.domain.Category;
 import com.gavas.domain.User;
 import com.gavas.exception.EmptyQueryResultException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -20,16 +21,17 @@ import static com.gavas.dao.sqls.UserSqls.SELECT_USER_BY_SNS_ID;
 @Repository
 public class UserDao {
     private NamedParameterJdbcTemplate jdbc;
-    private RowMapper<User> userRowMapper = BeanPropertyRowMapper.newInstance(User.class);
+    private RowMapper<User> userRowMapper;
     private SimpleJdbcInsert simpleJdbcInsert;
 
+    @Autowired
     public UserDao(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+        this.userRowMapper = BeanPropertyRowMapper.newInstance(User.class);
         this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
                 .withTableName("users")
                 .usingGeneratedKeyColumns("id");
     }
-
 
     public User selectUserBySnsId(String snsId) {
         Map<String, Object> paramMap = new HashMap<>();

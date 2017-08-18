@@ -3,6 +3,7 @@ package com.gavas.dao;
 import com.gavas.domain.dto.TotalCommentStatusDto;
 import com.gavas.domain.dto.UserCommentDto;
 import com.gavas.exception.EmptyQueryResultException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -19,11 +20,14 @@ import static com.gavas.dao.sqls.UserCommentSqls.*;
 @Repository
 public class UserCommentDao {
     private NamedParameterJdbcTemplate jdbc;
-    private RowMapper<TotalCommentStatusDto> totalCommentStatusDtoRowMapper = BeanPropertyRowMapper.newInstance(TotalCommentStatusDto.class);
-    private RowMapper<UserCommentDto> UserCommentDtoRowMapper = BeanPropertyRowMapper.newInstance(UserCommentDto.class);
+    private RowMapper<TotalCommentStatusDto> totalCommentStatusDtoRowMapper;
+    private RowMapper<UserCommentDto> userCommentDtoRowMapper;
 
+    @Autowired
     public UserCommentDao(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+        this.totalCommentStatusDtoRowMapper = BeanPropertyRowMapper.newInstance(TotalCommentStatusDto.class);
+        this.userCommentDtoRowMapper = BeanPropertyRowMapper.newInstance(UserCommentDto.class);
     }
 
     public Long findUserCommentId(Long userCommentId) {
@@ -51,7 +55,7 @@ public class UserCommentDao {
         paramMap.put("productId", productId);
         paramMap.put("commentId", commentId);
         paramMap.put("limit", limit);
-        List<UserCommentDto> userCommentDtoList = jdbc.query(SELECT_USER_COMMENTS_BY_PRODUCT_ID, paramMap, UserCommentDtoRowMapper);
+        List<UserCommentDto> userCommentDtoList = jdbc.query(SELECT_USER_COMMENTS_BY_PRODUCT_ID, paramMap, userCommentDtoRowMapper);
         if (userCommentDtoList.isEmpty()) {
             throw new EmptyQueryResultException(productId + "번 Product의 UserComment");
         } else {

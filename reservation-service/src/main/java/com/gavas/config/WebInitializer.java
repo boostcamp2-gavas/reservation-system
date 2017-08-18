@@ -18,7 +18,6 @@ public class WebInitializer implements WebApplicationInitializer {
 
     }
 
- 
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		WebApplicationContext context = getContext();
 

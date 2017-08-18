@@ -13,8 +13,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/usercomments")
 public class UserCommentRestController {
+
+    private UserCommentService userCommentService;
+
     @Autowired
-    UserCommentService userCommentService;
+    public UserCommentRestController(UserCommentService userCommentService) {
+        this.userCommentService = userCommentService;
+    }
 
     @GetMapping("/{userCommentId}/images")
     public ResponseEntity<List<Long>>  getFileIdByUserCommentId(@PathVariable Long userCommentId){
