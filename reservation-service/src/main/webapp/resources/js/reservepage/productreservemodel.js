@@ -36,7 +36,7 @@ var ProductReserveModel = (function () {
                 contentType : "application/json"
             }).then(function(data,status, jqXHR) {
                 fp(jqXHR.status);
-            }, function(jqXHR, textStatus, errorThrown){
+            }, function(jqXHR){
                 fp(jqXHR.status);
             });
         }

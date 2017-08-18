@@ -1,4 +1,3 @@
-var $ = require('../../node_modules/jquery/dist/jquery');
 var egComponent = require('../../node_modules/@egjs/component/dist/component.js');
 var util = require('../util.js');
 

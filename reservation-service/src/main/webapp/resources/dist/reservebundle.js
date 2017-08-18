@@ -14835,7 +14835,7 @@ var ProductReserveModel = (function () {
                 contentType : "application/json"
             }).then(function(data,status, jqXHR) {
                 fp(jqXHR.status);
-            }, function(jqXHR, textStatus, errorThrown){
+            }, function(jqXHR){
                 fp(jqXHR.status);
             });
         }
@@ -26727,11 +26727,8 @@ webpackContext.id = 122;
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(1);
-var Moment = __webpack_require__(0);
-var ProductReserveModel = __webpack_require__(2);
 
 var ProductReserve = (function () {
-    var productReserveModel = ProductReserveModel.getInstance();
     var $reserveTitle = $('.section_store_details .in_tit');
     var $reserveDsc = $('.section_store_details .dsc');
     
@@ -26743,12 +26740,6 @@ var ProductReserve = (function () {
     function bindHistotyBack() {
         $('.top_title .btn_back').on('click', function () {
             history.back();
-        });
-    }
-
-    function getProductReserveInfo() {
-        productReserveModel.getReserves(function (data) {
-            setProductReserveInfo(data);
         });
     }
 
@@ -26787,7 +26778,7 @@ var ProductReserve = (function () {
         var priceType = ["어린이(만 4~12세)", "청소년(만 13~18세)", "성인(만 19~64세)"];
         var priceArray = [];
         productPriceList.forEach(function (value, index) {
-            priceArray[index] = priceType[index] + " " + value.price.toLocaleString() + "원";
+            priceArray.push(priceType[index] + " " + value.price.toLocaleString() + "원");
         });
         var priceText = priceArray.join(" / ");
         return priceText;
@@ -31779,7 +31770,6 @@ module.exports = Ticket;
 /* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(1);
 var egComponent = __webpack_require__(118);
 var util = __webpack_require__(119);
 

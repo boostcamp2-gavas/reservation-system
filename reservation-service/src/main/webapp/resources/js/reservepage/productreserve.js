@@ -1,9 +1,6 @@
 var $ = require('../../node_modules/jquery/dist/jquery');
-var Moment = require('../../node_modules/moment/moment');
-var ProductReserveModel = require('./productreservemodel');
 
 var ProductReserve = (function () {
-    var productReserveModel = ProductReserveModel.getInstance();
     var $reserveTitle = $('.section_store_details .in_tit');
     var $reserveDsc = $('.section_store_details .dsc');
     
@@ -15,12 +12,6 @@ var ProductReserve = (function () {
     function bindHistotyBack() {
         $('.top_title .btn_back').on('click', function () {
             history.back();
-        });
-    }
-
-    function getProductReserveInfo() {
-        productReserveModel.getReserves(function (data) {
-            setProductReserveInfo(data);
         });
     }
 
@@ -59,7 +50,7 @@ var ProductReserve = (function () {
         var priceType = ["어린이(만 4~12세)", "청소년(만 13~18세)", "성인(만 19~64세)"];
         var priceArray = [];
         productPriceList.forEach(function (value, index) {
-            priceArray[index] = priceType[index] + " " + value.price.toLocaleString() + "원";
+            priceArray.push(priceType[index] + " " + value.price.toLocaleString() + "원");
         });
         var priceText = priceArray.join(" / ");
         return priceText;
