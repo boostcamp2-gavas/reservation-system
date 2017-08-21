@@ -2,7 +2,7 @@ $ = require('../../node_modules/jquery/dist/jquery');
 totlTotalCommentInfoModel = require('./totalcommentinfomodel');
 moment = require('../../node_modules/moment/moment');
 Handlebars = require('../../node_modules/handlebars/dist/handlebars');
-var FlickingComponent = require('../flickingcomponent');
+var LayerPopUp = require('../layerpopup');
 
 var UserComment = (function(){
     var source = $("#comment-template").html();
@@ -11,15 +11,9 @@ var UserComment = (function(){
     var commentImageSoruce = $("#commentImage-template").html();
     var commentImageTemplate = Handlebars.compile(commentImageSoruce);
 
-    var cur_num = 1;
-    var slide_width;
-    var slide_count;
-    var isOpen = 0;
-    var flickingModule;
-
     function init(){
         totalCommentInfo();
-
+        LayerPopUp.init('photoviwer');
     }
 
     function totalCommentInfo(){
@@ -30,72 +24,58 @@ var UserComment = (function(){
     }
 
     function showUserComment(data){
+        var $commentRoot = $('.list_short_review');
         data.forEach(function (item,i) {
             if( i === 3) {
-                console.log("more");
+                bindOnReviewPage();
             } else {
-                $('.list_short_review').append(template(
-                    {id : item.id, comment : item.comment, fileId : item.fileId, fileCount : item.fileCount,
-                    nickName : item.nickName, score : item.score, createDate : moment(item.createDate).format('YYYY-MM-DD')}));
+                appenUserComment($commentRoot,item);
             }
         });
     }
 
+    function bindOnReviewPage(){
+        $('.btn_review_more').show();
+        $('.btn_review_more').on('click',function(e){
+            e.preventDefault();
+            console.log("next");
+        });
+    }
+
+    function appenUserComment($root, item){
+        $root.append(template(
+            {id : item.id, comment : item.comment, fileId : item.fileId, fileCount : item.fileCount,
+                nickName : item.nickName, score : item.score, createDate : moment(item.createDate).format('YYYY-MM-DD')}));
+    }
+
     function bindOnClickUserCommentImage(){
+        var $commentImageRoot = $('.detail_img');
         $('.thumb_area').on('click','.thumb',function(e){
             e.preventDefault();
+
             var commentId = $(this).closest('li').data('comment');
-
             totlTotalCommentInfoModel.getUserCommentImage(commentId, function(data){
-
-                if (isOpen === 0) {
-                    addCommentLi(data.fileId);
+                if(!LayerPopUp.checkOpen()) {
+                    addCommentLi(data,$commentImageRoot);
                 }
 
-                layerOpen('photoviwer');
-
-                addFlickingComponent();
+                LayerPopUp.open();
             });
         })
-
-        $('.btn-r').on('click', '.cbtn', function () {
-            isOpen = 0;
-            cur_num = 1;
-            flickingModule.flush();
-            $('.detail_img li').remove();
-            $('#photoviwer').fadeOut();
-        })
     }
 
-    function addCommentLi(data) {
-        $('.detail_img').append(commentImageTemplate({fileData: data}));
-    }
+    function addCommentLi(data, $root) {
+        if(data !== false) {
+            var fileIdList = [];
 
-    function layerOpen(el) {
-        isOpen = 1;
-        slide_width = $('.detail_img > li').outerWidth();
-        slide_count = $('.detail_img > li').length;
-        var temp = $('#' + el);
+            data.forEach(function (item) {
+                var fileIdObject = {};
+                fileIdObject["fileId"] = item;
+                fileIdList.push(fileIdObject);
+            });
 
-        temp.fadeIn();
-
-        if (temp.outerHeight() < $(document).height()) {
-            temp.css('margin-top', '-' + temp.outerHeight() / 2 + 'px');
+            $root.append(commentImageTemplate({fileData: fileIdList}));
         }
-        else {
-            temp.css('top', '0px');
-        }
-
-        if (temp.outerWidth() < $(document).width()) {
-            temp.css('margin-left', '-' + temp.outerWidth() / 2 + 'px');
-        }
-        else {
-            temp.css('left', '0px');
-        }
-    }
-
-    function addFlickingComponent() {
-        flickingModule = new FlickingComponent($('.detail_img'));
     }
 
     return {

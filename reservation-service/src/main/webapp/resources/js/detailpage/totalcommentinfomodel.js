@@ -8,14 +8,12 @@ var TotalCommentInfoModel = (function () {
         var url = "/api/products/"+$('#gavas').data('productid')+"/usercommnets?commentid=0&limit=4";
 
         if (totalCommentInfoCash[url] != null) {
-            fp(data);
+            fp(totalCommentInfoCash[url]);
         } else {
             $.ajax(url).then(function(data){
                 totalCommentInfoCash[url] = data;
                 fp(data);
-            },function(){
-                console.log("hi");
-            })
+            });
         }
     }
 
@@ -23,14 +21,12 @@ var TotalCommentInfoModel = (function () {
         var url = "/api/usercomments/"+id+"/images";
 
         if (totalCommentInfoCash[url] != null) {
-            fp(data);
+            fp(false);
         } else {
             $.ajax(url).then(function(data){
                 totalCommentInfoCash[url] = data;
                 fp(data);
-            },function(){
-                console.log("hi");
-            })
+            });
         }
     }
 

@@ -43,36 +43,36 @@
                     <div>
                         <div class="container_visual" style="width: 414px;">
                             <ul class="visual_img">
-                                <li class="item" style="width: 414px;"><img alt="" class="img_thumb"
-                                                                            src="https://ssl.phinf.net/naverbooking/20170119_135/1484789767866RPO6o_JPEG/%B7%CE%B9%CC%BF%C0%C1%D9%B8%AE%BF%A7_1242.jpg?type=ff1242_1242">
-                                    <span class="img_bg"></span>
-                                    <div class="visual_txt">
-                                        <div class="visual_txt_inn">
-                                            <h2 class="visual_txt_tit"><span>뮤지컬 로미오와 줄리엣</span></h2>
-                                            <p class="visual_txt_dsc"></p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item" style="width: 414px;"><img alt="" class="img_thumb"
-                                                                            src="https://ssl.phinf.net/naverbooking/20170119_135/1484789767866RPO6o_JPEG/%B7%CE%B9%CC%BF%C0%C1%D9%B8%AE%BF%A7_1242.jpg?type=ff1242_1242">
-                                    <span class="img_bg"></span>
-                                    <div class="visual_txt">
-                                        <div class="visual_txt_inn">
-                                            <h2 class="visual_txt_tit"><span>뮤지컬 로미오와 줄리엣</span></h2>
-                                            <p class="visual_txt_dsc"></p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item" style="width: 414px;"><img alt="" class="img_thumb"
-                                                                            src="https://ssl.phinf.net/naverbooking/20170119_135/1484789767866RPO6o_JPEG/%B7%CE%B9%CC%BF%C0%C1%D9%B8%AE%BF%A7_1242.jpg?type=ff1242_1242">
-                                    <span class="img_bg"></span>
-                                    <div class="visual_txt">
-                                        <div class="visual_txt_inn">
-                                            <h2 class="visual_txt_tit"><span>뮤지컬 로미오와 줄리엣</span></h2>
-                                            <p class="visual_txt_dsc"></p>
-                                        </div>
-                                    </div>
-                                </li>
+                                <%--<li class="item" style="width: 414px;"><img alt="" class="img_thumb"--%>
+                                                                            <%--src="https://ssl.phinf.net/naverbooking/20170119_135/1484789767866RPO6o_JPEG/%B7%CE%B9%CC%BF%C0%C1%D9%B8%AE%BF%A7_1242.jpg?type=ff1242_1242">--%>
+                                    <%--<span class="img_bg"></span>--%>
+                                    <%--<div class="visual_txt">--%>
+                                        <%--<div class="visual_txt_inn">--%>
+                                            <%--<h2 class="visual_txt_tit"><span>뮤지컬 로미오와 줄리엣</span></h2>--%>
+                                            <%--<p class="visual_txt_dsc"></p>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</li>--%>
+                                <%--<li class="item" style="width: 414px;"><img alt="" class="img_thumb"--%>
+                                                                            <%--src="https://ssl.phinf.net/naverbooking/20170119_135/1484789767866RPO6o_JPEG/%B7%CE%B9%CC%BF%C0%C1%D9%B8%AE%BF%A7_1242.jpg?type=ff1242_1242">--%>
+                                    <%--<span class="img_bg"></span>--%>
+                                    <%--<div class="visual_txt">--%>
+                                        <%--<div class="visual_txt_inn">--%>
+                                            <%--<h2 class="visual_txt_tit"><span>뮤지컬 로미오와 줄리엣</span></h2>--%>
+                                            <%--<p class="visual_txt_dsc"></p>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</li>--%>
+                                <%--<li class="item" style="width: 414px;"><img alt="" class="img_thumb"--%>
+                                                                            <%--src="https://ssl.phinf.net/naverbooking/20170119_135/1484789767866RPO6o_JPEG/%B7%CE%B9%CC%BF%C0%C1%D9%B8%AE%BF%A7_1242.jpg?type=ff1242_1242">--%>
+                                    <%--<span class="img_bg"></span>--%>
+                                    <%--<div class="visual_txt">--%>
+                                        <%--<div class="visual_txt_inn">--%>
+                                            <%--<h2 class="visual_txt_tit"><span>뮤지컬 로미오와 줄리엣</span></h2>--%>
+                                            <%--<p class="visual_txt_dsc"></p>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</li>--%>
                             </ul>
                         </div>
                         <div class="prev">
@@ -194,7 +194,7 @@
                     <p class="guide"><i class="spr_book2 ico_bell"></i> <span>네이버 예약을 통해 실제 방문한 이용자가 남긴 평가입니다.</span>
                     </p>
                 </div>
-                <a class="btn_review_more" href="#"> <span>예매자 한줄평 더보기</span> <i class="fn fn-forward1"></i> </a>
+                <a class="btn_review_more" href="#" style="display: none;"> <span>예매자 한줄평 더보기</span> <i class="fn fn-forward1"></i> </a>
             </div>
             <div class="section_info_tab">
                 <!-- [D] tab 선택 시 anchor에 active 추가 -->
@@ -344,7 +344,7 @@
 <script id="commentImage-template" type="text/x-handlebars-template">
     {{#each fileData}}
     <li class="detail_list" style="width: 414px;" style="height: 414px; ">
-        <img alt="코멘트 사진" class="detail_img_thumb" src="/files/{{fileId}}">
+        <img alt="코멘트 사진" class="detail_img_thumb" src="/api/file/{{fileId}}">
     </li>
     {{/each}}
 </script>

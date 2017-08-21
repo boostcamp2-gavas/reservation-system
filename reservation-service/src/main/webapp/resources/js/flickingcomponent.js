@@ -188,7 +188,7 @@ var FlickingComponent = extend(egComponent, {
     },
 
     flush : function(){
-        this.ele.closest("ul").animate({"left": "0px"}, "fast");
+        this.ele.closest("ul").css({"left": "0px"});
         this.num = 1;
         this.touch_start_y = 0;
         this.touch_start_x = 0;
@@ -200,6 +200,14 @@ var FlickingComponent = extend(egComponent, {
 
     getSlideCount : function(){
         return this.slide_count;
+    },
+
+    plusCurNum: function(){
+        this.num++;
+    },
+
+    minusCurNum: function () {
+        this.num--;
     }
 });
 

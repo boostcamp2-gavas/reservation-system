@@ -30727,10 +30727,22 @@ var ProductDetail = __webpack_require__(119);
 var UserComment = __webpack_require__(126);
 var LazyLoad = __webpack_require__(128);
 var NaverMap = __webpack_require__(129);
+var FlickingComponent = __webpack_require__(131);
+var ProductDetailModel = __webpack_require__(120);
+
 
 (function () {
     ProductDetail.init();
-    ProductDetail.showProductDetail();
+
+    var productDetailModel = ProductDetailModel.getDetail();
+    productDetailModel.getDetails(function (data) {
+        ProductDetail.showProductDetail(data);
+
+        var flicking = new FlickingComponent($('.visual_img'));
+        flicking.on("flick",function (e) {
+            ProductDetail.changeSlideCountByFlicking(e.curNum);
+        });
+    });
 
     UserComment.init();
 
@@ -30746,15 +30758,11 @@ var NaverMap = __webpack_require__(129);
 
 var $ = __webpack_require__(1);
 var Handlebars = __webpack_require__(2);
-var ProductDetailModel = __webpack_require__(120);
 var Moment = __webpack_require__(0);
-var FlickingComponent = __webpack_require__(123);
 
 var ProductDetail = (function () {
-    var productDetailModel = ProductDetailModel.getDetail();
     var source = $("#detailImage-template").html();
     var template = Handlebars.compile(source);
-    var flicking;
 
     function init() {
         bindOnClickMoreBtn();
@@ -30786,14 +30794,11 @@ var ProductDetail = (function () {
         $('.section_store_details .store_details').toggleClass('close3');
     }
 
-    function showProductDetail() {
-        productDetailModel.getDetails(function (data) {
-            writeProductDetail(data);
-            setProductDetailImage(data);
-            validateTicketing(data);
-            flicking = new FlickingComponent($('.visual_img'));
-            bindOnFlickingComponent();
-        });
+    function showProductDetail(data) {
+        writeProductDetail(data);
+        setProductDetailImage(data);
+        validateTicketing(data);
+        $('.pagination .figure_pagination .num.off span').text(data.fileIdList.length);
     }
 
     function writeProductDetail(data) {
@@ -30832,16 +30837,14 @@ var ProductDetail = (function () {
         }
     }
 
-    function bindOnFlickingComponent(){
-        flicking.on("flick",function (e) {
-            $('.pagination .figure_pagination .num:first').text(e.curNum);
-        })
-        $('.pagination .figure_pagination .num.off span').text(flicking.getSlideCount());
+    function changeSlideCountByFlicking(slideCount){
+        $('.pagination .figure_pagination .num:first').text(slideCount);
     }
 
     return {
         init: init,
-        showProductDetail: showProductDetail
+        showProductDetail: showProductDetail,
+        changeSlideCountByFlicking : changeSlideCountByFlicking
     }
 })();
 
@@ -31350,7 +31353,7 @@ var FlickingComponent = extend(egComponent, {
     },
 
     flush : function(){
-        this.ele.closest("ul").animate({"left": "0px"}, "fast");
+        this.ele.closest("ul").css({"left": "0px"});
         this.num = 1;
         this.touch_start_y = 0;
         this.touch_start_x = 0;
@@ -31362,6 +31365,14 @@ var FlickingComponent = extend(egComponent, {
 
     getSlideCount : function(){
         return this.slide_count;
+    },
+
+    plusCurNum: function(){
+        this.num++;
+    },
+
+    minusCurNum: function () {
+        this.num--;
     }
 });
 
@@ -31774,7 +31785,7 @@ $ = __webpack_require__(1);
 totlTotalCommentInfoModel = __webpack_require__(127);
 moment = __webpack_require__(0);
 Handlebars = __webpack_require__(2);
-var FlickingComponent = __webpack_require__(123);
+var LayerPopUp = __webpack_require__(130);
 
 var UserComment = (function(){
     var source = $("#comment-template").html();
@@ -31783,15 +31794,9 @@ var UserComment = (function(){
     var commentImageSoruce = $("#commentImage-template").html();
     var commentImageTemplate = Handlebars.compile(commentImageSoruce);
 
-    var cur_num = 1;
-    var slide_width;
-    var slide_count;
-    var isOpen = 0;
-    var flickingModule;
-
     function init(){
         totalCommentInfo();
-
+        LayerPopUp.init('photoviwer');
     }
 
     function totalCommentInfo(){
@@ -31802,72 +31807,58 @@ var UserComment = (function(){
     }
 
     function showUserComment(data){
+        var $commentRoot = $('.list_short_review');
         data.forEach(function (item,i) {
             if( i === 3) {
-                console.log("more");
+                bindOnReviewPage();
             } else {
-                $('.list_short_review').append(template(
-                    {id : item.id, comment : item.comment, fileId : item.fileId, fileCount : item.fileCount,
-                    nickName : item.nickName, score : item.score, createDate : moment(item.createDate).format('YYYY-MM-DD')}));
+                appenUserComment($commentRoot,item);
             }
         });
     }
 
+    function bindOnReviewPage(){
+        $('.btn_review_more').show();
+        $('.btn_review_more').on('click',function(e){
+            e.preventDefault();
+            console.log("next");
+        });
+    }
+
+    function appenUserComment($root, item){
+        $root.append(template(
+            {id : item.id, comment : item.comment, fileId : item.fileId, fileCount : item.fileCount,
+                nickName : item.nickName, score : item.score, createDate : moment(item.createDate).format('YYYY-MM-DD')}));
+    }
+
     function bindOnClickUserCommentImage(){
+        var $commentImageRoot = $('.detail_img');
         $('.thumb_area').on('click','.thumb',function(e){
             e.preventDefault();
+
             var commentId = $(this).closest('li').data('comment');
-
             totlTotalCommentInfoModel.getUserCommentImage(commentId, function(data){
-
-                if (isOpen === 0) {
-                    addCommentLi(data.fileId);
+                if(!LayerPopUp.checkOpen()) {
+                    addCommentLi(data,$commentImageRoot);
                 }
 
-                layerOpen('photoviwer');
-
-                addFlickingComponent();
+                LayerPopUp.open();
             });
         })
-
-        $('.btn-r').on('click', '.cbtn', function () {
-            isOpen = 0;
-            cur_num = 1;
-            flickingModule.flush();
-            $('.detail_img li').remove();
-            $('#photoviwer').fadeOut();
-        })
     }
 
-    function addCommentLi(data) {
-        $('.detail_img').append(commentImageTemplate({fileData: data}));
-    }
+    function addCommentLi(data, $root) {
+        if(data !== false) {
+            var fileIdList = [];
 
-    function layerOpen(el) {
-        isOpen = 1;
-        slide_width = $('.detail_img > li').outerWidth();
-        slide_count = $('.detail_img > li').length;
-        var temp = $('#' + el);
+            data.forEach(function (item) {
+                var fileIdObject = {};
+                fileIdObject["fileId"] = item;
+                fileIdList.push(fileIdObject);
+            });
 
-        temp.fadeIn();
-
-        if (temp.outerHeight() < $(document).height()) {
-            temp.css('margin-top', '-' + temp.outerHeight() / 2 + 'px');
+            $root.append(commentImageTemplate({fileData: fileIdList}));
         }
-        else {
-            temp.css('top', '0px');
-        }
-
-        if (temp.outerWidth() < $(document).width()) {
-            temp.css('margin-left', '-' + temp.outerWidth() / 2 + 'px');
-        }
-        else {
-            temp.css('left', '0px');
-        }
-    }
-
-    function addFlickingComponent() {
-        flickingModule = new FlickingComponent($('.detail_img'));
     }
 
     return {
@@ -31892,14 +31883,12 @@ var TotalCommentInfoModel = (function () {
         var url = "/api/products/"+$('#gavas').data('productid')+"/usercommnets?commentid=0&limit=4";
 
         if (totalCommentInfoCash[url] != null) {
-            fp(data);
+            fp(totalCommentInfoCash[url]);
         } else {
             $.ajax(url).then(function(data){
                 totalCommentInfoCash[url] = data;
                 fp(data);
-            },function(){
-                console.log("hi");
-            })
+            });
         }
     }
 
@@ -31907,14 +31896,12 @@ var TotalCommentInfoModel = (function () {
         var url = "/api/usercomments/"+id+"/images";
 
         if (totalCommentInfoCash[url] != null) {
-            fp(data);
+            fp(false);
         } else {
             $.ajax(url).then(function(data){
                 totalCommentInfoCash[url] = data;
                 fp(data);
-            },function(){
-                console.log("hi");
-            })
+            });
         }
     }
 
@@ -32022,6 +32009,261 @@ var navermap = (function(){
 })();
 
 module.exports = navermap;
+
+/***/ }),
+/* 130 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+var FlickingComponent = __webpack_require__(123);
+
+var LayerPopUp = (function(){
+
+    var cur_num = 1;
+    var slide_width;
+    var slide_count;
+    var isOpen = 0;
+    var flickingModule = null;
+    var root;
+
+    function layerInit(el){
+        root = el;
+
+        $('.btn-r').on('click', '.pbtn', function (e) {
+            e.preventDefault();
+            if (cur_num != 1) {
+                $(".detail_img").animate({"left": "+=" + slide_width + "px"}, "slow");
+                cur_num--;
+                flickingModule.minusCurNum();
+            }
+        });
+
+        $('.btn-r').on('click', '.nbtn', function (e) {
+            e.preventDefault();
+            if (cur_num != slide_count) {
+                $(".detail_img").animate({"left": "-=" + slide_width + "px"}, "slow");
+                cur_num++;
+                flickingModule.plusCurNum();
+            }
+        });
+
+
+        $('.btn-r').on('click', '.cbtn', function (e) {
+            e.preventDefault();
+            isOpen = 0;
+            cur_num = 1;
+            flickingModule.flush();
+            $('#photoviwer').fadeOut();
+        });
+    }
+
+    function addfliking(){
+        if (flickingModule === null) {
+            flickingModule = new FlickingComponent($('.detail_img'));
+            flickingModule.on('flick', function (e) {
+                cur_num = e.curNum;
+            })
+        }
+    }
+
+    function layerOpen() {
+        isOpen = 1;
+        slide_width = $('.detail_img > li').outerWidth();
+        slide_count = $('.detail_img > li').length;
+        var temp = $('#' + root);
+
+        temp.fadeIn();
+
+        if (temp.outerHeight() < $(document).height()) {
+            temp.css('margin-top', '-' + temp.outerHeight() / 2 + 'px');
+        }
+        else {
+            temp.css('top', '0px');
+        }
+
+        if (temp.outerWidth() < $(document).width()) {
+            temp.css('margin-left', '-' + temp.outerWidth() / 2 + 'px');
+        }
+        else {
+            temp.css('left', '0px');
+        }
+
+        addfliking();
+    }
+
+    function checkOpen(){
+        return isOpen || false;
+    }
+
+    return {
+        init : layerInit,
+        open : layerOpen,
+        checkOpen : checkOpen
+    }
+
+})();
+
+module.exports = LayerPopUp;
+
+/***/ }),
+/* 131 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+var egComponent = __webpack_require__(124);
+var extend = __webpack_require__(125);
+
+var FlickingComponent = extend(egComponent, {
+
+    init: function (ele) {
+        this.root = ele;
+        this.ele = ele.find('li');
+        this.num = 1;
+        this.slideWidth = this.ele.width();
+        this.slideCount = this.ele.length;
+        this.touchStartY = 0;
+        this.touchStartX = 0;
+        this.moveDx = 0;
+        this.curLiPosition = 0;
+
+        this.bindOnFlikingBtn();
+    },
+
+    flickingStart : function (e) {
+        if (e.type === 'touchstart' && e.changedTouches.length === 1) {
+            this.touchStartX = e.changedTouches[0].pageX;
+            this.touchStartY = e.changedTouches[0].pageY;
+        }
+        e.preventDefault();
+    },
+
+    flickingMove : function (e) {
+        var dragDistance = 0;
+        var scrollDistance = 0;
+
+        if (e.type === 'touchmove' && e.changedTouches.length === 1) {
+            dragDistance = e.changedTouches[0].pageX - this.touchStartX;
+            scrollDistance = e.changedTouches[0].pageY - this.touchStartY;
+            this.moveDx = ( dragDistance / this.slideWidth ) * 100;
+            var fakeMove = 0;
+
+            if(Math.abs(dragDistance) > this.slideWidth){
+                dragDistance = (dragDistance < 0) ? - this.slideWidth : + this.slideWidth;
+            }
+            fakeMove = this.curLiPosition + dragDistance;
+
+            if(dragDistance > 0){
+                if (this.num !== 1) {
+                    if(Math.abs(dragDistance) > Math.abs(scrollDistance)){
+                        this.root.stop(true,true).animate({left: fakeMove},500);
+                    }
+                } else {
+                    this.root.stop(true,true).animate({left: this.curLiPosition + 10},500);
+                    this.moveDx = 0;
+                }
+            } else{
+                if (this.num < this.slideCount) {
+                    if(Math.abs(dragDistance) > Math.abs(scrollDistance)){
+                        this.root.stop(true,true).animate({left: fakeMove},500);
+                    }
+                } else {
+                    this.root.stop(true,true).animate({left: this.curLiPosition - 10},500);
+                    this.moveDx = 0;
+                }
+            }
+        }
+    },
+
+    flickingEnd : function (e) {
+
+        if (e.type === 'touchend' && e.changedTouches.length === 1) {
+            if(Math.abs(this.moveDx) > 30){
+                if(this.moveDx > 0){
+                    if (this.num !== 1) {
+                        this.root.stop(true,true).animate({left:this.curLiPosition + this.slideWidth});
+                        this.num = this.num - 1;
+                        this.curLiPosition += this.slideWidth;
+                    }
+                }
+                else {
+                    if(this.num < this.slideCount){
+                        this.root.stop(true,true).animate({left:this.curLiPosition - this.slideWidth});
+                        this.num = this.num + 1;
+                        this.curLiPosition -= this.slideWidth;
+                    }
+                }
+            } else{
+                this.root.stop(true,true).animate({left:this.curLiPosition},500);
+            }
+
+            this.touchStartY = 0;
+            this.touchStartX = 0;
+            this.moveDx = 0;
+            this.moveSum = 0;
+
+            e.preventDefault();
+        }
+    },
+
+    moveToPrev: function (e) {
+        e.preventDefault();
+
+        if (this.root.is(":animated")) {
+            return false;
+        }
+
+        if (this.num > 1) {
+            this.root.animate({"left": "+=" + this.slideWidth + "px"}, {
+                duration: "normal"
+            });
+            this.num--;
+            this.trigger("flick",{curNum : this.num});
+        }
+    },
+
+    moveToNext: function (e) {
+        e.preventDefault();
+
+        if (this.root.is(":animated")) {
+            return false;
+        }
+
+        if(this.num < this.slideCount){
+            this.root.animate({"left": "-=" + this.slideWidth + "px"}, {
+                duration: "normal"
+            });
+            this.num++;
+            this.trigger("flick",{curNum : this.num});
+        }
+    },
+
+    bindOnFlikingBtn : function(){
+        this.root.bind('touchstart', function (e) {
+            e.preventDefault();
+            this.flickingStart(e);
+        }.bind(this))
+
+        this.root.bind('touchmove', function (e) {
+            e.preventDefault();
+            this.flickingMove(e);
+        }.bind(this))
+
+        this.root.bind('touchend', function (e) {
+            e.preventDefault();
+            this.flickingEnd(e);
+            this.trigger("flick", {curNum: this.num});
+        }.bind(this))
+
+        $('.prev_inn').on('click', this.moveToPrev.bind(this));
+        $('.nxt_inn').on('click', this.moveToNext.bind(this));
+    },
+
+    getSlideCount : function(){
+        return this.slideCount;
+    }
+});
+
+module.exports = FlickingComponent;
 
 /***/ })
 /******/ ]);

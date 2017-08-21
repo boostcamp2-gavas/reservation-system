@@ -1,14 +1,10 @@
 var $ = require('../../node_modules/jquery/dist/jquery');
 var Handlebars = require('../../node_modules/handlebars/dist/handlebars');
-var ProductDetailModel = require('./productdetailmodel');
 var Moment = require('../../node_modules/moment/moment');
-var FlickingComponent = require('../flickingcomponent');
 
 var ProductDetail = (function () {
-    var productDetailModel = ProductDetailModel.getDetail();
     var source = $("#detailImage-template").html();
     var template = Handlebars.compile(source);
-    var flicking;
 
     function init() {
         bindOnClickMoreBtn();
@@ -40,14 +36,11 @@ var ProductDetail = (function () {
         $('.section_store_details .store_details').toggleClass('close3');
     }
 
-    function showProductDetail() {
-        productDetailModel.getDetails(function (data) {
-            writeProductDetail(data);
-            setProductDetailImage(data);
-            validateTicketing(data);
-            flicking = new FlickingComponent($('.visual_img'));
-            bindOnFlickingComponent();
-        });
+    function showProductDetail(data) {
+        writeProductDetail(data);
+        setProductDetailImage(data);
+        validateTicketing(data);
+        $('.pagination .figure_pagination .num.off span').text(data.fileIdList.length);
     }
 
     function writeProductDetail(data) {
@@ -86,16 +79,14 @@ var ProductDetail = (function () {
         }
     }
 
-    function bindOnFlickingComponent(){
-        flicking.on("flick",function (e) {
-            $('.pagination .figure_pagination .num:first').text(e.curNum);
-        })
-        $('.pagination .figure_pagination .num.off span').text(flicking.getSlideCount());
+    function changeSlideCountByFlicking(slideCount){
+        $('.pagination .figure_pagination .num:first').text(slideCount);
     }
 
     return {
         init: init,
-        showProductDetail: showProductDetail
+        showProductDetail: showProductDetail,
+        changeSlideCountByFlicking : changeSlideCountByFlicking
     }
 })();
 
