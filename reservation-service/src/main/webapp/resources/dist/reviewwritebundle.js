@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 117);
+/******/ 	return __webpack_require__(__webpack_require__.s = 144);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1896,7 +1896,7 @@ function loadLocale(name) {
             module && module.exports) {
         try {
             oldLocale = globalLocale._abbr;
-            __webpack_require__(120)("./" + name);
+            __webpack_require__(121)("./" + name);
             // because defineLocale currently also sets the global locale, we
             // want to undo that for lazy loaded locales
             getSetGlobalLocale(oldLocale);
@@ -4531,7 +4531,7 @@ return hooks;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(119)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(120)(module)))
 
 /***/ }),
 /* 1 */
@@ -25875,500 +25875,6 @@ return zhTw;
 
 /***/ }),
 /* 117 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $ = __webpack_require__(1);
-var ReviewInsert = __webpack_require__(118);
-
-(function(){
-    ReviewInsert.init();
-})();
-
-/***/ }),
-/* 118 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $ = __webpack_require__(1);
-var Jmoment = __webpack_require__(124);
-var RatingComponent = __webpack_require__(121);
-
-var ReviewInsert = (function () {
-    var uploadFileList = [];
-    var productId = $('#gavas').data('productid');
-    var userId = $('#gavas').data('userid');
-
-    function init() {
-        initRating();
-        bindOnTextArea();
-        uploadImage();
-        bindOnRegisterReviewBtn();
-    }
-
-    function bindOnTextArea () {
-        $('.review_write_info').on('click',function () {
-            $(this).hide();
-            $('.review_textarea').focus();
-        });
-
-        $('.review_textarea').on('focusout',function () {
-            if ($(this).val().length === 0){
-                $('.review_write_info').show();
-            }
-        });
-
-        $('.review_textarea').on('keyup',function(e){
-            var $textArea = $(this);
-            var $textCount = $('.guide_review span:first');
-            $textCount.text($textArea.val().length);
-        })
-    }
-
-    function initRating(){
-        var rating = new RatingComponent($('.rating'));
-        rating.on("score",function(e){
-            $('.star_rank').removeClass("gray_star");
-            $('.star_rank').text(e.score);
-        });
-    }
-
-    function uploadImage(){
-        var $eleFile = $("#reviewImageFileOpenInput");
-
-        $(".lst_thumb").on("click",".ico_del",function (e) {
-            deleteFileList(uploadFileList,e);
-        });
-
-        $eleFile.change(function(e){
-            var fileList = this.files;
-            var filesNum = fileList.length;
-            var curFilesNum = $('.item').length;
-
-            if(filesNum > 5 || curFilesNum === 6){
-                alert("이미지는 최대 5장까지 업로드할 수 있습니다.");
-            }
-
-            showImgFile(fileList,uploadFileList,curFilesNum);
-        });
-    }
-
-    function deleteFileList(uploadFileList,e){
-        var deleteFileIndex = $(".ico_del").index(this)-1;
-        uploadFileList.splice(deleteFileIndex,1);
-        e.currentTarget.closest(".item").remove();
-    }
-
-    function showImgFile(fileList,uploadFileList,curFilesNum){
-        var filesNum = fileList.length;
-        for (var i = 0; i < filesNum; i++) {
-            var file = fileList[i];
-            var imageTypeJpeg = /^image\/jpeg/;
-            var imageTypePng = /^image\/png/;
-
-            if (!imageTypeJpeg.test(file.type) && !imageTypePng.test(file.type)) {
-                alert("이미지 확장자는 .png, .jpeg만 가능합니다.")
-                continue;
-            }
-
-            if (file.size > 1048576) {
-                alert("파일 사이즈는 1mb보다 작아야 합니다.")
-                continue;
-            }
-
-            if( curFilesNum > 5){
-                return;
-            }
-
-            uploadFileList.push(file);
-
-            readImgFile(file);
-
-            curFilesNum++;
-        }
-    }
-
-    function readImgFile(file){
-        var img = new Image();
-        img.width = 130;
-        img.alt = "";
-        img.file = file;
-        $(img).addClass("item_thumb");
-
-        var reader = new FileReader();
-
-        reader.onload = (function(aImg) { return function(e) {
-            aImg.src = e.target.result;
-            var $html = $(".item").clone();
-            $html.find("a").after(aImg);
-            $($html.get(0)).appendTo(".lst_thumb");
-        };})(img);
-
-        reader.readAsDataURL(file);
-    }
-
-    function bindOnRegisterReviewBtn(){
-        $('.box_bk_btn').on('click','.bk_btn',enrollReviewInfo);
-    }
-
-    function enrollReviewInfo(){
-        var url = "/api/reviews";
-
-        if ($('.review_textarea').val().length === 0){
-            alert("리뷰내용을 입력해주세요");
-            return;
-        }
-        if (userId === "") {
-            alert("로그인 후 이용이 가능합니다.");
-            return;
-        }
-
-        var formData = makeFormData(uploadFileList);
-
-        $.ajax(url,{
-            type: "POST",
-            processData: false,
-            contentType: false,
-            data: formData
-        }).then(function(data){
-            alert("리뷰 등록을 완료하였습니다.")
-        }).fail(function () {
-            console.log("fail");
-        })
-    }
-
-    function makeFormData(uploadFileList){
-        var formData = new FormData();
-        var reviewData = JSON.stringify({
-            "productId" : productId,
-            "userId" : userId,
-            "score" : $('.star_rank').text(),
-            "comment" : $('.review_contents.write textarea').val(),
-            "createDate" : Jmoment().formatWithJDF("yyyy-MM-dd'T'HH:mm:ss.SSSZ"),
-            "modifyDate" : Jmoment().formatWithJDF("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-        });
-
-        formData.append('review', reviewData);
-        uploadFileList.forEach(function(file){
-            formData.append("files",file);
-        })
-
-        return formData;
-    }
-
-    return {
-        init : init
-    }
-})();
-
-module.exports = ReviewInsert;
-
-/***/ }),
-/* 119 */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if(!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-/* 120 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = {
-	"./af": 2,
-	"./af.js": 2,
-	"./ar": 3,
-	"./ar-dz": 4,
-	"./ar-dz.js": 4,
-	"./ar-kw": 5,
-	"./ar-kw.js": 5,
-	"./ar-ly": 6,
-	"./ar-ly.js": 6,
-	"./ar-ma": 7,
-	"./ar-ma.js": 7,
-	"./ar-sa": 8,
-	"./ar-sa.js": 8,
-	"./ar-tn": 9,
-	"./ar-tn.js": 9,
-	"./ar.js": 3,
-	"./az": 10,
-	"./az.js": 10,
-	"./be": 11,
-	"./be.js": 11,
-	"./bg": 12,
-	"./bg.js": 12,
-	"./bn": 13,
-	"./bn.js": 13,
-	"./bo": 14,
-	"./bo.js": 14,
-	"./br": 15,
-	"./br.js": 15,
-	"./bs": 16,
-	"./bs.js": 16,
-	"./ca": 17,
-	"./ca.js": 17,
-	"./cs": 18,
-	"./cs.js": 18,
-	"./cv": 19,
-	"./cv.js": 19,
-	"./cy": 20,
-	"./cy.js": 20,
-	"./da": 21,
-	"./da.js": 21,
-	"./de": 22,
-	"./de-at": 23,
-	"./de-at.js": 23,
-	"./de-ch": 24,
-	"./de-ch.js": 24,
-	"./de.js": 22,
-	"./dv": 25,
-	"./dv.js": 25,
-	"./el": 26,
-	"./el.js": 26,
-	"./en-au": 27,
-	"./en-au.js": 27,
-	"./en-ca": 28,
-	"./en-ca.js": 28,
-	"./en-gb": 29,
-	"./en-gb.js": 29,
-	"./en-ie": 30,
-	"./en-ie.js": 30,
-	"./en-nz": 31,
-	"./en-nz.js": 31,
-	"./eo": 32,
-	"./eo.js": 32,
-	"./es": 33,
-	"./es-do": 34,
-	"./es-do.js": 34,
-	"./es.js": 33,
-	"./et": 35,
-	"./et.js": 35,
-	"./eu": 36,
-	"./eu.js": 36,
-	"./fa": 37,
-	"./fa.js": 37,
-	"./fi": 38,
-	"./fi.js": 38,
-	"./fo": 39,
-	"./fo.js": 39,
-	"./fr": 40,
-	"./fr-ca": 41,
-	"./fr-ca.js": 41,
-	"./fr-ch": 42,
-	"./fr-ch.js": 42,
-	"./fr.js": 40,
-	"./fy": 43,
-	"./fy.js": 43,
-	"./gd": 44,
-	"./gd.js": 44,
-	"./gl": 45,
-	"./gl.js": 45,
-	"./gom-latn": 46,
-	"./gom-latn.js": 46,
-	"./he": 47,
-	"./he.js": 47,
-	"./hi": 48,
-	"./hi.js": 48,
-	"./hr": 49,
-	"./hr.js": 49,
-	"./hu": 50,
-	"./hu.js": 50,
-	"./hy-am": 51,
-	"./hy-am.js": 51,
-	"./id": 52,
-	"./id.js": 52,
-	"./is": 53,
-	"./is.js": 53,
-	"./it": 54,
-	"./it.js": 54,
-	"./ja": 55,
-	"./ja.js": 55,
-	"./jv": 56,
-	"./jv.js": 56,
-	"./ka": 57,
-	"./ka.js": 57,
-	"./kk": 58,
-	"./kk.js": 58,
-	"./km": 59,
-	"./km.js": 59,
-	"./kn": 60,
-	"./kn.js": 60,
-	"./ko": 61,
-	"./ko.js": 61,
-	"./ky": 62,
-	"./ky.js": 62,
-	"./lb": 63,
-	"./lb.js": 63,
-	"./lo": 64,
-	"./lo.js": 64,
-	"./lt": 65,
-	"./lt.js": 65,
-	"./lv": 66,
-	"./lv.js": 66,
-	"./me": 67,
-	"./me.js": 67,
-	"./mi": 68,
-	"./mi.js": 68,
-	"./mk": 69,
-	"./mk.js": 69,
-	"./ml": 70,
-	"./ml.js": 70,
-	"./mr": 71,
-	"./mr.js": 71,
-	"./ms": 72,
-	"./ms-my": 73,
-	"./ms-my.js": 73,
-	"./ms.js": 72,
-	"./my": 74,
-	"./my.js": 74,
-	"./nb": 75,
-	"./nb.js": 75,
-	"./ne": 76,
-	"./ne.js": 76,
-	"./nl": 77,
-	"./nl-be": 78,
-	"./nl-be.js": 78,
-	"./nl.js": 77,
-	"./nn": 79,
-	"./nn.js": 79,
-	"./pa-in": 80,
-	"./pa-in.js": 80,
-	"./pl": 81,
-	"./pl.js": 81,
-	"./pt": 82,
-	"./pt-br": 83,
-	"./pt-br.js": 83,
-	"./pt.js": 82,
-	"./ro": 84,
-	"./ro.js": 84,
-	"./ru": 85,
-	"./ru.js": 85,
-	"./sd": 86,
-	"./sd.js": 86,
-	"./se": 87,
-	"./se.js": 87,
-	"./si": 88,
-	"./si.js": 88,
-	"./sk": 89,
-	"./sk.js": 89,
-	"./sl": 90,
-	"./sl.js": 90,
-	"./sq": 91,
-	"./sq.js": 91,
-	"./sr": 92,
-	"./sr-cyrl": 93,
-	"./sr-cyrl.js": 93,
-	"./sr.js": 92,
-	"./ss": 94,
-	"./ss.js": 94,
-	"./sv": 95,
-	"./sv.js": 95,
-	"./sw": 96,
-	"./sw.js": 96,
-	"./ta": 97,
-	"./ta.js": 97,
-	"./te": 98,
-	"./te.js": 98,
-	"./tet": 99,
-	"./tet.js": 99,
-	"./th": 100,
-	"./th.js": 100,
-	"./tl-ph": 101,
-	"./tl-ph.js": 101,
-	"./tlh": 102,
-	"./tlh.js": 102,
-	"./tr": 103,
-	"./tr.js": 103,
-	"./tzl": 104,
-	"./tzl.js": 104,
-	"./tzm": 105,
-	"./tzm-latn": 106,
-	"./tzm-latn.js": 106,
-	"./tzm.js": 105,
-	"./uk": 107,
-	"./uk.js": 107,
-	"./ur": 108,
-	"./ur.js": 108,
-	"./uz": 109,
-	"./uz-latn": 110,
-	"./uz-latn.js": 110,
-	"./uz.js": 109,
-	"./vi": 111,
-	"./vi.js": 111,
-	"./x-pseudo": 112,
-	"./x-pseudo.js": 112,
-	"./yo": 113,
-	"./yo.js": 113,
-	"./zh-cn": 114,
-	"./zh-cn.js": 114,
-	"./zh-hk": 115,
-	"./zh-hk.js": 115,
-	"./zh-tw": 116,
-	"./zh-tw.js": 116
-};
-function webpackContext(req) {
-	return __webpack_require__(webpackContextResolve(req));
-};
-function webpackContextResolve(req) {
-	var id = map[req];
-	if(!(id + 1)) // check for number or string
-		throw new Error("Cannot find module '" + req + "'.");
-	return id;
-};
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = 120;
-
-/***/ }),
-/* 121 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $ = __webpack_require__(1);
-var extend = __webpack_require__(122);
-var egCommponent = __webpack_require__(123);
-
-var RatingComponent = extend(egCommponent,{
-    init : function (root) {
-        this.$root = root;
-        this.$checkBoxArr = this.$root.find('.rating_rdo');
-        this.cur = 0;
-        this.$root.on('click','.rating_rdo',this.bindOnCheckBox.bind(this));
-    },
-
-    bindOnCheckBox : function (e) {
-        this.cur = parseInt($(e.currentTarget).val());
-        this.$checkBoxArr.prop("checked",false);
-        this.$checkBoxArr.slice(0,this.cur+1).prop("checked", true);
-        this.trigger("score",{score:this.cur});
-    }
-});
-
-module.exports = RatingComponent;
-
-/***/ }),
-/* 122 */
 /***/ (function(module, exports) {
 
 var extend = function (superClass, def) {
@@ -26401,7 +25907,7 @@ module.exports = extend;
 
 
 /***/ }),
-/* 123 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -26767,7 +26273,499 @@ module.exports = exports["default"];
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 124 */
+/* 119 */,
+/* 120 */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if(!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if(!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./af": 2,
+	"./af.js": 2,
+	"./ar": 3,
+	"./ar-dz": 4,
+	"./ar-dz.js": 4,
+	"./ar-kw": 5,
+	"./ar-kw.js": 5,
+	"./ar-ly": 6,
+	"./ar-ly.js": 6,
+	"./ar-ma": 7,
+	"./ar-ma.js": 7,
+	"./ar-sa": 8,
+	"./ar-sa.js": 8,
+	"./ar-tn": 9,
+	"./ar-tn.js": 9,
+	"./ar.js": 3,
+	"./az": 10,
+	"./az.js": 10,
+	"./be": 11,
+	"./be.js": 11,
+	"./bg": 12,
+	"./bg.js": 12,
+	"./bn": 13,
+	"./bn.js": 13,
+	"./bo": 14,
+	"./bo.js": 14,
+	"./br": 15,
+	"./br.js": 15,
+	"./bs": 16,
+	"./bs.js": 16,
+	"./ca": 17,
+	"./ca.js": 17,
+	"./cs": 18,
+	"./cs.js": 18,
+	"./cv": 19,
+	"./cv.js": 19,
+	"./cy": 20,
+	"./cy.js": 20,
+	"./da": 21,
+	"./da.js": 21,
+	"./de": 22,
+	"./de-at": 23,
+	"./de-at.js": 23,
+	"./de-ch": 24,
+	"./de-ch.js": 24,
+	"./de.js": 22,
+	"./dv": 25,
+	"./dv.js": 25,
+	"./el": 26,
+	"./el.js": 26,
+	"./en-au": 27,
+	"./en-au.js": 27,
+	"./en-ca": 28,
+	"./en-ca.js": 28,
+	"./en-gb": 29,
+	"./en-gb.js": 29,
+	"./en-ie": 30,
+	"./en-ie.js": 30,
+	"./en-nz": 31,
+	"./en-nz.js": 31,
+	"./eo": 32,
+	"./eo.js": 32,
+	"./es": 33,
+	"./es-do": 34,
+	"./es-do.js": 34,
+	"./es.js": 33,
+	"./et": 35,
+	"./et.js": 35,
+	"./eu": 36,
+	"./eu.js": 36,
+	"./fa": 37,
+	"./fa.js": 37,
+	"./fi": 38,
+	"./fi.js": 38,
+	"./fo": 39,
+	"./fo.js": 39,
+	"./fr": 40,
+	"./fr-ca": 41,
+	"./fr-ca.js": 41,
+	"./fr-ch": 42,
+	"./fr-ch.js": 42,
+	"./fr.js": 40,
+	"./fy": 43,
+	"./fy.js": 43,
+	"./gd": 44,
+	"./gd.js": 44,
+	"./gl": 45,
+	"./gl.js": 45,
+	"./gom-latn": 46,
+	"./gom-latn.js": 46,
+	"./he": 47,
+	"./he.js": 47,
+	"./hi": 48,
+	"./hi.js": 48,
+	"./hr": 49,
+	"./hr.js": 49,
+	"./hu": 50,
+	"./hu.js": 50,
+	"./hy-am": 51,
+	"./hy-am.js": 51,
+	"./id": 52,
+	"./id.js": 52,
+	"./is": 53,
+	"./is.js": 53,
+	"./it": 54,
+	"./it.js": 54,
+	"./ja": 55,
+	"./ja.js": 55,
+	"./jv": 56,
+	"./jv.js": 56,
+	"./ka": 57,
+	"./ka.js": 57,
+	"./kk": 58,
+	"./kk.js": 58,
+	"./km": 59,
+	"./km.js": 59,
+	"./kn": 60,
+	"./kn.js": 60,
+	"./ko": 61,
+	"./ko.js": 61,
+	"./ky": 62,
+	"./ky.js": 62,
+	"./lb": 63,
+	"./lb.js": 63,
+	"./lo": 64,
+	"./lo.js": 64,
+	"./lt": 65,
+	"./lt.js": 65,
+	"./lv": 66,
+	"./lv.js": 66,
+	"./me": 67,
+	"./me.js": 67,
+	"./mi": 68,
+	"./mi.js": 68,
+	"./mk": 69,
+	"./mk.js": 69,
+	"./ml": 70,
+	"./ml.js": 70,
+	"./mr": 71,
+	"./mr.js": 71,
+	"./ms": 72,
+	"./ms-my": 73,
+	"./ms-my.js": 73,
+	"./ms.js": 72,
+	"./my": 74,
+	"./my.js": 74,
+	"./nb": 75,
+	"./nb.js": 75,
+	"./ne": 76,
+	"./ne.js": 76,
+	"./nl": 77,
+	"./nl-be": 78,
+	"./nl-be.js": 78,
+	"./nl.js": 77,
+	"./nn": 79,
+	"./nn.js": 79,
+	"./pa-in": 80,
+	"./pa-in.js": 80,
+	"./pl": 81,
+	"./pl.js": 81,
+	"./pt": 82,
+	"./pt-br": 83,
+	"./pt-br.js": 83,
+	"./pt.js": 82,
+	"./ro": 84,
+	"./ro.js": 84,
+	"./ru": 85,
+	"./ru.js": 85,
+	"./sd": 86,
+	"./sd.js": 86,
+	"./se": 87,
+	"./se.js": 87,
+	"./si": 88,
+	"./si.js": 88,
+	"./sk": 89,
+	"./sk.js": 89,
+	"./sl": 90,
+	"./sl.js": 90,
+	"./sq": 91,
+	"./sq.js": 91,
+	"./sr": 92,
+	"./sr-cyrl": 93,
+	"./sr-cyrl.js": 93,
+	"./sr.js": 92,
+	"./ss": 94,
+	"./ss.js": 94,
+	"./sv": 95,
+	"./sv.js": 95,
+	"./sw": 96,
+	"./sw.js": 96,
+	"./ta": 97,
+	"./ta.js": 97,
+	"./te": 98,
+	"./te.js": 98,
+	"./tet": 99,
+	"./tet.js": 99,
+	"./th": 100,
+	"./th.js": 100,
+	"./tl-ph": 101,
+	"./tl-ph.js": 101,
+	"./tlh": 102,
+	"./tlh.js": 102,
+	"./tr": 103,
+	"./tr.js": 103,
+	"./tzl": 104,
+	"./tzl.js": 104,
+	"./tzm": 105,
+	"./tzm-latn": 106,
+	"./tzm-latn.js": 106,
+	"./tzm.js": 105,
+	"./uk": 107,
+	"./uk.js": 107,
+	"./ur": 108,
+	"./ur.js": 108,
+	"./uz": 109,
+	"./uz-latn": 110,
+	"./uz-latn.js": 110,
+	"./uz.js": 109,
+	"./vi": 111,
+	"./vi.js": 111,
+	"./x-pseudo": 112,
+	"./x-pseudo.js": 112,
+	"./yo": 113,
+	"./yo.js": 113,
+	"./zh-cn": 114,
+	"./zh-cn.js": 114,
+	"./zh-hk": 115,
+	"./zh-hk.js": 115,
+	"./zh-tw": 116,
+	"./zh-tw.js": 116
+};
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
+};
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 121;
+
+/***/ }),
+/* 122 */,
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+var ReviewInsert = __webpack_require__(145);
+
+(function(){
+    ReviewInsert.init();
+})();
+
+/***/ }),
+/* 145 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+var Jmoment = __webpack_require__(146);
+var RatingComponent = __webpack_require__(147);
+
+var ReviewInsert = (function () {
+    var uploadFileList = [];
+    var productId = $('#gavas').data('productid');
+    var userId = $('#gavas').data('userid');
+
+    function init() {
+        initRating();
+        bindOnTextArea();
+        uploadImage();
+        bindOnRegisterReviewBtn();
+    }
+
+    function bindOnTextArea () {
+        $('.review_write_info').on('click',function () {
+            $(this).hide();
+            $('.review_textarea').focus();
+        });
+
+        $('.review_textarea').on('focusout',function () {
+            if ($(this).val().length === 0){
+                $('.review_write_info').show();
+            }
+        });
+
+        $('.review_textarea').on('keyup',function(e){
+            var $textArea = $(this);
+            var $textCount = $('.guide_review span:first');
+            $textCount.text($textArea.val().length);
+        })
+    }
+
+    function initRating(){
+        var rating = new RatingComponent($('.rating'));
+        rating.on("score",function(e){
+            $('.star_rank').removeClass("gray_star");
+            $('.star_rank').text(e.score);
+        });
+    }
+
+    function uploadImage(){
+        var $eleFile = $("#reviewImageFileOpenInput");
+
+        $(".lst_thumb").on("click",".ico_del",function (e) {
+            deleteFileList(uploadFileList,e);
+        });
+
+        $eleFile.change(function(e){
+            var fileList = this.files;
+            var filesNum = fileList.length;
+            var curFilesNum = $('.item').length;
+
+            if(filesNum > 5 || curFilesNum === 6){
+                alert("이미지는 최대 5장까지 업로드할 수 있습니다.");
+            }
+
+            showImgFile(fileList,uploadFileList,curFilesNum);
+        });
+    }
+
+    function deleteFileList(uploadFileList,e){
+        var deleteFileIndex = $(".ico_del").index(this)-1;
+        uploadFileList.splice(deleteFileIndex,1);
+        e.currentTarget.closest(".item").remove();
+    }
+
+    function showImgFile(fileList,uploadFileList,curFilesNum){
+        var filesNum = fileList.length;
+        for (var i = 0; i < filesNum; i++) {
+            var file = fileList[i];
+            var imageTypeJpeg = /^image\/jpeg/;
+            var imageTypePng = /^image\/png/;
+
+            if (!imageTypeJpeg.test(file.type) && !imageTypePng.test(file.type)) {
+                alert("이미지 확장자는 .png, .jpeg만 가능합니다.")
+                continue;
+            }
+
+            if (file.size > 1048576) {
+                alert("파일 사이즈는 1mb보다 작아야 합니다.")
+                continue;
+            }
+
+            if( curFilesNum > 5){
+                return;
+            }
+
+            uploadFileList.push(file);
+
+            readImgFile(file);
+
+            curFilesNum++;
+        }
+    }
+
+    function readImgFile(file){
+        var img = new Image();
+        img.width = 130;
+        img.alt = "";
+        img.file = file;
+        $(img).addClass("item_thumb");
+
+        var reader = new FileReader();
+
+        reader.onload = (function(aImg) { return function(e) {
+            aImg.src = e.target.result;
+            var $html = $(".item").clone();
+            $html.find("a").after(aImg);
+            $($html.get(0)).appendTo(".lst_thumb");
+        };})(img);
+
+        reader.readAsDataURL(file);
+    }
+
+    function bindOnRegisterReviewBtn(){
+        $('.box_bk_btn').on('click','.bk_btn',enrollReviewInfo);
+    }
+
+    function enrollReviewInfo(){
+        var url = "/api/reviews";
+
+        if ($('.review_textarea').val().length === 0){
+            alert("리뷰내용을 입력해주세요");
+            return;
+        }
+        if (userId === "") {
+            alert("로그인 후 이용이 가능합니다.");
+            return;
+        }
+
+        var formData = makeFormData(uploadFileList);
+
+        $.ajax(url,{
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: formData
+        }).then(function(data){
+            alert("리뷰 등록을 완료하였습니다.");
+            location.href="/reservations";
+        }).fail(function () {
+            console.log("fail");
+        })
+    }
+
+    function makeFormData(uploadFileList){
+        var formData = new FormData();
+        var reviewData = JSON.stringify({
+            "productId" : productId,
+            "userId" : userId,
+            "score" : $('.star_rank').text(),
+            "comment" : $('.review_contents.write textarea').val(),
+            "createDate" : Jmoment().formatWithJDF("yyyy-MM-dd'T'HH:mm:ss.SSSZ"),
+            "modifyDate" : Jmoment().formatWithJDF("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+        });
+
+        formData.append('review', reviewData);
+        uploadFileList.forEach(function(file){
+            formData.append("files",file);
+        })
+
+        return formData;
+    }
+
+    return {
+        init : init
+    }
+})();
+
+module.exports = ReviewInsert;
+
+/***/ }),
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {/**
@@ -27021,7 +27019,33 @@ module.exports = exports["default"];
 
 }).call(this);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(119)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(120)(module)))
+
+/***/ }),
+/* 147 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+var extend = __webpack_require__(117);
+var egCommponent = __webpack_require__(118);
+
+var RatingComponent = extend(egCommponent,{
+    init : function (root) {
+        this.$root = root;
+        this.$checkBoxArr = this.$root.find('.rating_rdo');
+        this.cur = 0;
+        this.$root.on('click','.rating_rdo',this.bindOnCheckBox.bind(this));
+    },
+
+    bindOnCheckBox : function (e) {
+        this.cur = parseInt($(e.currentTarget).val());
+        this.$checkBoxArr.prop("checked",false);
+        this.$checkBoxArr.slice(0,this.cur+1).prop("checked", true);
+        this.trigger("score",{score:this.cur});
+    }
+});
+
+module.exports = RatingComponent;
 
 /***/ })
 /******/ ]);

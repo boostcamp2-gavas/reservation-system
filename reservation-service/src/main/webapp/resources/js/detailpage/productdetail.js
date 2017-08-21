@@ -73,7 +73,7 @@ var ProductDetail = (function () {
                 $('.section_btn .bk_btn span').text('판매기간 종료')
             } else {
                 $('.section_btn').on('click', '.bk_btn', function () {
-                    location.href = "";
+                    location.href = "/reserve/" + $('#gavas').data('productid');
                 });
             }
         }
