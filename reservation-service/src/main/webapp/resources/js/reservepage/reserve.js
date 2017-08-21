@@ -71,25 +71,27 @@ var ProductReserveModel = require('./productreservemodel');
     function bindReserveBtn(){
         $('.box_bk_btn .bk_btn_wrap').on('click', function(){
             if(!$(this).hasClass("disable")){
-                var ticketscounts = [];
+                var ticketsCounts = [];
                 tickets.forEach(function(value){
-                    ticketscounts[value.priceType] = value.getTicketAmount();
+                    ticketsCounts[value.priceType] = value.getTicketAmount();
                 });
 
                 var user = reserveUser.state.value;
                 var data = {
                     "productId" : $('#gavas').data('productid'),
-                    "generalTicketCount" : ticketscounts[3],
-                    "youthTicketCount" : ticketscounts[2],
-                    "childTicketCount" : ticketscounts[1],
+                    "generalTicketCount" : ticketsCounts[3],
+                    "youthTicketCount" : ticketsCounts[2],
+                    "childTicketCount" : ticketsCounts[1],
                     "reservationName" : $('.title').text(),
                     "reservationTel" : user.tel,
                     "reservationEmail" : user.email,
-                    "reservationDate" : Moment().format('YYYY-MM-DD hh:mm:ss'),
-                    "reservationType" : 1,
+                    "reservationDate" : Moment().valueOf(),
+                    "reservationType" : 1
                 };
                 productReserveModel.writeReservation(data, function(response){
-                    console.log(response);
+                    if(response === 200) {
+                        location.href = '/reservations';
+                    }
                 });
             }
         });

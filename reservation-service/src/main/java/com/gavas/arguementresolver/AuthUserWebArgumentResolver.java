@@ -24,10 +24,7 @@ public class AuthUserWebArgumentResolver implements HandlerMethodArgumentResolve
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        AuthUser loginUser = parameter.getParameterAnnotation(AuthUser.class);
-
         HttpSession session = webRequest.getNativeRequest(HttpServletRequest.class).getSession();
-
         User naverLoginUser = (User) session.getAttribute("USER");
 
         return naverLoginUser;

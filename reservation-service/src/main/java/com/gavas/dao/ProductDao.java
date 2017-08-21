@@ -5,6 +5,7 @@ import com.gavas.domain.dto.ProductDto;
 import com.gavas.domain.dto.ProductPriceInfoDto;
 import com.gavas.domain.dto.ProductReserveDto;
 import com.gavas.exception.EmptyQueryResultException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -24,14 +25,18 @@ import static com.gavas.dao.sqls.ProductSqls.*;
 public class ProductDao {
 
     private NamedParameterJdbcTemplate jdbc;
-    private RowMapper<Long> productCountRowMapper = BeanPropertyRowMapper.newInstance(Long.class);
-    private RowMapper<ProductDto> productDtoRowMapper = BeanPropertyRowMapper.newInstance(ProductDto.class);
-    private RowMapper<ProductDetailsDto> productDetailsDtoRowMapper = BeanPropertyRowMapper.newInstance(ProductDetailsDto.class);
-    private RowMapper<ProductReserveDto> productReserveDtoRowMapper = BeanPropertyRowMapper.newInstance(ProductReserveDto.class);
-    private RowMapper<ProductPriceInfoDto> productPriceInfoDtoRowMapper = BeanPropertyRowMapper.newInstance(ProductPriceInfoDto.class);
+    private RowMapper<ProductDto> productDtoRowMapper;
+    private RowMapper<ProductDetailsDto> productDetailsDtoRowMapper;
+    private RowMapper<ProductReserveDto> productReserveDtoRowMapper;
+    private RowMapper<ProductPriceInfoDto> productPriceInfoDtoRowMapper;
 
+    @Autowired
     public ProductDao(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+        this.productDtoRowMapper = BeanPropertyRowMapper.newInstance(ProductDto.class);
+        this.productDetailsDtoRowMapper = BeanPropertyRowMapper.newInstance(ProductDetailsDto.class);
+        this.productReserveDtoRowMapper = BeanPropertyRowMapper.newInstance(ProductReserveDto.class);
+        this.productPriceInfoDtoRowMapper = BeanPropertyRowMapper.newInstance(ProductPriceInfoDto.class);
     }
 
     public Long findProudctId(Long productId) {
@@ -45,21 +50,21 @@ public class ProductDao {
         }
     }
 
-    public List<ProductDto> selectProductList(Long offsetId){
+    public List<ProductDto> selectProductList(Long offsetId) {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("offsetId", offsetId);
         try {
-            return jdbc.query(SELECT_PRODUCT_LIST,paramMap,productDtoRowMapper);
-        } catch (EmptyResultDataAccessException exception){
+            return jdbc.query(SELECT_PRODUCT_LIST, paramMap, productDtoRowMapper);
+        } catch (EmptyResultDataAccessException exception) {
             throw new EmptyQueryResultException("전체 Product");
         }
     }
 
-    public Long selectProductCount(){
+    public Long selectProductCount() {
         try {
             Long l = jdbc.queryForObject(SELECT_PRODUCT_COUNT, new HashMap<>(), Long.class);
             return l;
-        } catch (EmptyResultDataAccessException exception){
+        } catch (EmptyResultDataAccessException exception) {
             throw new EmptyQueryResultException("Category");
         }
     }

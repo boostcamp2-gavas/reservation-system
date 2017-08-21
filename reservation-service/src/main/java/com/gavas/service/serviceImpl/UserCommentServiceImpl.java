@@ -13,18 +13,21 @@ import java.util.List;
 
 @Service
 public class UserCommentServiceImpl implements UserCommentService {
-    @Autowired
+
     private UserCommentDao userCommentDao;
+    private ProductService productService;
 
     @Autowired
-    private ProductService productService;
+    public UserCommentServiceImpl(UserCommentDao userCommentDao, ProductService productService) {
+        this.userCommentDao = userCommentDao;
+        this.productService = productService;
+    }
 
     @Transactional(readOnly = true)
     @Override
     public Long findUserCommentId(Long userCommentId) {
         return userCommentDao.findUserCommentId(userCommentId);
     }
-
 
     @Transactional(readOnly = true)
     @Override

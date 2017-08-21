@@ -2,6 +2,7 @@ package com.gavas.dao;
 
 import com.gavas.domain.Category;
 import com.gavas.exception.EmptyQueryResultException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -24,10 +25,12 @@ import static com.gavas.dao.sqls.CategorySqls.SELECT_CATEGORY_LIST;
 @PropertySource("classpath:/application.properties")
 public class CategoryDao {
     private NamedParameterJdbcTemplate jdbc;
-    private RowMapper<Category> rowMapper = BeanPropertyRowMapper.newInstance(Category.class);
+    private RowMapper<Category> rowMapper;
 
+    @Autowired
     public CategoryDao(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+        this.rowMapper = BeanPropertyRowMapper.newInstance(Category.class);
     }
 
     public List<Category> selectCategoryList() {

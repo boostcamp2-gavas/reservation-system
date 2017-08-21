@@ -6,6 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface FileService {
-    FileDomain getFileDomaintByFileId(Long fileId);
-    List<Integer> saveFiles(Integer userId, MultipartFile[] files);
+    FileDomain getFileDomainByFileId(Long fileId);
+    List<Integer> saveFiles(Long userId, MultipartFile[] files);
 }

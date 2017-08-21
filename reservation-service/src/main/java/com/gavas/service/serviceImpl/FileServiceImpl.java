@@ -21,7 +21,7 @@ import static java.io.File.separator;
 
 @Service
 public class FileServiceImpl implements FileService {
-    FileDao fileDao;
+    private FileDao fileDao;
 
     @Value("${spring.resources.file-location}")
     private String baseDir;
@@ -32,12 +32,12 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public FileDomain getFileDomaintByFileId(Long fileId) {
+    public FileDomain getFileDomainByFileId(Long fileId) {
         return fileDao.selectFileDomainByfileId(fileId);
     }
 
     @Override
-    public List<Integer> saveFiles(Integer userId, MultipartFile[] files) {
+    public List<Integer> saveFiles(Long userId, MultipartFile[] files) {
         List<Integer> fileIdList = new ArrayList<>();
         FileDomain fileDomain = new FileDomain();
 

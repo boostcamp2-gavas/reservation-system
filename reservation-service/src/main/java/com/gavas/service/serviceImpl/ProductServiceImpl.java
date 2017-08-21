@@ -15,12 +15,17 @@ import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-    @Autowired
+
     private CategoryService categoryService;
-    @Autowired
     private ProductDao productDao;
-    @Autowired
     private FileDao fileDao;
+
+    @Autowired
+    public ProductServiceImpl(CategoryService categoryService, ProductDao productDao, FileDao fileDao) {
+        this.categoryService = categoryService;
+        this.productDao = productDao;
+        this.fileDao = fileDao;
+    }
 
     @Transactional(readOnly = true)
     @Override
