@@ -34,7 +34,7 @@ var ProductReserveModel = (function () {
                 method : "POST",
                 data : JSON.stringify(data),
                 contentType : "application/json"
-            }).then(function(data,status, jqXHR) {
+            }).then(function(data,status,jqXHR) {
                 fp(jqXHR.status);
             }, function(jqXHR){
                 fp(jqXHR.status);
