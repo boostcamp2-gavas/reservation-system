@@ -288,7 +288,23 @@
         <span class="copyright">© NAVER Corp.</span>
     </div>
 </footer>
-<div id="photoviwer"></div>
+
+<div id="photoviwer" class="pop-layer">
+    <div class="pop-container">
+        <div class="pop-conts">
+            <ul class="detail_img">
+
+            </ul>
+
+            <div class="btn-r">
+                <a href="#" class="pbtn">이전</a>
+                <a href="#" class="nbtn">다음</a>
+                <a href="#" class="cbtn">Close</a>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <script id="comment-template" type="text/x-handlebars-template">
     <li class="list_item" data-comment={{id}}>
@@ -323,6 +339,14 @@
         </div>
     </li>
     <%--{{/each}}--%>
+</script>
+
+<script id="commentImage-template" type="text/x-handlebars-template">
+    {{#each fileData}}
+    <li class="detail_list" style="width: 414px;" style="height: 414px; ">
+        <img alt="코멘트 사진" class="detail_img_thumb" src="/files/{{fileId}}">
+    </li>
+    {{/each}}
 </script>
 
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=eyic9Dq0EOsvUuWK7SHA&submodules=geocoder"></script>

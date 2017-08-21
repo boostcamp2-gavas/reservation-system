@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.peer.SystemTrayPeer;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -65,17 +66,21 @@ public class ReservationServiceImpl implements ReservationService {
                 productPriceMap.put(productId, productPriceService.getProductPriceList(productId));
             }
             List<ProductPrice> productPriceList = productPriceMap.get(productId);
+
             for (ProductPrice productPrice : productPriceList) {
-                Long count;
+                Long count = 0L;
+
                 if (productPrice.getPriceType().equals(1L) && reservationDto.getGeneralTicketCount() != null) {
                     count = reservationDto.getGeneralTicketCount();
                 } else if (productPrice.getPriceType().equals(2L) && reservationDto.getYouthTicketCount() != null) {
                     count = reservationDto.getYouthTicketCount();
                 } else if (productPrice.getPriceType().equals(3L) && reservationDto.getChildTicketCount() != null) {
                     count = reservationDto.getChildTicketCount();
-                } else {
-                    throw new IllegalArgumentException();
                 }
+//                else {
+//                    throw new IllegalArgumentException();
+//                }
+
                 Double discountRate = productPrice.getDiscountRate().doubleValue();
                 totalPrice += (productPrice.getPrice() * (1 - discountRate)) * count;
             }

@@ -9,7 +9,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ProductDto {
+public class ProductDto{
     private Long id;
     private Long categoryId;
     private String name;

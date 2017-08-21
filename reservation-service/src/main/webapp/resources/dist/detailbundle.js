@@ -31774,18 +31774,30 @@ $ = __webpack_require__(1);
 totlTotalCommentInfoModel = __webpack_require__(127);
 moment = __webpack_require__(0);
 Handlebars = __webpack_require__(2);
+var FlickingComponent = __webpack_require__(123);
 
 var UserComment = (function(){
     var source = $("#comment-template").html();
     var template = Handlebars.compile(source);
 
+    var commentImageSoruce = $("#commentImage-template").html();
+    var commentImageTemplate = Handlebars.compile(commentImageSoruce);
+
+    var cur_num = 1;
+    var slide_width;
+    var slide_count;
+    var isOpen = 0;
+    var flickingModule;
+
     function init(){
         totalCommentInfo();
+
     }
 
     function totalCommentInfo(){
         totlTotalCommentInfoModel.getTotalCommentInfo(function (data) {
             showUserComment(data);
+            bindOnClickUserCommentImage();
         });
     }
 
@@ -31799,6 +31811,63 @@ var UserComment = (function(){
                     nickName : item.nickName, score : item.score, createDate : moment(item.createDate).format('YYYY-MM-DD')}));
             }
         });
+    }
+
+    function bindOnClickUserCommentImage(){
+        $('.thumb_area').on('click','.thumb',function(e){
+            e.preventDefault();
+            var commentId = $(this).closest('li').data('comment');
+
+            totlTotalCommentInfoModel.getUserCommentImage(commentId, function(data){
+
+                if (isOpen === 0) {
+                    addCommentLi(data.fileId);
+                }
+
+                layerOpen('photoviwer');
+
+                addFlickingComponent();
+            });
+        })
+
+        $('.btn-r').on('click', '.cbtn', function () {
+            isOpen = 0;
+            cur_num = 1;
+            flickingModule.flush();
+            $('.detail_img li').remove();
+            $('#photoviwer').fadeOut();
+        })
+    }
+
+    function addCommentLi(data) {
+        $('.detail_img').append(commentImageTemplate({fileData: data}));
+    }
+
+    function layerOpen(el) {
+        isOpen = 1;
+        slide_width = $('.detail_img > li').outerWidth();
+        slide_count = $('.detail_img > li').length;
+        var temp = $('#' + el);
+
+        temp.fadeIn();
+
+        if (temp.outerHeight() < $(document).height()) {
+            temp.css('margin-top', '-' + temp.outerHeight() / 2 + 'px');
+        }
+        else {
+            temp.css('top', '0px');
+        }
+
+        if (temp.outerWidth() < $(document).width()) {
+            temp.css('margin-left', '-' + temp.outerWidth() / 2 + 'px');
+        }
+        else {
+            temp.css('left', '0px');
+        }
+    }
+
+    function addFlickingComponent() {
+        flickingModule = new FlickingComponent($('.detail_img'));
     }
 
     return {
@@ -31834,8 +31903,24 @@ var TotalCommentInfoModel = (function () {
         }
     }
 
+    function getUserCommentImage(id, fp) {
+        var url = "/api/usercomments/"+id+"/images";
+
+        if (totalCommentInfoCash[url] != null) {
+            fp(data);
+        } else {
+            $.ajax(url).then(function(data){
+                totalCommentInfoCash[url] = data;
+                fp(data);
+            },function(){
+                console.log("hi");
+            })
+        }
+    }
+
     return {
-        getTotalCommentInfo : getTotalCommentInfo
+        getTotalCommentInfo : getTotalCommentInfo,
+        getUserCommentImage : getUserCommentImage
     }
 
 })();

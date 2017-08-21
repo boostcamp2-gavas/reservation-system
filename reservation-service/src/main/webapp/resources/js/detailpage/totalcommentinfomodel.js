@@ -19,8 +19,24 @@ var TotalCommentInfoModel = (function () {
         }
     }
 
+    function getUserCommentImage(id, fp) {
+        var url = "/api/usercomments/"+id+"/images";
+
+        if (totalCommentInfoCash[url] != null) {
+            fp(data);
+        } else {
+            $.ajax(url).then(function(data){
+                totalCommentInfoCash[url] = data;
+                fp(data);
+            },function(){
+                console.log("hi");
+            })
+        }
+    }
+
     return {
-        getTotalCommentInfo : getTotalCommentInfo
+        getTotalCommentInfo : getTotalCommentInfo,
+        getUserCommentImage : getUserCommentImage
     }
 
 })();
