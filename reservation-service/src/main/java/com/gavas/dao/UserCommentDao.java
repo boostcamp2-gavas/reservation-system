@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,11 @@ public class UserCommentDao {
         try {
             return jdbc.queryForObject(SELECT_TOTAL_COMMENTS_STATUS_BY_PRODUCT_ID, paramMap, totalCommentStatusDtoRowMapper);
         } catch (EmptyResultDataAccessException exception) {
-            throw new EmptyQueryResultException("Product Comment Total Score");
+            TotalCommentStatusDto totalCommentStatusDto = new TotalCommentStatusDto();
+            totalCommentStatusDto.setAvg(BigDecimal.ZERO);
+            totalCommentStatusDto.setCount(0L);
+            totalCommentStatusDto.setProductId(productId);
+            return totalCommentStatusDto;
         }
     }
 

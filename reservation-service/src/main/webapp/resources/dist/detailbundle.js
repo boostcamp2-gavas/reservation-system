@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 117);
+/******/ 	return __webpack_require__(__webpack_require__.s = 127);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1896,7 +1896,7 @@ function loadLocale(name) {
             module && module.exports) {
         try {
             oldLocale = globalLocale._abbr;
-            __webpack_require__(122)("./" + name);
+            __webpack_require__(121)("./" + name);
             // because defineLocale currently also sets the global locale, we
             // want to undo that for lazy loaded locales
             getSetGlobalLocale(oldLocale);
@@ -4531,7 +4531,7 @@ return hooks;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(121)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(120)(module)))
 
 /***/ }),
 /* 1 */
@@ -25875,135 +25875,402 @@ return zhTw;
 
 /***/ }),
 /* 117 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-var $ = __webpack_require__(1);
-var ProductDetail = __webpack_require__(118);
-var LazyLoad = __webpack_require__(127);
-var NaverMap = __webpack_require__(128);
+var extend = function (superClass, def) {
 
-(function () {
-    ProductDetail.init();
-    ProductDetail.showProductDetail();
+    var extendClass = function extendClass() {
+        // Call a parent constructor
+        superClass.apply(this, arguments);
 
-    var lazyLoad = LazyLoad.getInstance();
-    lazyLoad.init($('.detail_info_lst.lazy_section'));
+        // Call a child constructor
+        if (typeof def.init === "function") {
+            def.init.apply(this, arguments);
+        }
+    };
 
-    NaverMap.showMap();
-})();
+    var ExtProto = function () {
+    };
+    ExtProto.prototype = superClass.prototype;
+
+    var extProto = new ExtProto();
+    for (var i in def) {
+        extProto[i] = def[i];
+    }
+    extProto.constructor = extendClass;
+    extendClass.prototype = extProto;
+
+    return extendClass;
+};
+
+module.exports = extend;
+
 
 /***/ }),
 /* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(1);
-var Handlebars = __webpack_require__(119);
-var ProductDetailModel = __webpack_require__(120);
-var Moment = __webpack_require__(0);
-var Carousel = __webpack_require__(123);
-var FlickingComponent = __webpack_require__(126);
+/*!
+ * Copyright (c) 2017 NAVER Corp.
+ * @egjs/component project is licensed under the MIT license
+ * 
+ * @egjs/component JavaScript library
+ * http://naver.github.io/egjs/component
+ * 
+ * @version 2.0.0
+ */
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["Component"] = factory();
+	else
+		root["eg"] = root["eg"] || {}, root["eg"]["Component"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
 
-var ProductDetail = (function () {
-    var productDetailModel = ProductDetailModel.getDetail();
-    var source = $("#detailImage-template").html();
-    var template = Handlebars.compile(source);
-    var carousel;
-    var flicking;
+"use strict";
 
-    function init() {
-        bindOnClickMoreBtn();
-        bindOnClickAnchor();
-    }
 
-    function bindOnClickAnchor() {
-        $('.info_tab_lst').on('click', '.anchor', toggleAnchorClass);
-    }
+var _Component = __webpack_require__(1);
 
-    function toggleAnchorClass(e) {
-        e.preventDefault();
-        var $target = $(this);
-        if (!$target.hasClass("active")) {
-            $target.closest("ul").find(".active").removeClass("active");
-            $target.addClass("active");
-            $('.detail_area_wrap').toggleClass("hide");
-            $('.detail_location').toggleClass("hide");
-        }
-    }
+var _Component2 = _interopRequireDefault(_Component);
 
-    function bindOnClickMoreBtn() {
-        $('.bk_more').on('click', showMoreContent);
-    }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-    function showMoreContent() {
-        $('.bk_more._open').toggle();
-        $('.bk_more._close').toggle();
-        $('.section_store_details .store_details').toggleClass('close3');
-    }
+_Component2["default"].VERSION = "2.0.0";
+module.exports = _Component2["default"];
 
-    function showProductDetail() {
-        productDetailModel.getDetails(function (data) {
-            writeProductDetail(data);
-            setProductDetailImage(data);
-            validateTicketing(data);
-            carousel = new Carousel($('.group_visual'));
-            bindOnCarouselAction();
-            flicking = new FlickingComponent($('.visual_img'));
-        });
-    }
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
 
-    function writeProductDetail(data) {
-        $('.store_details.close3 .dsc').html(data.description.replace(/\n/g, '<br>'));
-        $('.event_info .in_dsc').html(data.event.replace(/\n/g, '<br>'));
-        $('div.box_store_info h3.store_name').text(data.name);
-        $('.store_addr.store_addr_bold').text(data.placeStreet);
-        $('.addr_old_detail').text(data.placeLot);
-        $('.store_addr.addr_detail').text(data.placeName);
-        $('.detail_info_lst .in_dsc').html(data.content.replace(/\n/g, '<br>'));
-        $('.group_btn_goto .btn_goto_tel').attr('href', 'tel:' + data.tel);
-        $('.group_btn_goto .btn_goto_home').attr('href', data.homepage);
-        $('.group_btn_goto .btn_goto_mail').attr('href', 'mailto:' + data.email);
-    }
+"use strict";
 
-    function setProductDetailImage(data) {
-        var name = data.name;
-        data.fileIdList.forEach(function (item) {
-            $('.visual_img').append(template({name: name, fileId: item}));
-        })
-    }
 
-    function validateTicketing(data) {
-        var saleEnd = Moment(data.salesEnd).format('YYYY-MM-DD HH:mm');
-        var currentTime = Moment().format('YYYY-MM-DD HH:mm');
-        if (data.salesFlag) {
-            $('.section_btn .bk_btn span').text('매진')
-        } else {
-            if (Moment(currentTime).isAfter(saleEnd)) {
-                $('.section_btn .bk_btn span').text('판매기간 종료')
-            } else {
-                $('.section_btn').on('click', '.bk_btn', function () {
-                    location.href = "";
-                });
-            }
-        }
-    }
+exports.__esModule = true;
 
-    function bindOnCarouselAction() {
-        carousel.on("clickBtn",function(e) {
-            console.log(e.curNum);
-        });
-    }
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-    function bindOnFlickingComponent(){
-        var flicking = new FlickingComponent($('.visual_img'));
-    }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    return {
-        init: init,
-        showProductDetail: showProductDetail
-    }
-})();
+/**
+ * Copyright (c) 2015 NAVER Corp.
+ * egjs projects are licensed under the MIT license
+ */
 
-module.exports = ProductDetail;
+/**
+ * A class used to manage events and options in a component
+ * @ko 컴포넌트의 이벤트와 옵션을 관리할 수 있게 하는 클래스
+ * @alias eg.Component
+ */
+var Component = function () {
+	/**
+  * @support {"ie": "7+", "ch" : "latest", "ff" : "latest",  "sf" : "latest", "edge" : "latest", "ios" : "7+", "an" : "2.1+ (except 3.x)"}
+  */
+	function Component() {
+		_classCallCheck(this, Component);
+
+		this._eventHandler = {};
+		this.options = {};
+	}
+	/**
+  * Triggers a custom event.
+  * @ko 커스텀 이벤트를 발생시킨다
+  * @param {String} eventName The name of the custom event to be triggered <ko>발생할 커스텀 이벤트의 이름</ko>
+  * @param {Object} customEvent Event data to be sent when triggering a custom event <ko>커스텀 이벤트가 발생할 때 전달할 데이터</ko>
+  * @return {Boolean} Indicates whether the event has occurred. If the stop() method is called by a custom event handler, it will return false and prevent the event from occurring. <ko>이벤트 발생 여부. 커스텀 이벤트 핸들러에서 stop() 메서드를 호출하면 'false'를 반환하고 이벤트 발생을 중단한다.</ko>
+  * @example
+ class Some extends eg.Component {
+  some(){
+    this.trigger("hi");// fire hi event.
+  }
+ }
+  */
+
+
+	Component.prototype.trigger = function trigger(eventName) {
+		var customEvent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+		var handlerList = this._eventHandler[eventName] || [];
+		var hasHandlerList = handlerList.length > 0;
+
+		if (!hasHandlerList) {
+			return true;
+		}
+
+		// If detach method call in handler in first time then handeler list calls.
+		handlerList = handlerList.concat();
+
+		customEvent.eventType = eventName;
+
+		var isCanceled = false;
+		var arg = [customEvent];
+		var i = 0;
+
+		customEvent.stop = function () {
+			isCanceled = true;
+		};
+
+		for (var _len = arguments.length, restParam = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+			restParam[_key - 2] = arguments[_key];
+		}
+
+		if (restParam.length >= 1) {
+			arg = arg.concat(restParam);
+		}
+
+		for (i = 0; handlerList[i]; i++) {
+			handlerList[i].apply(this, arg);
+		}
+
+		return !isCanceled;
+	};
+	/**
+  * Executed event just one time.
+  * @ko 이벤트가 한번만 실행된다.
+  * @param {eventName} eventName The name of the event to be attached <ko>등록할 이벤트의 이름</ko>
+  * @param {Function} handlerToAttach The handler function of the event to be attached <ko>등록할 이벤트의 핸들러 함수</ko>
+  * @return {eg.Component} An instance of a component itself<ko>컴포넌트 자신의 인스턴스</ko>
+  * @example
+ class Some extends eg.Component {
+  hi() {
+    alert("hi");
+  }
+  thing() {
+    this.once("hi", this.hi);
+  }
+ }
+ var some = new Some();
+ some.thing();
+ some.trigger("hi");
+ // fire alert("hi");
+ some.trigger("hi");
+ // Nothing happens
+  */
+
+
+	Component.prototype.once = function once(eventName, handlerToAttach) {
+		if ((typeof eventName === "undefined" ? "undefined" : _typeof(eventName)) === "object" && typeof handlerToAttach === "undefined") {
+			var eventHash = eventName;
+			var i = void 0;
+
+			for (i in eventHash) {
+				this.once(i, eventHash[i]);
+			}
+			return this;
+		} else if (typeof eventName === "string" && typeof handlerToAttach === "function") {
+			var self = this;
+
+			this.on(eventName, function listener() {
+				for (var _len2 = arguments.length, arg = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+					arg[_key2] = arguments[_key2];
+				}
+
+				handlerToAttach.apply(self, arg);
+				self.off(eventName, listener);
+			});
+		}
+
+		return this;
+	};
+
+	/**
+  * Checks whether an event has been attached to a component.
+  * @ko 컴포넌트에 이벤트가 등록됐는지 확인한다.
+  * @param {String} eventName The name of the event to be attached <ko>등록 여부를 확인할 이벤트의 이름</ko>
+  * @return {Boolean} Indicates whether the event is attached. <ko>이벤트 등록 여부</ko>
+  * @example
+ class Some extends eg.Component {
+  some() {
+    this.hasOn("hi");// check hi event.
+  }
+ }
+  */
+
+
+	Component.prototype.hasOn = function hasOn(eventName) {
+		return !!this._eventHandler[eventName];
+	};
+
+	/**
+  * Attaches an event to a component.
+  * @ko 컴포넌트에 이벤트를 등록한다.
+  * @param {eventName} eventName The name of the event to be attached <ko>등록할 이벤트의 이름</ko>
+  * @param {Function} handlerToAttach The handler function of the event to be attached <ko>등록할 이벤트의 핸들러 함수</ko>
+  * @return {eg.Component} An instance of a component itself<ko>컴포넌트 자신의 인스턴스</ko>
+  * @example
+ class Some extends eg.Component {
+  hi() {
+    console.log("hi");
+  }
+  some() {
+    this.on("hi",this.hi); //attach event
+  }
+ }
+ */
+
+
+	Component.prototype.on = function on(eventName, handlerToAttach) {
+		if ((typeof eventName === "undefined" ? "undefined" : _typeof(eventName)) === "object" && typeof handlerToAttach === "undefined") {
+			var eventHash = eventName;
+			var name = void 0;
+
+			for (name in eventHash) {
+				this.on(name, eventHash[name]);
+			}
+			return this;
+		} else if (typeof eventName === "string" && typeof handlerToAttach === "function") {
+			var handlerList = this._eventHandler[eventName];
+
+			if (typeof handlerList === "undefined") {
+				this._eventHandler[eventName] = [];
+				handlerList = this._eventHandler[eventName];
+			}
+
+			handlerList.push(handlerToAttach);
+		}
+
+		return this;
+	};
+	/**
+  * Detaches an event from the component.
+  * @ko 컴포넌트에 등록된 이벤트를 해제한다
+  * @param {eventName} eventName The name of the event to be detached <ko>해제할 이벤트의 이름</ko>
+  * @param {Function} handlerToDetach The handler function of the event to be detached <ko>해제할 이벤트의 핸들러 함수</ko>
+  * @return {eg.Component} An instance of a component itself <ko>컴포넌트 자신의 인스턴스</ko>
+  * @example
+ class Some extends eg.Component {
+  hi() {
+    console.log("hi");
+  }
+  some() {
+    this.off("hi",this.hi); //detach event
+  }
+ }
+  */
+
+
+	Component.prototype.off = function off(eventName, handlerToDetach) {
+		// All event detach.
+		if (typeof eventName === "undefined") {
+			this._eventHandler = {};
+			return this;
+		}
+
+		// All handler of specific event detach.
+		if (typeof handlerToDetach === "undefined") {
+			if (typeof eventName === "string") {
+				this._eventHandler[eventName] = undefined;
+				return this;
+			} else {
+				var eventHash = eventName;
+				var name = void 0;
+
+				for (name in eventHash) {
+					this.off(name, eventHash[name]);
+				}
+				return this;
+			}
+		}
+
+		// The handler of specific event detach.
+		var handlerList = this._eventHandler[eventName];
+
+		if (handlerList) {
+			var k = void 0;
+			var handlerFunction = void 0;
+
+			for (k = 0; (handlerFunction = handlerList[k]) !== undefined; k++) {
+				if (handlerFunction === handlerToDetach) {
+					handlerList = handlerList.splice(k, 1);
+					break;
+				}
+			}
+		}
+
+		return this;
+	};
+
+	return Component;
+}();
+
+exports["default"] = Component;
+module.exports = exports["default"];
+
+/***/ })
+/******/ ]);
+});
+//# sourceMappingURL=component.js.map
 
 /***/ }),
 /* 119 */
@@ -30852,35 +31119,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 120 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $ = __webpack_require__(1);
-
-var ProductDetailModel = (function () {
-
-    function getDetail() {
-        var url = "/api/products/" + $('#gavas').data('productid') + "/details"
-
-        function getDetails(fp) {
-            $.ajax(url).then(function (data) {
-                fp(data);
-            })
-        }
-
-        return {
-            getDetails: getDetails
-        }
-    }
-
-    return {
-        getDetail: getDetail
-    }
-})();
-
-module.exports = ProductDetailModel;
-
-/***/ }),
-/* 121 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -30908,7 +31146,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 122 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -31157,509 +31395,384 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 122;
+webpackContext.id = 121;
 
 /***/ }),
-/* 123 */
+/* 122 */,
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var extend = __webpack_require__(124);
-var egCommponent = __webpack_require__(125);
 var $ = __webpack_require__(1);
+var ProductDetail = __webpack_require__(128);
+var UserComment = __webpack_require__(129);
+var LazyLoad = __webpack_require__(133);
+var NaverMap = __webpack_require__(134);
+var FlickingComponent = __webpack_require__(135);
+var ProductDetailModel = __webpack_require__(136);
 
-var Carousel = extend(egCommponent, {
 
-    init: function (root) {
-        this.$root = root;
-        this.$carouselRoot = this.$root.find('.visual_img');
-        var $li = this.$root.find('li');
-        this.liCount = $li.length;
-        this.arrange = $li.width();
-        this.index = 1;
+(function () {
+    ProductDetail.init();
 
-        this.carouselReady();
-        this.bindOnClick();
-    },
+    var productDetailModel = ProductDetailModel.getDetail();
+    productDetailModel.getDetails(function (data) {
+        ProductDetail.showProductDetail(data);
 
-    carouselReady: function () {
-        var firstChild = this.$root.find('li:first').clone();
-        var lastChild = this.$root.find('li:last').clone();
-        this.$carouselRoot.prepend(lastChild);
-        this.$carouselRoot.append(firstChild);
-        this.$carouselRoot.css({"left": "-=" + this.arrange + "px"});
-    },
+        var flicking = new FlickingComponent($('.visual_img'));
+        flicking.on("flick",function (e) {
+            ProductDetail.changeSlideCountByFlicking(e.curNum);
+        });
+    });
 
-    moveToPrev: function () {
-        if (this.$carouselRoot.is(":animated")) {
-            return false;
+    UserComment.init();
+
+    var lazyLoad = LazyLoad.getInstance();
+    lazyLoad.init($('.detail_info_lst.lazy_section'));
+
+    NaverMap.showMap();
+})();
+
+/***/ }),
+/* 128 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+var Handlebars = __webpack_require__(119);
+var Moment = __webpack_require__(0);
+
+var ProductDetail = (function () {
+    var source = $("#detailImage-template").html();
+    var template = Handlebars.compile(source);
+
+    function init() {
+        bindOnClickMoreBtn();
+        bindOnClickAnchor();
+    }
+
+    function bindOnClickAnchor() {
+        $('.info_tab_lst').on('click', '.anchor', toggleAnchorClass);
+    }
+
+    function toggleAnchorClass(e) {
+        e.preventDefault();
+        var $target = $(this);
+        if (!$target.hasClass("active")) {
+            $target.closest("ul").find(".active").removeClass("active");
+            $target.addClass("active");
+            $('.detail_area_wrap').toggleClass("hide");
+            $('.detail_location').toggleClass("hide");
         }
+    }
 
-        if (this.index <= 1) {
-            this.$carouselRoot.css({"left": "-=" + (this.arrange * (this.liCount)) + "px"});
-            this.index = this.liCount;
+    function bindOnClickMoreBtn() {
+        $('.bk_more').on('click', showMoreContent);
+    }
+
+    function showMoreContent() {
+        $('.bk_more._open').toggle();
+        $('.bk_more._close').toggle();
+        $('.section_store_details .store_details').toggleClass('close3');
+    }
+
+    function showProductDetail(data) {
+        writeProductDetail(data);
+        setProductDetailImage(data);
+        validateTicketing(data);
+        $('.pagination .figure_pagination .num.off span').text(data.fileIdList.length);
+    }
+
+    function writeProductDetail(data) {
+        $('.store_details.close3 .dsc').html(data.description.replace(/\n/g, '<br>'));
+        $('.event_info .in_dsc').html(data.event.replace(/\n/g, '<br>'));
+        $('div.box_store_info h3.store_name').text(data.name);
+        $('.store_addr.store_addr_bold').text(data.placeStreet);
+        $('.addr_old_detail').text(data.placeLot);
+        $('.store_addr.addr_detail').text(data.placeName);
+        $('.detail_info_lst .in_dsc').html(data.content.replace(/\n/g, '<br>'));
+        $('.group_btn_goto .btn_goto_tel').attr('href', 'tel:' + data.tel);
+        $('.group_btn_goto .btn_goto_home').attr('href', data.homepage);
+        $('.group_btn_goto .btn_goto_mail').attr('href', 'mailto:' + data.email);
+    }
+
+    function setProductDetailImage(data) {
+        var name = data.name;
+        data.fileIdList.forEach(function (item) {
+            $('.visual_img').append(template({name: name, fileId: item}));
+        })
+    }
+
+    function validateTicketing(data) {
+        var saleEnd = Moment(data.salesEnd).format('YYYY-MM-DD HH:mm');
+        var currentTime = Moment().format('YYYY-MM-DD HH:mm');
+        if (data.salesFlag) {
+            $('.section_btn .bk_btn span').text('매진')
         } else {
-            this.index--;
+            if (Moment(currentTime).isAfter(saleEnd)) {
+                $('.section_btn .bk_btn span').text('판매기간 종료')
+            } else {
+                $('.section_btn').on('click', '.bk_btn', function () {
+                    location.href = "/reserve/" + $('#gavas').data('productid');
+                });
+            }
         }
-
-        this.$carouselRoot.animate({"left": "+=" + this.arrange + "px"}, {
-            duration: "normal"
-        });
-
-        this.trigger("clickBtn",{curNum : this.index});
-    },
-
-    moveToNext: function () {
-        if (this.$carouselRoot.is(":animated")) {
-            return false;
-        }
-
-        if (this.index >= this.liCount) {
-            this.$carouselRoot.css({"left": "+=" + (this.arrange * (this.liCount)) + "px"});
-            this.index = 0;
-        }
-
-        this.$carouselRoot.animate({"left": "-=" + this.arrange + "px"}, {
-            duration: "normal"
-        });
-
-        this.index++;
-
-        this.trigger("clickBtn",{curNum : this.index});
-    },
-
-    bindOnClick: function () {
-        this.$root.find('.prev_inn').on('click', this.moveToPrevTrigger.bind(this));
-        this.$root.find('.nxt_inn').on('click', this.moveToNextTrigger.bind(this));
-
-        this.$root.find('.prev_e').on('mouseenter', '.prev_inn', function () {
-            this.trigger("stopTimer");
-        }.bind(this));
-
-        this.$root.find('.nxt_e').on('mouseenter', '.nxt_inn', function () {
-            this.trigger("stopTimer");
-        }.bind(this));
-    },
-
-    moveToPrevTrigger: function (e) {
-        e.preventDefault();
-        this.moveToPrev();
-    },
-
-    moveToNextTrigger: function (e) {
-        e.preventDefault();
-        this.moveToNext();
     }
-});
 
-module.exports = Carousel;
-
-
-/***/ }),
-/* 124 */
-/***/ (function(module, exports) {
-
-var extend = function (superClass, def) {
-
-    var extendClass = function extendClass() {
-        // Call a parent constructor
-        superClass.apply(this, arguments);
-
-        // Call a child constructor
-        if (typeof def.init === "function") {
-            def.init.apply(this, arguments);
-        }
-    };
-
-    var ExtProto = function () {
-    };
-    ExtProto.prototype = superClass.prototype;
-
-    var extProto = new ExtProto();
-    for (var i in def) {
-        extProto[i] = def[i];
+    function changeSlideCountByFlicking(slideCount){
+        $('.pagination .figure_pagination .num:first').text(slideCount);
     }
-    extProto.constructor = extendClass;
-    extendClass.prototype = extProto;
 
-    return extendClass;
-};
+    return {
+        init: init,
+        showProductDetail: showProductDetail,
+        changeSlideCountByFlicking : changeSlideCountByFlicking
+    }
+})();
 
-module.exports = extend;
-
-
-/***/ }),
-/* 125 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*!
- * Copyright (c) 2017 NAVER Corp.
- * @egjs/component project is licensed under the MIT license
- * 
- * @egjs/component JavaScript library
- * http://naver.github.io/egjs/component
- * 
- * @version 2.0.0
- */
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(true)
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else if(typeof exports === 'object')
-		exports["Component"] = factory();
-	else
-		root["eg"] = root["eg"] || {}, root["eg"]["Component"] = factory();
-})(this, function() {
-return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _Component = __webpack_require__(1);
-
-var _Component2 = _interopRequireDefault(_Component);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-_Component2["default"].VERSION = "2.0.0";
-module.exports = _Component2["default"];
+module.exports = ProductDetail;
 
 /***/ }),
-/* 1 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+$ = __webpack_require__(1);
+totlTotalCommentInfoModel = __webpack_require__(130);
+moment = __webpack_require__(0);
+Handlebars = __webpack_require__(119);
+var LayerPopUp = __webpack_require__(131);
 
+var UserComment = (function(){
+    var source = $("#comment-template").html();
+    var template = Handlebars.compile(source);
 
-exports.__esModule = true;
+    var commentImageSoruce = $("#commentImage-template").html();
+    var commentImageTemplate = Handlebars.compile(commentImageSoruce);
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+    function init(){
+        totalCommentInfo();
+        LayerPopUp.init('photoviwer');
+    }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+    function totalCommentInfo(){
+        totlTotalCommentInfoModel.getTotalCommentInfo(function (data) {
+            showUserComment(data);
+            bindOnClickUserCommentImage();
+        });
+    }
 
-/**
- * Copyright (c) 2015 NAVER Corp.
- * egjs projects are licensed under the MIT license
- */
+    function showUserComment(data){
+        var $commentRoot = $('.list_short_review');
+        data.forEach(function (item,i) {
+            if( i === 3) {
+                bindOnReviewPage();
+            } else {
+                appenUserComment($commentRoot,item);
+            }
+        });
+    }
 
-/**
- * A class used to manage events and options in a component
- * @ko 컴포넌트의 이벤트와 옵션을 관리할 수 있게 하는 클래스
- * @alias eg.Component
- */
-var Component = function () {
-	/**
-  * @support {"ie": "7+", "ch" : "latest", "ff" : "latest",  "sf" : "latest", "edge" : "latest", "ios" : "7+", "an" : "2.1+ (except 3.x)"}
-  */
-	function Component() {
-		_classCallCheck(this, Component);
+    function bindOnReviewPage(){
+        $('.btn_review_more').show();
+        $('.btn_review_more').on('click',function(e){
+            e.preventDefault();
+            console.log("next");
+        });
+    }
 
-		this._eventHandler = {};
-		this.options = {};
-	}
-	/**
-  * Triggers a custom event.
-  * @ko 커스텀 이벤트를 발생시킨다
-  * @param {String} eventName The name of the custom event to be triggered <ko>발생할 커스텀 이벤트의 이름</ko>
-  * @param {Object} customEvent Event data to be sent when triggering a custom event <ko>커스텀 이벤트가 발생할 때 전달할 데이터</ko>
-  * @return {Boolean} Indicates whether the event has occurred. If the stop() method is called by a custom event handler, it will return false and prevent the event from occurring. <ko>이벤트 발생 여부. 커스텀 이벤트 핸들러에서 stop() 메서드를 호출하면 'false'를 반환하고 이벤트 발생을 중단한다.</ko>
-  * @example
- class Some extends eg.Component {
-  some(){
-    this.trigger("hi");// fire hi event.
-  }
- }
-  */
+    function appenUserComment($root, item){
+        $root.append(template(
+            {id : item.id, comment : item.comment, fileId : item.fileId, fileCount : item.fileCount,
+                nickName : item.nickName, score : item.score, createDate : moment(item.createDate).format('YYYY-MM-DD')}));
+    }
 
+    function bindOnClickUserCommentImage(){
+        var $commentImageRoot = $('.detail_img');
+        $('.thumb_area').on('click','.thumb',function(e){
+            e.preventDefault();
 
-	Component.prototype.trigger = function trigger(eventName) {
-		var customEvent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+            var commentId = $(this).closest('li').data('comment');
+            totlTotalCommentInfoModel.getUserCommentImage(commentId, function(data){
+                if(!LayerPopUp.checkOpen()) {
+                    addCommentLi(data,$commentImageRoot);
+                }
 
-		var handlerList = this._eventHandler[eventName] || [];
-		var hasHandlerList = handlerList.length > 0;
+                LayerPopUp.open();
+            });
+        })
+    }
 
-		if (!hasHandlerList) {
-			return true;
-		}
+    function addCommentLi(data, $root) {
+        if(data !== false) {
+            var fileIdList = [];
 
-		// If detach method call in handler in first time then handeler list calls.
-		handlerList = handlerList.concat();
+            data.forEach(function (item) {
+                var fileIdObject = {};
+                fileIdObject["fileId"] = item;
+                fileIdList.push(fileIdObject);
+            });
 
-		customEvent.eventType = eventName;
+            $root.append(commentImageTemplate({fileData: fileIdList}));
+        }
+    }
 
-		var isCanceled = false;
-		var arg = [customEvent];
-		var i = 0;
+    return {
+        init : init
+    }
 
-		customEvent.stop = function () {
-			isCanceled = true;
-		};
+})();
 
-		for (var _len = arguments.length, restParam = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-			restParam[_key - 2] = arguments[_key];
-		}
-
-		if (restParam.length >= 1) {
-			arg = arg.concat(restParam);
-		}
-
-		for (i = 0; handlerList[i]; i++) {
-			handlerList[i].apply(this, arg);
-		}
-
-		return !isCanceled;
-	};
-	/**
-  * Executed event just one time.
-  * @ko 이벤트가 한번만 실행된다.
-  * @param {eventName} eventName The name of the event to be attached <ko>등록할 이벤트의 이름</ko>
-  * @param {Function} handlerToAttach The handler function of the event to be attached <ko>등록할 이벤트의 핸들러 함수</ko>
-  * @return {eg.Component} An instance of a component itself<ko>컴포넌트 자신의 인스턴스</ko>
-  * @example
- class Some extends eg.Component {
-  hi() {
-    alert("hi");
-  }
-  thing() {
-    this.once("hi", this.hi);
-  }
- }
- var some = new Some();
- some.thing();
- some.trigger("hi");
- // fire alert("hi");
- some.trigger("hi");
- // Nothing happens
-  */
-
-
-	Component.prototype.once = function once(eventName, handlerToAttach) {
-		if ((typeof eventName === "undefined" ? "undefined" : _typeof(eventName)) === "object" && typeof handlerToAttach === "undefined") {
-			var eventHash = eventName;
-			var i = void 0;
-
-			for (i in eventHash) {
-				this.once(i, eventHash[i]);
-			}
-			return this;
-		} else if (typeof eventName === "string" && typeof handlerToAttach === "function") {
-			var self = this;
-
-			this.on(eventName, function listener() {
-				for (var _len2 = arguments.length, arg = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-					arg[_key2] = arguments[_key2];
-				}
-
-				handlerToAttach.apply(self, arg);
-				self.off(eventName, listener);
-			});
-		}
-
-		return this;
-	};
-
-	/**
-  * Checks whether an event has been attached to a component.
-  * @ko 컴포넌트에 이벤트가 등록됐는지 확인한다.
-  * @param {String} eventName The name of the event to be attached <ko>등록 여부를 확인할 이벤트의 이름</ko>
-  * @return {Boolean} Indicates whether the event is attached. <ko>이벤트 등록 여부</ko>
-  * @example
- class Some extends eg.Component {
-  some() {
-    this.hasOn("hi");// check hi event.
-  }
- }
-  */
-
-
-	Component.prototype.hasOn = function hasOn(eventName) {
-		return !!this._eventHandler[eventName];
-	};
-
-	/**
-  * Attaches an event to a component.
-  * @ko 컴포넌트에 이벤트를 등록한다.
-  * @param {eventName} eventName The name of the event to be attached <ko>등록할 이벤트의 이름</ko>
-  * @param {Function} handlerToAttach The handler function of the event to be attached <ko>등록할 이벤트의 핸들러 함수</ko>
-  * @return {eg.Component} An instance of a component itself<ko>컴포넌트 자신의 인스턴스</ko>
-  * @example
- class Some extends eg.Component {
-  hi() {
-    console.log("hi");
-  }
-  some() {
-    this.on("hi",this.hi); //attach event
-  }
- }
- */
-
-
-	Component.prototype.on = function on(eventName, handlerToAttach) {
-		if ((typeof eventName === "undefined" ? "undefined" : _typeof(eventName)) === "object" && typeof handlerToAttach === "undefined") {
-			var eventHash = eventName;
-			var name = void 0;
-
-			for (name in eventHash) {
-				this.on(name, eventHash[name]);
-			}
-			return this;
-		} else if (typeof eventName === "string" && typeof handlerToAttach === "function") {
-			var handlerList = this._eventHandler[eventName];
-
-			if (typeof handlerList === "undefined") {
-				this._eventHandler[eventName] = [];
-				handlerList = this._eventHandler[eventName];
-			}
-
-			handlerList.push(handlerToAttach);
-		}
-
-		return this;
-	};
-	/**
-  * Detaches an event from the component.
-  * @ko 컴포넌트에 등록된 이벤트를 해제한다
-  * @param {eventName} eventName The name of the event to be detached <ko>해제할 이벤트의 이름</ko>
-  * @param {Function} handlerToDetach The handler function of the event to be detached <ko>해제할 이벤트의 핸들러 함수</ko>
-  * @return {eg.Component} An instance of a component itself <ko>컴포넌트 자신의 인스턴스</ko>
-  * @example
- class Some extends eg.Component {
-  hi() {
-    console.log("hi");
-  }
-  some() {
-    this.off("hi",this.hi); //detach event
-  }
- }
-  */
-
-
-	Component.prototype.off = function off(eventName, handlerToDetach) {
-		// All event detach.
-		if (typeof eventName === "undefined") {
-			this._eventHandler = {};
-			return this;
-		}
-
-		// All handler of specific event detach.
-		if (typeof handlerToDetach === "undefined") {
-			if (typeof eventName === "string") {
-				this._eventHandler[eventName] = undefined;
-				return this;
-			} else {
-				var eventHash = eventName;
-				var name = void 0;
-
-				for (name in eventHash) {
-					this.off(name, eventHash[name]);
-				}
-				return this;
-			}
-		}
-
-		// The handler of specific event detach.
-		var handlerList = this._eventHandler[eventName];
-
-		if (handlerList) {
-			var k = void 0;
-			var handlerFunction = void 0;
-
-			for (k = 0; (handlerFunction = handlerList[k]) !== undefined; k++) {
-				if (handlerFunction === handlerToDetach) {
-					handlerList = handlerList.splice(k, 1);
-					break;
-				}
-			}
-		}
-
-		return this;
-	};
-
-	return Component;
-}();
-
-exports["default"] = Component;
-module.exports = exports["default"];
-
-/***/ })
-/******/ ]);
-});
-//# sourceMappingURL=component.js.map
+module.exports = UserComment;
 
 /***/ }),
-/* 126 */
+/* 130 */
+/***/ (function(module, exports, __webpack_require__) {
+
+$ = __webpack_require__(1);
+
+var TotalCommentInfoModel = (function () {
+
+    var totalCommentInfoCash = {};
+
+    function getTotalCommentInfo(fp){
+        var url = "/api/products/"+$('#gavas').data('productid')+"/usercommnets?commentid=0&limit=4";
+
+        if (totalCommentInfoCash[url] != null) {
+            fp(totalCommentInfoCash[url]);
+        } else {
+            $.ajax(url).then(function(data){
+                totalCommentInfoCash[url] = data;
+                fp(data);
+            });
+        }
+    }
+
+    function getUserCommentImage(id, fp) {
+        var url = "/api/usercomments/"+id+"/images";
+
+        if (totalCommentInfoCash[url] != null) {
+            fp(false);
+        } else {
+            $.ajax(url).then(function(data){
+                totalCommentInfoCash[url] = data;
+                fp(data);
+            });
+        }
+    }
+
+    return {
+        getTotalCommentInfo : getTotalCommentInfo,
+        getUserCommentImage : getUserCommentImage
+    }
+
+})();
+
+module.exports = TotalCommentInfoModel;
+
+/***/ }),
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(1);
-var egComponent = __webpack_require__(125);
-var extend = __webpack_require__(124);
+var FlickingComponent = __webpack_require__(132);
+
+var LayerPopUp = (function(){
+
+    var cur_num = 1;
+    var slide_width;
+    var slide_count;
+    var isOpen = 0;
+    var flickingModule = null;
+    var root;
+
+    function layerInit(el){
+        root = el;
+
+        $('.btn-r').on('click', '.pbtn', function (e) {
+            e.preventDefault();
+            if (cur_num != 1) {
+                $(".detail_img").animate({"left": "+=" + slide_width + "px"}, "slow");
+                cur_num--;
+                flickingModule.minusCurNum();
+            }
+        });
+
+        $('.btn-r').on('click', '.nbtn', function (e) {
+            e.preventDefault();
+            if (cur_num != slide_count) {
+                $(".detail_img").animate({"left": "-=" + slide_width + "px"}, "slow");
+                cur_num++;
+                flickingModule.plusCurNum();
+            }
+        });
+
+
+        $('.btn-r').on('click', '.cbtn', function (e) {
+            e.preventDefault();
+            isOpen = 0;
+            cur_num = 1;
+            flickingModule.flush();
+            $('#photoviwer').fadeOut();
+        });
+    }
+
+    function addfliking(){
+        if (flickingModule === null) {
+            flickingModule = new FlickingComponent($('.detail_img'));
+            flickingModule.on('flick', function (e) {
+                cur_num = e.curNum;
+            })
+        }
+    }
+
+    function layerOpen() {
+        isOpen = 1;
+        slide_width = $('.detail_img > li').outerWidth();
+        slide_count = $('.detail_img > li').length;
+        var temp = $('#' + root);
+
+        temp.fadeIn();
+
+        if (temp.outerHeight() < $(document).height()) {
+            temp.css('margin-top', '-' + temp.outerHeight() / 2 + 'px');
+        }
+        else {
+            temp.css('top', '0px');
+        }
+
+        if (temp.outerWidth() < $(document).width()) {
+            temp.css('margin-left', '-' + temp.outerWidth() / 2 + 'px');
+        }
+        else {
+            temp.css('left', '0px');
+        }
+
+        addfliking();
+    }
+
+    function checkOpen(){
+        return isOpen || false;
+    }
+
+    return {
+        init : layerInit,
+        open : layerOpen,
+        checkOpen : checkOpen
+    }
+
+})();
+
+module.exports = LayerPopUp;
+
+/***/ }),
+/* 132 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+var egComponent = __webpack_require__(118);
+var extend = __webpack_require__(117);
 
 var FlickingComponent = extend(egComponent, {
 
@@ -31678,6 +31791,14 @@ var FlickingComponent = extend(egComponent, {
         this.curLiPosition;
 
         this.bindOnFlikingBtn();
+    },
+
+    flickingReady: function () {
+        var firstChild = this.root.find('li:first').clone();
+        var lastChild = this.root.find('li:last').clone();
+        this.root.prepend(lastChild);
+        this.root.append(firstChild);
+        this.root.css({"left": "-=" + this.arrange + "px"});
     },
 
     flickingStart : function (e) {
@@ -31729,6 +31850,7 @@ var FlickingComponent = extend(egComponent, {
             if (Math.abs(this.move_dx) > 8) {
 
                 if (this.save_x > 0) {
+
                     this.curLiPosition = this.ele.closest("ul").position().left;
                     this.ele.closest("ul").animate({"left": "-=" + (this.curLiPosition + ((this.num - 1) * this.cur_dist)) + "px"}, "fast");
 
@@ -31784,6 +31906,38 @@ var FlickingComponent = extend(egComponent, {
         }
     },
 
+    moveToPrev: function (e) {
+        e.preventDefault();
+
+        if (this.root.is(":animated")) {
+            return false;
+        }
+
+        if (this.num > 1) {
+            this.root.animate({"left": "+=" + this.slide_width + "px"}, {
+                duration: "normal"
+            });
+            this.num--;
+            this.trigger("flick",{curNum : this.num});
+        }
+    },
+
+    moveToNext: function (e) {
+        e.preventDefault();
+
+        if (this.root.is(":animated")) {
+            return false;
+        }
+
+        if(this.num < this.slide_count){
+            this.root.animate({"left": "-=" + this.slide_width + "px"}, {
+                duration: "normal"
+            });
+            this.num++;
+            this.trigger("flick",{curNum : this.num});
+        }
+    },
+
     bindOnFlikingBtn : function(){
         this.root.bind('touchstart', function (e) {
             e.preventDefault();
@@ -31798,12 +31952,15 @@ var FlickingComponent = extend(egComponent, {
         this.root.bind('touchend', function (e) {
             e.preventDefault();
             this.flickingEnd(e);
-            this.trigger("flick", {curDisplayNum: this.num});
+            this.trigger("flick", {curNum: this.num});
         }.bind(this))
+
+        $('.prev_inn').on('click', this.moveToPrev.bind(this));
+        $('.nxt_inn').on('click', this.moveToNext.bind(this));
     },
 
     flush : function(){
-        this.ele.closest("ul").animate({"left": "0px"}, "fast");
+        this.ele.closest("ul").css({"left": "0px"});
         this.num = 1;
         this.touch_start_y = 0;
         this.touch_start_x = 0;
@@ -31811,13 +31968,25 @@ var FlickingComponent = extend(egComponent, {
         this.save_y = 0;
         this.move_dx = 0;
         this.move_sum = 0;
+    },
+
+    getSlideCount : function(){
+        return this.slide_count;
+    },
+
+    plusCurNum: function(){
+        this.num++;
+    },
+
+    minusCurNum: function () {
+        this.num--;
     }
 });
 
 module.exports = FlickingComponent;
 
 /***/ }),
-/* 127 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(1);
@@ -31870,7 +32039,7 @@ var LazyLoad = (function () {
 module.exports = LazyLoad;
 
 /***/ }),
-/* 128 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(1);
@@ -31911,6 +32080,195 @@ var navermap = (function(){
 })();
 
 module.exports = navermap;
+
+/***/ }),
+/* 135 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+var egComponent = __webpack_require__(118);
+var extend = __webpack_require__(117);
+
+var FlickingComponent = extend(egComponent, {
+
+    init: function (ele) {
+        this.root = ele;
+        this.ele = ele.find('li');
+        this.num = 1;
+        this.slideWidth = this.ele.width();
+        this.slideCount = this.ele.length;
+        this.touchStartY = 0;
+        this.touchStartX = 0;
+        this.moveDx = 0;
+        this.curLiPosition = 0;
+
+        this.bindOnFlikingBtn();
+    },
+
+    flickingStart : function (e) {
+        if (e.type === 'touchstart' && e.changedTouches.length === 1) {
+            this.touchStartX = e.changedTouches[0].pageX;
+            this.touchStartY = e.changedTouches[0].pageY;
+        }
+        e.preventDefault();
+    },
+
+    flickingMove : function (e) {
+        var dragDistance = 0;
+        var scrollDistance = 0;
+
+        if (e.type === 'touchmove' && e.changedTouches.length === 1) {
+            dragDistance = e.changedTouches[0].pageX - this.touchStartX;
+            scrollDistance = e.changedTouches[0].pageY - this.touchStartY;
+            this.moveDx = ( dragDistance / this.slideWidth ) * 100;
+            var fakeMove = 0;
+
+            if(Math.abs(dragDistance) > this.slideWidth){
+                dragDistance = (dragDistance < 0) ? - this.slideWidth : + this.slideWidth;
+            }
+            fakeMove = this.curLiPosition + dragDistance;
+
+            if(dragDistance > 0){
+                if (this.num !== 1) {
+                    if(Math.abs(dragDistance) > Math.abs(scrollDistance)){
+                        this.root.stop(true,true).animate({left: fakeMove},500);
+                    }
+                } else {
+                    this.root.stop(true,true).animate({left: this.curLiPosition + 10},500);
+                    this.moveDx = 0;
+                }
+            } else{
+                if (this.num < this.slideCount) {
+                    if(Math.abs(dragDistance) > Math.abs(scrollDistance)){
+                        this.root.stop(true,true).animate({left: fakeMove},500);
+                    }
+                } else {
+                    this.root.stop(true,true).animate({left: this.curLiPosition - 10},500);
+                    this.moveDx = 0;
+                }
+            }
+        }
+    },
+
+    flickingEnd : function (e) {
+
+        if (e.type === 'touchend' && e.changedTouches.length === 1) {
+            if(Math.abs(this.moveDx) > 30){
+                if(this.moveDx > 0){
+                    if (this.num !== 1) {
+                        this.root.stop(true,true).animate({left:this.curLiPosition + this.slideWidth});
+                        this.num = this.num - 1;
+                        this.curLiPosition += this.slideWidth;
+                    }
+                }
+                else {
+                    if(this.num < this.slideCount){
+                        this.root.stop(true,true).animate({left:this.curLiPosition - this.slideWidth});
+                        this.num = this.num + 1;
+                        this.curLiPosition -= this.slideWidth;
+                    }
+                }
+            } else{
+                this.root.stop(true,true).animate({left:this.curLiPosition},500);
+            }
+
+            this.touchStartY = 0;
+            this.touchStartX = 0;
+            this.moveDx = 0;
+            this.moveSum = 0;
+
+            e.preventDefault();
+        }
+    },
+
+    moveToPrev: function (e) {
+        e.preventDefault();
+
+        if (this.root.is(":animated")) {
+            return false;
+        }
+
+        if (this.num > 1) {
+            this.root.animate({"left": "+=" + this.slideWidth + "px"}, {
+                duration: "normal"
+            });
+            this.num--;
+            this.trigger("flick",{curNum : this.num});
+        }
+    },
+
+    moveToNext: function (e) {
+        e.preventDefault();
+
+        if (this.root.is(":animated")) {
+            return false;
+        }
+
+        if(this.num < this.slideCount){
+            this.root.animate({"left": "-=" + this.slideWidth + "px"}, {
+                duration: "normal"
+            });
+            this.num++;
+            this.trigger("flick",{curNum : this.num});
+        }
+    },
+
+    bindOnFlikingBtn : function(){
+        this.root.bind('touchstart', function (e) {
+            e.preventDefault();
+            this.flickingStart(e);
+        }.bind(this))
+
+        this.root.bind('touchmove', function (e) {
+            e.preventDefault();
+            this.flickingMove(e);
+        }.bind(this))
+
+        this.root.bind('touchend', function (e) {
+            e.preventDefault();
+            this.flickingEnd(e);
+            this.trigger("flick", {curNum: this.num});
+        }.bind(this))
+
+        $('.prev_inn').on('click', this.moveToPrev.bind(this));
+        $('.nxt_inn').on('click', this.moveToNext.bind(this));
+    },
+
+    getSlideCount : function(){
+        return this.slideCount;
+    }
+});
+
+module.exports = FlickingComponent;
+
+/***/ }),
+/* 136 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+
+var ProductDetailModel = (function () {
+
+    function getDetail() {
+        var url = "/api/products/" + $('#gavas').data('productid') + "/details"
+
+        function getDetails(fp) {
+            $.ajax(url).then(function (data) {
+                fp(data);
+            })
+        }
+
+        return {
+            getDetails: getDetails
+        }
+    }
+
+    return {
+        getDetail: getDetail
+    }
+})();
+
+module.exports = ProductDetailModel;
 
 /***/ })
 /******/ ]);

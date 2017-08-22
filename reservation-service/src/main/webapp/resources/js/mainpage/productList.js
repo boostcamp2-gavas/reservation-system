@@ -30,7 +30,6 @@ var ProductListModule = (function () {
             bindScrollUpdateProduct();
         }
 
-
         function bindTabElement(ele) {
             $(".event_tab_lst li[data-category='" + activeAnchorIndex + "'] a").removeClass('active');
             $(ele.currentTarget).find('.anchor').addClass("active");

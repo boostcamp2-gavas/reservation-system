@@ -45,7 +45,6 @@ var ProductReserve = (function () {
         $('.visual_img .img_thumb').prop("src", "/api/file/" + data.fileId);
     }
 
-
     function makeJoinedPriceInfo(productPriceList) {
         var priceType = ["어린이(만 4~12세)", "청소년(만 13~18세)", "성인(만 19~64세)"];
         var priceArray = [];

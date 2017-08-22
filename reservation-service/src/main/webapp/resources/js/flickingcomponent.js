@@ -21,6 +21,14 @@ var FlickingComponent = extend(egComponent, {
         this.bindOnFlikingBtn();
     },
 
+    flickingReady: function () {
+        var firstChild = this.root.find('li:first').clone();
+        var lastChild = this.root.find('li:last').clone();
+        this.root.prepend(lastChild);
+        this.root.append(firstChild);
+        this.root.css({"left": "-=" + this.arrange + "px"});
+    },
+
     flickingStart : function (e) {
         if (e.type === 'touchstart' && e.touches.length === 1) {
             this.touch_start_x = e.touches[0].pageX;
@@ -70,6 +78,7 @@ var FlickingComponent = extend(egComponent, {
             if (Math.abs(this.move_dx) > 8) {
 
                 if (this.save_x > 0) {
+
                     this.curLiPosition = this.ele.closest("ul").position().left;
                     this.ele.closest("ul").animate({"left": "-=" + (this.curLiPosition + ((this.num - 1) * this.cur_dist)) + "px"}, "fast");
 
@@ -125,6 +134,38 @@ var FlickingComponent = extend(egComponent, {
         }
     },
 
+    moveToPrev: function (e) {
+        e.preventDefault();
+
+        if (this.root.is(":animated")) {
+            return false;
+        }
+
+        if (this.num > 1) {
+            this.root.animate({"left": "+=" + this.slide_width + "px"}, {
+                duration: "normal"
+            });
+            this.num--;
+            this.trigger("flick",{curNum : this.num});
+        }
+    },
+
+    moveToNext: function (e) {
+        e.preventDefault();
+
+        if (this.root.is(":animated")) {
+            return false;
+        }
+
+        if(this.num < this.slide_count){
+            this.root.animate({"left": "-=" + this.slide_width + "px"}, {
+                duration: "normal"
+            });
+            this.num++;
+            this.trigger("flick",{curNum : this.num});
+        }
+    },
+
     bindOnFlikingBtn : function(){
         this.root.bind('touchstart', function (e) {
             e.preventDefault();
@@ -139,12 +180,15 @@ var FlickingComponent = extend(egComponent, {
         this.root.bind('touchend', function (e) {
             e.preventDefault();
             this.flickingEnd(e);
-            this.trigger("flick", {curDisplayNum: this.num});
+            this.trigger("flick", {curNum: this.num});
         }.bind(this))
+
+        $('.prev_inn').on('click', this.moveToPrev.bind(this));
+        $('.nxt_inn').on('click', this.moveToNext.bind(this));
     },
 
     flush : function(){
-        this.ele.closest("ul").animate({"left": "0px"}, "fast");
+        this.ele.closest("ul").css({"left": "0px"});
         this.num = 1;
         this.touch_start_y = 0;
         this.touch_start_x = 0;
@@ -152,6 +196,18 @@ var FlickingComponent = extend(egComponent, {
         this.save_y = 0;
         this.move_dx = 0;
         this.move_sum = 0;
+    },
+
+    getSlideCount : function(){
+        return this.slide_count;
+    },
+
+    plusCurNum: function(){
+        this.num++;
+    },
+
+    minusCurNum: function () {
+        this.num--;
     }
 });
 

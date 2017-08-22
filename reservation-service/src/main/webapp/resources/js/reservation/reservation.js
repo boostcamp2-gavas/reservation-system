@@ -229,7 +229,7 @@ var Handlebars = require('../../node_modules/handlebars/dist/handlebars');
         function bindOnClickReviewWriteBtn() {
             $('.finished article .btn').on('click', function () {
                 var productId = $(this).data("productid");
-                location.href = '/reviewWrite/' + productId;
+                location.href = '/reviewWrite?productId=' + productId;
             });
         }
     })();

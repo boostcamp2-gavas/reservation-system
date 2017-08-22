@@ -78,7 +78,7 @@
             <div class="section_event_tab">
                 <ul class="event_tab_lst tab_lst_min">
                     <li class="item" data-category="0">
-                        <a class="anchor active"> <span>전체</span> </a>
+                        <a href = "#" class="anchor active"> <span>전체</span> </a>
                     </li>
                     <%--<li class="item" data-category="2">--%>
                         <%--<a class="anchor"> <span>전시</span> </a>--%>
@@ -181,7 +181,7 @@
     <script type="text/handlebars-template" id="category-template">
         {{#each data}}
         <li class="item" data-category="{{id}}">
-            <a class="anchor"> <span>{{name}}</span> </a>
+            <a href = "#" class="anchor"> <span>{{name}}</span> </a>
         </li>
         {{/each}}
     </script>

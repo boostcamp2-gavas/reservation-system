@@ -13,9 +13,6 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 public class ProductDto {
-
-    @NotBlank
-    @Size(min = 5)
     private Long id;
     private Long categoryId;
     private String name;

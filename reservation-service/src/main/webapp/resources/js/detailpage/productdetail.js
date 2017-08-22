@@ -1,16 +1,10 @@
 var $ = require('../../node_modules/jquery/dist/jquery');
 var Handlebars = require('../../node_modules/handlebars/dist/handlebars');
-var ProductDetailModel = require('./productdetailmodel');
 var Moment = require('../../node_modules/moment/moment');
-var Carousel = require('../mainpage/carousel');
-var FlickingComponent = require('../flickingcomponent');
 
 var ProductDetail = (function () {
-    var productDetailModel = ProductDetailModel.getDetail();
     var source = $("#detailImage-template").html();
     var template = Handlebars.compile(source);
-    var carousel;
-    var flicking;
 
     function init() {
         bindOnClickMoreBtn();
@@ -42,15 +36,11 @@ var ProductDetail = (function () {
         $('.section_store_details .store_details').toggleClass('close3');
     }
 
-    function showProductDetail() {
-        productDetailModel.getDetails(function (data) {
-            writeProductDetail(data);
-            setProductDetailImage(data);
-            validateTicketing(data);
-            carousel = new Carousel($('.group_visual'));
-            bindOnCarouselAction();
-            flicking = new FlickingComponent($('.visual_img'));
-        });
+    function showProductDetail(data) {
+        writeProductDetail(data);
+        setProductDetailImage(data);
+        validateTicketing(data);
+        $('.pagination .figure_pagination .num.off span').text(data.fileIdList.length);
     }
 
     function writeProductDetail(data) {
@@ -83,25 +73,20 @@ var ProductDetail = (function () {
                 $('.section_btn .bk_btn span').text('판매기간 종료')
             } else {
                 $('.section_btn').on('click', '.bk_btn', function () {
-                    location.href = "";
+                    location.href = "/reserve/" + $('#gavas').data('productid');
                 });
             }
         }
     }
 
-    function bindOnCarouselAction() {
-        carousel.on("clickBtn",function(e) {
-            console.log(e.curNum);
-        });
-    }
-
-    function bindOnFlickingComponent(){
-        var flicking = new FlickingComponent($('.visual_img'));
+    function changeSlideCountByFlicking(slideCount){
+        $('.pagination .figure_pagination .num:first').text(slideCount);
     }
 
     return {
         init: init,
-        showProductDetail: showProductDetail
+        showProductDetail: showProductDetail,
+        changeSlideCountByFlicking : changeSlideCountByFlicking
     }
 })();
 
