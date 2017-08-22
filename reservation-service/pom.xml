@@ -21,6 +21,8 @@
 
 		<!-- jackson -->
 		<jackson2.version>2.8.6</jackson2.version>
+
+		<hibernate.version>5.4.1.Final</hibernate.version>
 	</properties>
 
 	<dependencies>
@@ -198,6 +200,14 @@
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
 	</dependencies>
 
 

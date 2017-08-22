@@ -11,8 +11,10 @@ import com.gavas.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -38,10 +40,14 @@ public class ReservationRestContorller {
     }
 
     @PostMapping
-    public ResponseEntity<Integer> addReservation(@AuthUser User user, @RequestBody Reservation reservation) {
-        reservation.setUserId(user.getId());
-        Integer reservationId = reservationService.addReservation(reservation);
-        return new ResponseEntity<>(reservationId, HttpStatus.OK);
+    public ResponseEntity<Integer> addReservation(@AuthUser User user, @RequestBody @Valid Reservation reservation, BindingResult result) {
+        if(result.hasErrors()) {
+            return new ResponseEntity<>(0, HttpStatus.BAD_REQUEST);
+        } else {
+            reservation.setUserId(user.getId());
+            Integer reservationId = reservationService.addReservation(reservation);
+            return new ResponseEntity<>(reservationId, HttpStatus.CREATED);
+        }
     }
 
     @ExceptionHandler(EmptyQueryResultException.class)
