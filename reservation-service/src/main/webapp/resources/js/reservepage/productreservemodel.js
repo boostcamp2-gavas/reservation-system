@@ -28,7 +28,6 @@ var ProductReserveModel = (function () {
         }
 
         function writeReservation(data, fp) {
-            console.log(data);
             var url = "/api/reservations";
             $.ajax(url,{
                 method : "POST",
