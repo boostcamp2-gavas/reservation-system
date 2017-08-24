@@ -25,6 +25,7 @@ public class ProductPriceDao {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
         this.productPriceRowMapper = BeanPropertyRowMapper.newInstance(ProductPrice.class);
     }
+
     public List<ProductPrice> selectProductPriceByProductId(Long id) {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("id", id);
