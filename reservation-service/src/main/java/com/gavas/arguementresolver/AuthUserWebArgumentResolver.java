@@ -26,7 +26,6 @@ public class AuthUserWebArgumentResolver implements HandlerMethodArgumentResolve
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         HttpSession session = webRequest.getNativeRequest(HttpServletRequest.class).getSession();
         User naverLoginUser = (User) session.getAttribute("USER");
-
         return naverLoginUser;
     }
 }
