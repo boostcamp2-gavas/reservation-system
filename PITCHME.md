@@ -110,13 +110,16 @@ protected void configure(HttpSecurity http) throws Exception {
 ---
 ## 시행착오
 
-- Spring Security Boot에는 이렇게 되어 있었는데 Spring Security에서는 달랐다...
+- Spring Security Boot에는 이렇게 되어 있었는데 Spring Security에서는 달랐다(결론: 레퍼런스와 구현체 코드 분석)
+- OAuth2를 사용하는 우리 시스템에 적용은 어떻게 해야 할지(결론: Add Custom Filter)
+- MVC와 분리시킨 스프링 시큐리티의 컨셉을 잘 살리는 구현이 뭘지(결론: 원래 있던 로그인 코드를 완전히 걷어내고 arguementResolver에서 컨텍스트의 홀더를 통해 user를 받아오는 형태)
 
 ---
 ## 결론
 
-- Spring MVC와 Spring Security의 완전한 로직 분리
-
+- 시행착오를 통해 얻은 결론을 여기서 소개?
+- 시큐리티의 장점을 다시 환기 및 그 이유를 적용하여 더욱 확실히 알 수 있었다.
+- //Spring MVC와 Spring Security의 완전한 로직 분리
 
 ---
 ## Q&A

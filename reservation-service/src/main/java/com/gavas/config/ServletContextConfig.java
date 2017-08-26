@@ -26,7 +26,6 @@ import java.util.List;
 @ComponentScan(basePackages = {"com.gavas.controller"})
 @PropertySource("classpath:/application.properties")
 public class ServletContextConfig extends WebMvcConfigurerAdapter {
-
     @Value("${spring.resources.file-size}")
     private long fileSize;
 
@@ -39,6 +38,13 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
         return viewResolver;
     }
 
+    @Bean
+    public MultipartResolver multipartResolver() {
+        org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(fileSize);
+        return multipartResolver;
+    }
+
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(new AuthUserWebArgumentResolver());
@@ -49,11 +55,6 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
-    @Bean
-    public MultipartResolver multipartResolver() {
-        org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(fileSize);
-        return multipartResolver;
-    }
+
 
 }
