@@ -5,6 +5,7 @@ import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.*;
@@ -19,7 +20,7 @@ public class WebInitializer implements WebApplicationInitializer {
     }
 
 	public void onStartup(ServletContext servletContext) throws ServletException {
-		WebApplicationContext context = getContext();
+        WebApplicationContext context = getContext();
 
 
         EnumSet<DispatcherType> dispatcherTypes = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD);
@@ -35,8 +36,7 @@ public class WebInitializer implements WebApplicationInitializer {
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("DispatcherServlet", new DispatcherServlet(context));
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping(MAPPING_URL);
-		
-	}
+    }
 	
 	 private AnnotationConfigWebApplicationContext getContext() {
 	        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();

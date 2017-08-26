@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,12 +25,16 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/")
+@PropertySource("classpath:/application.properties")
 public class MainController {
 
     @Value("${open-api.naver.client-id}")
     private String clientId;
     @Value("${open-api.naver.callback-url}")
     private String callbackUrl;
+
+    @Autowired
+    private Environment env;
 
     private static Logger logger = LoggerFactory.getLogger(MainController.class);
     private LoginService loginService;
@@ -42,6 +48,7 @@ public class MainController {
 
     @GetMapping
     public ModelAndView mainPage() {
+        System.out.println(env.getProperty("facebook.client.clientId"));
         return new ModelAndView("mainpage");
     }
 
