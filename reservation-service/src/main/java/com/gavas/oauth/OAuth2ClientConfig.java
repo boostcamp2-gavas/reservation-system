@@ -4,37 +4,25 @@ import com.gavas.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
-import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.common.AuthenticationScheme;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.CompositeFilter;
 
 import javax.servlet.Filter;
 import java.util.*;
 
-import static javax.swing.text.html.CSS.getAttribute;
-
 @Configuration
 @EnableOAuth2Client
 @PropertySource("classpath:/application.properties")
-//@Component
-//@ComponentScan(basePackages = "com.gavas.oauth")
 public class OAuth2ClientConfig
 {
     @Qualifier("oauth2ClientContext")
@@ -61,14 +49,14 @@ public class OAuth2ClientConfig
         return details;
     }
 
-    public AuthorizationCodeResourceDetails nvaer() {
+    public AuthorizationCodeResourceDetails naver() {
         AuthorizationCodeResourceDetails details = new AuthorizationCodeResourceDetails();
-        details.setClientId(env.getProperty("facebook.client.clientId"));
-        details.setClientSecret(env.getProperty("facebook.client.clientSecret"));
-        details.setAccessTokenUri(env.getProperty("facebook.client.accessTokenUri"));
-        details.setUserAuthorizationUri(env.getProperty("facebook.client.userAuthorizationUri"));
-        details.setTokenName(env.getProperty("facebook.client.tokenName"));
-        String commaSeparatedScopes = env.getProperty("facebook.client.scope");
+        details.setClientId(env.getProperty("naver.client.clientId"));
+        details.setClientSecret(env.getProperty("naver.client.clientSecret"));
+        details.setAccessTokenUri(env.getProperty("naver.client.accessTokenUri"));
+        details.setUserAuthorizationUri(env.getProperty("naver.client.userAuthorizationUri"));
+        details.setTokenName(env.getProperty("naver.client.tokenName"));
+        String commaSeparatedScopes = env.getProperty("naver.client.scope");
         details.setScope(parseScopes(commaSeparatedScopes));
         details.setAuthenticationScheme(AuthenticationScheme.query);
         details.setClientAuthenticationScheme(AuthenticationScheme.form);
@@ -109,9 +97,9 @@ public class OAuth2ClientConfig
         filters.add(facebook);
 
         OAuth2ClientAuthenticationProcessingFilter naver
-            = new OAuth2ClientAuthenticationProcessingFilter("/login");
-        naver.setRestTemplate(new OAuth2RestTemplate(facebook(), oauth2ClientContext));
-        naver.setTokenServices(new UserTokenService(env.getProperty("facebook.resource.userInfoUri"),env.getProperty("facebook.client.clientId")));
+            = new OAuth2ClientAuthenticationProcessingFilter("/logins");
+        naver.setRestTemplate(new OAuth2RestTemplate(naver(), oauth2ClientContext));
+        naver.setTokenServices(new UserTokenService(env.getProperty("naver.resource.userInfoUri"),env.getProperty("naver.client.clientId")));
         naver.setAuthenticationSuccessHandler(new OAuth2SuccessHandler("naver"));
         filters.add(naver);
 

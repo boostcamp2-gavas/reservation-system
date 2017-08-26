@@ -157,7 +157,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception {
 //        http.csrf().disable();
 //        http
-//                // 강의 특성상 전부 허용으로 작업하겠습니다.
 //                .authorizeRequests()
 //                .antMatchers("/**")
 //                .permitAll();

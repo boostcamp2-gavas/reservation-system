@@ -2,7 +2,6 @@ package com.gavas.oauth;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -57,9 +56,8 @@ public class UserTokenServices implements ResourceServerTokenServices {
 
     private OAuth2Authentication extractAuthentication(Map<String, Object> map) {
         System.out.println("2asfasdfs");
-//        Object principal = getPrincipal(map);
         OAuth2Request request = new OAuth2Request((Map)null, this.clientId, (Collection)null, true, (Set)null, (Set)null, (String)null, (Set)null, (Map)null);
-        FacebookAuthenticationToken token = new FacebookAuthenticationToken(map.get("name"), null, generateAuthorities());
+        AuthenticationToken token = new AuthenticationToken(map.get("name"), null, generateAuthorities());
         token.setDetails(map);
         return new OAuth2Authentication(request, token);
     }
