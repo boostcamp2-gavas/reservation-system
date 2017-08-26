@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
-@RequestMapping("/index")
+@RequestMapping("/admin/category")
 @Slf4j
 public class CategoryController {
 
@@ -19,6 +19,6 @@ public class CategoryController {
     public ModelAndView getCategoryIndex() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         log.info(authentication.getAuthorities().toString());
-        return new ModelAndView("index");
+        return new ModelAndView("category");
     }
 }

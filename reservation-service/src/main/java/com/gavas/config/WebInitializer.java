@@ -16,13 +16,10 @@ public class WebInitializer implements WebApplicationInitializer {
     private static final String MAPPING_URL = "/";
 
     public WebInitializer(){
-
     }
 
 	public void onStartup(ServletContext servletContext) throws ServletException {
         WebApplicationContext context = getContext();
-
-
         EnumSet<DispatcherType> dispatcherTypes = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD);
 
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();

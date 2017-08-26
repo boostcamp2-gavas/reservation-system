@@ -21,10 +21,10 @@ import static java.io.File.separator;
 
 @Service
 public class FileServiceImpl implements FileService {
-    private FileDao fileDao;
-
     @Value("${spring.resources.file-location}")
     private String baseDir;
+
+    private FileDao fileDao;
 
     @Autowired
     public FileServiceImpl(FileDao fileDao){

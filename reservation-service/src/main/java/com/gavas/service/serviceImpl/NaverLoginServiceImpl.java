@@ -19,13 +19,10 @@ import java.util.Map;
 
 @Service
 public class NaverLoginServiceImpl implements LoginService {
-
     @Value("${open-api.naver.client-id}")
     private String clientId;
     @Value("${open-api.naver.client-secret}")
     private String clientSecret;
-
-    private final String PROVIDER = "&service_provider=NAVER";
 
     @Override
     public Map<String, Object> getAcessToken(String token, String code) {
@@ -77,7 +74,7 @@ public class NaverLoginServiceImpl implements LoginService {
 
             if (responseCode == 200) {
                 br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            } else {  // 에러 발생
+            } else {
                 br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
             }
 
@@ -121,8 +118,6 @@ public class NaverLoginServiceImpl implements LoginService {
 
     private Map<String, Object> jsonToMap(String json) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(json, new TypeReference<Map<String, Object>>() {
-        });
-
+        return mapper.readValue(json, new TypeReference<Map<String, Object>>() {});
     }
 }

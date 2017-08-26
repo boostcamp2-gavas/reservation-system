@@ -21,7 +21,6 @@ import java.util.Map;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
-    private Logger logger = LoggerFactory.getLogger(ReservationServiceImpl.class);
     private ReservationDao reservationDao;
     private ProductPriceService productPriceService;
 
@@ -59,7 +58,7 @@ public class ReservationServiceImpl implements ReservationService {
         Map<Long, List<ProductPrice>> productPriceMap = new HashMap<>();
 
         for (ReservationDto reservationDto : reservationDtoList) {
-            Double totalPrice = new Double(0);
+            Double totalPrice = 0D;
             Long productId = reservationDto.getProductId();
 
             if (productPriceMap.get(productId) == null) {
@@ -77,9 +76,6 @@ public class ReservationServiceImpl implements ReservationService {
                 } else if (productPrice.getPriceType().equals(3L) && reservationDto.getChildTicketCount() != null) {
                     count = reservationDto.getChildTicketCount();
                 }
-//                else {
-//                    throw new IllegalArgumentException();
-//                }
 
                 Double discountRate = productPrice.getDiscountRate().doubleValue();
                 totalPrice += (productPrice.getPrice() * (1 - discountRate)) * count;

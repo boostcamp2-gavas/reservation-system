@@ -28,7 +28,6 @@ public class ReservationDao {
     private NamedParameterJdbcTemplate jdbcTemplate;
     private RowMapper<ReservationDto> reservationDtoRowMapper;
 
-
     @Autowired
     public ReservationDao(DataSource dataSource) {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);

@@ -1,8 +1,7 @@
-package com.gavas.oauth;
+package com.gavas.security;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gavas.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,28 +9,28 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import com.gavas.domain.User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-public class OAuth2SuccessHandler implements AuthenticationSuccessHandler
-{
+@Slf4j
+public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private UserService userService;
-    final String type;
+    private String type;
 
-    public OAuth2SuccessHandler(String type, UserService userService)
-    {
+    public OAuth2SuccessHandler(String type, UserService userService) {
         this.userService = userService;
         this.type = type;
     }
 
-    protected Collection<GrantedAuthority> generateAuthorities(boolean adminFlag) {
+    protected Collection<GrantedAuthority> generateAuthorities(Integer adminFlag) {
         Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-        if(adminFlag) {
+        if (adminFlag == 0) {
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        } else {
+        } else if (adminFlag == 1) {
             authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         }
         return authorities;
@@ -39,18 +38,16 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse res, Authentication auth)
-            throws IOException, ServletException
-    {
+            throws IOException, ServletException {
         Map<String, Object> userInfo = (HashMap<String, Object>) auth.getPrincipal();
-        System.out.println(userInfo);
-        System.out.println("abcde");
-        Map<String, Object> jsonUserInfo = (HashMap<String, Object>)userInfo.get("response");
+        log.info(userInfo.toString());
+        Map<String, Object> jsonUserInfo = (HashMap<String, Object>) userInfo.get("response");
         String id = (String) jsonUserInfo.get("enc_id");
 
         User user = userService.getUser(id);
 
-        if ( user == null) {
-            jsonUserInfo.put("adminFlag",1);
+        if (user == null) {
+            jsonUserInfo.put("adminFlag", 1);
             jsonUserInfo.put("snsId", id);
             jsonUserInfo.put("username", (String) jsonUserInfo.get("name"));
             ModelMapper modelMapper = new ModelMapper();
@@ -59,9 +56,9 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler
         }
 
         if (user.getAdminFlag() == 0) {
-            SecurityContextHolder.getContext().setAuthentication(new AuthenticationToken(user, null, generateAuthorities(true)));
+            SecurityContextHolder.getContext().setAuthentication(new AuthenticationToken(user, null, generateAuthorities(0)));
         } else {
-            SecurityContextHolder.getContext().setAuthentication(new AuthenticationToken(user, null, generateAuthorities(false)));
+            SecurityContextHolder.getContext().setAuthentication(new AuthenticationToken(user, null, generateAuthorities(1)));
         }
 
         res.sendRedirect("/");

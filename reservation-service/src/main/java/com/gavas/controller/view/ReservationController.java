@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Slf4j
 public class ReservationController {
 
-
     @GetMapping
     @Secured("ROLE_USER")
     public ModelAndView reservationPage(@AuthUser User user) {

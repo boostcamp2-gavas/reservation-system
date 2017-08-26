@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.MultipartResolver;
@@ -43,13 +44,6 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
         argumentResolvers.add(new AuthUserWebArgumentResolver());
     }
 
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/reservations").addPathPatterns("/reserve/*");
-////        .addPathPatterns("/reviewWrite").addPathPatterns("/reviewWrite/*");
-//        super.addInterceptors(registry);
-//    }
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
@@ -58,12 +52,8 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
     @Bean
     public MultipartResolver multipartResolver() {
         org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(fileSize); // 1024 * 1024 * 10
+        multipartResolver.setMaxUploadSize(fileSize);
         return multipartResolver;
     }
 
-//    @Bean
-//    public RequestContextListener requestContextListener() {
-//        return new RequestContextListener();
-//    }
 }

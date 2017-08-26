@@ -18,7 +18,6 @@ public class ReviewDao {
     private NamedParameterJdbcTemplate jdbc;
     private SimpleJdbcInsert simpleJdbcInsert;
     private SimpleJdbcInsert simpleJdbcInsertImageTable;
-    private RowMapper<Review> rowMapper = BeanPropertyRowMapper.newInstance(Review.class);
 
     public ReviewDao(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -28,7 +27,6 @@ public class ReviewDao {
         this.simpleJdbcInsertImageTable = new SimpleJdbcInsert(dataSource)
                 .withTableName("reservation_user_comment_image")
                 .usingGeneratedKeyColumns("id");
-
     }
 
     public Integer insert(Review review) {
