@@ -2,9 +2,7 @@ package com.gavas.controller.view;
 
 import com.gavas.domain.dto.TotalCommentStatusDto;
 import com.gavas.service.UserCommentService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

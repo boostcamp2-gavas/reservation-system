@@ -190,14 +190,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 //                .and()
 //                .authorizeRequests()
 //                .anyRequest().authenticated()
-			/* No need for form-based login or basic authentication
-			.and()
-				.formLogin()
-					.loginPage("...")
-					.loginProcessingUrl("...")
-			.and()
-				.httpBasic()
-			 */
+//			 No need for form-based login or basic authentication
+//			.and()
+//				.formLogin()
+//					.loginPage("/aa")
+//					.loginProcessingUrl("/aa")
+//			.and()
+//				.httpBasic()
                 .and()
                 .addFilterAfter(
                         oauth2ClientContextFilter,

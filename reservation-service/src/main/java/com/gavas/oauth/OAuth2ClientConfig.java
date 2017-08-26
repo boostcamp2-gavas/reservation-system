@@ -1,6 +1,7 @@
 package com.gavas.oauth;
 
 import com.gavas.service.CategoryService;
+import com.gavas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +34,7 @@ public class OAuth2ClientConfig
     private Environment env;
 
     @Autowired
-    CategoryService categoryService;
+    UserService userService;
 
     public AuthorizationCodeResourceDetails facebook() {
         AuthorizationCodeResourceDetails details = new AuthorizationCodeResourceDetails();
@@ -81,11 +82,11 @@ public class OAuth2ClientConfig
     @Bean("sso.filter")
     Filter ssoFilter()
     {
-        if(oauth2ClientContext == null) {
-            System.out.println("asfsafasfads");
-        } else {
-            System.out.println("not null");
-        }
+//        if(oauth2ClientContext == null) {
+//            System.out.println("asfsafasfads");
+//        } else {
+//            System.out.println("not null");
+//        }
         List<Filter> filters = new ArrayList<>();
 
         OAuth2ClientAuthenticationProcessingFilter facebook
@@ -93,14 +94,14 @@ public class OAuth2ClientConfig
 
         facebook.setRestTemplate(new OAuth2RestTemplate(facebook(), oauth2ClientContext));
         facebook.setTokenServices(new UserTokenService(env.getProperty("facebook.resource.userInfoUri"),env.getProperty("facebook.client.clientId")));
-        facebook.setAuthenticationSuccessHandler(new OAuth2SuccessHandler("facebook"));
+        facebook.setAuthenticationSuccessHandler(new OAuth2SuccessHandler("facebook",userService));
         filters.add(facebook);
 
         OAuth2ClientAuthenticationProcessingFilter naver
             = new OAuth2ClientAuthenticationProcessingFilter("/logins");
         naver.setRestTemplate(new OAuth2RestTemplate(naver(), oauth2ClientContext));
         naver.setTokenServices(new UserTokenService(env.getProperty("naver.resource.userInfoUri"),env.getProperty("naver.client.clientId")));
-        naver.setAuthenticationSuccessHandler(new OAuth2SuccessHandler("naver"));
+        naver.setAuthenticationSuccessHandler(new OAuth2SuccessHandler("naver",userService));
         filters.add(naver);
 
         CompositeFilter filter = new CompositeFilter();

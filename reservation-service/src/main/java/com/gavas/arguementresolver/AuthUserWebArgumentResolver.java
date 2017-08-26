@@ -3,6 +3,8 @@ package com.gavas.arguementresolver;
 import com.gavas.domain.User;
 import com.gavas.exception.EmptyQueryResultException;
 import org.springframework.core.MethodParameter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.support.WebArgumentResolver;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
