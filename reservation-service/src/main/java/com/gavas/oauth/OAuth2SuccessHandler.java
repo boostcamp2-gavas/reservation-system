@@ -27,9 +27,13 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler
         this.type = type;
     }
 
-    protected Collection<GrantedAuthority> generateAuthorities() {
+    protected Collection<GrantedAuthority> generateAuthorities(boolean adminFlag) {
         Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        if(adminFlag) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        } else {
+            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        }
         return authorities;
     }
 
@@ -51,11 +55,13 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler
             jsonUserInfo.put("username", (String) jsonUserInfo.get("name"));
             ModelMapper modelMapper = new ModelMapper();
             user = modelMapper.map(jsonUserInfo, User.class);
-            userService.addUser(user);
+            user.setId(userService.addUser(user));
         }
 
         if (user.getAdminFlag() == 0) {
-            SecurityContextHolder.getContext().setAuthentication(new AuthenticationToken(user, null, generateAuthorities()));
+            SecurityContextHolder.getContext().setAuthentication(new AuthenticationToken(user, null, generateAuthorities(true)));
+        } else {
+            SecurityContextHolder.getContext().setAuthentication(new AuthenticationToken(user, null, generateAuthorities(false)));
         }
 
         res.sendRedirect("/");

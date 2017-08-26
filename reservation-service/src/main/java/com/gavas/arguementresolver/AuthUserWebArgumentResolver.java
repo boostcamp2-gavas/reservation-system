@@ -2,6 +2,7 @@ package com.gavas.arguementresolver;
 
 import com.gavas.domain.User;
 import com.gavas.exception.EmptyQueryResultException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,7 +14,9 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
+@Slf4j
 public class AuthUserWebArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -26,8 +29,15 @@ public class AuthUserWebArgumentResolver implements HandlerMethodArgumentResolve
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        HttpSession session = webRequest.getNativeRequest(HttpServletRequest.class).getSession();
-        User naverLoginUser = (User) session.getAttribute("USER");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info(authentication.getPrincipal().toString());
+        log.info(authentication.getAuthorities().toString());
+
+
+//        HttpSession session = webRequest.getNativeRequest(HttpServletRequest.class).getSession();
+//        User naverLoginUser = (User) session.getAttribute("USER");
+
+        User naverLoginUser = (User) authentication.getPrincipal();
         return naverLoginUser;
     }
 }

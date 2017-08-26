@@ -43,12 +43,12 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
         argumentResolvers.add(new AuthUserWebArgumentResolver());
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/reservations").addPathPatterns("/reserve/*");
-//        .addPathPatterns("/reviewWrite").addPathPatterns("/reviewWrite/*");
-        super.addInterceptors(registry);
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/reservations").addPathPatterns("/reserve/*");
+////        .addPathPatterns("/reviewWrite").addPathPatterns("/reviewWrite/*");
+//        super.addInterceptors(registry);
+//    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
