@@ -1,6 +1,5 @@
 package com.gavas.oauth;
 
-import com.gavas.service.CategoryService;
 import com.gavas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -82,16 +81,10 @@ public class OAuth2ClientConfig
     @Bean("sso.filter")
     Filter ssoFilter()
     {
-//        if(oauth2ClientContext == null) {
-//            System.out.println("asfsafasfads");
-//        } else {
-//            System.out.println("not null");
-//        }
         List<Filter> filters = new ArrayList<>();
 
         OAuth2ClientAuthenticationProcessingFilter facebook
                 = new OAuth2ClientAuthenticationProcessingFilter("/facebook_login");
-
         facebook.setRestTemplate(new OAuth2RestTemplate(facebook(), oauth2ClientContext));
         facebook.setTokenServices(new UserTokenService(env.getProperty("facebook.resource.userInfoUri"),env.getProperty("facebook.client.clientId")));
         facebook.setAuthenticationSuccessHandler(new OAuth2SuccessHandler("facebook",userService));
