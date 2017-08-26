@@ -139,7 +139,8 @@ var ReviewInsert = (function () {
             contentType: false,
             data: formData
         }).then(function(data){
-            alert("리뷰 등록을 완료하였습니다.")
+            alert("리뷰 등록을 완료하였습니다.");
+            location.href="/reservations";
         }).fail(function () {
             console.log("fail");
         })

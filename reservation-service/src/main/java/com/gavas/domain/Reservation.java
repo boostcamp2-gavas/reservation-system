@@ -1,6 +1,7 @@
 package com.gavas.domain;
 
 import lombok.*;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.Date;
 
@@ -11,6 +12,7 @@ import java.util.Date;
 @ToString
 public class Reservation {
     private Long id;
+    @NotBlank
     private Long productId;
     private Long userId;
     private Long generalTicketCount;

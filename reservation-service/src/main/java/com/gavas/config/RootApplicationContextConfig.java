@@ -11,8 +11,7 @@ import org.springframework.context.annotation.Import;
         "com.gavas.dao",
         "com.gavas.service",
         "com.gavas.domain",
-        "com.gavas.oauth",
-        "com.gavas.facebook"
+        "com.gavas.oauth"
 })
 @Import({DbConfig.class})
 public class RootApplicationContextConfig {

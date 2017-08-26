@@ -23,7 +23,6 @@ public class DetailController {
     }
 
     @GetMapping("/{productId}")
-    @Secured("ROLE_USER")
     public ModelAndView detailPage(@PathVariable Long productId) {
         ModelAndView mv = new ModelAndView("detail");
         TotalCommentStatusDto totalCommentStatusDto = userCommentService.getTotalCommentStatus(productId);

@@ -39,7 +39,9 @@ public class ProductRestController {
     }
 
     @GetMapping("/{productId}/usercommnets")
-    public ResponseEntity<List<UserCommentDto>> getUserCommnetList(@PathVariable Long productId, @RequestParam("commentid") Long commentId, @RequestParam("limit") Integer limit) {
+    public ResponseEntity<List<UserCommentDto>> getUserCommnetList(@PathVariable Long productId,
+                                                                   @RequestParam("commentid") Long commentId,
+                                                                   @RequestParam("limit") Integer limit) {
         List<UserCommentDto> userCommentDtoList = userCommentService.getUserCommentDtoByProductId(productId,commentId,limit);
         return new ResponseEntity<>(userCommentDtoList,HttpStatus.OK);
     }

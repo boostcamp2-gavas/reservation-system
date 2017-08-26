@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 119);
+/******/ 	return __webpack_require__(__webpack_require__.s = 137);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -25875,6 +25875,39 @@ return zhTw;
 
 /***/ }),
 /* 117 */
+/***/ (function(module, exports) {
+
+var extend = function (superClass, def) {
+
+    var extendClass = function extendClass() {
+        // Call a parent constructor
+        superClass.apply(this, arguments);
+
+        // Call a child constructor
+        if (typeof def.init === "function") {
+            def.init.apply(this, arguments);
+        }
+    };
+
+    var ExtProto = function () {
+    };
+    ExtProto.prototype = superClass.prototype;
+
+    var extProto = new ExtProto();
+    for (var i in def) {
+        extProto[i] = def[i];
+    }
+    extProto.constructor = extendClass;
+    extendClass.prototype = extProto;
+
+    return extendClass;
+};
+
+module.exports = extend;
+
+
+/***/ }),
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -26240,536 +26273,7 @@ module.exports = exports["default"];
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 118 */
-/***/ (function(module, exports) {
-
-var extend = function (superClass, def) {
-
-    var extendClass = function extendClass() {
-        // Call a parent constructor
-        superClass.apply(this, arguments);
-
-        // Call a child constructor
-        if (typeof def.init === "function") {
-            def.init.apply(this, arguments);
-        }
-    };
-
-    var ExtProto = function () {
-    };
-    ExtProto.prototype = superClass.prototype;
-
-    var extProto = new ExtProto();
-    for (var i in def) {
-        extProto[i] = def[i];
-    }
-    extProto.constructor = extendClass;
-    extendClass.prototype = extProto;
-
-    return extendClass;
-};
-
-module.exports = extend;
-
-
-/***/ }),
 /* 119 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $ = __webpack_require__(1);
-var Moment = __webpack_require__(0);
-var ProductReserve = __webpack_require__(122);
-var TicketView = __webpack_require__(123);
-var Ticket = __webpack_require__(125);
-var ReserveUser = __webpack_require__(126);
-var ProductReserveModel = __webpack_require__(127);
-
-(function () {
-    var productReserveModel = ProductReserveModel.getInstance();
-    var reserveUser;
-    var tickets = [];
-    productReserveModel.setMomentConfig();
-    productReserveModel.getReserves(afterGetReserveData);
-
-    function afterGetReserveData(data, salesDuration){
-        ProductReserve.init(data, salesDuration);
-        TicketView.setTicketInfomation(data);
-        reserveUser = new ReserveUser($('.section_booking_form'), {"salesDuration":salesDuration});
-        
-        controllTicket();
-        reserveUserController();
-        bindBookingAgreement();
-        bindReserveBtn();
-        
-    }
-
-    function controllTicket(){
-        $('.qty').each(function(index,v){
-            var ticket = new Ticket("#ticket" + (index + 1));
-            tickets.push(ticket);
-
-            ticket.on('changeTicket', function(obj){
-                var ticketTotalCount = 0;
-                tickets.forEach(function(ticket){
-                    ticketTotalCount += ticket.getTicketAmount();
-                });
-                
-                reserveUser.setInlineText(ticketTotalCount);
-            });
-        });
-    }
-
-    function reserveUserController(){
-        reserveUser.on('changeBooking', function(reserve){
-            var inspect = reserve.state.boolean;
-            var data = reserve.state.value;
-            
-            if(inspect.name && inspect.tel && inspect.email && inspect.agreement && inspect.ticketTotalCount) {
-                $('.box_bk_btn .bk_btn_wrap').removeClass("disable");
-            } else {
-                $('.box_bk_btn .bk_btn_wrap').addClass("disable");
-            }
-        });
-    }
-
-    function bindBookingAgreement(){
-        $('.section_booking_agreement').on('click', '.btn_agreement', function(e){
-            e.preventDefault();
-            $(this).closest('.agreement').toggleClass('open');
-            var $arrowBtn = $(this).find('.fn');
-
-            if($arrowBtn.hasClass('fn-down2')) {
-                $arrowBtn.removeClass('fn-down2').addClass('fn-up2');
-            } else {
-                $arrowBtn.removeClass('fn-up2').addClass('fn-down2');
-            }
-        });
-    }
-
-    function bindReserveBtn(){
-        $('.box_bk_btn .bk_btn_wrap').on('click', function(){
-            if(!$(this).hasClass("disable")){
-                var ticketsCounts = [];
-                tickets.forEach(function(value){
-                    ticketsCounts[value.priceType] = value.getTicketAmount();
-                });
-
-                var user = reserveUser.state.value;
-                var data = {
-                    "productId" : $('#gavas').data('productid'),
-                    "generalTicketCount" : ticketsCounts[3],
-                    "youthTicketCount" : ticketsCounts[2],
-                    "childTicketCount" : ticketsCounts[1],
-                    "reservationName" : $('.title').text(),
-                    "reservationTel" : user.tel,
-                    "reservationEmail" : user.email,
-                    "reservationDate" : Moment().valueOf(),
-                    "reservationType" : 1
-                };
-                productReserveModel.writeReservation(data, function(response){
-                    if(response === 200) {
-                        location.href = '/reservations';
-                    }
-                });
-            }
-        });
-    }
-
-})();
-
-/***/ }),
-/* 120 */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if(!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-/* 121 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = {
-	"./af": 2,
-	"./af.js": 2,
-	"./ar": 3,
-	"./ar-dz": 4,
-	"./ar-dz.js": 4,
-	"./ar-kw": 5,
-	"./ar-kw.js": 5,
-	"./ar-ly": 6,
-	"./ar-ly.js": 6,
-	"./ar-ma": 7,
-	"./ar-ma.js": 7,
-	"./ar-sa": 8,
-	"./ar-sa.js": 8,
-	"./ar-tn": 9,
-	"./ar-tn.js": 9,
-	"./ar.js": 3,
-	"./az": 10,
-	"./az.js": 10,
-	"./be": 11,
-	"./be.js": 11,
-	"./bg": 12,
-	"./bg.js": 12,
-	"./bn": 13,
-	"./bn.js": 13,
-	"./bo": 14,
-	"./bo.js": 14,
-	"./br": 15,
-	"./br.js": 15,
-	"./bs": 16,
-	"./bs.js": 16,
-	"./ca": 17,
-	"./ca.js": 17,
-	"./cs": 18,
-	"./cs.js": 18,
-	"./cv": 19,
-	"./cv.js": 19,
-	"./cy": 20,
-	"./cy.js": 20,
-	"./da": 21,
-	"./da.js": 21,
-	"./de": 22,
-	"./de-at": 23,
-	"./de-at.js": 23,
-	"./de-ch": 24,
-	"./de-ch.js": 24,
-	"./de.js": 22,
-	"./dv": 25,
-	"./dv.js": 25,
-	"./el": 26,
-	"./el.js": 26,
-	"./en-au": 27,
-	"./en-au.js": 27,
-	"./en-ca": 28,
-	"./en-ca.js": 28,
-	"./en-gb": 29,
-	"./en-gb.js": 29,
-	"./en-ie": 30,
-	"./en-ie.js": 30,
-	"./en-nz": 31,
-	"./en-nz.js": 31,
-	"./eo": 32,
-	"./eo.js": 32,
-	"./es": 33,
-	"./es-do": 34,
-	"./es-do.js": 34,
-	"./es.js": 33,
-	"./et": 35,
-	"./et.js": 35,
-	"./eu": 36,
-	"./eu.js": 36,
-	"./fa": 37,
-	"./fa.js": 37,
-	"./fi": 38,
-	"./fi.js": 38,
-	"./fo": 39,
-	"./fo.js": 39,
-	"./fr": 40,
-	"./fr-ca": 41,
-	"./fr-ca.js": 41,
-	"./fr-ch": 42,
-	"./fr-ch.js": 42,
-	"./fr.js": 40,
-	"./fy": 43,
-	"./fy.js": 43,
-	"./gd": 44,
-	"./gd.js": 44,
-	"./gl": 45,
-	"./gl.js": 45,
-	"./gom-latn": 46,
-	"./gom-latn.js": 46,
-	"./he": 47,
-	"./he.js": 47,
-	"./hi": 48,
-	"./hi.js": 48,
-	"./hr": 49,
-	"./hr.js": 49,
-	"./hu": 50,
-	"./hu.js": 50,
-	"./hy-am": 51,
-	"./hy-am.js": 51,
-	"./id": 52,
-	"./id.js": 52,
-	"./is": 53,
-	"./is.js": 53,
-	"./it": 54,
-	"./it.js": 54,
-	"./ja": 55,
-	"./ja.js": 55,
-	"./jv": 56,
-	"./jv.js": 56,
-	"./ka": 57,
-	"./ka.js": 57,
-	"./kk": 58,
-	"./kk.js": 58,
-	"./km": 59,
-	"./km.js": 59,
-	"./kn": 60,
-	"./kn.js": 60,
-	"./ko": 61,
-	"./ko.js": 61,
-	"./ky": 62,
-	"./ky.js": 62,
-	"./lb": 63,
-	"./lb.js": 63,
-	"./lo": 64,
-	"./lo.js": 64,
-	"./lt": 65,
-	"./lt.js": 65,
-	"./lv": 66,
-	"./lv.js": 66,
-	"./me": 67,
-	"./me.js": 67,
-	"./mi": 68,
-	"./mi.js": 68,
-	"./mk": 69,
-	"./mk.js": 69,
-	"./ml": 70,
-	"./ml.js": 70,
-	"./mr": 71,
-	"./mr.js": 71,
-	"./ms": 72,
-	"./ms-my": 73,
-	"./ms-my.js": 73,
-	"./ms.js": 72,
-	"./my": 74,
-	"./my.js": 74,
-	"./nb": 75,
-	"./nb.js": 75,
-	"./ne": 76,
-	"./ne.js": 76,
-	"./nl": 77,
-	"./nl-be": 78,
-	"./nl-be.js": 78,
-	"./nl.js": 77,
-	"./nn": 79,
-	"./nn.js": 79,
-	"./pa-in": 80,
-	"./pa-in.js": 80,
-	"./pl": 81,
-	"./pl.js": 81,
-	"./pt": 82,
-	"./pt-br": 83,
-	"./pt-br.js": 83,
-	"./pt.js": 82,
-	"./ro": 84,
-	"./ro.js": 84,
-	"./ru": 85,
-	"./ru.js": 85,
-	"./sd": 86,
-	"./sd.js": 86,
-	"./se": 87,
-	"./se.js": 87,
-	"./si": 88,
-	"./si.js": 88,
-	"./sk": 89,
-	"./sk.js": 89,
-	"./sl": 90,
-	"./sl.js": 90,
-	"./sq": 91,
-	"./sq.js": 91,
-	"./sr": 92,
-	"./sr-cyrl": 93,
-	"./sr-cyrl.js": 93,
-	"./sr.js": 92,
-	"./ss": 94,
-	"./ss.js": 94,
-	"./sv": 95,
-	"./sv.js": 95,
-	"./sw": 96,
-	"./sw.js": 96,
-	"./ta": 97,
-	"./ta.js": 97,
-	"./te": 98,
-	"./te.js": 98,
-	"./tet": 99,
-	"./tet.js": 99,
-	"./th": 100,
-	"./th.js": 100,
-	"./tl-ph": 101,
-	"./tl-ph.js": 101,
-	"./tlh": 102,
-	"./tlh.js": 102,
-	"./tr": 103,
-	"./tr.js": 103,
-	"./tzl": 104,
-	"./tzl.js": 104,
-	"./tzm": 105,
-	"./tzm-latn": 106,
-	"./tzm-latn.js": 106,
-	"./tzm.js": 105,
-	"./uk": 107,
-	"./uk.js": 107,
-	"./ur": 108,
-	"./ur.js": 108,
-	"./uz": 109,
-	"./uz-latn": 110,
-	"./uz-latn.js": 110,
-	"./uz.js": 109,
-	"./vi": 111,
-	"./vi.js": 111,
-	"./x-pseudo": 112,
-	"./x-pseudo.js": 112,
-	"./yo": 113,
-	"./yo.js": 113,
-	"./zh-cn": 114,
-	"./zh-cn.js": 114,
-	"./zh-hk": 115,
-	"./zh-hk.js": 115,
-	"./zh-tw": 116,
-	"./zh-tw.js": 116
-};
-function webpackContext(req) {
-	return __webpack_require__(webpackContextResolve(req));
-};
-function webpackContextResolve(req) {
-	var id = map[req];
-	if(!(id + 1)) // check for number or string
-		throw new Error("Cannot find module '" + req + "'.");
-	return id;
-};
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = 121;
-
-/***/ }),
-/* 122 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $ = __webpack_require__(1);
-
-var ProductReserve = (function () {
-    var $reserveTitle = $('.section_store_details .in_tit');
-    var $reserveDsc = $('.section_store_details .dsc');
-    
-    function init(data, salesDuration) {
-        bindHistotyBack();
-        setProductReserveInfo(data, salesDuration);
-    }
-
-    function bindHistotyBack() {
-        $('.top_title .btn_back').on('click', function () {
-            history.back();
-        });
-    }
-
-    function setProductReserveInfo(data, salesDuration) {
-        var productPriceList = data.productPriceInfoDtoList;
-        setReserveMainInfo({
-            "name": data.name,
-            "minPrice": productPriceList[0].price,
-            "salesDuration": salesDuration,
-            "fileId": data.fileId
-        });
-        var priceText = makeJoinedPriceInfo(productPriceList);
-
-        var topProductReserveInfo = [
-            {"tit": data.name, "dsc": "장소 : " + data.name + "<br>" + "기간 : " + salesDuration},
-            {"tit": "관람시간", "dsc": data.observationTime},
-            {"tit": "요금", "dsc": priceText}
-        ];
-
-        topProductReserveInfo.forEach(function (value, index) {
-            $reserveTitle.eq(index).text(value.tit);
-            $reserveDsc.eq(index).html(value.dsc);
-        });
-    }
-
-    function setReserveMainInfo(data) {
-        $('.top_title .title').text(data.name);
-        $('.preview_txt .preview_txt_tit').text(data.name);
-        $('.preview_txt .preview_txt_dsc:first').text("￦" + data.minPrice.toLocaleString() + "~");
-        $('.preview_txt .preview_txt_dsc:last').text(data.salesDuration);
-        $('.visual_img .img_thumb').prop("src", "/api/file/" + data.fileId);
-    }
-
-
-    function makeJoinedPriceInfo(productPriceList) {
-        var priceType = ["어린이(만 4~12세)", "청소년(만 13~18세)", "성인(만 19~64세)"];
-        var priceArray = [];
-        productPriceList.forEach(function (value, index) {
-            priceArray.push(priceType[index] + " " + value.price.toLocaleString() + "원");
-        });
-        var priceText = priceArray.join(" / ");
-        return priceText;
-    }
-
-    return {
-        init: init,
-        setProductReserveInfo : setProductReserveInfo
-    }
-
-})();
-
-module.exports = ProductReserve;
-
-/***/ }),
-/* 123 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $ = __webpack_require__(1);
-var Handlebars = __webpack_require__(124);
-
-var TicketView = (function(){
-    var ticketSource = $("#ticket-template").html();
-    var ticketTemplate = Handlebars.compile(ticketSource);
-
-    function setTicketInfomation(data){
-        var productPriceList = data.productPriceInfoDtoList;
-        var type = ["어린이", "청소년", "성인"];
-
-        var item = [];
-        productPriceList.forEach(function(value, index){
-            var discountPrice = value.price * (1 - value.discountRate);
-            item[index] = {
-                "ticketId" : "ticket"+(index+1),
-                "priceType" : value.priceType,
-                "type" : type[index],
-                "discountPrice" : discountPrice,
-                "pricePretty" : value.price.toLocaleString(),
-                "discountPricePretty" : discountPrice.toLocaleString(),
-                "discountRate" : value.discountRate*100
-            }
-        });
-
-        $('.ticket_body').append(ticketTemplate(item));
-    }
-
-    return {
-        setTicketInfomation : setTicketInfomation
-    }
-
-})();
-
-module.exports = TicketView;
-
-/***/ }),
-/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**!
@@ -31614,12 +31118,522 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 125 */
+/* 120 */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if(!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if(!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./af": 2,
+	"./af.js": 2,
+	"./ar": 3,
+	"./ar-dz": 4,
+	"./ar-dz.js": 4,
+	"./ar-kw": 5,
+	"./ar-kw.js": 5,
+	"./ar-ly": 6,
+	"./ar-ly.js": 6,
+	"./ar-ma": 7,
+	"./ar-ma.js": 7,
+	"./ar-sa": 8,
+	"./ar-sa.js": 8,
+	"./ar-tn": 9,
+	"./ar-tn.js": 9,
+	"./ar.js": 3,
+	"./az": 10,
+	"./az.js": 10,
+	"./be": 11,
+	"./be.js": 11,
+	"./bg": 12,
+	"./bg.js": 12,
+	"./bn": 13,
+	"./bn.js": 13,
+	"./bo": 14,
+	"./bo.js": 14,
+	"./br": 15,
+	"./br.js": 15,
+	"./bs": 16,
+	"./bs.js": 16,
+	"./ca": 17,
+	"./ca.js": 17,
+	"./cs": 18,
+	"./cs.js": 18,
+	"./cv": 19,
+	"./cv.js": 19,
+	"./cy": 20,
+	"./cy.js": 20,
+	"./da": 21,
+	"./da.js": 21,
+	"./de": 22,
+	"./de-at": 23,
+	"./de-at.js": 23,
+	"./de-ch": 24,
+	"./de-ch.js": 24,
+	"./de.js": 22,
+	"./dv": 25,
+	"./dv.js": 25,
+	"./el": 26,
+	"./el.js": 26,
+	"./en-au": 27,
+	"./en-au.js": 27,
+	"./en-ca": 28,
+	"./en-ca.js": 28,
+	"./en-gb": 29,
+	"./en-gb.js": 29,
+	"./en-ie": 30,
+	"./en-ie.js": 30,
+	"./en-nz": 31,
+	"./en-nz.js": 31,
+	"./eo": 32,
+	"./eo.js": 32,
+	"./es": 33,
+	"./es-do": 34,
+	"./es-do.js": 34,
+	"./es.js": 33,
+	"./et": 35,
+	"./et.js": 35,
+	"./eu": 36,
+	"./eu.js": 36,
+	"./fa": 37,
+	"./fa.js": 37,
+	"./fi": 38,
+	"./fi.js": 38,
+	"./fo": 39,
+	"./fo.js": 39,
+	"./fr": 40,
+	"./fr-ca": 41,
+	"./fr-ca.js": 41,
+	"./fr-ch": 42,
+	"./fr-ch.js": 42,
+	"./fr.js": 40,
+	"./fy": 43,
+	"./fy.js": 43,
+	"./gd": 44,
+	"./gd.js": 44,
+	"./gl": 45,
+	"./gl.js": 45,
+	"./gom-latn": 46,
+	"./gom-latn.js": 46,
+	"./he": 47,
+	"./he.js": 47,
+	"./hi": 48,
+	"./hi.js": 48,
+	"./hr": 49,
+	"./hr.js": 49,
+	"./hu": 50,
+	"./hu.js": 50,
+	"./hy-am": 51,
+	"./hy-am.js": 51,
+	"./id": 52,
+	"./id.js": 52,
+	"./is": 53,
+	"./is.js": 53,
+	"./it": 54,
+	"./it.js": 54,
+	"./ja": 55,
+	"./ja.js": 55,
+	"./jv": 56,
+	"./jv.js": 56,
+	"./ka": 57,
+	"./ka.js": 57,
+	"./kk": 58,
+	"./kk.js": 58,
+	"./km": 59,
+	"./km.js": 59,
+	"./kn": 60,
+	"./kn.js": 60,
+	"./ko": 61,
+	"./ko.js": 61,
+	"./ky": 62,
+	"./ky.js": 62,
+	"./lb": 63,
+	"./lb.js": 63,
+	"./lo": 64,
+	"./lo.js": 64,
+	"./lt": 65,
+	"./lt.js": 65,
+	"./lv": 66,
+	"./lv.js": 66,
+	"./me": 67,
+	"./me.js": 67,
+	"./mi": 68,
+	"./mi.js": 68,
+	"./mk": 69,
+	"./mk.js": 69,
+	"./ml": 70,
+	"./ml.js": 70,
+	"./mr": 71,
+	"./mr.js": 71,
+	"./ms": 72,
+	"./ms-my": 73,
+	"./ms-my.js": 73,
+	"./ms.js": 72,
+	"./my": 74,
+	"./my.js": 74,
+	"./nb": 75,
+	"./nb.js": 75,
+	"./ne": 76,
+	"./ne.js": 76,
+	"./nl": 77,
+	"./nl-be": 78,
+	"./nl-be.js": 78,
+	"./nl.js": 77,
+	"./nn": 79,
+	"./nn.js": 79,
+	"./pa-in": 80,
+	"./pa-in.js": 80,
+	"./pl": 81,
+	"./pl.js": 81,
+	"./pt": 82,
+	"./pt-br": 83,
+	"./pt-br.js": 83,
+	"./pt.js": 82,
+	"./ro": 84,
+	"./ro.js": 84,
+	"./ru": 85,
+	"./ru.js": 85,
+	"./sd": 86,
+	"./sd.js": 86,
+	"./se": 87,
+	"./se.js": 87,
+	"./si": 88,
+	"./si.js": 88,
+	"./sk": 89,
+	"./sk.js": 89,
+	"./sl": 90,
+	"./sl.js": 90,
+	"./sq": 91,
+	"./sq.js": 91,
+	"./sr": 92,
+	"./sr-cyrl": 93,
+	"./sr-cyrl.js": 93,
+	"./sr.js": 92,
+	"./ss": 94,
+	"./ss.js": 94,
+	"./sv": 95,
+	"./sv.js": 95,
+	"./sw": 96,
+	"./sw.js": 96,
+	"./ta": 97,
+	"./ta.js": 97,
+	"./te": 98,
+	"./te.js": 98,
+	"./tet": 99,
+	"./tet.js": 99,
+	"./th": 100,
+	"./th.js": 100,
+	"./tl-ph": 101,
+	"./tl-ph.js": 101,
+	"./tlh": 102,
+	"./tlh.js": 102,
+	"./tr": 103,
+	"./tr.js": 103,
+	"./tzl": 104,
+	"./tzl.js": 104,
+	"./tzm": 105,
+	"./tzm-latn": 106,
+	"./tzm-latn.js": 106,
+	"./tzm.js": 105,
+	"./uk": 107,
+	"./uk.js": 107,
+	"./ur": 108,
+	"./ur.js": 108,
+	"./uz": 109,
+	"./uz-latn": 110,
+	"./uz-latn.js": 110,
+	"./uz.js": 109,
+	"./vi": 111,
+	"./vi.js": 111,
+	"./x-pseudo": 112,
+	"./x-pseudo.js": 112,
+	"./yo": 113,
+	"./yo.js": 113,
+	"./zh-cn": 114,
+	"./zh-cn.js": 114,
+	"./zh-hk": 115,
+	"./zh-hk.js": 115,
+	"./zh-tw": 116,
+	"./zh-tw.js": 116
+};
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
+};
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 121;
+
+/***/ }),
+/* 122 */,
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(1);
-var egComponent = __webpack_require__(117);
-var util = __webpack_require__(118);
+var Moment = __webpack_require__(0);
+var ProductReserve = __webpack_require__(138);
+var TicketView = __webpack_require__(139);
+var Ticket = __webpack_require__(140);
+var ReserveUser = __webpack_require__(141);
+var ProductReserveModel = __webpack_require__(142);
+
+(function () {
+    var productReserveModel = ProductReserveModel.getInstance();
+    var reserveUser;
+    var tickets = [];
+    productReserveModel.setMomentConfig();
+    productReserveModel.getReserves(afterGetReserveData);
+
+    function afterGetReserveData(data, salesDuration){
+        ProductReserve.init(data, salesDuration);
+        TicketView.setTicketInfomation(data);
+        reserveUser = new ReserveUser($('.section_booking_form'), {"salesDuration":salesDuration});
+        
+        controllTicket();
+        reserveUserController();
+        bindBookingAgreement();
+        bindReserveBtn();
+        
+    }
+
+    function controllTicket(){
+        $('.qty').each(function(index,v){
+            var ticket = new Ticket("#ticket" + (index + 1));
+            tickets.push(ticket);
+
+            ticket.on('changeTicket', function(obj){
+                var ticketTotalCount = 0;
+                tickets.forEach(function(ticket){
+                    ticketTotalCount += ticket.getTicketAmount();
+                });
+                
+                reserveUser.setInlineText(ticketTotalCount);
+            });
+        });
+    }
+
+    function reserveUserController(){
+        reserveUser.on('changeBooking', function(reserve){
+            var inspect = reserve.state.boolean;
+            var data = reserve.state.value;
+            
+            if(inspect.name && inspect.tel && inspect.email && inspect.agreement && inspect.ticketTotalCount) {
+                $('.box_bk_btn .bk_btn_wrap').removeClass("disable");
+            } else {
+                $('.box_bk_btn .bk_btn_wrap').addClass("disable");
+            }
+        });
+    }
+
+    function bindBookingAgreement(){
+        $('.section_booking_agreement').on('click', '.btn_agreement', function(e){
+            e.preventDefault();
+            $(this).closest('.agreement').toggleClass('open');
+            var $arrowBtn = $(this).find('.fn');
+
+            if($arrowBtn.hasClass('fn-down2')) {
+                $arrowBtn.removeClass('fn-down2').addClass('fn-up2');
+            } else {
+                $arrowBtn.removeClass('fn-up2').addClass('fn-down2');
+            }
+        });
+    }
+
+    function bindReserveBtn(){
+        $('.box_bk_btn .bk_btn_wrap').on('click', function(){
+            if(!$(this).hasClass("disable")){
+                var ticketsCounts = [];
+                tickets.forEach(function(value){
+                    ticketsCounts[value.priceType] = value.getTicketAmount();
+                });
+
+                var user = reserveUser.state.value;
+                var data = {
+                    "productId" : $('#gavas').data('productid'),
+                    "generalTicketCount" : ticketsCounts[3],
+                    "youthTicketCount" : ticketsCounts[2],
+                    "childTicketCount" : ticketsCounts[1],
+                    "reservationName" : $('.title').text(),
+                    "reservationTel" : user.tel,
+                    "reservationEmail" : user.email,
+                    "reservationDate" : Moment().valueOf(),
+                    "reservationType" : 1
+                };
+                productReserveModel.writeReservation(data, function(response){
+                    if(response === 200) {
+                        location.href = '/reservations';
+                    }
+                });
+            }
+        });
+    }
+
+})();
+
+/***/ }),
+/* 138 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+
+var ProductReserve = (function () {
+    var $reserveTitle = $('.section_store_details .in_tit');
+    var $reserveDsc = $('.section_store_details .dsc');
+    
+    function init(data, salesDuration) {
+        bindHistotyBack();
+        setProductReserveInfo(data, salesDuration);
+    }
+
+    function bindHistotyBack() {
+        $('.top_title .btn_back').on('click', function () {
+            history.back();
+        });
+    }
+
+    function setProductReserveInfo(data, salesDuration) {
+        var productPriceList = data.productPriceInfoDtoList;
+        setReserveMainInfo({
+            "name": data.name,
+            "minPrice": productPriceList[0].price,
+            "salesDuration": salesDuration,
+            "fileId": data.fileId
+        });
+        var priceText = makeJoinedPriceInfo(productPriceList);
+
+        var topProductReserveInfo = [
+            {"tit": data.name, "dsc": "장소 : " + data.name + "<br>" + "기간 : " + salesDuration},
+            {"tit": "관람시간", "dsc": data.observationTime},
+            {"tit": "요금", "dsc": priceText}
+        ];
+
+        topProductReserveInfo.forEach(function (value, index) {
+            $reserveTitle.eq(index).text(value.tit);
+            $reserveDsc.eq(index).html(value.dsc);
+        });
+    }
+
+    function setReserveMainInfo(data) {
+        $('.top_title .title').text(data.name);
+        $('.preview_txt .preview_txt_tit').text(data.name);
+        $('.preview_txt .preview_txt_dsc:first').text("￦" + data.minPrice.toLocaleString() + "~");
+        $('.preview_txt .preview_txt_dsc:last').text(data.salesDuration);
+        $('.visual_img .img_thumb').prop("src", "/api/file/" + data.fileId);
+    }
+
+    function makeJoinedPriceInfo(productPriceList) {
+        var priceType = ["어린이(만 4~12세)", "청소년(만 13~18세)", "성인(만 19~64세)"];
+        var priceArray = [];
+        productPriceList.forEach(function (value, index) {
+            priceArray.push(priceType[index] + " " + value.price.toLocaleString() + "원");
+        });
+        var priceText = priceArray.join(" / ");
+        return priceText;
+    }
+
+    return {
+        init: init,
+        setProductReserveInfo : setProductReserveInfo
+    }
+
+})();
+
+module.exports = ProductReserve;
+
+/***/ }),
+/* 139 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+var Handlebars = __webpack_require__(119);
+
+var TicketView = (function(){
+    var ticketSource = $("#ticket-template").html();
+    var ticketTemplate = Handlebars.compile(ticketSource);
+
+    function setTicketInfomation(data){
+        var productPriceList = data.productPriceInfoDtoList;
+        var type = ["어린이", "청소년", "성인"];
+
+        var item = [];
+        productPriceList.forEach(function(value, index){
+            var discountPrice = value.price * (1 - value.discountRate);
+            item[index] = {
+                "ticketId" : "ticket"+(index+1),
+                "priceType" : value.priceType,
+                "type" : type[index],
+                "discountPrice" : discountPrice,
+                "pricePretty" : value.price.toLocaleString(),
+                "discountPricePretty" : discountPrice.toLocaleString(),
+                "discountRate" : value.discountRate*100
+            }
+        });
+
+        $('.ticket_body').append(ticketTemplate(item));
+    }
+
+    return {
+        setTicketInfomation : setTicketInfomation
+    }
+
+})();
+
+module.exports = TicketView;
+
+/***/ }),
+/* 140 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(1);
+var egComponent = __webpack_require__(118);
+var util = __webpack_require__(117);
 
 var Ticket = util(egComponent,{
     init : function(id) {
@@ -31702,11 +31716,11 @@ var Ticket = util(egComponent,{
 module.exports = Ticket;
 
 /***/ }),
-/* 126 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var egComponent = __webpack_require__(117);
-var util = __webpack_require__(118);
+var egComponent = __webpack_require__(118);
+var util = __webpack_require__(117);
 
 var ReserveUser = util(egComponent, {
     init : function($rootElement, option){
@@ -31845,7 +31859,7 @@ var ReserveUser = util(egComponent, {
 module.exports = ReserveUser;
 
 /***/ }),
-/* 127 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(1);
@@ -31884,7 +31898,7 @@ var ProductReserveModel = (function () {
                 method : "POST",
                 data : JSON.stringify(data),
                 contentType : "application/json"
-            }).then(function(data,status, jqXHR) {
+            }).then(function(data,status,jqXHR) {
                 fp(jqXHR.status);
             }, function(jqXHR){
                 fp(jqXHR.status);
