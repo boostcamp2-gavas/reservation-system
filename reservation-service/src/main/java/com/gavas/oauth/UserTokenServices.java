@@ -2,9 +2,11 @@ package com.gavas.oauth;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2RestOperations;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.BaseOAuth2ProtectedResourceDetails;
@@ -48,16 +50,13 @@ public class UserTokenServices implements ResourceServerTokenServices {
 
             throw new InvalidTokenException(accessToken);
         } else {
-            System.out.println("1asfsafsaf");
-            System.out.println(map);
             return this.extractAuthentication(map);
         }
     }
 
     private OAuth2Authentication extractAuthentication(Map<String, Object> map) {
-        System.out.println("2asfasdfs");
-        OAuth2Request request = new OAuth2Request((Map)null, this.clientId, (Collection)null, true, (Set)null, (Set)null, (String)null, (Set)null, (Map)null);
-        AuthenticationToken token = new AuthenticationToken(map.get("name"), null, generateAuthorities());
+        OAuth2Request request = new OAuth2Request((Map)map, this.clientId, (Collection)null, true, (Set)null, (Set)null, (String)null, (Set)null, (Map)map);
+        AuthenticationToken token = new AuthenticationToken(map, null, generateAuthorities());
         token.setDetails(map);
         return new OAuth2Authentication(request, token);
     }
@@ -73,7 +72,6 @@ public class UserTokenServices implements ResourceServerTokenServices {
     }
 
     private Map<String, Object> getMap(String path, String accessToken) {
-        System.out.println("3asfasfas");
         if (this.logger.isDebugEnabled()) {
             this.logger.debug("Getting user info from: " + path);
         }
