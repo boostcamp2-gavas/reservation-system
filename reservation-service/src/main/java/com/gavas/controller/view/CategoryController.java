@@ -16,8 +16,9 @@ public class CategoryController {
     @Secured("ROLE_ADMIN")
     public ModelAndView getCategoryIndex() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("asfs");
+        System.out.println("인증정보");
         System.out.println(authentication.getPrincipal());
+        System.out.println(authentication.getAuthorities());
         return new ModelAndView("index");
     }
 }

@@ -62,9 +62,4 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
         multipartResolver.setMaxUploadSize(fileSize); // 1024 * 1024 * 10
         return multipartResolver;
     }
-
-//    @Bean
-//    public RequestContextListener requestContextListener() {
-//        return new RequestContextListener();
-//    }
 }
