@@ -28,8 +28,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional(readOnly = true)
     @Override
-    public Long findProductById(Long productId) {
-        return productDao.findProudctId(productId);
+    public Long getProductById(Long productId) {
+        return productDao.selectProuductId(productId);
     }
 
     @Transactional(readOnly = true)
@@ -57,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     @Override
     public ProductDetailsDto getProductDetailsByProductId(Long productId) {
-        if (findProductById(productId) != null) {
+        if (getProductById(productId) != null) {
             ProductDetailsDto productDetailsDto = productDao.selectProductDetailsByProductId(productId);
             productDetailsDto.setFileIdList(fileDao.selectFileIdsByProductId(productId));
             return productDetailsDto;
@@ -67,14 +67,14 @@ public class ProductServiceImpl implements ProductService {
     
     @Transactional(readOnly = true)
     @Override
-    public String selectProductNameByProductId(Long productId) {
+    public String getProductNameByProductId(Long productId) {
         return productDao.selectProductNameByProductId(productId);
     }
 
     @Transactional(readOnly = true)
     @Override
     public ProductReserveDto getProductReserveInfoByProductId(Long productId) {
-        if (findProductById(productId) != null){
+        if (getProductById(productId) != null){
                 ProductReserveDto productReserveDto = productDao.selectProductReserveInfoByProductId(productId);
                 productReserveDto.setProductPriceInfoDtoList(productDao.selectProductPriceInfoByProductId(productId));
                 return productReserveDto;

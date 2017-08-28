@@ -31,7 +31,7 @@ public class UserCommentServiceImpl implements UserCommentService {
     @Transactional(readOnly = true)
     @Override
     public TotalCommentStatusDto getTotalCommentStatus(Long productId) {
-        if (productService.findProductById(productId) != null) {
+        if (productService.getProductById(productId) != null) {
             return userCommentDao.selectTotalCommentStatusByProductId(productId);
         }
         return null;
@@ -40,7 +40,7 @@ public class UserCommentServiceImpl implements UserCommentService {
     @Transactional(readOnly = true)
     @Override
     public List<UserCommentDto> getUserCommentDtoByProductId(Long productId, Long commentId, Integer limit) {
-        if (productService.findProductById(productId) != null) {
+        if (productService.getProductById(productId) != null) {
             List<UserCommentDto> userCommentDtoList = userCommentDao.selectUserCommentByProductId(productId, commentId, limit);
             userCommentDtoList.forEach(dto -> dto.setNickName(blockUsername(dto.getNickName())));
             return userCommentDtoList;

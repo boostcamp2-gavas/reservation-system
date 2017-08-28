@@ -4,8 +4,8 @@ var TotalCommentInfoModel = (function () {
 
     var totalCommentInfoCash = {};
 
-    function getTotalCommentInfo(fp){
-        var url = "/api/products/"+$('#gavas').data('productid')+"/usercommnets?commentid=0&limit=4";
+    function getTotalCommentInfo(start, limit, fp){
+        var url = "/api/products/"+$('#gavas').data('productid')+"/usercommnets?commentid="+ start +"&limit=" + limit;
 
         if (totalCommentInfoCash[url] != null) {
             fp(totalCommentInfoCash[url]);

@@ -18,7 +18,10 @@ public class CategoryController {
     @Secured("ROLE_ADMIN")
     public ModelAndView getCategoryIndex() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("인증정보");
+        System.out.println(authentication.getPrincipal());
+        System.out.println(authentication.getAuthorities());
         log.info(authentication.getAuthorities().toString());
-        return new ModelAndView("category");
+        return new ModelAndView("categoryadmin");
     }
 }

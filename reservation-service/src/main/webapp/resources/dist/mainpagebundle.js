@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 122);
+/******/ 	return __webpack_require__(__webpack_require__.s = 126);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -15573,13 +15573,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 
-/***/ 122:
+/***/ 126:
 /***/ (function(module, exports, __webpack_require__) {
 
-var ProductListModule = __webpack_require__(123);
-var Carousel = __webpack_require__(125);
+var ProductListModule = __webpack_require__(127);
+var Carousel = __webpack_require__(129);
 var $ = __webpack_require__(1);
-var Timer = __webpack_require__(126);
+var Timer = __webpack_require__(130);
 
 (function (){
     var productListModule = ProductListModule.getInstance();
@@ -15615,10 +15615,10 @@ var Timer = __webpack_require__(126);
 
 /***/ }),
 
-/***/ 123:
+/***/ 127:
 /***/ (function(module, exports, __webpack_require__) {
 
-var ProductModel = __webpack_require__(124);
+var ProductModel = __webpack_require__(128);
 var Handlebars = __webpack_require__(119);
 var $ = __webpack_require__(1);
 
@@ -15720,7 +15720,7 @@ module.exports = ProductListModule;
 
 /***/ }),
 
-/***/ 124:
+/***/ 128:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(1);
@@ -15788,7 +15788,7 @@ module.exports = ProductModel;
 
 /***/ }),
 
-/***/ 125:
+/***/ 129:
 /***/ (function(module, exports, __webpack_require__) {
 
 var extend = __webpack_require__(117);
@@ -15884,7 +15884,7 @@ module.exports = Carousel;
 
 /***/ }),
 
-/***/ 126:
+/***/ 130:
 /***/ (function(module, exports) {
 
 var Timer = (function () {

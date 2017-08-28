@@ -5,7 +5,8 @@ module.exports = {
         detail: './detailpage/detail.js',
         reserve: './reservepage/reserve.js',
         reservation: './reservation/reservation.js',
-        reviewwrite: './reviewwritepage/reviewwrite.js'
+        reviewwrite: './reviewwritepage/reviewwrite.js',
+        review: './review/review.js'
     },
     output: {
         path: __dirname + '/dist', // 번들 파일 폴더

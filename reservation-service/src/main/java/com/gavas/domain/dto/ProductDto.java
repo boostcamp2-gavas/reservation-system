@@ -19,4 +19,10 @@ public class ProductDto {
     private String description;
     private String placeName;
     private Long fileId;
+
+    @Data
+    @AllArgsConstructor
+    public static class ProductName {
+        private String name;
+    }
 }
