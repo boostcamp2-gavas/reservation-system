@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class ReservationController {
 
     @GetMapping
-    @Secured("ROLE_USER")
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     public ModelAndView reservationPage(@AuthUser User user) {
         ModelAndView mv = new ModelAndView("myreservation");
         log.info(user.toString());

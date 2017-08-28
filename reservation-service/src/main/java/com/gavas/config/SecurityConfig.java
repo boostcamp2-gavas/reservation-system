@@ -64,17 +64,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin()
-                .loginProcessingUrl("/logina");
-        http.exceptionHandling()
+        http
+                .csrf()
+                .disable()
+                .formLogin()
+                .loginProcessingUrl("/logina")
+                .and()
+                .exceptionHandling()
                 .and()
                 .addFilterAfter(oauth2ClientContextFilter,
                         ExceptionTranslationFilter.class)
                 .addFilterBefore((Filter) context.getBean("sso.filter"),
                         FilterSecurityInterceptor.class)
                 .anonymous()
-                .disable();
-        http
+                .disable()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/");
