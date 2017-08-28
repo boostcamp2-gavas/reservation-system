@@ -18,13 +18,13 @@ public class ReviewServiceImpl implements ReviewService {
         this.reviewDao = reviewDao;
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     @Override
     public Integer addReviewWithFiles(Review review, List<Integer> fileList) {
         return reviewDao.insertWithFiles(review,fileList);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     @Override
     public Integer addReview(Review review) {
         return reviewDao.insert(review);

@@ -1,6 +1,5 @@
 package com.gavas.config;
 
-import org.springframework.core.annotation.Order;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 import org.springframework.web.context.request.RequestContextListener;
 

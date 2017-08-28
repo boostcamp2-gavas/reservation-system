@@ -1,4 +1,4 @@
-package com.gavas.oauth;
+package com.gavas.security;
 
 
 import org.springframework.security.core.GrantedAuthority;
@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class UserDetailImpl extends org.springframework.security.core.userdetails.User {
 
-    public UserDetailImpl(com.gavas.domain.User account) {
+public class UserDetailsImpl extends org.springframework.security.core.userdetails.User {
+
+    public UserDetailsImpl(com.gavas.domain.User account) {
         super (account.getUsername(),account.getSnsId(),authorities(account));
     }
 

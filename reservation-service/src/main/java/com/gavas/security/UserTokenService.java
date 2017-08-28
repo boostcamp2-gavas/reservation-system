@@ -1,12 +1,11 @@
-package com.gavas.oauth;
+package com.gavas.security;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2RestOperations;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.BaseOAuth2ProtectedResourceDetails;
@@ -21,14 +20,14 @@ import java.util.*;
 
 import java.util.Map;
 
-public class UserTokenServices implements ResourceServerTokenServices {
-    protected final Log logger = LogFactory.getLog(this.getClass());
+public class UserTokenService implements ResourceServerTokenServices {
+    protected final Log log = LogFactory.getLog(this.getClass());
     private final String userInfoEndpointUrl;
     private final String clientId;
     private OAuth2RestOperations restTemplate;
     private String tokenType = "Bearer";
 
-    public UserTokenServices(String userInfoEndpointUrl, String clientId) {
+    public UserTokenService(String userInfoEndpointUrl, String clientId) {
         this.userInfoEndpointUrl = userInfoEndpointUrl;
         this.clientId = clientId;
     }
@@ -44,10 +43,9 @@ public class UserTokenServices implements ResourceServerTokenServices {
     public OAuth2Authentication loadAuthentication(String accessToken) throws AuthenticationException, InvalidTokenException {
         Map<String, Object> map = this.getMap(this.userInfoEndpointUrl, accessToken);
         if (map.containsKey("error")) {
-            if (this.logger.isDebugEnabled()) {
-                this.logger.debug("userinfo returned error: " + map.get("error"));
+            if (this.log.isDebugEnabled()) {
+                this.log.debug("userinfo returned error: " + map.get("error"));
             }
-
             throw new InvalidTokenException(accessToken);
         } else {
             return this.extractAuthentication(map);
@@ -55,7 +53,7 @@ public class UserTokenServices implements ResourceServerTokenServices {
     }
 
     private OAuth2Authentication extractAuthentication(Map<String, Object> map) {
-        OAuth2Request request = new OAuth2Request((Map)map, this.clientId, (Collection)null, true, (Set)null, (Set)null, (String)null, (Set)null, (Map)map);
+        OAuth2Request request = new OAuth2Request((Map) map, this.clientId, (Collection) null, true, null, null, (String) null, (Set) null, (Map) map);
         AuthenticationToken token = new AuthenticationToken(map, null, generateAuthorities());
         token.setDetails(map);
         return new OAuth2Authentication(request, token);
@@ -72,8 +70,8 @@ public class UserTokenServices implements ResourceServerTokenServices {
     }
 
     private Map<String, Object> getMap(String path, String accessToken) {
-        if (this.logger.isDebugEnabled()) {
-            this.logger.debug("Getting user info from: " + path);
+        if (this.log.isDebugEnabled()) {
+            this.log.debug("Getting user info from: " + path);
         }
 
         try {
@@ -84,16 +82,15 @@ public class UserTokenServices implements ResourceServerTokenServices {
                 restTemplate = new OAuth2RestTemplate(resource);
             }
 
-            OAuth2AccessToken existingToken = ((OAuth2RestOperations)restTemplate).getOAuth2ClientContext().getAccessToken();
+            OAuth2AccessToken existingToken = ((OAuth2RestOperations) restTemplate).getOAuth2ClientContext().getAccessToken();
             if (existingToken == null || !accessToken.equals(existingToken.getValue())) {
                 DefaultOAuth2AccessToken token = new DefaultOAuth2AccessToken(accessToken);
                 token.setTokenType(this.tokenType);
-                ((OAuth2RestOperations)restTemplate).getOAuth2ClientContext().setAccessToken(token);
+                ((OAuth2RestOperations) restTemplate).getOAuth2ClientContext().setAccessToken(token);
             }
-
-            return (Map)((OAuth2RestOperations)restTemplate).getForEntity(path, Map.class, new Object[0]).getBody();
+            return (Map) ((OAuth2RestOperations) restTemplate).getForEntity(path, Map.class, new Object[0]).getBody();
         } catch (Exception var6) {
-            this.logger.warn("Could not fetch user details: " + var6.getClass() + ", " + var6.getMessage());
+            this.log.warn("Could not fetch user details: " + var6.getClass() + ", " + var6.getMessage());
             return Collections.singletonMap("error", "Could not fetch user details");
         }
     }

@@ -18,8 +18,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/reviews")
 public class ReveiwRestController {
-    FileService fileService;
-    ReviewService reviewService;
+    private FileService fileService;
+    private ReviewService reviewService;
 
     @Autowired
     public ReveiwRestController(FileService fileService, ReviewService reviewService){
@@ -30,7 +30,6 @@ public class ReveiwRestController {
     @PostMapping
     public Integer createReview(@RequestParam("review") String reviewString, @RequestParam("files") MultipartFile[] files){
         Review review = null;
-
         try {
             review = new ObjectMapper().readValue(reviewString, Review.class);
         } catch (JsonParseException e) {
@@ -40,16 +39,13 @@ public class ReveiwRestController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         Integer reviewId;
-
         if(files != null) {
             List<Integer> addedFileList = fileService.saveFiles(review.getUserId(),files);
             reviewId = reviewService.addReviewWithFiles(review, addedFileList);
         } else {
             reviewId = reviewService.addReview(review);
         }
-
         return reviewId;
     }
 }

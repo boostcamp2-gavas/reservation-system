@@ -13,7 +13,6 @@ import java.util.List;
 
 @Service
 public class UserCommentServiceImpl implements UserCommentService {
-
     private UserCommentDao userCommentDao;
     private ProductService productService;
 

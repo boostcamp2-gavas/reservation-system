@@ -1,17 +1,14 @@
 package com.gavas.controller.view;
 
 
-import com.gavas.arguementresolver.AuthUser;
 import com.gavas.domain.User;
 import com.gavas.service.LoginService;
 import com.gavas.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +23,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/")
 @PropertySource("classpath:/application.properties")
+@Slf4j
 public class MainController {
 
     @Value("${open-api.naver.client-id}")
@@ -33,22 +31,20 @@ public class MainController {
     @Value("${open-api.naver.callback-url}")
     private String callbackUrl;
 
-    @Autowired
-    private Environment env;
-
-    private static Logger logger = LoggerFactory.getLogger(MainController.class);
+    private Environment environment;
     private LoginService loginService;
     private UserService userService;
 
     @Autowired
-    public MainController(LoginService loginService, UserService userService) {
+    public MainController(LoginService loginService, UserService userService, Environment environment) {
         this.loginService = loginService;
         this.userService = userService;
+        this.environment = environment;
     }
 
     @GetMapping
     public ModelAndView mainPage() {
-        System.out.println(env.getProperty("facebook.client.clientId"));
+        log.info(environment.getProperty("facebook.client.clientId"));
         return new ModelAndView("mainpage");
     }
 
@@ -58,7 +54,6 @@ public class MainController {
         String state = loginService.generateState();
         HttpSession session = request.getSession();
         session.setAttribute("state", state);
-
         try {
             String encodeURL = URLEncoder.encode(callbackUrl, "UTF-8");
             return new ModelAndView("redirect:" + naverLoginUrl + encodeURL + "&state=" + state + "&auth_type=reauthenticate");
@@ -99,14 +94,12 @@ public class MainController {
 
             return new ModelAndView("redirect:" + url);
         }
-
     }
 
     @GetMapping("logout")
     public ModelAndView logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.removeAttribute("USER");
-
         return new ModelAndView("mainpage");
     }
 }

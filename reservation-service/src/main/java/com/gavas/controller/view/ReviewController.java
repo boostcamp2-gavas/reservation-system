@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 @RequestMapping("/reviewWrite")
 public class ReviewController {
-    ProductService productService;
+    private ProductService productService;
 
     @Autowired
     public ReviewController(ProductService productService) {

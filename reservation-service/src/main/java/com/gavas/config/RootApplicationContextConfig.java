@@ -1,6 +1,5 @@
 package com.gavas.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -11,7 +10,7 @@ import org.springframework.context.annotation.Import;
         "com.gavas.dao",
         "com.gavas.service",
         "com.gavas.domain",
-        "com.gavas.oauth"
+        "com.gavas.security"
 })
 @Import({DbConfig.class})
 public class RootApplicationContextConfig {
