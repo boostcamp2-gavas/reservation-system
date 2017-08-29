@@ -1,6 +1,5 @@
 package com.gavas.controller.view;
 
-import com.gavas.domain.dto.ProductDto;
 import com.gavas.domain.dto.TotalCommentStatusDto;
 import com.gavas.service.ProductService;
 import com.gavas.service.UserCommentService;

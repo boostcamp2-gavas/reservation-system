@@ -39,7 +39,7 @@ public class ProductDao {
         this.productPriceInfoDtoRowMapper = BeanPropertyRowMapper.newInstance(ProductPriceInfoDto.class);
     }
 
-    public Long selectProuductId(Long productId) {
+    public Long selectProductId(Long productId) {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("productId", productId);
         try {

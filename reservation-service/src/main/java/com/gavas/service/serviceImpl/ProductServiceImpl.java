@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     @Override
     public Long getProductById(Long productId) {
-        return productDao.selectProuductId(productId);
+        return productDao.selectProductId(productId);
     }
 
     @Transactional(readOnly = true)

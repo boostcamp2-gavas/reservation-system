@@ -15,12 +15,10 @@ import java.util.List;
 
 @Repository
 public class ReviewDao {
-    private NamedParameterJdbcTemplate jdbc;
     private SimpleJdbcInsert simpleJdbcInsert;
     private SimpleJdbcInsert simpleJdbcInsertImageTable;
 
     public ReviewDao(DataSource dataSource) {
-        this.jdbc = new NamedParameterJdbcTemplate(dataSource);
         this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
                 .withTableName("reservation_user_comment")
                 .usingGeneratedKeyColumns("id");
